@@ -212,9 +212,9 @@ namespace Xe {
 				};
 			};
 			Rgba8888 c;
-			c.b = (u8)Math::Truncate(Math::Max(0.0f, Math::Min(1.0f, color.b)) * COLOR_FLOAT8);
-			c.g = (u8)Math::Truncate(Math::Max(0.0f, Math::Min(1.0f, color.g)) * COLOR_FLOAT8);
 			c.r = (u8)Math::Truncate(Math::Max(0.0f, Math::Min(1.0f, color.r)) * COLOR_FLOAT8);
+			c.g = (u8)Math::Truncate(Math::Max(0.0f, Math::Min(1.0f, color.g)) * COLOR_FLOAT8);
+			c.b = (u8)Math::Truncate(Math::Max(0.0f, Math::Min(1.0f, color.b)) * COLOR_FLOAT8);
 			c.a = (u8)Math::Truncate(Math::Max(0.0f, Math::Min(1.0f, color.a)) * COLOR_FLOAT8);
 			return c.rgba;
 		}
@@ -295,9 +295,9 @@ namespace Xe {
 			return Color(r + m, g + m, b + m, color.a);
 		}
 		Color Color::Lerp(const Color &c1, const Color &c2, double m) {
-			return Color((float)Math::Lerp(m, (double)c1.b, (double)c2.b),
+			return Color((float)Math::Lerp(m, (double)c1.r, (double)c2.r),
 				(float)Math::Lerp(m, (double)c1.g, (double)c2.g),
-				(float)Math::Lerp(m, (double)c1.r, (double)c2.r),
+				(float)Math::Lerp(m, (double)c1.b, (double)c2.b),
 				(float)Math::Lerp(m, (double)c1.a, (double)c2.a));
 		}
 		float Color::GetContrast(const Color& color) {

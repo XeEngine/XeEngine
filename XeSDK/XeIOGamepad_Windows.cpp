@@ -142,6 +142,7 @@ namespace Xe {
 				pXInputGetKeystroke = (PFNXINPUTGETKEYSTROKEPROC)XInputGetKeystroke;
 				pXInputGetAudioDeviceIds = (PFNXINPUTGETAUDIODEVICESIDSPROC)XInputGetAudioDeviceIds;
 #endif
+				return true;
 			}
 			void Deinitialize() {
 				if (IsInitialized) {
