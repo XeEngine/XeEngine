@@ -169,10 +169,9 @@ namespace Xe {
 				GENERIC_READ | GENERIC_WRITE
 			};
 			static const DWORD SHARE_MODE[]{
+				0,
 				FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 				FILE_SHARE_READ,
-				0,
-				0,
 				0,
 			};
 			static const DWORD CREATION_DISPOSITION[]{
