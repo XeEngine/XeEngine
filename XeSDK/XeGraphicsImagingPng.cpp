@@ -132,11 +132,21 @@ namespace Xe {
 								png_read_info(png_ptr, info_ptr);
 								png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type,
 									&interlace_type, NULL, NULL);
+								bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+								color_type = png_get_color_type(png_ptr, info_ptr);
 
 								switch (color_type)
 								{
-								case PNG_COLOR_TYPE_GRAY_ALPHA:
 								case PNG_COLOR_TYPE_GRAY:
+									png_set_gray_to_rgb(png_ptr);
+									bit_depth = 24;
+									format = Color::Format_RGB888;
+									break;
+								case PNG_COLOR_TYPE_GRAY_ALPHA:
+									png_set_gray_to_rgb(png_ptr);
+									bit_depth = 32;
+									format = Color::Format_RGBA8888;
+									break;
 								case PNG_COLOR_TYPE_PALETTE:
 									switch (bit_depth)
 									{
