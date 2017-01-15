@@ -110,24 +110,28 @@ namespace Xe {
 
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color;
 				vOut++;
 
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color;
 				vOut++;
 
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color;
 				vOut++;
 
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color;
 			}
@@ -136,25 +140,155 @@ namespace Xe {
 				const Vector2f v2 = position[1].Transform(m);
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color[0];
 				vOut++;
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color[1];
 				vOut++;
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color[2];
 				vOut++;
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->p = 1.0f;
 				vOut->color = color[3];
 			}
 			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Color &color) {
+				vOut->pos = Math::Vector3f(position[0], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+			}
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Color(&color)[4]) {
+				vOut->pos = Math::Vector3f(position[0], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[0];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[1];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[2];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], 0.0f).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[3];
+			}
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[2], float z, const Color &color) {
+				const Vector2f v1 = position[0].Transform(m);
+				const Vector2f v2 = position[1].Transform(m);
+
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color;
+			}
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[2], float z, const Color(&color)[4]) {
+				const Vector2f v1 = position[0].Transform(m);
+				const Vector2f v2 = position[1].Transform(m);
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color[0];
+				vOut++;
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color[1];
+				vOut++;
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color[2];
+				vOut++;
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->p = 1.0f;
+				vOut->color = color[3];
+			}
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], float z, const Color &color) {
+				vOut->pos = Math::Vector3f(position[0], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color;
+			}
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], float z, const Color(&color)[4]) {
+				vOut->pos = Math::Vector3f(position[0], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[0];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[1];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[2];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], z).Transform(m);
+				vOut->p = 1.0f;
+				vOut->color = color[3];
+			}
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector3f(&position)[4], const Color &color) {
 				vOut->pos = position[0].Transform(m);
 				vOut->p = 1.0f;
 				vOut->color = color;
@@ -171,7 +305,7 @@ namespace Xe {
 				vOut->p = 1.0f;
 				vOut->color = color;
 			}
-			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Color(&color)[4]) {
+			void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Vector3f(&position)[4], const Color(&color)[4]) {
 				vOut->pos = position[0].Transform(m);
 				vOut->p = 1.0f;
 				vOut->color = color[0];
@@ -193,6 +327,7 @@ namespace Xe {
 				const Vector2f v2 = position[1].Transform(m);
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[0].x;
 				vOut->v = uvCoord[0].y;
 				vOut->p = mode;
@@ -200,6 +335,7 @@ namespace Xe {
 				vOut++;
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[1].x;
 				vOut->v = uvCoord[1].y;
 				vOut->p = mode;
@@ -207,6 +343,7 @@ namespace Xe {
 				vOut++;
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[2].x;
 				vOut->v = uvCoord[2].y;
 				vOut->p = mode;
@@ -214,6 +351,7 @@ namespace Xe {
 				vOut++;
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[3].x;
 				vOut->v = uvCoord[3].y;
 				vOut->p = mode;
@@ -224,6 +362,7 @@ namespace Xe {
 				const Vector2f v2 = position[1].Transform(m);
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[0].x;
 				vOut->v = uvCoord[0].y;
 				vOut->p = mode;
@@ -231,6 +370,7 @@ namespace Xe {
 				vOut++;
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v1.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[1].x;
 				vOut->v = uvCoord[1].y;
 				vOut->p = mode;
@@ -238,6 +378,7 @@ namespace Xe {
 				vOut++;
 				vOut->pos.x = v1.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[2].x;
 				vOut->v = uvCoord[2].y;
 				vOut->p = mode;
@@ -245,12 +386,183 @@ namespace Xe {
 				vOut++;
 				vOut->pos.x = v2.x;
 				vOut->pos.y = v2.y;
+				vOut->pos.z = 0.0f;
 				vOut->u = uvCoord[3].x;
 				vOut->v = uvCoord[3].y;
 				vOut->p = mode;
 				vOut->color = color[3];
 			}
 			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode) {
+				vOut->pos = Math::Vector3f(position[0], 0.0f).Transform(m);
+				vOut->u = uvCoord[0].x;
+				vOut->v = uvCoord[0].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], 0.0f).Transform(m);
+				vOut->u = uvCoord[1].x;
+				vOut->v = uvCoord[1].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], 0.0f).Transform(m);
+				vOut->u = uvCoord[2].x;
+				vOut->v = uvCoord[2].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], 0.0f).Transform(m);
+				vOut->u = uvCoord[3].x;
+				vOut->v = uvCoord[3].y;
+				vOut->p = mode;
+				vOut->color = color;
+			}
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
+				vOut->pos = Math::Vector3f(position[0], 0.0f).Transform(m);
+				vOut->u = uvCoord[0].x;
+				vOut->v = uvCoord[0].y;
+				vOut->p = mode;
+				vOut->color = color[0];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], 0.0f).Transform(m);
+				vOut->u = uvCoord[1].x;
+				vOut->v = uvCoord[1].y;
+				vOut->p = mode;
+				vOut->color = color[1];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], 0.0f).Transform(m);
+				vOut->u = uvCoord[2].x;
+				vOut->v = uvCoord[2].y;
+				vOut->p = mode;
+				vOut->color = color[2];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], 0.0f).Transform(m);
+				vOut->u = uvCoord[3].x;
+				vOut->v = uvCoord[3].y;
+				vOut->p = mode;
+				vOut->color = color[3];
+			}
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[2], const Vector2f(&uvCoord)[4], float z, const Color &color, float mode) {
+				const Vector2f v1 = position[0].Transform(m);
+				const Vector2f v2 = position[1].Transform(m);
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[0].x;
+				vOut->v = uvCoord[0].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[1].x;
+				vOut->v = uvCoord[1].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[2].x;
+				vOut->v = uvCoord[2].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[3].x;
+				vOut->v = uvCoord[3].y;
+				vOut->p = mode;
+				vOut->color = color;
+			}
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[2], const Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode) {
+				const Vector2f v1 = position[0].Transform(m);
+				const Vector2f v2 = position[1].Transform(m);
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[0].x;
+				vOut->v = uvCoord[0].y;
+				vOut->p = mode;
+				vOut->color = color[0];
+				vOut++;
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v1.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[1].x;
+				vOut->v = uvCoord[1].y;
+				vOut->p = mode;
+				vOut->color = color[1];
+				vOut++;
+				vOut->pos.x = v1.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[2].x;
+				vOut->v = uvCoord[2].y;
+				vOut->p = mode;
+				vOut->color = color[2];
+				vOut++;
+				vOut->pos.x = v2.x;
+				vOut->pos.y = v2.y;
+				vOut->pos.z = z;
+				vOut->u = uvCoord[3].x;
+				vOut->v = uvCoord[3].y;
+				vOut->p = mode;
+				vOut->color = color[3];
+			}
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Vector2f(&uvCoord)[4], float z, const Color &color, float mode) {
+				vOut->pos = Math::Vector3f(position[0], z).Transform(m);
+				vOut->u = uvCoord[0].x;
+				vOut->v = uvCoord[0].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], z).Transform(m);
+				vOut->u = uvCoord[1].x;
+				vOut->v = uvCoord[1].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], z).Transform(m);
+				vOut->u = uvCoord[2].x;
+				vOut->v = uvCoord[2].y;
+				vOut->p = mode;
+				vOut->color = color;
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], z).Transform(m);
+				vOut->u = uvCoord[3].x;
+				vOut->v = uvCoord[3].y;
+				vOut->p = mode;
+				vOut->color = color;
+			}
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode) {
+				vOut->pos = Math::Vector3f(position[0], z).Transform(m);
+				vOut->u = uvCoord[0].x;
+				vOut->v = uvCoord[0].y;
+				vOut->p = mode;
+				vOut->color = color[0];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[1], z).Transform(m);
+				vOut->u = uvCoord[1].x;
+				vOut->v = uvCoord[1].y;
+				vOut->p = mode;
+				vOut->color = color[1];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[2], z).Transform(m);
+				vOut->u = uvCoord[2].x;
+				vOut->v = uvCoord[2].y;
+				vOut->p = mode;
+				vOut->color = color[2];
+				vOut++;
+				vOut->pos = Math::Vector3f(position[3], z).Transform(m);
+				vOut->u = uvCoord[3].x;
+				vOut->v = uvCoord[3].y;
+				vOut->p = mode;
+				vOut->color = color[3];
+			}
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode) {
 				vOut->pos = position[0].Transform(m);
 				vOut->u = uvCoord[0].x;
 				vOut->v = uvCoord[0].y;
@@ -275,7 +587,7 @@ namespace Xe {
 				vOut->p = mode;
 				vOut->color = color;
 			}
-			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector2f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
+			void DrawSurface(Vertex *vOut, const Matrix4 &m, const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
 				vOut->pos = position[0].Transform(m);
 				vOut->u = uvCoord[0].x;
 				vOut->v = uvCoord[0].y;

@@ -38,9 +38,9 @@ namespace Xe {
 			{
 			static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
 			{
-				{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float) * 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
-				{ "TEXTURE", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 2,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
-				{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(float) * 5, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXTURE", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 3,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(float) * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			};
 			HRESULT hr = context->p_d3dDevice->CreateInputLayout(vertexDesc, 3, d3d11vsDefault, sizeof(d3d11vsDefault), &m_pInputLayout);
 			if (FAILED(hr)) {
@@ -183,6 +183,24 @@ namespace Xe {
 		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], const Color(&color)[4]) {
 			Common::DrawRectangle(Get(), GetMatrix(), position, color);
 		}
+		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color &color) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color(&color)[4]) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color &color) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color(&color)[4]) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector3f(&position)[4], const Color &color) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
+		}
+		void CContextD3D11::CDrawing::DrawRectangle(const Math::Vector3f(&position)[4], const Color(&color)[4]) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
+		}
 		void CContextD3D11::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode) {
 			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
@@ -193,6 +211,24 @@ namespace Xe {
 			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
 		void CContextD3D11::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
+		}
+		void CContextD3D11::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextD3D11::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextD3D11::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextD3D11::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextD3D11::CDrawing::DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
+		}
+		void CContextD3D11::CDrawing::DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
 			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
 

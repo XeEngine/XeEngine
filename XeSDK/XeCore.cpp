@@ -8,7 +8,7 @@
 #define VERSION_BUILD 4
 #define ENGINE_NAME _T("XeEngine")
 #define ENGINE_DEVELOPER _T("Luciano Ciccariello (Xeeynamo)")
-#define ENGINE_VERSION _T("0.6.5")
+#define ENGINE_VERSION _T("0.6.6")
 
 namespace Xe {
 	namespace Core {
@@ -27,7 +27,7 @@ namespace Xe {
 				ENGINE_DEVELOPER,
 				ENGINE_VERSION,
 				DATETIME_YYYYMMDD,
-				0, 6, 5
+				0, 6, 6
 			};
 			properties = ENGINE;
 		}

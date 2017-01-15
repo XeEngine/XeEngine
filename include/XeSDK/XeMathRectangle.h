@@ -85,15 +85,15 @@ namespace Xe {
 			static Rectangle FromSize(const Vector2<T>& pos, const Vector2<T>& size) {
 				return Rectangle(pos.x, pos.y, pos.x + size.x, pos.y + size.y);
 			}
-			Point2<T> AsPosition() const {
-				return Point2<T>(left, top);
+			Vector2<T> AsPosition() const {
+				return Vector2<T>(left, top);
 			}
-			Point2<T> AsSize() const {
-				return Point2<T>(GetWidth(), GetHeight());
+			Vector2<T> AsSize() const {
+				return Vector2<T>(GetWidth(), GetHeight());
 			}
 
 			//! \brief Check if the specified point is contained by the rectangle
-			bool Contains(const Point2<T>& point) const {
+			bool Contains(const Vector2<T>& point) const {
 				return Contains(point.x, point.y);
 			}
 			//! \brief Check if the specified point is contained by the rectangle
@@ -102,22 +102,22 @@ namespace Xe {
 					y >= top && y <= bottom;
 			}
 			//! \brief Normalize the specified point
-			Point2<float> Normalize(const Point2<T>& point) const {
+			Vector2<float> Normalize(const Vector2<T>& point) const {
 				return Normalize(point.x, point.y);
 			}
 			//! \brief Normalize the specified point
-			Point2<double> Normalize(const Point2<double>& point) const {
+			Vector2<double> Normalize(const Vector2<double>& point) const {
 				return Normalize(point.x, point.y);
 			}
 			//! \brief Normalize the specified point
-			Point2<float> Normalize(T x, T y) const {
-				return Point2<float>(
+			Vector2<float> Normalize(T x, T y) const {
+				return Vector2<float>(
 					NormalizeUnsecure((float)x, (float)left, (float)right),
 					NormalizeUnsecure((float)y, (float)top, (float)bottom));
 			}
 			//! \brief Normalize the specified point
-			Point2<double> Normalize(double x, double y) const {
-				return Point2<double>(
+			Vector2<double> Normalize(double x, double y) const {
+				return Vector2<double>(
 					NormalizeUnsecure(x, (double)left, (double)right),
 					NormalizeUnsecure(y, (double)top, (double)bottom));
 			}

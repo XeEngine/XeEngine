@@ -12,7 +12,13 @@ namespace Xe {
 			Vector4() : x(0), y(0), z(0), w(0) {}
 			Vector4(T v) : x(v), y(v), z(v), w(v) {}
 			Vector4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
-			Vector4(const Vector4& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
+			Vector4(const Vector2<T>& v, T z, T w) : x(v.x), y(v.y), z(z), w(w) {}
+			Vector4(float x, const Vector2<T>& v, T w) : x(x), y(v.x), z(v.y), w(w) {}
+			Vector4(float x, float y, const Vector2<T>& v) : x(x), y(y), z(v.x), w(v.y) {}
+			Vector4(const Vector2<T>& v1, const Vector2<T>& v2) : x(v1.x), y(v1.y), z(v2.x), w(v2.y) {}
+			Vector4(const Vector3<T>& v, float w) : x(v.x), y(v.y), z(v.z), w(w) {}
+			Vector4(float x, const Vector3<T>& v) : x(x), y(v.x), z(v.y), w(v.z) {}
+			Vector4(const Vector4<T>& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
 
 			Vector4& operator = (const Vector4& v) {
 				x = v.x;
@@ -138,6 +144,8 @@ namespace Xe {
 			}
 		};
 
+		typedef Vector4<int> Vector4i;
+		typedef Vector4<uint> Vector4u;
 		typedef Vector4<float> Vector4f;
 		typedef Vector4<double> Vector4d;
 	}

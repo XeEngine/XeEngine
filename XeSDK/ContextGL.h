@@ -24,10 +24,22 @@ namespace Xe {
 				void DrawRectangle(const Math::Vector2f(&position)[2], const Color(&color)[4]);
 				void DrawRectangle(const Math::Vector2f(&position)[4], const Color &color);
 				void DrawRectangle(const Math::Vector2f(&position)[4], const Color(&color)[4]);
+				void DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color &color);
+				void DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color(&color)[4]);
+				void DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color &color);
+				void DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color(&color)[4]);
+				void DrawRectangle(const Math::Vector3f(&position)[4], const Color &color);
+				void DrawRectangle(const Math::Vector3f(&position)[4], const Color(&color)[4]);
 				void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
 				void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 				void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
 				void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
+				void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode);
+				void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode);
+				void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode);
+				void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode);
+				void DrawSurface(const Math::Vector3f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
+				void DrawSurface(const Math::Vector3f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 			private:
 				static const svar MaximumQuadsCount = CContextGLCommon::MaximumQuadsCount;
 				static const char VertexShader[];

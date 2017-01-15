@@ -119,9 +119,9 @@ namespace Xe {
 				glUniform1i(m_AttribTex0, 0);
 				glUniform1i(m_AttribTex1, 1);
 				// Draw data
-				glVertexAttribPointer(m_AttribPos, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
-				glVertexAttribPointer(m_AttribTex, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)8);
-				glVertexAttribPointer(m_AttribCol, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)20);
+				glVertexAttribPointer(m_AttribPos, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
+				glVertexAttribPointer(m_AttribTex, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)12);
+				glVertexAttribPointer(m_AttribCol, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)24);
 
 				glEnableVertexAttribArray(m_AttribPos);
 				glEnableVertexAttribArray(m_AttribTex);
@@ -135,28 +135,64 @@ namespace Xe {
 			m_curQuadsCount = 0;
 		}
 		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[2], const Color &color) {
-			Common::DrawRectangle((Common::Vertex*)Get(), GetMatrix(), position, color);
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
 		}
 		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[2], const Color(&color)[4]) {
-			Common::DrawRectangle((Common::Vertex*)Get(), GetMatrix(), position, color);
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
 		}
 		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], const Color &color) {
-			Common::DrawRectangle((Common::Vertex*)Get(), GetMatrix(), position, color);
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
 		}
 		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], const Color(&color)[4]) {
-			Common::DrawRectangle((Common::Vertex*)Get(), GetMatrix(), position, color);
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
+		}
+		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color &color) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color(&color)[4]) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color &color) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextGL::CDrawing::DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color(&color)[4]) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, z, color);
+		}
+		void CContextGL::CDrawing::DrawRectangle(const Math::Vector3f(&position)[4], const Color &color) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
+		}
+		void CContextGL::CDrawing::DrawRectangle(const Math::Vector3f(&position)[4], const Color(&color)[4]) {
+			Common::DrawRectangle(Get(), GetMatrix(), position, color);
 		}
 		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode) {
-			Common::DrawSurface((Common::Vertex*)Get(), GetMatrix(), position, uvCoord, color, mode);
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
 		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
-			Common::DrawSurface((Common::Vertex*)Get(), GetMatrix(), position, uvCoord, color, mode);
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
 		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode) {
-			Common::DrawSurface((Common::Vertex*)Get(), GetMatrix(), position, uvCoord, color, mode);
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
 		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
-			Common::DrawSurface((Common::Vertex*)Get(), GetMatrix(), position, uvCoord, color, mode);
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
+		}
+		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextGL::CDrawing::DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, z, color, mode);
+		}
+		void CContextGL::CDrawing::DrawSurface(const Math::Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
+		}
+		void CContextGL::CDrawing::DrawSurface(const Math::Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode) {
+			Common::DrawSurface(Get(), GetMatrix(), position, uvCoord, color, mode);
 		}
 
 	}

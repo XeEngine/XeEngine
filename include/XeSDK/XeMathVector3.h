@@ -1,6 +1,5 @@
 #pragma once
-#include <XeSDK/XeMath.h>
-#include <XeSDK/XeMathMatrix.h>
+#include <XeSDK/XeMathVector2.h>
 
 namespace Xe {
 	namespace Math {
@@ -12,7 +11,9 @@ namespace Xe {
 			Vector3() : x(0), y(0), z(0) {}
 			Vector3(T v) : x(v), y(v), z(v) {}
 			Vector3(T x, T y, T z) : x(x), y(y), z(z) {}
-			Vector3(const Vector3& v) : x(v.x), y(v.y), z(v.z) {}
+			Vector3(const Vector2<T>& v, float z) : x(v.x), y(v.y), z(z) {}
+			Vector3(float x, const Vector2<T>& v) : x(x), y(v.x), z(v.y) {}
+			Vector3(const Vector3<T>& v) : x(v.x), y(v.y), z(v.z) {}
 
 			Vector3& operator = (const Vector3& v) {
 				x = v.x;
@@ -109,6 +110,8 @@ namespace Xe {
 			}
 		};
 
+		typedef Vector3<int> Vector3i;
+		typedef Vector3<uint> Vector3u;
 		typedef Vector3<float> Vector3f;
 		typedef Vector3<double> Vector3d;
 	}

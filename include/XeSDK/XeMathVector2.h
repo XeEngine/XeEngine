@@ -101,9 +101,13 @@ namespace Xe {
 		};
 
 #define Point2 Vector2
+		typedef Vector2<int> Vector2i;
+		typedef Vector2<uint> Vector2u;
 		typedef Vector2<float> Vector2f;
 		typedef Vector2<double> Vector2d;
-		typedef Point2<float> Point2f;
-		typedef Point2<double> Point2d;
+		typedef Vector2<int> Point2i;
+		typedef Vector2<uint> Point2u;
+		typedef Vector2<float> Point2f;
+		typedef Vector2<double> Point2d;
 	}
 }
