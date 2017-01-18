@@ -39,9 +39,17 @@ namespace Xe {
 			case Color::Format_BGRA8888:
 				d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 				break;
+			case Color::Format_BGRX8888:
+				d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+				break;
 			case Color::Format_RGBA8888:
 				d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 				break;
+			case Color::Format_RGBX8888:
+				d3dFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+				break;
+			default:
+				return false;
 			}
 
 			D3D11_SUBRESOURCE_DATA resData;
