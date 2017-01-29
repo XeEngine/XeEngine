@@ -143,7 +143,7 @@ namespace Xe {
 				else {
 					if (m_Surface[index]) m_Surface[index]->Release();
 					m_Surface[index] = nullptr;
-					m_d3dContext->PSSetShaderResources((UINT)index, 1, NULL);
+					m_d3dContext->PSSetShaderResources((UINT)index, 0, NULL);
 				}
 			}
 		}
