@@ -60,6 +60,32 @@ namespace Xe {
 				bottom -= rect.bottom;
 				return *this;
 			}
+			Rectangle operator + (const Vector2<T>& pos) const {
+				return Rectangle(left + pos.x,
+					top + pos.y,
+					right + pos.x,
+					bottom + pos.y);
+			}
+			Rectangle operator - (const Vector2<T>& pos) const {
+				return Rectangle(left - pos.x,
+					top - pos.y,
+					right - pos.x,
+					bottom - pos.y);
+			}
+			const Rectangle& operator += (const Vector2<T>& pos) {
+				left += pos.x;
+				top += pos.y;
+				right += pos.x;
+				bottom += pos.y;
+				return *this;
+			}
+			const Rectangle& operator -= (const Vector2<T>& pos) {
+				left -= pos.x;
+				top -= pos.y;
+				right -= pos.x;
+				bottom -= pos.y;
+				return *this;
+			}
 
 			T GetSourceX() const {
 				return left;

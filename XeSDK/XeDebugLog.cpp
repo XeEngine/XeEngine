@@ -6,6 +6,10 @@
 #include <cstdarg>
 #include <wchar.h>
 
+#if _MSC_VER < 1900
+#define snprintf _snprintf
+#endif
+
 void __stdcall xe_debug_logout(Xe::Debug::Log::Priority priority, ctstring text);
 Xe::Debug::Log::PFNLOGOUT xe_debug_pfnlogout = xe_debug_logout;
 Xe::Debug::Log::Priority xe_debug_priority = Xe::Debug::Log::Priority_Diagnostics;

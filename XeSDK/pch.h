@@ -22,7 +22,6 @@
 #endif
 #if !(defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE))
 // Stuff that does not belong to Windows 6.3 or previous kernels
-#include <DXGI1_4.h>
 #endif
 
 #elif defined(PLATFORM_UNIX) || defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)
