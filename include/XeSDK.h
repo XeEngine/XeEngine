@@ -41,3 +41,4 @@
 #include <XeSDK/XeGameComponentTexture2d.h>
 #include <XeSDK/XeGameComponentSprite.h>
 #include <XeSDK/XeGameTiled.h>
+#include <XeSDK/INetSocket.h>

@@ -21,6 +21,7 @@
 
 #define LM_GENERAL				0x00
 #define LM_SYSTEM				0x01
+#define LM_NET					0x08
 #define LM_DEVICE				0x10
 #define LM_DEVICE_WINDOW		0x11
 #define LM_DEVICE_VIDEO			0x12

@@ -347,6 +347,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeIOGamepad.h">
       <Filter>IO\Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\INetSocket.h">
+      <Filter>Net\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)adler32.c">
@@ -676,6 +679,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Windows.cpp">
       <Filter>IO\Private</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeNetSocket.cpp">
+      <Filter>Net\private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -824,6 +830,15 @@
     </Filter>
     <Filter Include="Core\private">
       <UniqueIdentifier>{df2523b7-a74a-4d7c-915b-1878e679400c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{ce142852-056f-4265-8e94-7fc944795396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\public">
+      <UniqueIdentifier>{4e2657da-0a12-48c4-91f2-bdc439a527f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\private">
+      <UniqueIdentifier>{fa05bf39-8d6a-44ce-9449-b23079088edd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
