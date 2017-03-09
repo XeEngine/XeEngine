@@ -48,6 +48,16 @@ namespace Xe
 		{
 			return x <= y ? x : y;
 		}
+		template <class T>
+		T Min(T x, T y, T z)
+		{
+			return Min<T>(Min<T>(x, y), z);
+		}
+		template <class T>
+		T Min(T x, T y, T z, T w)
+		{
+			return Min<T>(Min<T>(x, y), Min<T>(z, w));
+		}
 
 		//! \brief maximum value
 		//! \param[in] x value to process
@@ -62,6 +72,16 @@ namespace Xe
 		T Max(T x, T y)
 		{
 			return x >= y ? x : y;
+		}
+		template <class T>
+		T Max(T x, T y, T z)
+		{
+			return Max<T>(Max<T>(x, y), z);
+		}
+		template <class T>
+		T Max(T x, T y, T z, T w)
+		{
+			return Max<T>(Max<T>(x, y), Max<T>(z, w));
 		}
 
 		//! \brief combine minimum and maximum to block a value between the specified range

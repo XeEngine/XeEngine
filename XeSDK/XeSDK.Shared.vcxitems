@@ -93,6 +93,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeTimer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextD3D11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL_Common.h" />
@@ -387,6 +388,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)zutil.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderCompileAs>CompileAsC</PrecompiledHeaderCompileAs>

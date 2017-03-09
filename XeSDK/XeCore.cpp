@@ -27,7 +27,7 @@ namespace Xe {
 				ENGINE_DEVELOPER,
 				ENGINE_VERSION,
 				DATETIME_YYYYMMDD,
-				0, 6, 6
+				0, 7, 0
 			};
 			properties = ENGINE;
 		}

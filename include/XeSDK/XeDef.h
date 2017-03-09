@@ -14,6 +14,8 @@
 #pragma GCC diagnostic ignored "-Wunused-value"
 #endif
 
+#include <XeSDK/XeValue.h>
+
 // Types
 typedef signed char	        sbyte;
 typedef signed char         s8;
