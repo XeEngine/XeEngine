@@ -4,7 +4,7 @@ namespace Xe {
 	template <class T>
 	struct Value {
 		Value<T>() : m_value(0) {}
-		Value<T>(const T& value) : m_value(value) {}
+		Value<T>(const T& value) : m_value(value) { }
 		operator T() const { return m_value; }
 		Value<T> operator + (const T& value) const { return Value<T>(m_value + value); }
 		Value<T> operator - (const T& value) const { return Value<T>(m_value - value); }
@@ -43,8 +43,6 @@ namespace Xe {
 		Value<T>& operator <<= (const T& value) { m_value <<= value; return *this; }
 		bool TestBit(T bit) { return !!(m_value & (1 << bit)); }
 		bool EqualBits(T bits) { return (m_value & bits) == bits; }
-	protected:
-		T m_value;
 	};
 
 	struct Int8 : public ValueInteger<signed char> {
@@ -67,6 +65,7 @@ namespace Xe {
 		static const Int16 MaxValue;
 		Int16();
 		Int16(signed short value);
+		Int16 SwapEndian() const;
 	};
 	struct UInt16 : public ValueInteger<unsigned short> {
 		static const UInt16 DefaultValue;
@@ -74,6 +73,7 @@ namespace Xe {
 		static const UInt16 MaxValue;
 		UInt16();
 		UInt16(unsigned short value);
+		UInt16 SwapEndian() const;
 	};
 	struct Int32 : public ValueInteger<signed int> {
 		static const Int32 DefaultValue;
@@ -81,6 +81,7 @@ namespace Xe {
 		static const Int32 MaxValue;
 		Int32();
 		Int32(signed int value);
+		Int32 SwapEndian() const;
 	};
 	struct UInt32 : public ValueInteger<unsigned int> {
 		static const UInt32 DefaultValue;
@@ -88,6 +89,7 @@ namespace Xe {
 		static const UInt32 MaxValue;
 		UInt32();
 		UInt32(unsigned int value);
+		UInt32 SwapEndian() const;
 	};
 	struct Int64 : public ValueInteger<signed long long> {
 		static const Int64 DefaultValue;
@@ -95,6 +97,7 @@ namespace Xe {
 		static const Int64 MaxValue;
 		Int64();
 		Int64(signed long long value);
+		Int64 SwapEndian() const;
 	};
 	struct UInt64 : public ValueInteger<unsigned long long> {
 		static const UInt64 DefaultValue;
@@ -102,6 +105,7 @@ namespace Xe {
 		static const UInt64 MaxValue;
 		UInt64();
 		UInt64(unsigned long long value);
+		UInt64 SwapEndian() const;
 	};
 	struct Float : public Value<float> {
 		static const Float DefaultValue;

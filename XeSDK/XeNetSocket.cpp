@@ -6,7 +6,7 @@ namespace Xe {
 		EndPoint::EndPoint(u16 port)
 		{
 			m_SockAddr.m_SockAddrIn.AddressFamily = InterNetwork;
-			m_SockAddr.m_SockAddrIn.Port = port;
+			m_SockAddr.m_SockAddrIn.Port = Int16(port).SwapEndian();
 			m_SockAddr.dData[1] = 0;
 			m_SockAddr.dData[2] = 0;
 			m_SockAddr.qData[1] = 0;
@@ -15,7 +15,7 @@ namespace Xe {
 		EndPoint::EndPoint(const IPv4& ip, u16 port)
 		{
 			m_SockAddr.m_SockAddrIn.AddressFamily = InterNetwork;
-			m_SockAddr.m_SockAddrIn.Port = port;
+			m_SockAddr.m_SockAddrIn.Port = Int16(port).SwapEndian();
 			m_SockAddr.m_SockAddrIn.Address = ip;
 			m_SockAddr.qData[1] = 0;
 			m_Length = 16;

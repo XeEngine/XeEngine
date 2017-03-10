@@ -20,36 +20,82 @@ namespace Xe {
 	const Int16 Int16::MaxValue = 0x7FFF;
 	Int16::Int16() : Int16(DefaultValue) {}
 	Int16::Int16(signed short value) : ValueInteger(value) {}
+	Int16 Int16::SwapEndian() const {
+		return Int16(
+			((m_value & 0xFF) << 8) |
+			((m_value >> 8) & 0xFF));
+	}
 
 	const UInt16 UInt16::DefaultValue = 0U;
 	const UInt16 UInt16::MinValue = 0x0000U;
 	const UInt16 UInt16::MaxValue = 0xFFFFU;
 	UInt16::UInt16() : UInt16(DefaultValue) {}
 	UInt16::UInt16(unsigned short value) : ValueInteger(value) {}
+	UInt16 UInt16::SwapEndian() const {
+		return UInt16(
+			((m_value & 0xFF) << 8) |
+			((m_value >> 8) & 0xFF));
+	}
 
 	const Int32 Int32::DefaultValue = 0;
 	const Int32 Int32::MinValue = 0x80000000;
 	const Int32 Int32::MaxValue = 0x7FFFFFFF;
 	Int32::Int32() : Int32(DefaultValue) {}
 	Int32::Int32(signed int value) : ValueInteger(value) {}
+	Int32 Int32::SwapEndian() const {
+		return Int32(
+			(((m_value >> 0) & 0xFF) << 24) |
+			(((m_value >> 8) & 0xFF) << 16) |
+			(((m_value >> 16) & 0xFF) << 8) |
+			(((m_value >> 24) & 0xFF) << 0));
+	}
 
 	const UInt32 UInt32::DefaultValue = 0U;
 	const UInt32 UInt32::MinValue = 0x00000000U;
 	const UInt32 UInt32::MaxValue = 0xFFFFFFFFU;
 	UInt32::UInt32() : UInt32(DefaultValue) {}
 	UInt32::UInt32(unsigned int value) : ValueInteger(value) {}
+	UInt32 UInt32::SwapEndian() const {
+		return UInt32(
+			(((m_value >> 0) & 0xFF) << 24) |
+			(((m_value >> 8) & 0xFF) << 16) |
+			(((m_value >> 16) & 0xFF) << 8) |
+			(((m_value >> 24) & 0xFF) << 0));
+	}
 
 	const Int64 Int64::DefaultValue = 0;
 	const Int64 Int64::MinValue = 0x8000000000000000LL;
 	const Int64 Int64::MaxValue = 0x7FFFFFFFFFFFFFFFLL;
 	Int64::Int64() : Int64(DefaultValue) {}
 	Int64::Int64(signed long long value) : ValueInteger(value) {}
+	Int64 Int64::SwapEndian() const {
+		return UInt32(
+			(((m_value >> 0) & 0xFF) << 56) |
+			(((m_value >> 8) & 0xFF) << 48) |
+			(((m_value >> 16) & 0xFF) << 40) |
+			(((m_value >> 24) & 0xFF) << 32) |
+			(((m_value >> 32) & 0xFF) << 24) |
+			(((m_value >> 40) & 0xFF) << 16) |
+			(((m_value >> 48) & 0xFF) << 8) |
+			(((m_value >> 56) & 0xFF) << 0));
+	}
 
 	const UInt64 UInt64::DefaultValue = 0;
 	const UInt64 UInt64::MinValue = 0x0000000000000000LL;
 	const UInt64 UInt64::MaxValue = 0xFFFFFFFFFFFFFFFFLL;
 	UInt64::UInt64() : UInt64(DefaultValue) {}
 	UInt64::UInt64(unsigned long long value) : ValueInteger(value) {}
+	UInt64 UInt64::SwapEndian() const {
+		return UInt64(
+			(((m_value >> 0) & 0xFF) << 56) |
+			(((m_value >> 8) & 0xFF) << 48) |
+			(((m_value >> 16) & 0xFF) << 40) |
+			(((m_value >> 24) & 0xFF) << 32) |
+			(((m_value >> 32) & 0xFF) << 24) |
+			(((m_value >> 40) & 0xFF) << 16) |
+			(((m_value >> 48) & 0xFF) << 8) |
+			(((m_value >> 56) & 0xFF) << 0));
+	}
 
 	const Float Float::DefaultValue = 0.0f;
 	const Float Float::MinValue = *(float*)&UInt32(0xFF7FFFFFU);
