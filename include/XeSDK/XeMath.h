@@ -31,7 +31,7 @@ namespace Xe
 		template <class T>
 		T Abs(T x)
 		{
-			return x < 0 ? -x : x;
+			return x < T() ? -x : x;
 		}
 
 		//! \brief minimum value

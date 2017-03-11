@@ -350,7 +350,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\INetSocket.h">
       <Filter>Net\public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeValue.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)adler32.c">
@@ -683,7 +685,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeNetSocket.cpp">
       <Filter>Net\private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
