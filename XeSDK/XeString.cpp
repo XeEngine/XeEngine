@@ -44,16 +44,17 @@ bool Xe::String::Query(IObject **obj, UID id)
 	return false;
 }
 
-Xe::String::String()
-{
-	m_capacity = CAPACITY_MULTIPLIER;
-	m_str = (tchar*)Memory::Alloc(CAPACITY_MULTIPLIER * sizeof(tchar));
-	m_str[0] = '\0';
-	m_length = 0;
+Xe::String::String() : String(CAPACITY_MULTIPLIER) {}
+Xe::String::String(const String& string) {
+	m_capacity = string.m_capacity;
+	m_length = string.GetLength();
+	m_str = (tchar*)Memory::Alloc(m_capacity * sizeof(tchar));
+	Memory::Copy(m_str, string.m_str, m_length * sizeof(tchar));
+	m_str[m_length] = '\0';
 }
 Xe::String::String(svar capacity)
 {
-	m_capacity = Math::Align(capacity + 1, CAPACITY_MULTIPLIER);
+	m_capacity = Math::Align(capacity, CAPACITY_MULTIPLIER);
 	m_str = (tchar*)Memory::Alloc(m_capacity * sizeof(tchar));
 	m_str[0] = '\0';
 	m_length = 0;
@@ -82,6 +83,8 @@ Xe::String::String(const wchar_t* string, svar length)
 #ifdef PLATFORM_UNICODE
 	Memory::Copy(m_str, string, length * sizeof(tchar));
 #else
+	// TODO: Replace with a UTF16 to UTF8 converter.
+	// Note that UTF8 will need unarbitrary capacity for UTF16 convertion.
 	for (svar i = 0; i < length; i++)
 	{
 		if (string[i] >= 0x80)
@@ -93,15 +96,24 @@ Xe::String::String(const wchar_t* string, svar length)
 	m_str[length] = 0;
 	m_length = GetLength(m_str);
 }
-Xe::String::String(const String& string, svar length)
+Xe::String::String(const String& string, svar index, svar length)
 {
-	if (length < 0)
-		length = string.GetLength();
-	m_capacity = Math::Align(length + 1, CAPACITY_MULTIPLIER);
-	m_str = (tchar*)Memory::Alloc(m_capacity * sizeof(tchar));
-	Memory::Copy(m_str, string.GetData(), length * sizeof(tchar));
-	m_str[length] = '\0';
-	m_length = length;
+	if (length <= 0 || index >= string.GetLength()) {
+		m_capacity = CAPACITY_MULTIPLIER;
+		m_length = 0;
+		m_str = (tchar*)Memory::Alloc(m_capacity * sizeof(tchar));
+		m_str[0] = '\0';
+	}
+	else {
+		if (index + length > string.GetLength())
+			m_length = string.GetLength() - index;
+		else
+			m_length = length;
+		m_capacity = Math::Align(m_length + 1, CAPACITY_MULTIPLIER);
+		m_str = (tchar*)Memory::Alloc(m_capacity * sizeof(tchar));
+		Memory::Copy(m_str, string.GetData() + index, m_length);
+		m_str[m_length] = '\0';
+	}
 }
 Xe::String::~String()
 {
@@ -117,6 +129,12 @@ ctstring Xe::String::GetData() const
 	return m_str;
 }
 
+Xe::String Xe::String::GetLower() const {
+	return String(*this).ToLower();
+}
+Xe::String Xe::String::GetUpper() const {
+	return String(*this).ToUpper();
+}
 const Xe::String& Xe::String::ToLower()
 {
 	tchar* strEnd = m_str + GetLength();
@@ -139,10 +157,7 @@ void Xe::String::SetCapacity(svar capacity)
 	if (capacity > m_capacity)
 	{
 		m_capacity = Math::Align(capacity, CAPACITY_MULTIPLIER);
-		tchar* str = (tchar*)Memory::Alloc(m_capacity * sizeof(tchar));
-		Memory::Copy(str, m_str, m_length * sizeof(tchar));
-		Memory::Free(m_str);
-		m_str = str;
+		m_str = (tchar*)Memory::Resize(m_str, m_capacity * sizeof(tchar));
 	}
 }
 void Xe::String::SetCapacityZero(svar capacity)
@@ -152,7 +167,6 @@ void Xe::String::SetCapacityZero(svar capacity)
 		Memory::Free(m_str);
 		m_capacity = Math::Align(capacity, CAPACITY_MULTIPLIER);
 		m_str = (tchar*)Memory::Alloc(capacity * sizeof(tchar));
-
 	}
 }
 
@@ -275,12 +289,14 @@ Xe::String::operator ctstring() const
 }
 tchar& Xe::String::operator [](svar index)
 {
-	tchar* str = (tchar*)GetData();
-	if (index < 0 || index >= GetLength())
-		index = GetLength();
-	return str[index];
+	return m_str[index];
 }
-const Xe::String& Xe::String::operator = (ctstring str)
+const Xe::String& Xe::String::operator = (const char* str)
+{
+	Copy(str);
+	return *this;
+}
+const Xe::String& Xe::String::operator = (const wchar_t* str)
 {
 	Copy(str);
 	return *this;
@@ -338,7 +354,15 @@ bool Xe::String::operator <= (const String& str) const
 {
 	return Compare(str) <= 0;
 }
-Xe::String Xe::String::operator + (ctstring str) const
+Xe::String Xe::String::operator + (const char* str) const
+{
+	svar strLen = String::GetLength(str);
+	String s(this->GetLength() + strLen);
+	s.Append(GetData(), 0, GetLength());
+	s.Append(str, 0, strLen);
+	return s;
+}
+Xe::String Xe::String::operator + (const wchar_t* str) const
 {
 	svar strLen = String::GetLength(str);
 	String s(this->GetLength() + strLen);
@@ -353,7 +377,12 @@ Xe::String Xe::String::operator + (const String& str) const
 	s.Append(str.GetData(), 0, str.GetLength());
 	return s;
 }
-const Xe::String& Xe::String::operator += (ctstring src)
+const Xe::String& Xe::String::operator += (const char* src)
+{
+	Append(src, 0);
+	return *this;
+}
+const Xe::String& Xe::String::operator += (const wchar_t* src)
 {
 	Append(src, 0);
 	return *this;

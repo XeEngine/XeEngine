@@ -13,7 +13,7 @@ namespace Xe {
 		Value<T> operator ++(int) { return Value<T>(m_value++); }
 		Value<T> operator --(int) { return Value<T>(m_value--); }
 		Value<T> operator + (const T& value) const { return Value<T>(m_value + value); }
-		Value<T> operator - (const T& value) const { return Value<T>(m_value -  value); }
+		//Value<T> operator - (const T& value) const { return Value<T>(m_value - value); }
 		Value<T> operator * (const T& value) const { return Value<T>(m_value * value); }
 		Value<T> operator / (const T& value) const { return Value<T>(m_value / value); }
 		Value<T>& operator = (const T& value) { m_value = value; return *this; }

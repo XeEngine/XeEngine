@@ -29,6 +29,10 @@ namespace Xe
 		//! \brief create an empty string
 		String();
 
+		//! \brief create a string from another string
+		//! \param[in] string to copy
+		String(const String& string);
+
 		//! \brief create an empty string with a specified initial capacity
 		//! \param[in] capacity of string
 		/** \details this constructor helps when an user knows about the
@@ -50,19 +54,10 @@ namespace Xe
 
 		//! \brief create a string from another string
 		//! \param[in] string to copy
-		//! \param[in] length of the input string; if < 0, the string terminator will be checked.
-		String(const String& string, svar length = -1);
+		String(const String& string, svar index, svar length);
 
 		//! \brief deallocate the string
 		~String();
-
-		//! \brief convert uppercase letters to lowercase
-		//! \return this
-		const String& ToLower();
-
-		//! \brief convert lowercase letters to uppercase
-		//! \return this
-		const String& ToUpper();
 
 		//! \brief get length of the string
 		//! \return number of character minus '\0'
@@ -71,6 +66,22 @@ namespace Xe
 		//! \brief get character's array pointer
 		//! \return pointer
 		ctstring GetData() const;
+
+		//! \brief get the string as lowercase
+		//! \return this
+		String GetLower() const;
+
+		//! \brief get the string as uppercase
+		//! \return this
+		String GetUpper() const;
+
+		//! \brief convert uppercase letters to lowercase
+		//! \return this
+		const String& ToLower();
+
+		//! \brief convert lowercase letters to uppercase
+		//! \return this
+		const String& ToUpper();
 
 		//! \brief compare the current string with another one
 		//! \param[in] str the string that will be compared
@@ -134,7 +145,11 @@ namespace Xe
 
 		//! \brief assign a string
 		//! \details same as Copy(str)
-		const String& operator = (ctstring str);
+		const String& operator = (const char* str);
+
+		//! \brief assign a string
+		//! \details same as Copy(str)
+		const String& operator = (const wchar_t* str);
 
 		//! \brief assign a string
 		//! \details same as Copy(str)
@@ -190,7 +205,11 @@ namespace Xe
 
 		//! \brief concatenate the current string with a second one
 		//! \details same as Append(str, 0, -1)
-		String operator + (ctstring str) const;
+		String operator + (const char* str) const;
+
+		//! \brief concatenate the current string with a second one
+		//! \details same as Append(str, 0, -1)
+		String operator + (const wchar_t* str) const;
 
 		//! \brief concatenate the current string with a second one
 		//! \details same as Append(str, 0, -1)
@@ -198,7 +217,11 @@ namespace Xe
 
 		//! \brief concatenate the current string with a second one
 		//! \details same as Append(str, 0, -1)
-		const String& operator += (ctstring str);
+		const String& operator += (const char* str);
+
+		//! \brief concatenate the current string with a second one
+		//! \details same as Append(str, 0, -1)
+		const String& operator += (const wchar_t* str);
 
 		//! \brief concatenate the current string with a second one
 		//! \details same as Append(str, 0, -1)
