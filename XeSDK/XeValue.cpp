@@ -138,4 +138,7 @@ namespace Xe {
 	Double Double::Floor() const { return Math::Floor(m_value); }
 	Double Double::Ceiling() const { return Math::Ceiling(m_value); }
 	Double Double::Round() const { return Math::Ceiling(m_value); }
+
+	const Bool Bool::False;
+	const Bool Bool::True;
 }

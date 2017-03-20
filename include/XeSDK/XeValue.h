@@ -12,10 +12,10 @@ namespace Xe {
 		Value<T>& operator --() { m_value--; return *this; }
 		Value<T> operator ++(int) { return Value<T>(m_value++); }
 		Value<T> operator --(int) { return Value<T>(m_value--); }
-		Value<T> operator + (const T& value) const { return Value<T>(m_value + value); }
+		//Value<T> operator + (const T& value) const { return Value<T>(m_value + value); }
 		//Value<T> operator - (const T& value) const { return Value<T>(m_value - value); }
-		Value<T> operator * (const T& value) const { return Value<T>(m_value * value); }
-		Value<T> operator / (const T& value) const { return Value<T>(m_value / value); }
+		//Value<T> operator * (const T& value) const { return Value<T>(m_value * value); }
+		//Value<T> operator / (const T& value) const { return Value<T>(m_value / value); }
 		Value<T>& operator = (const T& value) { m_value = value; return *this; }
 		Value<T>& operator += (const T& value) { m_value += value; return *this; }
 		Value<T>& operator -= (const T& value) { m_value -= value; return *this; }
@@ -34,18 +34,18 @@ namespace Xe {
 	struct ValueInteger : Value<T> {
 		ValueInteger<T>() : Value(0) {}
 		ValueInteger<T>(const T& value) : Value(value) {}
-		ValueInteger<T> operator % (const T& value) const { return ValueInteger<T>(m_value % value); }
-		ValueInteger<T> operator & (const T& value) const { return ValueInteger<T>(m_value ^ value); }
-		ValueInteger<T> operator | (const T& value) const { return ValueInteger<T>(m_value | value); }
-		ValueInteger<T> operator ^ (const T& value) const { return ValueInteger<T>(m_value ^ value); }
-		ValueInteger<T> operator >> (const T& value) const { return ValueInteger<T>(m_value >> value); }
-		ValueInteger<T> operator << (const T& value) const { return ValueInteger<T>(m_value << value); }
+		//ValueInteger<T> operator % (const T& value) const { return ValueInteger<T>(m_value % value); }
+		//ValueInteger<T> operator & (const T& value) const { return ValueInteger<T>(m_value & value); }
+		//ValueInteger<T> operator | (const T& value) const { return ValueInteger<T>(m_value | value); }
+		//ValueInteger<T> operator ^ (const T& value) const { return ValueInteger<T>(m_value ^ value); }
+		//ValueInteger<T> operator >> (const T& value) const { return ValueInteger<T>(m_value >> value); }
+		//ValueInteger<T> operator << (const T& value) const { return ValueInteger<T>(m_value << value); }
 		ValueInteger<T> operator ~() const { return ValueInteger<T>(~m_value); }
 		ValueInteger<T> operator !() const { return ValueInteger<T>(!m_value); }
 		ValueInteger<T> operator &&(ValueInteger<T> value) const { return ValueInteger<T>(m_value && value); }
 		ValueInteger<T> operator ||(ValueInteger<T> value) const { return ValueInteger<T>(m_value || value); }
 		ValueInteger<T>& operator %= (const T& value) { m_value %= value; return *this; }
-		ValueInteger<T>& operator &= (const T& value) { m_value ^= value; return *this; }
+		ValueInteger<T>& operator &= (const T& value) { m_value &= value; return *this; }
 		ValueInteger<T>& operator |= (const T& value) { m_value |= value; return *this; }
 		ValueInteger<T>& operator ^= (const T& value) { m_value ^= value; return *this; }
 		ValueInteger<T>& operator >>= (const T& value) { m_value >>= value; return *this; }
@@ -167,5 +167,31 @@ namespace Xe {
 		Double Floor() const;
 		Double Ceiling() const;
 		Double Round() const;
+	};
+
+	struct Bool {
+		static const Bool False;
+		static const Bool True;
+
+		Bool() : m_value(0) {}
+		Bool(bool value) : m_value(!!value) { }
+		operator bool() const { return m_value; }
+		Bool& operator = (bool value) { m_value = value; return *this; }
+		bool operator == (bool value) const { return m_value == value; }
+		bool operator != (bool value) const { return m_value != value; }
+		bool operator > (bool value) const { return m_value > value; }
+		bool operator >= (bool value) const { return m_value >= value; }
+		bool operator < (bool value) const { return m_value < value; }
+		bool operator <= (bool value) const { return m_value <= value; }
+		Bool operator !() const { return Bool(!m_value); }
+		Bool operator &&(bool value) const { return Bool(m_value && value); }
+		Bool operator ||(bool value) const { return Bool(m_value || value); }
+		Bool& operator &= (bool value) { m_value &= value; return *this; }
+		Bool& operator |= (bool value) { m_value |= value; return *this; }
+		Bool& operator ^= (bool value) { m_value ^= value; return *this; }
+		Bool IsFalse() const { return !m_value; }
+		Bool IsTrue() const { return m_value; }
+	private:
+		bool m_value;
 	};
 }
