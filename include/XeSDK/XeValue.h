@@ -23,7 +23,7 @@ namespace Xe {
 		Value<T>& operator /= (const T& value) { m_value /= value; return *this; }
 		bool operator == (const T& value) const { return m_value == value; }
 		bool operator != (const T& value) const { return m_value != value; }
-		bool operator > (const T& value) const { return m_value > value; }
+		//bool operator > (const T& value) const { return m_value > value; }
 		bool operator >= (const T& value) const { return m_value >= value; }
 		bool operator < (const T& value) const { return m_value < value; }
 		bool operator <= (const T& value) const { return m_value <= value; }
