@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <XeSDK/XeValue.h>
 #include <XeSDK/XeMath.h>
+#include "..\include\XeSDK\XeValue.h"
 
 namespace Xe {
 	const Int8 Int8::DefaultValue = 0;
@@ -9,6 +10,7 @@ namespace Xe {
 	Int8::Int8() : Int8(DefaultValue) {}
 	Int8::Int8(signed char value) : ValueInteger(value) {}
 	Int8 Int8::Abs() const { return m_value < 0 ? -m_value : m_value; }
+	Int8 Int8::Sign() const { return m_value < 0 ? -1 : +1; }
 
 	const UInt8 UInt8::DefaultValue = 0U;
 	const UInt8 UInt8::MinValue = (unsigned char)0x00U;
@@ -16,6 +18,7 @@ namespace Xe {
 	UInt8::UInt8() : UInt8(DefaultValue) {}
 	UInt8::UInt8(unsigned char value) : ValueInteger(value) {}
 	UInt8 UInt8::Abs() const { return m_value; }
+	UInt8 UInt8::Sign() const { return +1; }
 
 	const Int16 Int16::DefaultValue = 0;
 	const Int16 Int16::MinValue = (signed short)0x8000;
@@ -23,6 +26,7 @@ namespace Xe {
 	Int16::Int16() : Int16(DefaultValue) {}
 	Int16::Int16(signed short value) : ValueInteger(value) {}
 	Int16 Int16::Abs() const { return m_value < 0 ? -m_value : m_value; }
+	Int16 Int16::Sign() const { return m_value < 0 ? -1 : +1; }
 	Int16 Int16::SwapEndian() const { return (signed short)Math::Swap16(m_value); }
 
 	const UInt16 UInt16::DefaultValue = 0U;
@@ -31,6 +35,7 @@ namespace Xe {
 	UInt16::UInt16() : UInt16(DefaultValue) {}
 	UInt16::UInt16(unsigned short value) : ValueInteger(value) {}
 	UInt16 UInt16::Abs() const { return m_value; }
+	UInt16 UInt16::Sign() const { return +1; }
 	UInt16 UInt16::SwapEndian() const { return Math::Swap16(m_value); }
 
 	const Int32 Int32::DefaultValue = 0;
@@ -39,6 +44,7 @@ namespace Xe {
 	Int32::Int32() : Int32(DefaultValue) {}
 	Int32::Int32(signed int value) : ValueInteger(value) {}
 	Int32 Int32::Abs() const { return m_value < 0 ? -m_value : m_value; }
+	Int32 Int32::Sign() const { return m_value < 0 ? -1 : +1; }
 	Int32 Int32::SwapEndian() const { return (signed int)Math::Swap32(m_value); }
 
 	const UInt32 UInt32::DefaultValue = 0U;
@@ -47,6 +53,7 @@ namespace Xe {
 	UInt32::UInt32() : UInt32(DefaultValue) {}
 	UInt32::UInt32(unsigned int value) : ValueInteger(value) {}
 	UInt32 UInt32::Abs() const { return m_value; }
+	UInt32 UInt32::Sign() const { return +1; }
 	UInt32 UInt32::SwapEndian() const { return Math::Swap32(m_value); }
 
 	const Int64 Int64::DefaultValue = 0;
@@ -55,6 +62,7 @@ namespace Xe {
 	Int64::Int64() : Int64(DefaultValue) {}
 	Int64::Int64(signed long long value) : ValueInteger(value) {}
 	Int64 Int64::Abs() const { return m_value < 0 ? -m_value : m_value; }
+	Int64 Int64::Sign() const { return m_value < 0 ? -1LL : +1LL; }
 	Int64 Int64::SwapEndian() const { return (signed long long)Math::Swap64(m_value); }
 
 	const UInt64 UInt64::DefaultValue = 0;
@@ -63,6 +71,7 @@ namespace Xe {
 	UInt64::UInt64() : UInt64(DefaultValue) {}
 	UInt64::UInt64(unsigned long long value) : ValueInteger(value) {}
 	UInt64 UInt64::Abs() const { return m_value; }
+	UInt64 UInt64::Sign() const { return +1ULL; }
 	UInt64 UInt64::SwapEndian() const { return Math::Swap64(m_value); }
 
 	const Float Float::DefaultValue = 0.0f;
@@ -98,6 +107,7 @@ namespace Xe {
 			Math::Max<float>(1.0f, Abs(), value.Abs());
 	}
 	Float Float::Abs() const { return m_value < 0 ? -m_value : m_value; }
+	Float Float::Sign() const { return m_value < 0 ? -1.0f : +1.0f; }
 	Float Float::Floor() const { return Math::Floor(m_value); }
 	Float Float::Ceiling() const { return Math::Ceiling(m_value); }
 	Float Float::Round() const { return Math::Ceiling(m_value); }
@@ -135,6 +145,7 @@ namespace Xe {
 			Math::Max<Double>(1.0, Abs(), value.Abs());
 	}
 	Double Double::Abs() const { return m_value < 0 ? -m_value : m_value; }
+	Double Double::Sign() const { return m_value < 0.0 ? -1.0 : +1.0; }
 	Double Double::Floor() const { return Math::Floor(m_value); }
 	Double Double::Ceiling() const { return Math::Ceiling(m_value); }
 	Double Double::Round() const { return Math::Ceiling(m_value); }

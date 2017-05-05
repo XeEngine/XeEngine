@@ -40,68 +40,6 @@ typedef signed int			svar;
 typedef unsigned int		uvar;
 #endif
 
-// Minimum and maximum of types
-#ifdef INT8_MIN
-#undef INT8_MIN
-#endif
-#define INT8_MIN            -128
-
-#ifdef INT8_MAX
-#undef INT8_MAX
-#endif
-#define INT8_MAX            127
-
-#ifdef UINT8_MAX
-#undef UINT8_MAX
-#endif
-#define UINT8_MAX           0xFFU
-
-#ifdef INT16_MIN
-#undef INT16_MIN
-#endif
-#define INT16_MIN           -32768
-
-#ifdef INT16_MAX
-#undef INT16_MAX
-#endif
-#define INT16_MAX           32767
-
-#ifdef UINT16_MAX
-#undef UINT16_MAX
-#endif
-#define UINT16_MAX          0xFFFFU
-
-#ifdef INT32_MIN
-#undef INT32_MIN
-#endif
-#define INT32_MIN           -2147483648
-
-#ifdef INT32_MAX
-#undef INT32_MAX
-#endif
-#define INT32_MAX           2147483647
-
-#ifdef UINT32_MAX
-#undef UINT32_MAX
-#endif
-#define UINT32_MAX          0xFFFFFFFFU
-
-#ifdef INT64_MIN
-#undef INT64_MIN
-#endif
-#define INT64_MIN           -9223372036854775808LL
-
-#ifdef INT64_MAX
-#undef INT64_MAX
-#endif
-#define INT64_MAX           9223372036854775807LL
-
-#ifdef UINT64_MAX
-#undef UINT64_MAX
-#endif
-#define UINT64_MAX          0xFFFFFFFFFFFFFFFFULL
-
-
 // Compiler compatibility
 #ifdef _MSC_VER
 // This prevent MSC warnings / errors

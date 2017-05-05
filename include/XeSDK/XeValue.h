@@ -12,10 +12,6 @@ namespace Xe {
 		Value<T>& operator --() { m_value--; return *this; }
 		Value<T> operator ++(int) { return Value<T>(m_value++); }
 		Value<T> operator --(int) { return Value<T>(m_value--); }
-		//Value<T> operator + (const T& value) const { return Value<T>(m_value + value); }
-		//Value<T> operator - (const T& value) const { return Value<T>(m_value - value); }
-		//Value<T> operator * (const T& value) const { return Value<T>(m_value * value); }
-		//Value<T> operator / (const T& value) const { return Value<T>(m_value / value); }
 		Value<T>& operator = (const T& value) { m_value = value; return *this; }
 		Value<T>& operator += (const T& value) { m_value += value; return *this; }
 		Value<T>& operator -= (const T& value) { m_value -= value; return *this; }
@@ -23,10 +19,8 @@ namespace Xe {
 		Value<T>& operator /= (const T& value) { m_value /= value; return *this; }
 		bool operator == (const T& value) const { return m_value == value; }
 		bool operator != (const T& value) const { return m_value != value; }
-		//bool operator > (const T& value) const { return m_value > value; }
 		bool operator >= (const T& value) const { return m_value >= value; }
 		bool operator < (const T& value) const { return m_value < value; }
-		bool operator <= (const T& value) const { return m_value <= value; }
 	protected:
 		T m_value;
 	};
@@ -50,8 +44,10 @@ namespace Xe {
 		ValueInteger<T>& operator ^= (const T& value) { m_value ^= value; return *this; }
 		ValueInteger<T>& operator >>= (const T& value) { m_value >>= value; return *this; }
 		ValueInteger<T>& operator <<= (const T& value) { m_value <<= value; return *this; }
-		bool TestBit(T bit) { return !!(m_value & (1 << bit)); }
-		bool EqualBits(T bits) { return (m_value & bits) == bits; }
+		bool TestBit(T bit) const { return !!(m_value & (1 << bit)); }
+		void ResetBit(T bit) { m_value &= ~(1 << bit); }
+		void SetBit(T bit) { m_value |= 1 << bit; }
+		bool EqualBits(T bits) const { return (m_value & bits) == bits; }
 	};
 
 	struct Int8 : public ValueInteger<signed char> {
@@ -61,6 +57,7 @@ namespace Xe {
 		Int8();
 		Int8(signed char value);
 		Int8 Abs() const;
+		Int8 Sign() const;
 	};
 	struct UInt8 : public ValueInteger<unsigned char> {
 		static const UInt8 DefaultValue;
@@ -69,6 +66,7 @@ namespace Xe {
 		UInt8();
 		UInt8(unsigned char value);
 		UInt8 Abs() const;
+		UInt8 Sign() const;
 	};
 	struct Int16 : public ValueInteger<signed short> {
 		static const Int16 DefaultValue;
@@ -77,6 +75,7 @@ namespace Xe {
 		Int16();
 		Int16(signed short value);
 		Int16 Abs() const;
+		Int16 Sign() const;
 		Int16 SwapEndian() const;
 	};
 	struct UInt16 : public ValueInteger<unsigned short> {
@@ -86,6 +85,7 @@ namespace Xe {
 		UInt16();
 		UInt16(unsigned short value);
 		UInt16 Abs() const;
+		UInt16 Sign() const;
 		UInt16 SwapEndian() const;
 	};
 	struct Int32 : public ValueInteger<signed int> {
@@ -95,6 +95,7 @@ namespace Xe {
 		Int32();
 		Int32(signed int value);
 		Int32 Abs() const;
+		Int32 Sign() const;
 		Int32 SwapEndian() const;
 	};
 	struct UInt32 : public ValueInteger<unsigned int> {
@@ -104,6 +105,7 @@ namespace Xe {
 		UInt32();
 		UInt32(unsigned int value);
 		UInt32 Abs() const;
+		UInt32 Sign() const;
 		UInt32 SwapEndian() const;
 	};
 	struct Int64 : public ValueInteger<signed long long> {
@@ -112,8 +114,9 @@ namespace Xe {
 		static const Int64 MaxValue;
 		Int64();
 		Int64(signed long long value);
-		Int64 SwapEndian() const;
 		Int64 Abs() const;
+		Int64 Sign() const;
+		Int64 SwapEndian() const;
 	};
 	struct UInt64 : public ValueInteger<unsigned long long> {
 		static const UInt64 DefaultValue;
@@ -121,8 +124,9 @@ namespace Xe {
 		static const UInt64 MaxValue;
 		UInt64();
 		UInt64(unsigned long long value);
-		UInt64 SwapEndian() const;
 		UInt64 Abs() const;
+		UInt64 Sign() const;
+		UInt64 SwapEndian() const;
 	};
 	struct Float : public Value<float> {
 		static const Float DefaultValue;
@@ -142,6 +146,7 @@ namespace Xe {
 		bool IsNaN() const;
 		bool IsEqual(Float value, Float epsilon) const;
 		Float Abs() const;
+		Float Sign() const;
 		Float Floor() const;
 		Float Ceiling() const;
 		Float Round() const;
@@ -164,6 +169,7 @@ namespace Xe {
 		bool IsNaN() const;
 		bool IsEqual(Double value, Double epsilon) const;
 		Double Abs() const;
+		Double Sign() const;
 		Double Floor() const;
 		Double Ceiling() const;
 		Double Round() const;
