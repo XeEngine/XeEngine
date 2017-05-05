@@ -18,11 +18,13 @@ namespace Xe {
 			svar BufferIndex;
 			svar BufferLen[BUFFERSCOUNT];
 			float *BufferData[BUFFERSCOUNT];
+			bool IsRunning;
 
 			CCallback() :
 				Playable(nullptr),
 				BuffersUsed(0),
-				BufferIndex(0)
+				BufferIndex(0),
+				IsRunning(false)
 			{
 				Memory::Fill(BufferLen, 0, sizeof(BufferLen));
 				Memory::Fill(BufferData, 0, sizeof(BufferData));
@@ -41,6 +43,7 @@ namespace Xe {
 		public:
 			IAudioBuffer *m_soundBuffer;
 			IAudioSource *m_audioSource;
+			CCallback *m_callback;
 
 			bool Query(IObject **obj, UID id) {
 				switch (id) {
@@ -79,21 +82,26 @@ namespace Xe {
 				m_playState = State_End;
 			}
 
-			CPlayable(IAudioBuffer *soundBuffer, IAudioSource *audioSource) :
+			CPlayable(IAudioBuffer *soundBuffer, IAudioSource *audioSource, CCallback* callback) :
 				m_soundBuffer(soundBuffer),
-				m_audioSource(audioSource) {
+				m_audioSource(audioSource),
+				m_callback(callback) {
 				m_soundBuffer->AddRef();
 				m_audioSource->AddRef();
 			}
 			~CPlayable() {
+				Stop();
+				while (m_callback->IsRunning);
 				m_audioSource->Release();
 				m_soundBuffer->Release();
+				delete m_callback;
 			}
 		};
 		void CCallback::SetPlayable(CPlayable *playable) {
 			Playable = playable;
 		}
 		void CCallback::OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired) {
+			IsRunning = true;
 			if (BuffersUsed < BUFFERSCOUNT) {
 				if (BufferLen[BufferIndex] < bytesRequired) {
 					BufferLen[BufferIndex] = bytesRequired * Playable->m_audioSource->GetFormat().SampleLength;
@@ -109,6 +117,7 @@ namespace Xe {
 				else
 					Playable->End();
 			}
+			IsRunning = false;
 		}
 		void CCallback::OnBufferProcessed() {
 			BuffersUsed--;
@@ -116,9 +125,16 @@ namespace Xe {
 		bool CreatePlayable(IPlayable **pPlayable, IAudio *audio, IAudioSource *src) {
 			IAudioBuffer *dst;
 			CCallback *callback = new CCallback;
-			audio->CreateBuffer(&dst, src->GetFormat(), callback);
-			*pPlayable = new CPlayable(dst, src);
-			callback->SetPlayable((CPlayable*)*pPlayable);
+			if (audio->CreateBuffer(&dst, src->GetFormat(), callback)) {
+				*pPlayable = new CPlayable(dst, src, callback);
+				callback->SetPlayable((CPlayable*)*pPlayable);
+				return true;
+			}
+			else {
+				audio->Release();
+				delete callback;
+				return false;
+			}
 			return true;
 		}
 	}
