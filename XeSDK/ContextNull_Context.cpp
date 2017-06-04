@@ -26,7 +26,6 @@ namespace Xe {
 		}
 		CContextNull::CContextNull() :
 			m_Drawing(nullptr),
-			m_Tilemap(nullptr),
 			m_Size(800, 480),
 			m_ClearColor(Color::Black),
 			m_ClearDepth(0.0f),
@@ -38,22 +37,19 @@ namespace Xe {
 			for (svar i = 0; i < lengthof(m_Surface); i++)
 				if (m_Surface[i]) m_Surface[i]->Release();
 			if (m_DepthStencilState) m_DepthStencilState->Release();
-			if (m_Tilemap) m_Tilemap->Release();
 			if (m_Drawing) m_Drawing->Release();
 		}
 
 		bool CContextNull::Initialize(const ContextProperties& properties) {
 			m_Drawing = new CDrawing(this);
-			m_Tilemap = new CTilemap2d(this);
 			return true;
 		}
 		void CContextNull::GetDrawing(IDrawing2d** drawing) {
 			m_Drawing->AddRef();
 			*drawing = m_Drawing;
 		}
-		void CContextNull::GetTilemap(Tilemap2d** tilemap) {
-			m_Tilemap->AddRef();
-			*tilemap = m_Tilemap;
+		void CContextNull::CreateTilemap(ITilemap** tilemap) {
+			*tilemap = new CTilemap(this);
 		}
 
 		const Color &CContextNull::GetClearColor() const {

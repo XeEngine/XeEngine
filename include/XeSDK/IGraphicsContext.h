@@ -5,6 +5,7 @@
 
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
+#include <XeSDK/IGraphicsTilemap.h>
 
 namespace Xe {
 	namespace Graphics {
@@ -82,7 +83,6 @@ namespace Xe {
 		};
 
 		class IDrawing2d;
-		class Tilemap2d;
 		class IContext : public IObject {
 		public:
 			static const UID ID = 0x7c368cde9f314894ULL;
@@ -94,7 +94,7 @@ namespace Xe {
 			};
 
 			virtual void GetDrawing(IDrawing2d **ppDrawing) = 0;
-			virtual void GetTilemap(Tilemap2d **ppTilemap) = 0;
+			virtual void CreateTilemap(ITilemap **ppTilemap) = 0;
 
 			///////////////////////////////////////////////////////////////////
 			// States

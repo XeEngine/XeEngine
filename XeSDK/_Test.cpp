@@ -85,7 +85,7 @@ namespace Xe {
 
 		// Set Tilemap2d attributes
 		Xe::Graphics::Tilemap2d *pTilemap;
-		m_pContext->GetTilemap(&pTilemap);
+		m_pContext->CreateTilemap(&pTilemap);
 		pTilemap->SelectSurface(m_pSurface);
 		pTilemap->SetViewSize(Math::Vector2f(480.0f, 270.0f));
 		// Load a map from a file
@@ -147,7 +147,7 @@ namespace Xe {
 		pDrawing->Release();
 
 		Xe::Graphics::Tilemap2d *pTilemap;
-		m_pContext->GetTilemap(&pTilemap);
+		m_pContext->CreateTilemap(&pTilemap);
 		//pTilemap->Draw();
 		pTilemap->Release();
 

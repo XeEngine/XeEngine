@@ -260,9 +260,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeObjPtr.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeGraphicsTilemap2d.h">
-      <Filter>Graphics\Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\IGraphicsBuffer.h">
       <Filter>Graphics\Public</Filter>
     </ClInclude>
@@ -286,9 +283,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL_Library.h">
       <Filter>Graphics\Private\ContextOpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeGameTiled.h">
-      <Filter>Game\Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)tinyxml2.h">
       <Filter>Private\3rd libs\tinyxml</Filter>
@@ -353,6 +347,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\XeValue.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\IGraphicsTilemap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)adler32.c">
@@ -583,9 +578,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)_Test.cpp">
       <Filter>_TEST</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap2d.cpp">
-      <Filter>Graphics\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull_Drawing2d.cpp">
       <Filter>Graphics\Private\ContextNull</Filter>
     </ClCompile>
@@ -625,9 +617,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Library.cpp">
       <Filter>Graphics\Private\ContextOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTiled.cpp">
-      <Filter>Game\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)tinyxml2.cpp">
       <Filter>Private\3rd libs\tinyxml</Filter>
     </ClCompile>
@@ -644,9 +633,6 @@
       <Filter>Graphics\Private\ContextD3D11</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Drawing2d.cpp">
-      <Filter>Graphics\Private\ContextD3D11</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Tilemap2d.cpp">
       <Filter>Graphics\Private\ContextD3D11</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Nyan.cpp">
@@ -673,9 +659,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMathRandom.cpp">
       <Filter>Math\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Tilemap2d.cpp">
-      <Filter>Graphics\Private\ContextOpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsSpriteBatch.cpp">
       <Filter>Graphics\Private</Filter>
     </ClCompile>
@@ -687,6 +670,13 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp">
       <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp" />
+    <ClCompile Include="D:\Xe\XeEngine\XeSDK\ContextGL_Tilemap.cpp">
+      <Filter>Graphics\Private\ContextOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Xe\XeEngine\XeSDK\ContextD3D11_Tilemap.cpp">
+      <Filter>Graphics\Private\ContextD3D11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

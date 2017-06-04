@@ -30,7 +30,6 @@ namespace Xe {
 		CContextD3D11::CContextD3D11(Core::IView *pView) :
 			m_pView(pView),
 			m_Drawing(nullptr),
-			m_Tilemap(nullptr),
 			m_Size(800, 480),
 			m_ClearColor(Color::Black),
 			m_ClearDepth(0.0f),
@@ -59,7 +58,6 @@ namespace Xe {
 			for (svar i = 0; i < lengthof(m_Surface); i++)
 				if (m_Surface[i]) m_Surface[i]->Release();
 			if (m_DepthStencilState) m_DepthStencilState->Release();
-			if (m_Tilemap) m_Tilemap->Release();
 			if (m_Drawing) m_Drawing->Release();
 			if (m_d3dContext1) r = m_d3dContext1->Release();
 			if (p_d3dDevice1) r = p_d3dDevice1->Release();
@@ -100,11 +98,8 @@ namespace Xe {
 			m_Drawing->AddRef();
 			*drawing = m_Drawing;
 		}
-		void CContextD3D11::GetTilemap(Tilemap2d** tilemap) {
-			if (m_Tilemap == nullptr)
-				m_Tilemap = new CTilemap2d(this);
-			m_Tilemap->AddRef();
-			*tilemap = m_Tilemap;
+		void CContextD3D11::CreateTilemap(ITilemap** pTilemap) {
+			*pTilemap = new CTilemap(this);
 		}
 
 		void CContextD3D11::SetInternalResolution(const Size& size) {

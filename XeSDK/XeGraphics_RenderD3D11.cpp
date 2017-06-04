@@ -631,7 +631,7 @@ namespace Xe {
 
 			bool Initialize(const ContextProperties& properties);
 			void GetDrawing(IDrawing2d** drawing);
-			void GetTilemap(Tilemap2d **ppTilemap) {
+			void CreateTilemap(Tilemap2d **ppTilemap) {
 				*ppTilemap = nullptr;
 			}
 			void SetCallback(ICallback* callback);

@@ -4,7 +4,7 @@
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include <XeSDK/XeGraphicsTilemap2d.h>
+#include <XeSDK/IGraphicsTilemap.h>
 #include "XeGraphicsCommon.h"
 
 namespace Xe {
@@ -84,23 +84,50 @@ namespace Xe {
 				void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode);
 				void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 			};
-			class CTilemap2d : public Tilemap2d {
-				IContext *m_Context;
+			class CTilemap : public ITilemap {
+				IContext* m_pContext;
+				IDrawing2d* m_pDrawing;
+
+				Size m_TileSize;
+				Vector2f m_TileSizef;
+
+				int m_TilesPerRow;
+				Math::Rectangle<float> m_TilesetRectf;
+				Vector2f m_TilesetPos;
+				Vector2f m_TilesetSize;
+				Vector2f m_TilesetMul;
+				Vector2f m_TilesetPadding;
+
+				Rectanglef m_Camera;
+
+				Size m_MapSize;
+				int m_ParallaxSize;
+				TileData* m_Tilemap;
+				float* m_Parallax;
+
+				void SetTileset(const TilesetProperties& tileset);
+
+				const Size& GetMapSize() const;
+				void SetMapSize(const Size& size);
+
+				void Lock(TilemapData& data);
+				void Unlock();
+
+				const Rectanglef& GetCamera() const;
+				void SetCamera(const Rectanglef& camera);
+
+				void Draw(int flags);
+				void DrawStandard() const;
+				void DrawFlip() const;
+
 			public:
 				bool Query(IObject **obj, UID id);
-				CTilemap2d(IContext *context);
-				~CTilemap2d();
-
-				void SetViewSize(const Math::Vector2f& size);
-				void SetPosition(uvar layer, const Math::Vector2f& position);
-				void OnDraw();
-				void OnTilesetChanged(ISurface *pSurface);
-				void OnColorLutChanged(ISurface *pSurface);
+				CTilemap(IContext* context);
+				~CTilemap();
 			};
 
 			Core::IView* m_pView;
 			CDrawing *m_Drawing;
-			CTilemap2d *m_Tilemap;
 			Size m_Size;
 			Color m_ClearColor;
 			float m_ClearDepth;
@@ -156,7 +183,7 @@ namespace Xe {
 
 			bool Initialize(const ContextProperties& properties);
 			void GetDrawing(IDrawing2d** drawing);
-			void GetTilemap(Tilemap2d** tilemap);
+			void CreateTilemap(ITilemap** pTilemap);
 
 			const Color &GetClearColor() const;
 			void SetClearColor(const Color &color);

@@ -5,9 +5,9 @@ namespace Xe {
 	namespace Graphics {
 		///////////////////////////////////////////////////////////////////////
 		// Tilemap2d implementation
-		bool CContextNull::CTilemap2d::Query(IObject **obj, UID id) {
+		bool CContextNull::CTilemap::Query(IObject **obj, UID id) {
 			switch (id) {
-			case Tilemap2d::ID:
+			case ITilemap::ID:
 			case IObject::ID:
 				AddRef();
 				*obj = this;
@@ -16,26 +16,26 @@ namespace Xe {
 			*obj = nullptr;
 			return false;
 		}
-		CContextNull::CTilemap2d::CTilemap2d(IContext *context) :
-			Tilemap2d(context) {
+		CContextNull::CTilemap::CTilemap(IContext *pContext) :
+			m_pContext(pContext)
+		{
+			m_pContext->AddRef();
 		}
-		CContextNull::CTilemap2d::~CTilemap2d() {
+		CContextNull::CTilemap::~CTilemap() {
+			m_pContext->Release();
+		}
 
+		void CContextNull::CTilemap::SetTileset(const TilesetProperties& tileset) {}
+		const Size& CContextNull::CTilemap::GetMapSize() const { return Size(); }
+		void CContextNull::CTilemap::SetMapSize(const Size& size) {}
+		void CContextNull::CTilemap::Lock(TilemapData& data) {
+			data.Tilemap = nullptr;
+			data.Stride = 0;
+			data.Size = Size();
 		}
-		void CContextNull::CTilemap2d::SetViewSize(const Math::Vector2f& size) {
-			m_ViewSize = size;
-		}
-		void CContextNull::CTilemap2d::SetPosition(uvar layer, const Math::Vector2f& position) {
-
-		}
-		void CContextNull::CTilemap2d::OnDraw() {
-
-		}
-		void CContextNull::CTilemap2d::OnTilesetChanged(ISurface *pSurface) {
-
-		}
-		void CContextNull::CTilemap2d::OnColorLutChanged(ISurface *pSurface) {
-
-		}
+		void CContextNull::CTilemap::Unlock() {}
+		const Math::Rectanglef& CContextNull::CTilemap::GetCamera() const { return Math::Rectanglef(); }
+		void CContextNull::CTilemap::SetCamera(const Math::Rectanglef& camera) {}
+		void CContextNull::CTilemap::Draw(int flags) {}
 	}
 }

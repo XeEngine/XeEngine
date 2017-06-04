@@ -27,11 +27,9 @@ namespace Xe {
 		}
 		CContextGL::CContextGL(Core::IView *pView) :
 			CContextGLCommon(pView),
-			m_Tilemap(nullptr),
 			m_Size(800, 480) {
 		}
 		CContextGL::~CContextGL() {
-			if (m_Tilemap) m_Tilemap->Release();
 			if (m_Drawing) m_Drawing->Release();
 		}
 
@@ -47,11 +45,8 @@ namespace Xe {
 			m_Drawing->AddRef();
 			*drawing = m_Drawing;
 		}
-		void CContextGL::GetTilemap(Tilemap2d** tilemap) {
-			if (m_Tilemap == nullptr)
-				m_Tilemap = new CTilemap2d(this);
-			m_Tilemap->AddRef();
-			*tilemap = m_Tilemap;
+		void CContextGL::CreateTilemap(ITilemap** pTilemap) {
+			*pTilemap = new CTilemap(this);
 		}
 
 		void CContextGL::SetClearDepth(float depth) {

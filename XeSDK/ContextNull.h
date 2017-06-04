@@ -1,9 +1,10 @@
 #pragma once
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
+#include <XeSDK/IGraphicsTilemap.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include <XeSDK/XeGraphicsTilemap2d.h>
+#include <XeSDK/IGraphicsTilemap.h>
 
 namespace Xe {
 	namespace Graphics {
@@ -57,22 +58,28 @@ namespace Xe {
 				void DrawSurface(const Math::Vector3f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
 				void DrawSurface(const Math::Vector3f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 			};
-			class CTilemap2d : public Tilemap2d {
-				IContext *m_Context;
+			class CTilemap : public ITilemap {
+				IContext *m_pContext;
+
+				void SetTileset(const TilesetProperties& tileset);
+
+				const Size& GetMapSize() const;
+				void SetMapSize(const Size& size);
+
+				void Lock(TilemapData& data);
+				void Unlock();
+
+				const Math::Rectanglef& GetCamera() const;
+				void SetCamera(const Math::Rectanglef& camera);
+
+				void Draw(int flags);
 			public:
 				bool Query(IObject **obj, UID id);
-				CTilemap2d(IContext *context);
-				~CTilemap2d();
-
-				void SetViewSize(const Math::Vector2f& size);
-				void SetPosition(uvar layer, const Math::Vector2f& position);
-				void OnDraw();
-				void OnTilesetChanged(ISurface *pSurface);
-				void OnColorLutChanged(ISurface *pSurface);
+				CTilemap(IContext *context);
+				~CTilemap();
 			};
 
 			CDrawing *m_Drawing;
-			CTilemap2d *m_Tilemap;
 			Size m_Size;
 			Color m_ClearColor;
 			float m_ClearDepth;
@@ -87,7 +94,7 @@ namespace Xe {
 
 			bool Initialize(const ContextProperties& properties);
 			void GetDrawing(IDrawing2d** drawing);
-			void GetTilemap(Tilemap2d** tilemap);
+			void CreateTilemap(ITilemap** tilemap);
 
 			const Color &GetClearColor() const;
 			void SetClearColor(const Color &color);

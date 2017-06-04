@@ -4,7 +4,7 @@
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include <XeSDK/XeGraphicsTilemap2d.h>
+#include <XeSDK/IGraphicsTilemap.h>
 #include "XeGraphicsCommon.h"
 #include "ContextGL_Common.h"
 
@@ -60,82 +60,48 @@ namespace Xe {
 
 				inline Vertex *Get();
 			};
-			class CTilemap2d : public Tilemap2d {
-				CContextGL *m_pContextGl;
+			class CTilemap : public ITilemap {
+				IContext* m_pContext;
+				IDrawing2d* m_pDrawing;
+
+				Size m_TileSize;
+				Vector2f m_TileSizef;
+
+				int m_TilesPerRow;
+				Math::Rectangle<float> m_TilesetRectf;
+				Vector2f m_TilesetPos;
+				Vector2f m_TilesetSize;
+				Vector2f m_TilesetMul;
+				Vector2f m_TilesetPadding;
+
+				Rectanglef m_Camera;
+
+				Size m_MapSize;
+				int m_ParallaxSize;
+				TileData* m_Tilemap;
+				float* m_Parallax;
+
+				void SetTileset(const TilesetProperties& tileset);
+
+				const Size& GetMapSize() const;
+				void SetMapSize(const Size& size);
+
+				void Lock(TilemapData& data);
+				void Unlock();
+
+				const Rectanglef& GetCamera() const;
+				void SetCamera(const Rectanglef& camera);
+
+				void Draw(int flags);
+				void DrawStandard() const;
+				void DrawFlip() const;
+
 			public:
 				bool Query(IObject **obj, UID id);
-				CTilemap2d(CContextGL *context);
-				~CTilemap2d();
-
-				void SetViewSize(const Math::Vector2f& size);
-				void SetPosition(uvar layer, const Math::Vector2f& position);
-			private:
-				enum DrawType {
-					// Classic drawing defining each vertex.
-					// This should be used in GLES where gl_VertexID is not available.
-					Draw_Classic,
-					// Enhanced version with the use of gl_VertexID.
-					// Supported from OpenGL 2.0 or greater
-					Draw_VerticesIndexed,
-					// Enhanced version with the use of Texture Buffer Object.
-					// Supported from OpenGL 3.1 or greater
-					Draw_TexInstanced,
-					// Fastest version with gl_InstanceID support.
-					// Supported from OpenGL 3.3 or greater
-					Draw_VboInstanced,
-				};
-				struct VertexClassic {
-					GLfloat x, y;
-					GLfloat u, v;
-				};
-				struct VertexIndexed {
-					GLfloat index;
-				};
-
-				static const char VertexShaderClassic[];
-				static const char VertexShaderVerticesIndexed[];
-				static const char FragmentShader[];
-
-				DrawType m_DrawType;
-				GLint m_shader[2];
-				GLint m_program;
-				GLuint m_AttribTileIndex;
-				GLuint m_AttribPos;
-				GLuint m_AttribTex;
-				GLuint m_UniformPosition;
-				GLuint m_UniformCamera;
-				GLuint m_UniformTex0;
-				GLuint m_UniformTex1;
-
-				// VBO that will store all vertces to send to the GPU
-				GLuint m_VboTiles;
-				void *m_VboData;
-				uvar m_VboDataLength;
-				// Uniforms to control the size of tiles and map
-				GLuint m_UniformTileSize;
-				GLuint m_UniformTilesetSize;
-				GLuint m_UniformTilemapSize;
-
-				// Draw with Texture Buffer Object instanced
-				GLuint m_Tbo;
-				GLuint m_TboTexture;
-				GLuint m_UniformTboTilemap;
-
-				bool m_IsCameraInvalidated;
-				Math::Vector2<svar> *m_LayerTilePos;
-				Math::Matrix4 m_mCamera;
-
-				void OnDraw();
-				void OnDrawClassic();
-				void OnDrawIndexed();
-				void OnDrawTexInstanced();
-				void OnDrawVboInstanced();
-
-				void OnTilesetChanged(ISurface *pSurface);
-				void OnColorLutChanged(ISurface *pSurface);
+				CTilemap(IContext* context);
+				~CTilemap();
 			};
 
-			CTilemap2d *m_Tilemap;
 			Size m_Size;
 
 			virtual void SwapBuffersSub(VBlankSync sync) = 0;
@@ -147,7 +113,7 @@ namespace Xe {
 
 			virtual bool Initialize(const ContextProperties& properties);
 			void GetDrawing(IDrawing2d** drawing);
-			void GetTilemap(Tilemap2d** tilemap);
+			void CreateTilemap(ITilemap** pTilemap);
 
 			void SetClearDepth(float depth);
 			void SwapBuffers(VBlankSync sync);

@@ -28,7 +28,7 @@
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
-#include <XeSDK/XeGraphicsTilemap2d.h>
+#include <XeSDK/IGraphicsTilemap.h>
 #include <XeSDK/XeGraphicsImaging.h>
 #include <XeSDK/XeGraphicsImagingPng.h>
 #include <XeSDK/XeGraphicsFont.h>
@@ -40,5 +40,4 @@
 #include <XeSDK/XeGameComponentPosition2d.h>
 #include <XeSDK/XeGameComponentTexture2d.h>
 #include <XeSDK/XeGameComponentSprite.h>
-#include <XeSDK/XeGameTiled.h>
 #include <XeSDK/INetSocket.h>
