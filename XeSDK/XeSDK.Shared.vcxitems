@@ -121,6 +121,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)tinyxml2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)trees.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)winapifamily.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioDefinitions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsGl.h" />
@@ -160,6 +164,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull_Surface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull_Tilemap2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tinyxml2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioEngine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_WinRt.cpp" />

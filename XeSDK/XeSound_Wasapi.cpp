@@ -9,7 +9,7 @@ namespace Xe {
 	namespace Sound {
 		class AudioWasapi : public IAudio {
 		public:
-			class CBuffer : public IAudioBuffer {
+			class XAudioBuffer : public IAudioBuffer {
 			public:
 				bool Query(IObject **obj, UID id) {
 					switch (id) {
@@ -22,7 +22,7 @@ namespace Xe {
 					*obj = nullptr;
 					return false;
 				}
-				CBuffer(const WaveFormat &format, ICallback *pCallback) :
+				XAudioBuffer(const WaveFormat &format, ICallback *pCallback) :
 					IAudioBuffer(format, pCallback) {
 				}
 				void Submit(const float *data, svar length) {
@@ -59,7 +59,7 @@ namespace Xe {
 				return true;
 			}
 			bool CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback) {
-				*buffer = new CBuffer(format, pCallback);
+				*buffer = new XAudioBuffer(format, pCallback);
 				return true;
 			}
 		};

@@ -348,6 +348,18 @@
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\XeSDK\IGraphicsTilemap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioDefinitions.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioEngine.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioBuffer.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)adler32.c">
@@ -672,11 +684,16 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp" />
-    <ClCompile Include="D:\Xe\XeEngine\XeSDK\ContextGL_Tilemap.cpp">
-      <Filter>Graphics\Private\ContextOpenGL</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Tilemap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Tilemap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.cpp">
+      <Filter>Sound\Private\XAudio</Filter>
     </ClCompile>
-    <ClCompile Include="D:\Xe\XeEngine\XeSDK\ContextD3D11_Tilemap.cpp">
-      <Filter>Graphics\Private\ContextD3D11</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioEngine.cpp">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioBuffer.cpp">
+      <Filter>Sound\Private\XAudio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -835,6 +852,9 @@
     </Filter>
     <Filter Include="Net\private">
       <UniqueIdentifier>{fa05bf39-8d6a-44ce-9449-b23079088edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Private\XAudio">
+      <UniqueIdentifier>{be90b3ec-53d8-4f8c-a725-b3e9e34324d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
