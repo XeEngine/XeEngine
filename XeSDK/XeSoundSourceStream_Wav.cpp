@@ -154,6 +154,9 @@ namespace Xe {
 						m_pcmPosition = pStream->GetPosition();
 						m_posEnd = chunk.length / m_internalSampleBlock;
 						break;
+					default:
+						pStream->SetPosition(chunk.length, IO::Seek_Cur);
+						break;
 					}
 					header.chunkSize -= chunk.length + 8;
 				}
