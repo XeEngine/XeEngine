@@ -141,16 +141,19 @@ namespace Xe { namespace Sound {
 			LOG(Log::Priority_Warning, Log::Type_Sound, _T("Sample rate %i is invalid."), sampleRate);
 			return false;
 		}
+
 		if (m_pMasterVoice != nullptr) {
 			LOG(Log::Priority_Diagnostics, Log::Type_Sound, _T("Destroying previous voice..."));
 			m_pMasterVoice->DestroyVoice();
 		}
+
 		HRESULT hr = m_pAudio->CreateMasteringVoice(&m_pMasterVoice, XAUDIO2_DEFAULT_CHANNELS, sampleRate);
 		if (SUCCEEDED(hr)) {
 			m_sampleRate = sampleRate;
 			LOG(Log::Priority_Info, Log::Type_Sound, _T("Sample rate %i set with success."), sampleRate);
 			return true;
 		}
+
 		LogHresult(hr);
 		return false;
 	}

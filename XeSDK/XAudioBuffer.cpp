@@ -25,20 +25,26 @@ namespace Xe { namespace Sound {
 	}
 
 	XAudioBuffer::~XAudioBuffer() {
-		if (m_pSourceVoice)
+		if (m_pSourceVoice) {
+			m_pSourceVoice->FlushSourceBuffers();
 			m_pSourceVoice->DestroyVoice();
+		}
 		m_pAudio->Release();
 	}
 
 
 	bool XAudioBuffer::Initialize() {
 		const WaveFormat &format = GetFormat();
+
 		WAVEFORMATEX wf = { WAVE_FORMAT_IEEE_FLOAT, (WORD)format.NumberOfChannels, (DWORD)format.SampleRate,
-			(DWORD)(format.SampleRate * format.SampleLength), (WORD)format.SampleLength, (WORD)32, sizeof(WAVEFORMATEX) };
+			(DWORD)(format.SampleRate * format.SampleLength), (WORD)format.SampleLength, (WORD)(sizeof(float) * 8), sizeof(WAVEFORMATEX) };
+
 		HRESULT hr = m_pAudio->m_pAudio->CreateSourceVoice(&m_pSourceVoice, &wf,
 			0, XAUDIO2_DEFAULT_FREQ_RATIO, m_pCallback ? &m_voiceCallback : nullptr);
+
 		if (!SUCCEEDED(hr))
 			return false;
+
 		m_xabuffer.PlayBegin = 0;
 		m_xabuffer.PlayLength = 0;
 		return true;

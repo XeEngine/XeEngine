@@ -39,6 +39,7 @@ namespace Xe {
 			void OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired);
 			void OnBufferProcessed();
 		};
+
 		class CPlayable : public IPlayable {
 		public:
 			IAudioBuffer *m_soundBuffer;
@@ -86,9 +87,11 @@ namespace Xe {
 				m_soundBuffer(soundBuffer),
 				m_audioSource(audioSource),
 				m_callback(callback) {
+
 				m_soundBuffer->AddRef();
 				m_audioSource->AddRef();
 			}
+
 			~CPlayable() {
 				Stop();
 				while (m_callback->IsRunning);
@@ -97,9 +100,11 @@ namespace Xe {
 				delete m_callback;
 			}
 		};
+
 		void CCallback::SetPlayable(CPlayable *playable) {
 			Playable = playable;
 		}
+
 		void CCallback::OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired) {
 			IsRunning = true;
 			if (BuffersUsed < BUFFERSCOUNT) {
@@ -119,14 +124,17 @@ namespace Xe {
 			}
 			IsRunning = false;
 		}
+
 		void CCallback::OnBufferProcessed() {
 			BuffersUsed--;
 		}
+
 		bool CreatePlayable(IPlayable **pPlayable, IAudio *audio, IAudioSource *src) {
 			IAudioBuffer *dst;
 			CCallback *callback = new CCallback;
 			if (audio->CreateBuffer(&dst, src->GetFormat(), callback)) {
 				*pPlayable = new CPlayable(dst, src, callback);
+				dst->Release();
 				callback->SetPlayable((CPlayable*)*pPlayable);
 				return true;
 			}
