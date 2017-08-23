@@ -77,6 +77,11 @@ namespace Xe { namespace Sound {
 		
 		void Submit(const float *data, svar length);
 
+		float GetVolume();
+		void SetVolume(float volume);
+		void GetChannelVolumes(int channels, float* volumes);
+		void SetChannelVolumes(int channels, const float* volumes);
+
 	private:
 		XAudioEngine *m_pAudio;
 		CXAudio2VoiceCallback m_voiceCallback;

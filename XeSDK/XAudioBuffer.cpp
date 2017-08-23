@@ -64,5 +64,22 @@ namespace Xe { namespace Sound {
 		HRESULT hr = m_pSourceVoice->SubmitSourceBuffer(&m_xabuffer);
 	}
 
+	float XAudioBuffer::GetVolume() {
+		float volume;
+		m_pSourceVoice->GetVolume(&volume);
+		return volume;
+	}
+
+	void XAudioBuffer::SetVolume(float volume) {
+		m_pSourceVoice->SetVolume(volume);
+	}
+
+	void XAudioBuffer::GetChannelVolumes(int channels, float* volumes) {
+		m_pSourceVoice->GetChannelVolumes(channels, volumes);
+	}
+
+	void XAudioBuffer::SetChannelVolumes(int channels, const float* volumes) {
+		m_pSourceVoice->SetChannelVolumes(channels, volumes);
+	}
 
 } }

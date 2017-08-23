@@ -40,20 +40,30 @@ namespace Xe {
 
 			//! \brief specify wave format and callback function
 			IAudioBuffer(const WaveFormat &properties, ICallback *pCallback);
+
 			//! \brief wave format specified from the beginning
 			const WaveFormat &GetFormat() const;
+
 			//! \brief send audio data through the buffer
 			//! \param[in] data that contains the information to send
 			//! \param[in] length in bytes of data to send
 			virtual void Submit(const float *data, svar length) = 0;
+
 			//! \brief start to process the buffer
 			//! \details revert with Stop
 			//! \sa Stop
 			virtual void Play() = 0;
+
 			//! \brief stop to process the buffer
 			//! \details revert with Play
 			//! \sa Play
 			virtual void Stop() = 0;
+
+			virtual float GetVolume() = 0;
+			virtual void SetVolume(float volume) = 0;
+			virtual void GetChannelVolumes(int channels, float* volumes) = 0;
+			virtual void SetChannelVolumes(int channels, const float* volumes) = 0;
+
 		protected:
 			const WaveFormat m_format;
 			const ICallback *m_pCallback;

@@ -9,22 +9,28 @@ namespace Xe {
 			m_posCur(0),
 			m_posLoop((u64)-1)
 		{ }
+
 		const WaveFormat &IAudioSource::GetFormat() const {
 			return m_format;
 		}
+
 		SampleOffset IAudioSource::GetPositionEnd() const {
 			return m_posEnd;
 		}
+
 		SampleOffset IAudioSource::GetPositionCurrent() const {
 			return m_posCur;
 		}
+
 		void IAudioSource::SetPositionCurrent(SampleOffset position) {
 			m_posCur = position;
 			SetPositionCurrentSub(position);
 		}
+
 		SampleOffset IAudioSource::GetPositionLoop() const {
 			return m_posLoop;
 		}
+
 		void IAudioSource::SetPositionLoop(SampleOffset position) {
 			m_posLoop = position;
 		}
@@ -35,6 +41,7 @@ namespace Xe {
 			m_pEffect = effect;
 			m_pEffect->AddRef();
 		}
+
 		svar IAudioSource::Read(float *data, svar offset, svar bytescount) {
 			SampleOffset samplesRequired = bytescount / m_format.SampleLength;
 			SampleOffset len = 0;

@@ -20,6 +20,10 @@ namespace Xe {
 			virtual void Play() = 0;
 			virtual void Pause() = 0;
 			virtual void Stop() = 0;
+			virtual float GetVolume() = 0;
+			virtual void SetVolume(float volume) = 0;
+			virtual void GetChannelVolumes(int channels, float* volumes) = 0;
+			virtual void SetChannelVolumes(int channels, const float* volumes) = 0;
 
 		protected:
 			PlayState m_playState;

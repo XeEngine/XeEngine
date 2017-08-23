@@ -9,7 +9,7 @@ namespace Xe {
 	namespace Sound {
 		class AudioWasapi : public IAudio {
 		public:
-			class XAudioBuffer : public IAudioBuffer {
+			class WasapiBuffer : public IAudioBuffer {
 			public:
 				bool Query(IObject **obj, UID id) {
 					switch (id) {
@@ -22,7 +22,7 @@ namespace Xe {
 					*obj = nullptr;
 					return false;
 				}
-				XAudioBuffer(const WaveFormat &format, ICallback *pCallback) :
+				WasapiBuffer(const WaveFormat &format, ICallback *pCallback) :
 					IAudioBuffer(format, pCallback) {
 				}
 				void Submit(const float *data, svar length) {
@@ -33,6 +33,19 @@ namespace Xe {
 				}
 				void Stop() {
 
+				}
+
+				float GetVolume() {
+					return 1.0f;
+				}
+
+				void SetVolume(float volume) {
+				}
+
+				void GetChannelVolumes(int channels, float* volumes) {
+				}
+
+				void SetChannelVolumes(int channels, const float* volumes) {
 				}
 			};
 
@@ -59,7 +72,7 @@ namespace Xe {
 				return true;
 			}
 			bool CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback) {
-				*buffer = new XAudioBuffer(format, pCallback);
+				*buffer = new WasapiBuffer(format, pCallback);
 				return true;
 			}
 		};

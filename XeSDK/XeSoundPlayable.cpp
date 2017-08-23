@@ -83,6 +83,22 @@ namespace Xe {
 				m_playState = State_End;
 			}
 
+			float GetVolume() {
+				return m_soundBuffer->GetVolume();
+			}
+
+			void SetVolume(float volume) {
+				m_soundBuffer->SetVolume(volume);
+			}
+
+			void GetChannelVolumes(int channels, float* volumes) {
+				m_soundBuffer->GetChannelVolumes(channels, volumes);
+			}
+
+			void SetChannelVolumes(int channels, const float* volumes) {
+				m_soundBuffer->SetChannelVolumes(channels, volumes);
+			}
+
 			CPlayable(IAudioBuffer *soundBuffer, IAudioSource *audioSource, CCallback* callback) :
 				m_soundBuffer(soundBuffer),
 				m_audioSource(audioSource),
