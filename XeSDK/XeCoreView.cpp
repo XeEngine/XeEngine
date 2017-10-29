@@ -15,6 +15,9 @@ namespace Xe {
 		bool IView::SetSize(const Graphics::Size& size) {
 			return m_FrameView->SetSize(size);
 		}
+		void IView::SetFullScreen(bool fullScreen) {
+			return m_FrameView->SetFullScreen(fullScreen);
+		}
 		Xe::Graphics::Orientation IView::GetOrientation() const {
 			return m_FrameView->GetOrientation();
 		}

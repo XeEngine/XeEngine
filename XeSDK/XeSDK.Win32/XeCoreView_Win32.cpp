@@ -147,6 +147,37 @@ namespace Xe {
 				}
 				return false;
 			}
+
+			void SetFullScreen(bool fullScreen) {
+				if (fullScreen)
+				{
+					GetWindowPlacement(m_hWnd, &m_OriginalWindowPlacement);
+					if (m_style == 0)
+						m_style = GetWindowLong(m_hWnd, GWL_STYLE);
+					if (m_styleEx == 0)
+						m_styleEx = GetWindowLong(m_hWnd, GWL_EXSTYLE);
+
+					LONG style = m_style;
+					style &= ~WS_BORDER;
+					style &= ~WS_DLGFRAME;
+					style &= ~WS_THICKFRAME;
+
+					LONG styleEx = m_styleEx;
+					styleEx &= ~WS_EX_WINDOWEDGE;
+
+					SetWindowLong(m_hWnd, GWL_STYLE, style | WS_POPUP);
+					SetWindowLong(m_hWnd, GWL_EXSTYLE, styleEx | WS_EX_TOPMOST);
+					ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
+				}
+				else
+				{
+					SetWindowLong(m_hWnd, GWL_STYLE, m_style);
+					SetWindowLong(m_hWnd, GWL_EXSTYLE, m_styleEx);
+					ShowWindow(m_hWnd, SW_SHOWNORMAL);
+					SetWindowPlacement(m_hWnd, &m_OriginalWindowPlacement);
+				}
+			}
+
 			Graphics::Orientation GetOrientation() const {
 				return Graphics::Orientation_Unknown;
 			}
@@ -260,6 +291,7 @@ namespace Xe {
 			HINSTANCE m_hInstance;
 			DWORD m_style;
 			DWORD m_styleEx;
+			WINDOWPLACEMENT m_OriginalWindowPlacement;
 			HWND m_hWnd;
 			bool m_isClosed;
 			bool m_isFullscreenSwitchEnabled;

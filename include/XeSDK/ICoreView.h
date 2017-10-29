@@ -96,6 +96,7 @@ namespace Xe {
 			virtual void SetTitle(const String& title) = 0;
 			virtual Graphics::Size GetSize() const = 0;
 			virtual bool SetSize(const Graphics::Size& size) = 0;
+			virtual void SetFullScreen(bool fullScreen) = 0;
 			virtual Xe::Graphics::Orientation GetOrientation() const = 0;
 			virtual void SetPreferredOrientation(Xe::Graphics::Orientation orientation) = 0;
 			virtual float GetScale() const = 0;
@@ -150,6 +151,10 @@ namespace Xe {
 			//! \brief Specify a new size, when possible.
 			//! \return false if param is invalid or device does not support it.
 			bool SetSize(const Graphics::Size& size);
+
+			//! \brief Enable the fullscreen mode, if supported.
+			//! \param[in] fullScreen set or reset the fullscreen.
+			void SetFullScreen(bool fullScreen);
 
 			//! \brief Get current orientation of device.
 			Xe::Graphics::Orientation GetOrientation() const;
