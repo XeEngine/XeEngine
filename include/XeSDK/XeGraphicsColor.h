@@ -30,6 +30,7 @@ namespace Xe {
 			};
 			static svar GetBitsPerPixel(Format format);
 			static bool IsIndexed(Format format);
+			static Color FromRgba(u8 r, u8 g, u8 b, u8 a = 0xFF);
 
 			union {
 				struct {

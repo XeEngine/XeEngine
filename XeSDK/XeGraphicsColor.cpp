@@ -66,6 +66,13 @@ namespace Xe {
 			return ISINDEXED[format];
 		}
 
+		Color Color::FromRgba(u8 r, u8 g, u8 b, u8 a) {
+			return Color(r / (float)COLOR_FLOAT8,
+				g / (float)COLOR_FLOAT8,
+				b / (float)COLOR_FLOAT8,
+				a / (float)COLOR_FLOAT8);
+		}
+
 		Color::Color() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 		Color::Color(float r, float g, float b) :
 			r(r), g(g), b(b), a(1.0f) {}
