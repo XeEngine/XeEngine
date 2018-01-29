@@ -100,7 +100,7 @@ namespace Xe {
 			return m_pVertex;
 		}
 		void CContextGL::CDrawing::Flush() {
-			if (m_curQuadsCount < 0)
+			if (m_curQuadsCount <= 0)
 				return;
 
 			// Set attributes
