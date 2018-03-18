@@ -108,6 +108,10 @@ namespace Xe {
 					((x * matrix._12) + (y * matrix._22) + (z * matrix._32)) + matrix._42,
 					((x * matrix._13) + (y * matrix._23) + (z * matrix._33)) + matrix._43);
 			}
+
+			Vector2<T> ToVector2() const {
+				return Vector2<T>(x, y);
+			}
 		};
 
 		typedef Vector3<int> Vector3i;
