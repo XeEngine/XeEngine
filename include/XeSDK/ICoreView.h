@@ -5,14 +5,14 @@
 namespace Xe {
 	namespace IO {
 		//! \brief Unique identifier for a keyboard button.
-		typedef u32 ScanCode;
+		typedef u32 ScanKey;
 		//! \brief Translation from a scancode through globalization keyboard.
 		typedef u32 VirtualKey;
 
 		//! \brief Describe the event for a keyboard button.
 		struct KeyboardEvent {
 			//! \brief The physical ID of the key.
-			ScanCode ScanCode;
+			ScanKey ScanCode;
 			//! \brief Translated physical key as keyboard language describes.
 			VirtualKey VirtualCode;
 		};
@@ -20,7 +20,7 @@ namespace Xe {
 		//! \brief Describe the event for a character.
 		struct CharacterEvent {
 			//! \brief The physical ID of the key.
-			ScanCode ScanCode;
+			ScanKey ScanCode;
 			//! \brief Character processed
 			u32 Character;
 		};
@@ -100,6 +100,7 @@ namespace Xe {
 			virtual Xe::Graphics::Orientation GetOrientation() const = 0;
 			virtual void SetPreferredOrientation(Xe::Graphics::Orientation orientation) = 0;
 			virtual float GetScale() const = 0;
+			virtual void* GetSystemWindow() const = 0;
 		};
 
 		//! \brief Offers a space for drawing and event handling.
@@ -164,6 +165,9 @@ namespace Xe {
 
 			//! \brief Get a scale value to adapt output to physical device size.
 			float GetScale() const;
+
+			//! \brief Get a pointer of window system's object.
+			void* GetSystemWindow() const;
 
 			//! \brief This is called before any other event.
 			//! \return false if initialization was unsuccessful.

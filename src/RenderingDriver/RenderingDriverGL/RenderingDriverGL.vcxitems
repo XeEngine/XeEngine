@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{bcc72797-7b82-4a1e-a85c-0de87d9fd502}</ItemsProjectGuid>
+    <ItemsProjectName>RenderingDriverGL</ItemsProjectName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL_Common.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL_Library.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsGl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Common.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Context.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Drawing2d.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Library.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Resource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_States.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Surface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Tilemap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsGl.cpp" />
+  </ItemGroup>
+</Project>

@@ -46,6 +46,6 @@ namespace Xe
 		//! \brief query the interface
 		//! \param id interface identifier to check
 		//! \return the class pointer if the query is satisfied, else nullptr
-		virtual bool Query(IObject **obj, UID id) = 0;
+		virtual bool Query(IObject **obj, UID id);
 	};
 }

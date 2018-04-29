@@ -20,7 +20,7 @@ namespace Xe { namespace Graphics {
 			u16 Tile;
 		};
 		u16 RESERVED;
-		Color Color;
+		Color BlendColor;
 	};
 	struct TilemapData {
 		TileData* Tilemap;
@@ -40,7 +40,7 @@ namespace Xe { namespace Graphics {
 		//! \brief interface id
 		static const UID ID = 0xdb60c0912f4344a0ULL;
 
-		virtual ~ITilemap() = default;
+		virtual ~ITilemap() {};
 
 		virtual void SetTileset(const TilesetProperties& tileset) = 0;
 

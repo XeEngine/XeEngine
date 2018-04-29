@@ -37,7 +37,7 @@
 
 #include <XeSDK/XeDef.h>
 #if defined(__cplusplus)
-#include <XeSDK/XeDebugLog.h>
+#include "XeDebugLog.h"
 #endif
 
 #include <cstdio>

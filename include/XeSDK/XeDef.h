@@ -5,6 +5,7 @@
  *////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <XeSDK/XeDefinitions.h>
 
 #if defined(_WIN64) || defined(_M_X64) || defined(_LP64)
 #define PLATFORM_64
@@ -14,7 +15,7 @@
 #pragma GCC diagnostic ignored "-Wunused-value"
 #endif
 
-#include <XeSDK/XeValue.h>
+//#include <XeSDK/XeValue.h>
 
 // Types
 typedef signed char	        sbyte;
@@ -44,7 +45,7 @@ typedef unsigned int		uvar;
 #ifdef _MSC_VER
 // This prevent MSC warnings / errors
 #define _CRT_SECURE_NO_WARNINGS_GLOBALS
-// 
+//
 #define INLINE __forceinline
 
 #if _MSC_VER < 1500
@@ -54,7 +55,11 @@ typedef unsigned int		uvar;
 
 #else // not MSC compiler
 #define INLINE inline __attribute__((always_inline))
-#define __stdcall __attribute__((stdcall))
+//#define __stdcall __attribute__((stdcall))
+#ifndef STDCALL_DEFINED
+#define STDCALL_DEFINED
+#define __stdcall
+#endif
 
 #if (__cplusplus < 201100L)
 // Previous MSC compilers does not support C++11's nullptr

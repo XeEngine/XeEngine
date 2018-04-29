@@ -2,12 +2,11 @@
 #ifdef PLATFORM_LIBC
 #include <cstdio>
 #endif
-#ifdef PLATFORM_LIBCW
-#include <cwchar>
-#endif
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeMath.h>
+#include <string.h>
+#include <cwchar>
 
 #if defined(_MSC_VER)
 #define SECURE_CRT
@@ -853,9 +852,6 @@ template <typename T> const T *Xe_FindCharacter(const T *string, T ch)
 	while (*string && *string != ch)
 		string++;
 	return *string == ch ? string : (const T*)nullptr;
-	if (*string == ch)
-		return(string);
-	return (const T*)nullptr;
 }
 const char *Xe::String::FindCharacter(const char *string, char ch)
 {

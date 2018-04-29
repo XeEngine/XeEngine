@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{23c41de4-1f9c-4556-9391-532353102816}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_Dummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_Dummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Dummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Dummy.cpp" />
+  </ItemGroup>
+</Project>

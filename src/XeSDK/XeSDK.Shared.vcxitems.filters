@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsFont.h">
       <Filter>Graphics\Font\Public</Filter>
     </ClInclude>
@@ -40,12 +39,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h">
       <Filter>Graphics\Private\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDebugConsole.h">
-      <Filter>Debug\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugConsole.h">
-      <Filter>Debug\Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugLog.h">
       <Filter>Debug\Public</Filter>
@@ -257,20 +250,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioDefinitions.h">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.h">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioEngine.h">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioBuffer.h">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsTilemap.h">
       <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeLogger.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IDriverInputEnumerator.h">
+      <Filter>Driver\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -301,15 +291,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.cpp">
       <Filter>Graphics\Private\Common</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugConsole.cpp">
-      <Filter>Debug\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugGraphicon.cpp">
-      <Filter>Debug\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp">
-      <Filter>Debug\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOMemoryStream.cpp">
       <Filter>IO\Private</Filter>
     </ClCompile>
@@ -320,18 +301,6 @@
       <Filter>Storage\Container\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp">
-      <Filter>Storage\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Unix.cpp">
-      <Filter>Storage\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Windows.cpp">
-      <Filter>Storage\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Unix.cpp">
-      <Filter>Storage\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Windows.cpp">
       <Filter>Storage\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp">
@@ -394,9 +363,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImaging.cpp">
       <Filter>Graphics\Imaging\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Windows.cpp">
-      <Filter>Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp">
       <Filter>Private</Filter>
     </ClCompile>
@@ -409,13 +375,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp">
       <Filter>Core\private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_WinRt.cpp">
-      <Filter>Core\private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp">
-      <Filter>Core\private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCore_Windows.cpp">
       <Filter>Core\private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp">
@@ -427,26 +387,24 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsSpriteBatch.cpp">
       <Filter>Graphics\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Windows.cpp">
-      <Filter>IO\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeNetSocket.cpp">
       <Filter>Net\private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp">
       <Filter>Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.cpp">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioEngine.cpp">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioBuffer.cpp">
-      <Filter>Sound\Private\XAudio</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp">
       <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp">
+      <Filter>Debug\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeLogger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIODevices.cpp">
+      <Filter>IO\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad.cpp">
+      <Filter>IO\Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -573,8 +531,11 @@
     <Filter Include="Net\private">
       <UniqueIdentifier>{fa05bf39-8d6a-44ce-9449-b23079088edd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound\Private\XAudio">
-      <UniqueIdentifier>{be90b3ec-53d8-4f8c-a725-b3e9e34324d9}</UniqueIdentifier>
+    <Filter Include="Driver">
+      <UniqueIdentifier>{4c4e7aac-c1fc-4b61-a025-1d921473066c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Driver\Input">
+      <UniqueIdentifier>{ef248b82-5ee7-4b93-8b8a-2a0fa64ecd3d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

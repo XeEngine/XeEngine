@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{1e4b9a2c-c668-4671-8b81-fe0f23326787}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_X11.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_Unix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Linux.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeMemory_libc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Unix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Unix.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Linux.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView_X11.h" />
+  </ItemGroup>
+</Project>

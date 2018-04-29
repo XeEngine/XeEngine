@@ -1,6 +1,6 @@
 #pragma once
 #include <XeSDK/IObject.h>
-#include <XeSDK/IIoStream.h>
+#include <XeSDK/IIOStream.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeGraphicsColor.h>
 

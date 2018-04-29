@@ -2,15 +2,24 @@
 #include <XeSDK/XeStorage.h>
 #include <XeSDK/IStorageDirectory.h>
 
+#include "IDriverInputEnumerator.h"
+#include "XeDriverInputWindowsCustom.h"
+#include "XeDriverInputXInput.h"
+
 namespace Xe {
-	namespace Core {
-		void Main();
+
+	Xe::Driver::Input::WindowsCustom g_DriverInputCustom;
+	Xe::Driver::Input::XInput g_DriverInputXInput;
+
+	void RegisterInputDrivers()
+	{
+		Xe::IO::SubscribeEnumerator(g_DriverInputCustom);
+		Xe::IO::SubscribeEnumerator(g_DriverInputXInput);
 	}
-}
 
-using namespace Xe;
-
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
-	Xe::Core::Main();
-	return 0;
+	namespace Core {
+		void Initialize() {
+			RegisterInputDrivers();
+		}
+	}
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include <XeSDK/IIoStream.h>
+#include <XeSDK/IIOStream.h>
 #include <XeSDK/ISoundAudioSource.h>
 
 namespace Xe {

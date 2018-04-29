@@ -1,6 +1,5 @@
 #include "pch.h"
 #include <XeSDK/ISound.h>
-#include <XeSDK/XeDebugLog.h>
 #include "XAudioEngine.h"
 
 namespace Xe {

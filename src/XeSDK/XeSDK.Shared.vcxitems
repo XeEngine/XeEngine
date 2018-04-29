@@ -19,7 +19,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICollection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IComparable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreView.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDebugConsole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDictionary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IEnumerable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGameComponent.h" />
@@ -55,7 +54,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCore.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugConsole.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugLog.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentPosition2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentSprite.h" />
@@ -73,6 +71,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIO.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIOGamepad.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIOPointer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeLogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathMatrix.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathRandom.h" />
@@ -93,13 +92,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IDriverInputEnumerator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeError.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioBuffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioDefinitions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h" />
@@ -107,17 +103,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XeStorageFile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioBuffer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioEngine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_WinRt.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCore_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugConsole.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugGraphicon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentPosition2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentTexture2d.cpp" />
@@ -134,8 +123,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIO.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIODevices.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOMemoryStream.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeLogger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMathMatrix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMathRandom.cpp" />
@@ -153,10 +144,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_XAudio2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Unix.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Windows.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Unix.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageContainerXefs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeString.cpp" />
@@ -165,7 +152,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp" />
   </ItemGroup>
   <ItemGroup>

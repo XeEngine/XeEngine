@@ -21,34 +21,63 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml", "src\ThirdParty\t
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winsdk", "src\ThirdParty\winsdk\winsdk.vcxitems", "{4385B406-A2EA-4DD0-9F9B-CFDBC27FC12E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rendering Engines", "Rendering Engines", "{FA2D4871-A08A-473E-A308-DF740D2EEA59}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rendering Drivers", "Rendering Drivers", "{FA2D4871-A08A-473E-A308-DF740D2EEA59}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingEngineNull", "src\RenderingEngine\RenderingEngineNull\RenderingEngineNull.vcxitems", "{DFD54352-B7AB-40E2-B9A8-8401488E02AE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingDriverNull", "src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems", "{DFD54352-B7AB-40E2-B9A8-8401488E02AE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingEngineGL", "src\RenderingEngine\RenderingEngineGL\RenderingEngineGL.vcxitems", "{BCC72797-7B82-4A1E-A85C-0DE87D9FD502}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingDriverGL", "src\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems", "{BCC72797-7B82-4A1E-A85C-0DE87D9FD502}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingEngineD3D11", "src\RenderingEngine\RenderingEngineD3D11\RenderingEngineD3D11.vcxitems", "{32285449-9C04-4464-811F-8FE3F87A3914}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderingDriverD3D11", "src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems", "{32285449-9C04-4464-811F-8FE3F87A3914}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound Drivers", "Sound Drivers", "{F76BC7A6-29D6-4290-BF04-DD6DAF9321B6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundDriverXAudio", "src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems", "{69D5BB40-2D91-407B-8B87-1089E02A4032}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.Unix", "src\XeSDK\XeSDK.Shared.Unix\XeSDK.Shared.Unix.vcxitems", "{1E4B9A2C-C668-4671-8B81-FE0F23326787}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.Dummy", "src\XeSDK\XeSDK.Shared.Dummy\XeSDK.Shared.Dummy.vcxitems", "{23C41DE4-1F9C-4556-9391-532353102816}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.Win32", "src\XeSDK\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems", "{E0523D5A-7F1C-46EA-94A3-F9A89DC2DFBF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.WinRT", "src\XeSDK\XeSDK.Shared.WinRT\XeSDK.Shared.WinRT.vcxitems", "{FBADE22C-9443-4292-BA13-B97D2720B2EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input Driver", "Input Driver", "{3F51B60D-7DFE-40B2-948A-251513107990}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InputDriverXInput", "src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems", "{D0662974-0A87-4CAF-9CDA-6C2A5FF1AB81}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InputDriverWindowsCustom", "..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems", "{69C0C0A8-0787-4BCD-993F-FBC1C05DD267}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		src\RenderingEngine\RenderingEngineD3D11\RenderingEngineD3D11.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
-		src\RenderingEngine\RenderingEngineGL\RenderingEngineGL.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
-		src\RenderingEngine\RenderingEngineNull\RenderingEngineNull.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\libpng\libpng.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\tinyxml\tinyxml.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\winsdk\winsdk.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\zlib\zlib.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.Shared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.WinShared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.Shared.Unix\XeSDK.Shared.Unix.vcxitems*{1e4b9a2c-c668-4671-8b81-fe0f23326787}*SharedItemsImports = 9
+		src\XeSDK\XeSDK.Shared.Dummy\XeSDK.Shared.Dummy.vcxitems*{23c41de4-1f9c-4556-9391-532353102816}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.vcxitems*{26e3750a-fdf1-46ff-81ef-4031f3be2d43}*SharedItemsImports = 9
 		src\ThirdParty\zlib\zlib.vcxitems*{2cd3c38f-9921-4736-8afe-0b8c947cd36f}*SharedItemsImports = 9
-		src\RenderingEngine\RenderingEngineD3D11\RenderingEngineD3D11.vcxitems*{32285449-9c04-4464-811f-8fe3f87a3914}*SharedItemsImports = 9
+		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{32285449-9c04-4464-811f-8fe3f87a3914}*SharedItemsImports = 9
 		src\ThirdParty\winsdk\winsdk.vcxitems*{4385b406-a2ea-4dd0-9f9b-cfdbc27fc12e}*SharedItemsImports = 9
+		..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{69c0c0a8-0787-4bcd-993f-fbc1c05dd267}*SharedItemsImports = 9
+		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{69d5bb40-2d91-407b-8b87-1089e02a4032}*SharedItemsImports = 9
 		src\ThirdParty\libpng\libpng.vcxitems*{7745487a-b7ca-4073-b035-621710b56cd2}*SharedItemsImports = 9
 		src\ThirdParty\tinyxml\tinyxml.vcxitems*{9edecedc-1cc8-4e90-b8fa-c13233dfe317}*SharedItemsImports = 9
-		src\RenderingEngine\RenderingEngineGL\RenderingEngineGL.vcxitems*{bcc72797-7b82-4a1e-a85c-0de87d9fd502}*SharedItemsImports = 9
-		src\RenderingEngine\RenderingEngineNull\RenderingEngineNull.vcxitems*{dfd54352-b7ab-40e2-b9a8-8401488e02ae}*SharedItemsImports = 9
+		src\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems*{bcc72797-7b82-4a1e-a85c-0de87d9fd502}*SharedItemsImports = 9
+		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{d0662974-0a87-4caf-9cda-6c2a5ff1ab81}*SharedItemsImports = 9
+		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{dfd54352-b7ab-40e2-b9a8-8401488e02ae}*SharedItemsImports = 9
+		src\XeSDK\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems*{e0523d5a-7f1c-46ea-94a3-f9a89dc2dfbf}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.WinShared.vcxitems*{ef4e1787-9547-4aef-af68-f75347d19383}*SharedItemsImports = 9
+		src\XeSDK\XeSDK.Shared.WinRT\XeSDK.Shared.WinRT.vcxitems*{fbade22c-9443-4292-ba13-b97d2720b2eb}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +136,13 @@ Global
 		{DFD54352-B7AB-40E2-B9A8-8401488E02AE} = {FA2D4871-A08A-473E-A308-DF740D2EEA59}
 		{BCC72797-7B82-4A1E-A85C-0DE87D9FD502} = {FA2D4871-A08A-473E-A308-DF740D2EEA59}
 		{32285449-9C04-4464-811F-8FE3F87A3914} = {FA2D4871-A08A-473E-A308-DF740D2EEA59}
+		{69D5BB40-2D91-407B-8B87-1089E02A4032} = {F76BC7A6-29D6-4290-BF04-DD6DAF9321B6}
+		{1E4B9A2C-C668-4671-8B81-FE0F23326787} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
+		{23C41DE4-1F9C-4556-9391-532353102816} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
+		{E0523D5A-7F1C-46EA-94A3-F9A89DC2DFBF} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
+		{FBADE22C-9443-4292-BA13-B97D2720B2EB} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
+		{D0662974-0A87-4CAF-9CDA-6C2A5FF1AB81} = {3F51B60D-7DFE-40B2-948A-251513107990}
+		{69C0C0A8-0787-4BCD-993F-FBC1C05DD267} = {3F51B60D-7DFE-40B2-948A-251513107990}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27233E81-5340-49F9-BF5E-A0B089653147}

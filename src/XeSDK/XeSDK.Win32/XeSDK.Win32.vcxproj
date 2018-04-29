@@ -42,8 +42,6 @@
     <ClCompile Include="ContextGL_Win32.cpp" />
     <ClCompile Include="ContextGL_Windows.cpp" />
     <ClCompile Include="XeCoreMain_Win32.cpp" />
-    <ClCompile Include="XeCoreView_Win32.cpp" />
-    <ClCompile Include="XeGraphics_Win32.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{11F0CE85-E904-4231-A27C-F7FF076FC7FB}</ProjectGuid>
@@ -124,9 +122,13 @@
     <Import Project="..\..\ThirdParty\zlib\zlib.vcxitems" Label="Shared" />
     <Import Project="..\..\ThirdParty\tinyxml\tinyxml.vcxitems" Label="Shared" />
     <Import Project="..\..\ThirdParty\winsdk\winsdk.vcxitems" Label="Shared" />
-    <Import Project="..\..\RenderingEngine\RenderingEngineD3D11\RenderingEngineD3D11.vcxitems" Label="Shared" />
-    <Import Project="..\..\RenderingEngine\RenderingEngineGL\RenderingEngineGL.vcxitems" Label="Shared" />
-    <Import Project="..\..\RenderingEngine\RenderingEngineNull\RenderingEngineNull.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems" Label="Shared" />
+    <Import Project="..\..\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems" Label="Shared" />
+    <Import Project="..\..\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems" Label="Shared" />
+    <Import Project="..\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems" Label="Shared" />
+    <Import Project="..\..\..\..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\XeSDK.WinShared.vcxitems" Label="Shared" />

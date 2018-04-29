@@ -5,7 +5,6 @@
 #include <XeSDK/ISoundPlayable.h>
 #include <XeSDK/XeSound.h>
 #include <XeSDK/XeMemory.h>
-#include <XeSDK/XeDebugLog.h>
 
 #define WAVE_FORMAT_PCM 1 
 #define WAVE_FORMAT_IEEE_FLOAT 3

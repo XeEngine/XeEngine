@@ -90,7 +90,7 @@ namespace Xe {
 		//! \brief Call this when needed to call OnDraw event.
 		void Invalidate();
 		//! \brief Call this when content does not needed to be drawn.
-		void Validate();
+		void Flush();
 
 		virtual void OnContextInitialize(Graphics::ContextProperties& properties) = 0;
 

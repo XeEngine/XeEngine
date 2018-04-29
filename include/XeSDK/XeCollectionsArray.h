@@ -3,7 +3,7 @@
 
 namespace Xe {
 	namespace Collections {
-		template <typename T>
+		template <class T>
 		class Array<T> : public ICollection<T> {
 			svar m_count;
 			T* m_items;

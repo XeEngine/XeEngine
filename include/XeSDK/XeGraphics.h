@@ -11,8 +11,8 @@ namespace Xe {
 	//! \brief Graphics and drawing management
 	namespace Graphics {
 		class IContext;
-		typedef Math::Vector2<svar> Position;
-		typedef Math::Vector2<svar> Size;
+		typedef Math::Vector2i Position;
+		typedef Math::Vector2i Size;
 
 		//! \brief Specify a render engine used to draw on screen.
 		enum RenderEngine {
