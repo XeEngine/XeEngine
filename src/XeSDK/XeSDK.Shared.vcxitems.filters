@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsFont.h">
+      <Filter>Graphics\Font\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsFont.h">
+      <Filter>Graphics\Font\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsFontUV.h">
+      <Filter>Graphics\Font\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsImagingImage.h">
+      <Filter>Graphics\Imaging\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsImaging.h">
+      <Filter>Graphics\Imaging\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsImagingPng.h">
+      <Filter>Graphics\Imaging\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsContext.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsDrawing2d.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphics.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsColor.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsFrame.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h">
+      <Filter>Graphics\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h">
+      <Filter>Graphics\Private\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDebugConsole.h">
+      <Filter>Debug\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugConsole.h">
+      <Filter>Debug\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugLog.h">
+      <Filter>Debug\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIO.h">
+      <Filter>IO\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIOFileStream.h">
+      <Filter>IO\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIOMemoryStream.h">
+      <Filter>IO\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIoStream.h">
+      <Filter>IO\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStorageContainerXefs.h">
+      <Filter>Storage\Container\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStorage.h">
+      <Filter>Storage\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStorageDirectory.h">
+      <Filter>Storage\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStorage.h">
+      <Filter>Storage\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundPlayable.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISound.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISoundAudioEffect.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISoundAudioSource.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISoundPlayable.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSound.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundAudioSource.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathVector4.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMath.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathMatrix.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathVector2.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathVector3.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IApplication.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IObject.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeApplication.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeError.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMemory.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeString.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSystem.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStack.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICollection.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IComparable.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDictionary.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IEnumerable.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IHashable.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IList.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IQueue.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStack.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStringable.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollections.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsDictionary.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsListDynamic.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsListFixed.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsQueue.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentTexture2d.h">
+      <Filter>Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGameComponent.h">
+      <Filter>Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentPosition2d.h">
+      <Filter>Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentSprite.h">
+      <Filter>Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeTimer.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeThread.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeObjPtr.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsBuffer.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsResource.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsSurface.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsDef.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathRectangle.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIOPointer.h">
+      <Filter>IO\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreView.h">
+      <Filter>Core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView.h">
+      <Filter>Core\private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCore.h">
+      <Filter>Core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeStorageFile.h">
+      <Filter>Storage\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeStorageDirectory.h">
+      <Filter>Storage\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStoragePath.h">
+      <Filter>Storage\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathRandom.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsSpriteBatch.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphicsSurfaceManager.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIOGamepad.h">
+      <Filter>IO\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\INetSocket.h">
+      <Filter>Net\public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioDefinitions.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioEngine.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XAudioBuffer.h">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsTilemap.h">
+      <Filter>Graphics\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsColor.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsDrawing.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImagingPng.cpp">
+      <Filter>Graphics\Imaging\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFont.cpp">
+      <Filter>Graphics\Font\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFontFnt.cpp">
+      <Filter>Graphics\Font\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFontUV.cpp">
+      <Filter>Graphics\Font\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.cpp">
+      <Filter>Graphics\Private\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugConsole.cpp">
+      <Filter>Debug\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugGraphicon.cpp">
+      <Filter>Debug\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp">
+      <Filter>Debug\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOMemoryStream.cpp">
+      <Filter>IO\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIO.cpp">
+      <Filter>IO\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageContainerXefs.cpp">
+      <Filter>Storage\Container\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp">
+      <Filter>Storage\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Unix.cpp">
+      <Filter>Storage\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Windows.cpp">
+      <Filter>Storage\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Unix.cpp">
+      <Filter>Storage\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Windows.cpp">
+      <Filter>Storage\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Wasapi.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_XAudio2.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeMathMatrix.cpp">
+      <Filter>Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeMath.cpp">
+      <Filter>Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeMemory.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeObject.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeString.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStringFormatted.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSystem.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentTexture2d.cpp">
+      <Filter>Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentPosition2d.cpp">
+      <Filter>Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Windows.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImaging.cpp">
+      <Filter>Graphics\Imaging\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Windows.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeThread_Windows.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp">
+      <Filter>Core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_WinRt.cpp">
+      <Filter>Core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp">
+      <Filter>Core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCore_Windows.cpp">
+      <Filter>Core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp">
+      <Filter>Storage\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeMathRandom.cpp">
+      <Filter>Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsSpriteBatch.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Windows.cpp">
+      <Filter>IO\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeNetSocket.cpp">
+      <Filter>Net\private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.cpp">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioEngine.cpp">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XAudioBuffer.cpp">
+      <Filter>Sound\Private\XAudio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{a1e81e09-295e-4b64-9ecb-910a455e7e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Private">
+      <UniqueIdentifier>{c14df414-a993-4676-9468-7c3980f8bb40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Public">
+      <UniqueIdentifier>{5b076878-9cd9-40be-9a5c-47fdf92b4057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Font">
+      <UniqueIdentifier>{d8bd5f91-022a-4cac-9e2d-d4e1769e8ed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Font\Public">
+      <UniqueIdentifier>{c6e35800-e073-441d-ba4b-b0eeb7f170e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Font\Private">
+      <UniqueIdentifier>{d8bde76f-9b06-43e9-9554-8c70ee78b9e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Imaging">
+      <UniqueIdentifier>{a129a3a5-2d1f-4047-b8db-3625573f2e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Imaging\Private">
+      <UniqueIdentifier>{76c4438c-18ef-418f-9fc9-da05a4991d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Imaging\Public">
+      <UniqueIdentifier>{6f062af4-f87d-4e4b-be05-728a487df526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Private\Common">
+      <UniqueIdentifier>{e7648014-55f0-491e-8845-38773b437975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{da49246a-3aed-4268-a552-e50b369cc607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Public">
+      <UniqueIdentifier>{5519b15b-069b-4243-9076-7f127b97c6ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Private">
+      <UniqueIdentifier>{f868280c-82c4-46a8-badd-ea97fb5bfe65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{b70bb70f-793f-44d9-b70f-aa63c259175f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Public">
+      <UniqueIdentifier>{42adb0db-8621-444d-aa92-9e6679a12ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Private">
+      <UniqueIdentifier>{ad86b56e-ebd4-473d-ab75-7d55d40bc28e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{07c6a55f-63e8-4f50-af43-531697cacf5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Private">
+      <UniqueIdentifier>{f14e70d8-c0a1-4056-9dca-0aa14a87157d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Public">
+      <UniqueIdentifier>{4c8d19f8-6cca-4181-aafa-60607ef746b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Container">
+      <UniqueIdentifier>{fa70a7af-81d3-4832-a31d-0c55890059b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Container\Public">
+      <UniqueIdentifier>{3a2e4e20-7c1c-41b4-bc97-6cd30658f89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Container\Private">
+      <UniqueIdentifier>{d0c9c39a-a2a1-4c2b-aa96-64b60cbcd1ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{2d40329f-4e6e-4919-ac97-23eb44219d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Private">
+      <UniqueIdentifier>{2ae78d5b-37c5-41a1-8011-b01eb4de0594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Public">
+      <UniqueIdentifier>{33aceaa4-c8bb-411e-9315-38f5595ccc7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{b5e9e380-2a1b-4893-bc01-dbd6fc1e60aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Public">
+      <UniqueIdentifier>{890c9b64-7bc5-4514-b632-9c6dd0cb943e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Private">
+      <UniqueIdentifier>{533c108c-2847-478e-baef-58358e59cdb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private">
+      <UniqueIdentifier>{909e9543-555a-4449-9e8e-99c281a2e8e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{8ebe3cb4-677a-4f5e-a6e5-8fb68c22c6e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collections">
+      <UniqueIdentifier>{0764a08b-9f6e-4dee-9f55-076929ebe583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collections\Public">
+      <UniqueIdentifier>{184ddff9-8dcc-4e3b-a564-e3e3387813b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{52d4e83a-df4c-4ca5-8d6d-c3ae2f3cae14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Public">
+      <UniqueIdentifier>{b59c2f53-7d9c-416c-8511-a2557640ba07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Private">
+      <UniqueIdentifier>{2e641a65-22fa-488e-81e5-5df3efbc46b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{c4c14010-9ad3-4cb7-8c8c-e2a1b2463e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\public">
+      <UniqueIdentifier>{ac9ddfb5-8171-4cdf-8705-69a677688616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\private">
+      <UniqueIdentifier>{df2523b7-a74a-4d7c-915b-1878e679400c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{ce142852-056f-4265-8e94-7fc944795396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\public">
+      <UniqueIdentifier>{4e2657da-0a12-48c4-91f2-bdc439a527f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\private">
+      <UniqueIdentifier>{fa05bf39-8d6a-44ce-9449-b23079088edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Private\XAudio">
+      <UniqueIdentifier>{be90b3ec-53d8-4f8c-a725-b3e9e34324d9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

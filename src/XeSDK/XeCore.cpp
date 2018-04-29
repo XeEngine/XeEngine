@@ -4,11 +4,11 @@
 #include <XeSDK/XeMemory.h>
 
 #define VERSION_MAJOR 0
-#define VERSION_MINOR 6
-#define VERSION_BUILD 4
+#define VERSION_MINOR 7
+#define VERSION_BUILD 5
 #define ENGINE_NAME _T("XeEngine")
-#define ENGINE_DEVELOPER _T("Luciano Ciccariello (Xeeynamo)")
-#define ENGINE_VERSION _T("0.7.4")
+#define ENGINE_DEVELOPER _T("Luciano (Xeeynamo) Ciccariello")
+#define ENGINE_VERSION _T("0.7.5")
 
 namespace Xe {
 	namespace Core {
@@ -27,7 +27,7 @@ namespace Xe {
 				ENGINE_DEVELOPER,
 				ENGINE_VERSION,
 				DATETIME_YYYYMMDD,
-				0, 7, 4
+				VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD
 			};
 			properties = ENGINE;
 		}

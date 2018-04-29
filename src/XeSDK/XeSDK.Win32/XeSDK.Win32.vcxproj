@@ -120,6 +120,13 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\XeSDK.Shared.vcxitems" Label="Shared" />
+    <Import Project="..\..\ThirdParty\libpng\libpng.vcxitems" Label="Shared" />
+    <Import Project="..\..\ThirdParty\zlib\zlib.vcxitems" Label="Shared" />
+    <Import Project="..\..\ThirdParty\tinyxml\tinyxml.vcxitems" Label="Shared" />
+    <Import Project="..\..\ThirdParty\winsdk\winsdk.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingEngine\RenderingEngineD3D11\RenderingEngineD3D11.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingEngine\RenderingEngineGL\RenderingEngineGL.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingEngine\RenderingEngineNull\RenderingEngineNull.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\XeSDK.WinShared.vcxitems" Label="Shared" />
