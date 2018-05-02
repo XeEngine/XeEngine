@@ -44,9 +44,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pngset.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)pngtest.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)pngtrans.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
