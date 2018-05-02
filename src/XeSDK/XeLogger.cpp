@@ -74,8 +74,37 @@ namespace Xe {
     void Logger::LowLevelLog(LogLevel level, ctstring str) {
         bool isError = level <= LogLevel_Warning;
 #ifdef PLATFORM_WINDOWS
+		static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
         OutputDebugString(str);
+
+		WORD attributes;
+		switch (level) {
+		case LogLevel_Critical:
+			attributes = FOREGROUND_BLUE | FOREGROUND_RED | BACKGROUND_INTENSITY;
+			break;
+		case LogLevel_Error:
+			attributes = FOREGROUND_RED | BACKGROUND_INTENSITY;
+			break;
+		case LogLevel_Warning:
+			attributes = FOREGROUND_GREEN | FOREGROUND_RED | BACKGROUND_INTENSITY;
+			break;
+		case LogLevel_Info:
+			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+			break;
+		case LogLevel_Debug:
+			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+			break;
+		case LogLevel_Trace:
+			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+			break;
+		default:
+			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+			break;
+		}
+		SetConsoleTextAttribute(hConsole, attributes);
 #endif
+
         fputs(str, isError ? stderr : stdout);
     }
 
