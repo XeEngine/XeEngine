@@ -18,6 +18,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextNull.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Buffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull_Context.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull_Drawing2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull_Resource.cpp" />

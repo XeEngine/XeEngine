@@ -13,8 +13,6 @@ namespace Xe {
 		class CContextGL : public CContextGLCommon {
 			class CDrawing : public IDrawing2d {
 			public:
-				typedef Common::Vertex Vertex;
-
 				bool Query(IObject **obj, UID id);
 				CDrawing(CContextGL *context);
 				~CDrawing();

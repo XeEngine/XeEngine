@@ -7,6 +7,12 @@
 
 namespace Xe {
 	namespace Graphics {
+		struct Vertex {
+			Xe::Math::Vector3f Position;
+			Xe::Math::Vector3f Texture;
+			Xe::Graphics::Color Color;
+		};
+
 		class IDrawing2d : public IObject {
 			Math::Matrix4 m_matrix;
 		public:

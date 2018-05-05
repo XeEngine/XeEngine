@@ -35,7 +35,7 @@ namespace Xe {
 			m_pVertex(new Vertex[MaximumQuadsCount * 4]),
 			m_curQuadsCount(0),
 			m_IsInitialized(false)
-			{
+		{
 			static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
 			{
 				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -110,23 +110,21 @@ namespace Xe {
 
 				nx += 0x00040004;
 			}
-			desc.ByteWidth = (UINT)(MaximumQuadsCount * 6 * sizeof(u16));
-			desc.Usage = D3D11_USAGE_IMMUTABLE;
-			desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-			desc.CPUAccessFlags = 0;
-			desc.MiscFlags = 0;
-			desc.StructureByteStride = 0;
-			D3D11_SUBRESOURCE_DATA data;
-			data.pSysMem = indices;
-			data.SysMemPitch = 0;
-			data.SysMemSlicePitch = 0;
-			hr = context->p_d3dDevice->CreateBuffer(&desc, &data, &m_pIndexBuffer);
-			delete[] indices;
-			if (FAILED(hr))
+
+			BufferDesc indexBufferDesc;
+			indexBufferDesc.Usage = Usage_Static;
+			indexBufferDesc.Length = MaximumQuadsCount * 6 * sizeof(u16);
+			indexBufferDesc.Type = BufferType_Index;
+
+			DataDesc indexDataDesc;
+			indexDataDesc.data = pIndices;
+			indexDataDesc.pitch = indexBufferDesc.Length;
+
+			if (!m_context->CreateBuffer(&m_pIndexBuffer, indexBufferDesc, &indexDataDesc))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create index buffer (%08X)."), hr);
-				return;
+				Logger::DebugError("Unable to create default index buffer.");
 			}
+
 			m_IsInitialized = true;
 		}
 		CContextD3D11::CDrawing::~CDrawing() {
@@ -161,10 +159,10 @@ namespace Xe {
 					m_context->m_d3dContext->PSSetSamplers(0, 1, &m_pSamplerState);
 					m_context->m_d3dContext->PSSetSamplers(1, 1, &m_pSamplerState);
 					m_context->m_d3dContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offsets);
-					m_context->m_d3dContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
+					m_context->SelectBuffer(m_pIndexBuffer);
 					m_context->m_d3dContext->IASetInputLayout(m_pInputLayout);
 					m_context->m_d3dContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-					m_context->m_d3dContext->DrawIndexed((UINT)(m_curQuadsCount * 6), start, 0);
+					m_context->DrawIndexed(m_curQuadsCount * 6, start);
 				}
 				else
 					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to upload new buffer's content."));

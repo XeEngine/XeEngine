@@ -18,6 +18,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextD3D11.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Buffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Context.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Drawing2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Nyan.cpp" />

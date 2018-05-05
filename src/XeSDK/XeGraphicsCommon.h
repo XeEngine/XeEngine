@@ -8,13 +8,9 @@ using namespace Xe::Math;
 
 namespace Xe {
     namespace Graphics {
-        namespace Common {
-            struct Vertex {
-                Vector3f pos;
-                float u, v, p;
-                Color color;
-            };
+		struct Vertex;
 
+        namespace Common {
             void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Math::Vector2f(&position)[2], const Color &color);
             void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Math::Vector2f(&position)[2], const Color(&color)[4]);
             void DrawRectangle(Vertex *vOut, const Matrix4 &m, const Math::Vector2f(&position)[4], const Color &color);

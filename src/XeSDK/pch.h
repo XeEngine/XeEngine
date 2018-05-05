@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿
+#pragma once
 #if defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE) || defined(PLATFORM_WINUNIVERSAL)
 #define PLATFORM_WINRT
 #endif
@@ -42,3 +43,10 @@
 
 #include <cstdio>
 #include <cstdlib>
+
+#if defined(_DEBUG) || defined(DEVELOPMENT)
+#include <cassert>
+#define ASSERT assert
+#else
+#define ASSERT
+#endif

@@ -102,10 +102,17 @@ namespace Xe {
 			void SetClearDepthSub(float depth);
 			int GetClearStencil() const;
 			void SetClearStencil(int stencil);
+
 			void Clear(svar clearmask);
+			void Draw(u32 count, u32 start);
+			void DrawIndex(u32 count, u32 start);
 
 			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 			void SelectSurface(ISurface *surface, svar index);
+
+			bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData);
+			void SelectBuffer(IBuffer *pBuffer);
+
 			bool CreateDepthStencilState(IDepthStencilState **depthStencilState, const DepthStencilStateDesc& desc);
 			void SelectDepthStencilState(IDepthStencilState *depthStencilState);
 

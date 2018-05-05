@@ -23,6 +23,7 @@ namespace Xe {
 					ID3D11Resource *resource, ID3D11ShaderResourceView *resourceView, ID3D11RenderTargetView *targetView);
 				~CSurface();
 			};
+
 			class CDepthStencilState : public IDepthStencilState {
 			public:
 				static const UID ID = 0x233162049b0c40f5ULL;
@@ -32,8 +33,25 @@ namespace Xe {
 				CDepthStencilState(IContext *context, const DepthStencilStateDesc& desc);
 				~CDepthStencilState();
 			};
+
+			class CBuffer : public IBuffer {
+			public:
+				CBuffer(IContext *pContext, const BufferDesc& desc, ID3D11Buffer *pBuffer);
+				~CBuffer();
+
+				ID3D11Buffer* GetBuffer() const;
+
+				bool SubLock(DataDesc & map, LockType type);
+				void SubUnlock();
+
+			private:
+				ID3D11Buffer * m_pBuffer;
+				void* m_LockBuffer;
+				bool m_IsLocked;
+				bool m_DirectMode;
+			};
+
 			class CDrawing : public IDrawing2d {
-				typedef Common::Vertex Vertex;
 				static const svar MaximumQuadsCount = 16383;
 
 				CContextD3D11* m_context;
@@ -42,7 +60,7 @@ namespace Xe {
 				ID3D11PixelShader* m_pPixelShader;
 				ID3D11SamplerState* m_pSamplerState;
 				ID3D11Buffer* m_pVertexBuffer;
-				ID3D11Buffer* m_pIndexBuffer;
+				IBuffer* m_pIndexBuffer;
 				Vertex* m_pVertex;
 				uvar m_curQuadsCount;
 				bool m_IsInitialized;
@@ -84,6 +102,7 @@ namespace Xe {
 				void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode);
 				void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 			};
+
 			class CTilemap : public ITilemap {
 				IContext* m_pContext;
 				IDrawing2d* m_pDrawing;
@@ -190,16 +209,30 @@ namespace Xe {
 			float GetClearDepth() const;
 			int GetClearStencil() const;
 			void SetClearStencil(int stencil);
+			
 			void Clear(svar clearmask);
+			void Draw(u32 count, u32 start = 0);
+			void DrawIndexed(u32 count, u32 start = 0);
 
 			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 			void SelectSurface(ISurface *surface, svar index);
+
 			bool CreateDepthStencilState(IDepthStencilState **depthStencilState, const DepthStencilStateDesc& desc);
 			void SelectDepthStencilState(IDepthStencilState *depthStencilState);
+
+			bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData);
+			void SelectBuffer(IBuffer *pBuffer);
 
 			void SetClearDepth(float depth);
 			void SetInternalResolution(const Size& size);
 			void SwapBuffers(VBlankSync sync);
+
+#pragma region Helpers
+			static D3D11_USAGE GetUsageType(UsageType usage);
+			static UINT GetCpuAccess(UsageType usage);
+			static D3D11_MAP GetMapType(LockType lockType);
+			static D3D11_BIND_FLAG GetBufferType(BufferType usage);
+#pragma endregion
 		};
 	}
 }

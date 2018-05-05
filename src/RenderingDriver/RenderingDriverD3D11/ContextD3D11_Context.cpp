@@ -139,6 +139,8 @@ namespace Xe {
 		void CContextD3D11::SetClearStencil(int stencil) {
 			m_ClearStencil = stencil;
 		}
+
+
 		void CContextD3D11::Clear(svar clearmask) {
 			if (clearmask == 0)
 				return;
@@ -158,6 +160,16 @@ namespace Xe {
 					(FLOAT)m_ClearDepth,
 					(UINT8)m_ClearStencil);
 			}
+		}
+
+		void CContextD3D11::Draw(u32 count, u32 start)
+		{
+			m_d3dContext->Draw(count, start);
+		}
+
+		void CContextD3D11::DrawIndexed(u32 count, u32 start)
+		{
+			m_d3dContext->DrawIndexed(count, start, 0);
 		}
 
 

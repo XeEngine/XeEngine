@@ -123,12 +123,12 @@
     <Import Project="..\..\ThirdParty\tinyxml\tinyxml.vcxitems" Label="Shared" />
     <Import Project="..\..\ThirdParty\winsdk\winsdk.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems" Label="Shared" />
-    <Import Project="..\..\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems" Label="Shared" />
     <Import Project="..\..\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems" Label="Shared" />
     <Import Project="..\..\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems" Label="Shared" />
     <Import Project="..\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems" Label="Shared" />
     <Import Project="..\..\..\..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems" Label="Shared" />
+    <Import Project="..\..\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\XeSDK.WinShared.vcxitems" Label="Shared" />
@@ -205,7 +205,7 @@
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -220,7 +220,7 @@
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -257,7 +257,7 @@
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -297,7 +297,7 @@
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -312,7 +312,7 @@
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -335,7 +335,7 @@
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

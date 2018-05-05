@@ -150,6 +150,7 @@ namespace Xe {
 			m_ClearStencil = stencil;
 			glClearStencil((GLint)stencil);
 		}
+
 		void CContextGLCommon::Clear(svar clearmask) {
 			GLbitfield mask = 0;
 			if (clearmask & Clear_Color)
@@ -159,6 +160,16 @@ namespace Xe {
 			if (clearmask & Clear_Stencil)
 				mask |= GL_STENCIL_BUFFER_BIT;
 			glClear(mask);
+		}
+
+		void CContextGLCommon::Draw(u32 count, u32 start)
+		{
+			glDrawArrays(GL_TRIANGLES, (GLint)start, (GLsizei)count);
+		}
+
+		void CContextGLCommon::DrawIndexed(u32 count, u32 start)
+		{
+			glDrawElements(GL_TRIANGLES, (GLsizei)count, GL_UNSIGNED_SHORT, (const GLvoid*)(start * sizeof(u16)));
 		}
 
 		///////////////////////////////////////////////////////////////////

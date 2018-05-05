@@ -48,7 +48,7 @@ namespace Xe {
 			bool m_isLocked;
 		protected:
 			IContext* m_pContext;
-			UsageType m_usage;
+			UsageType m_Usage;
 			svar m_length;
 
 			virtual bool SubLock(DataDesc& map, LockType type) = 0;
@@ -72,7 +72,7 @@ namespace Xe {
 			svar GetLength() const;
 
 			//! \brief Get how the resource can be managed
-			UsageType GetUsage() const;
+			UsageType GetUsageType() const;
 
 			//! \brief check if the resource is currently locked
 			//! \sa Lock, Unlock

@@ -69,9 +69,13 @@ namespace Xe {
 		void CContextNull::SetClearStencil(int stencil) {
 			m_ClearStencil = stencil;
 		}
+
 		void CContextNull::Clear(svar clearmask) {
 
 		}
+
+		void CContextNull::Draw(u32 count, u32 start) {}
+		void CContextNull::DrawIndex(u32 count, u32 start) {}
 
 		void CContextNull::SwapBuffers(VBlankSync sync) {
 

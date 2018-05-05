@@ -92,7 +92,7 @@ namespace Xe {
 			delete[] m_pVertex;
 		}
 
-		CContextGL::CDrawing::Vertex *CContextGL::CDrawing::Get() {
+		Vertex *CContextGL::CDrawing::Get() {
 			if (m_curQuadsCount < MaximumQuadsCount)
 				return m_pVertex + m_curQuadsCount++ * 4;
 			Flush();
@@ -126,7 +126,7 @@ namespace Xe {
 				glEnableVertexAttribArray(m_AttribPos);
 				glEnableVertexAttribArray(m_AttribTex);
 				glEnableVertexAttribArray(m_AttribCol);
-				glDrawElements(GL_TRIANGLES, 6 * m_curQuadsCount, GL_UNSIGNED_SHORT, 0);
+				m_pContext->DrawIndexed(m_curQuadsCount * 6, 0);
 				glDisableVertexAttribArray(m_AttribCol);
 				glDisableVertexAttribArray(m_AttribTex);
 				glDisableVertexAttribArray(m_AttribPos);

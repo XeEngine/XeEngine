@@ -74,6 +74,15 @@ namespace Xe {
 			static DepthStencilStateDesc Default();
 		};
 
+		struct BufferDesc
+		{
+			UsageType Usage;
+
+			u32 Length;
+
+			BufferType Type;
+		};
+
 		//! \brief State of depth and stencil associated to a context
 		class IDepthStencilState : public IObject
 		{
@@ -116,6 +125,9 @@ namespace Xe {
 
 			virtual bool CreateDepthStencilState(IDepthStencilState **depthStencilState, const DepthStencilStateDesc& desc) = 0;
 			virtual void SelectDepthStencilState(IDepthStencilState *depthStencilState) = 0;
+
+			virtual bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData = nullptr) = 0;
+			virtual void SelectBuffer(IBuffer *pBuffer) = 0;
 
 			virtual const Color &GetClearColor() const = 0;
 			virtual void SetClearColor(const Color &color) = 0;
