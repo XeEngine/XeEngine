@@ -211,8 +211,8 @@ namespace Xe {
 			void SetClearStencil(int stencil);
 			
 			void Clear(svar clearmask);
-			void Draw(u32 count, u32 start = 0);
-			void DrawIndexed(u32 count, u32 start = 0);
+			void Draw(Primitive primitive, u32 count, u32 start = 0);
+			void DrawIndexed(Primitive primitive, u32 count, u32 start = 0);
 
 			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 			void SelectSurface(ISurface *surface, svar index);
@@ -232,6 +232,7 @@ namespace Xe {
 			static UINT GetCpuAccess(UsageType usage);
 			static D3D11_MAP GetMapType(LockType lockType);
 			static D3D11_BIND_FLAG GetBufferType(BufferType usage);
+			static D3D_PRIMITIVE_TOPOLOGY GetPrimitive(Primitive primitive);
 #pragma endregion
 		};
 	}

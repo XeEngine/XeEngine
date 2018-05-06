@@ -165,7 +165,7 @@ namespace Xe {
 			if (IsSdkLayersAvailable())
 			{
 				// Se il progetto si trova in una compilazione di debug, abilita il debug tramite i livelli SDK utilizzando questo flag.
-				creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+				//creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
 				LOG(Log::Priority_Info, Log::Type_Graphics, _T("D3D11_CREATE_DEVICE_DEBUG set"));
 			}
 			else

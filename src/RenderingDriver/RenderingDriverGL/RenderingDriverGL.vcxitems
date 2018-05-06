@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Buffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Common.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Context.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL_Drawing2d.cpp" />

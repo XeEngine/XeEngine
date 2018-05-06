@@ -74,8 +74,8 @@ namespace Xe {
 
 		}
 
-		void CContextNull::Draw(u32 count, u32 start) {}
-		void CContextNull::DrawIndex(u32 count, u32 start) {}
+		void CContextNull::Draw(Primitive primitive, u32 count, u32 start) {}
+		void CContextNull::DrawIndexed(Primitive primitive, u32 count, u32 start) {}
 
 		void CContextNull::SwapBuffers(VBlankSync sync) {
 

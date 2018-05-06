@@ -161,8 +161,7 @@ namespace Xe {
 					m_context->m_d3dContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offsets);
 					m_context->SelectBuffer(m_pIndexBuffer);
 					m_context->m_d3dContext->IASetInputLayout(m_pInputLayout);
-					m_context->m_d3dContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-					m_context->DrawIndexed(m_curQuadsCount * 6, start);
+					m_context->DrawIndexed(Primitive_TriangleList, m_curQuadsCount * 6, start);
 				}
 				else
 					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to upload new buffer's content."));

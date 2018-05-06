@@ -104,8 +104,8 @@ namespace Xe {
 			void SetClearStencil(int stencil);
 
 			void Clear(svar clearmask);
-			void Draw(u32 count, u32 start);
-			void DrawIndex(u32 count, u32 start);
+			void Draw(Primitive primitive, u32 count, u32 start);
+			void DrawIndexed(Primitive primitive, u32 count, u32 start);
 
 			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 			void SelectSurface(ISurface *surface, svar index);

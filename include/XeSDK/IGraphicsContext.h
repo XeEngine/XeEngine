@@ -22,6 +22,16 @@ namespace Xe {
 			//! \brief clear stencil
 			Clear_Stencil = 4,
 		};
+
+		enum Primitive
+		{
+			Primitive_PointList,
+			Primitive_LineList,
+			Primitive_LineStrip,
+			Primitive_TriangleList,
+			Primitive_TriangleStrip
+		};
+
 		//! \brief comparison operators
 		enum Comparison
 		{
@@ -135,10 +145,14 @@ namespace Xe {
 			virtual void SetClearDepth(float depth) = 0;
 			virtual int GetClearStencil() const = 0;
 			virtual void SetClearStencil(int stencil) = 0;
+
 			//! \brief clear selected rendering buffer
 			//! \param[in] clearmask mask of ClearMask 
 			//! \sa ClearMask
 			virtual void Clear(svar clearmask) = 0;
+
+			virtual void Draw(Primitive primitive, u32 count, u32 start = 0) = 0;
+			virtual void DrawIndexed(Primitive primitive, u32 count, u32 start = 0) = 0;
 
 			virtual void SetInternalResolution(const Size& size) = 0;
 			//! \brief present the changes to the visible screen buffer

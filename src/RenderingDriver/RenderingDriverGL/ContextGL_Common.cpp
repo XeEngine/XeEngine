@@ -162,14 +162,14 @@ namespace Xe {
 			glClear(mask);
 		}
 
-		void CContextGLCommon::Draw(u32 count, u32 start)
+		void CContextGLCommon::Draw(Primitive primitive, u32 count, u32 start)
 		{
-			glDrawArrays(GL_TRIANGLES, (GLint)start, (GLsizei)count);
+			glDrawArrays(GetPrimitive(primitive), (GLint)start, (GLsizei)count);
 		}
 
-		void CContextGLCommon::DrawIndexed(u32 count, u32 start)
+		void CContextGLCommon::DrawIndexed(Primitive primitive, u32 count, u32 start)
 		{
-			glDrawElements(GL_TRIANGLES, (GLsizei)count, GL_UNSIGNED_SHORT, (const GLvoid*)(start * sizeof(u16)));
+			glDrawElements(GetPrimitive(primitive), (GLsizei)count, GL_UNSIGNED_SHORT, (const GLvoid*)(start * sizeof(u16)));
 		}
 
 		///////////////////////////////////////////////////////////////////

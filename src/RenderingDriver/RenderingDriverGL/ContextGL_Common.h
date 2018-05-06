@@ -46,8 +46,8 @@ namespace Xe {
 			void SetClearStencil(int stencil);
 			
 			void Clear(svar clearmask);
-			void Draw(u32 count, u32 start);
-			void DrawIndexed(u32 count, u32 start);
+			void Draw(Primitive primitive, u32 count, u32 start);
+			void DrawIndexed(Primitive primitive, u32 count, u32 start);
 
 			///////////////////////////////////////////////////////////////////
 			// Surface management
@@ -106,6 +106,8 @@ namespace Xe {
 			static svar GetFormatsCount();
 			static svar GetFormatsArray(Format *format, svar maxcount);
 			static bool SetFormat(const Format &format);
+
+			static GLenum GetPrimitive(Primitive primitive);
 
 		protected:
 			Core::IView *m_pView;

@@ -126,7 +126,7 @@ namespace Xe {
 				glEnableVertexAttribArray(m_AttribPos);
 				glEnableVertexAttribArray(m_AttribTex);
 				glEnableVertexAttribArray(m_AttribCol);
-				m_pContext->DrawIndexed(m_curQuadsCount * 6, 0);
+				m_pContext->DrawIndexed(Primitive_TriangleList, m_curQuadsCount * 6, 0);
 				glDisableVertexAttribArray(m_AttribCol);
 				glDisableVertexAttribArray(m_AttribTex);
 				glDisableVertexAttribArray(m_AttribPos);

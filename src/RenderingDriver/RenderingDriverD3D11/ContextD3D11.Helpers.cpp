@@ -31,6 +31,15 @@ namespace Xe { namespace Graphics {
 		D3D11_BIND_INDEX_BUFFER, // BufferType_Index
 	};
 
+	const D3D_PRIMITIVE_TOPOLOGY LUT_PRIMITIVE[]
+	{
+		D3D_PRIMITIVE_TOPOLOGY_POINTLIST, // Primitive_PointList,
+		D3D_PRIMITIVE_TOPOLOGY_LINELIST, // Primitive_LineList,
+		D3D_PRIMITIVE_TOPOLOGY_LINESTRIP, // Primitive_LineStrip,
+		D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST, // Primitive_TriangleList,
+		D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, // Primitive_TriangleStrip
+	};
+
 	D3D11_USAGE CContextD3D11::GetUsageType(UsageType usage) {
 		return LUT_USAGETYPE[usage];
 	}
@@ -46,5 +55,9 @@ namespace Xe { namespace Graphics {
 
 	D3D11_BIND_FLAG CContextD3D11::GetBufferType(BufferType usage) {
 		return LUT_BUFFERTYPE[usage];
+	}
+
+	D3D_PRIMITIVE_TOPOLOGY CContextD3D11::GetPrimitive(Primitive primitive) {
+		return LUT_PRIMITIVE[primitive];
 	}
 } }

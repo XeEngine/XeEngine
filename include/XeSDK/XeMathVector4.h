@@ -142,6 +142,14 @@ namespace Xe {
 					((x * matrix._13) + (y * matrix._23) + (z * matrix._33)) + w * matrix._43,
 					((x * matrix._14) + (y * matrix._24) + (z * matrix._34)) + w * matrix._44);
 			}
+
+			Vector2<T> ToVector2() const {
+				return Vector2<T>(x, y);
+			}
+
+			Vector3<T> ToVector3() const {
+				return Vector3<T>(x, y, z);
+			}
 		};
 
 		typedef Vector4<int> Vector4i;
