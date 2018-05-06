@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "ContextGL_Common.h"
+#include "ContextGL.Common.h"
 
 namespace Xe { namespace Graphics {
 	const GLenum PRIMITIVE[]

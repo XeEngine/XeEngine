@@ -4,7 +4,7 @@
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/XeMathVector2.h>
-#include "ContextGL_Library.h"
+#include "ContextGL.Library.h"
 #include <gl/GL.h>
 
 #define CHECKERROR CheckError(_XE_WIDE(__FILE__), __LINE__)

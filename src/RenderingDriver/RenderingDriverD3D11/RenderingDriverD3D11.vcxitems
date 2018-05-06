@@ -20,11 +20,11 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Buffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Helpers.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Context.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Drawing2d.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Nyan.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_States.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Surface.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11_Tilemap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Context.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Drawing2d.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Nyan.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.States.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Surface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Tilemap.cpp" />
   </ItemGroup>
 </Project>

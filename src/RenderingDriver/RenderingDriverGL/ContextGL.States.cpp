@@ -1,7 +1,7 @@
 #include "pch.h"
 #ifdef PLATFORM_GL
 #include <XeSDK/IGraphicsDrawing2d.h>
-#include "ContextGL_Common.h"
+#include "ContextGL.Common.h"
 
 namespace Xe {
 	namespace Graphics {

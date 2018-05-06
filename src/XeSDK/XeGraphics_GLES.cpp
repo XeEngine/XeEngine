@@ -2,9 +2,9 @@
 #include <XeSDK/IGraphicsContext.h>
 #include "XeGraphicsCommon.h"
 #if defined(PLATFORM_GLES2)
-#include "ContextGL_Library.h"
+#include "ContextGL.Library.h"
 #include <cstdlib>
-#include "ContextGL_Common.h"
+#include "ContextGL.Common.h"
 #include "IGraphicsWindowsWin32.h"
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/XeMemory.h>

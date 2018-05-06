@@ -6,7 +6,7 @@
 #include <XeSDK/IGraphicsBuffer.h>
 #include <XeSDK/IGraphicsTilemap.h>
 #include "XeGraphicsCommon.h"
-#include "ContextGL_Common.h"
+#include "ContextGL.Common.h"
 
 namespace Xe {
 	namespace Graphics {
