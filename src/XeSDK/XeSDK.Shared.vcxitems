@@ -135,6 +135,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp" />

@@ -138,6 +138,7 @@ Xe::RESULT Xe::Storage::Directory::SetCurrent(ctstring path) {
 }
 
 Xe::RESULT Xe::Storage::Directory::Open(IDirectory **directory, ctstring path) {
+	ctstring strFilter;
 	tstring str;
 	svar len = String::GetLength(path);
 	bool alloc;
@@ -159,15 +160,17 @@ Xe::RESULT Xe::Storage::Directory::Open(IDirectory **directory, ctstring path) {
 		str[index++] = '*';
 		str[index++] = '\0';
 		alloc = true;
+		strFilter = str;
 	}
 	else {
-		str = _T("*");
+		str = nullptr;
+		strFilter = _T("*");
 		alloc = false;
 	}
 
 	RESULT r;
 	WIN32_FIND_DATA findData;
-	HANDLE h = FindFirstFileEx(str, (FINDEX_INFO_LEVELS)1/*FindExInfoBasic*/, &findData, FindExSearchNameMatch, nullptr, 0);
+	HANDLE h = FindFirstFileEx(strFilter, (FINDEX_INFO_LEVELS)1/*FindExInfoBasic*/, &findData, FindExSearchNameMatch, nullptr, 0);
 	if (h != INVALID_HANDLE_VALUE) {
 		*directory = new CDirectory(h, findData, path);
 		r = Error::OK;
@@ -176,7 +179,7 @@ Xe::RESULT Xe::Storage::Directory::Open(IDirectory **directory, ctstring path) {
 		r = Error::GENERIC_ERROR;
 	}
 
-	if (alloc)
+	if (alloc && str)
 		delete[] str;
 	return r;
 }

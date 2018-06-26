@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{364e7032-37e4-42b0-8617-fedb3b7673b5}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TextureManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IAtom.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IEntityManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAchievement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatformCallback.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlatformConfig.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TextureManager.h" />
+  </ItemGroup>
+</Project>
