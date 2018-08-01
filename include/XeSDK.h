@@ -18,6 +18,8 @@
 #include <XeSDK/XeApplication.h>
 #include <XeSDK/XeCollections.h>
 #include <XeSDK/XeCore.h>
+#include <XeSDK/XeCryptoCrc32.h>
+#include <XeSDK/XeCryptoCrc64.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeGraphicsImaging.h>
 #include <XeSDK/XeGraphicsImagingPng.h>

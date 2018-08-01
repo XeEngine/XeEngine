@@ -54,6 +54,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc32.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugLog.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentPosition2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentSprite.h" />
@@ -107,6 +109,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentPosition2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentTexture2d.cpp" />

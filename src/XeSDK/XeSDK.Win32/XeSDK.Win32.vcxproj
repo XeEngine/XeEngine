@@ -92,7 +92,6 @@
     <Import Project="..\..\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems" Label="Shared" />
     <Import Project="..\..\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems" Label="Shared" />
     <Import Project="..\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems" Label="Shared" />
-    <Import Project="..\..\..\..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="Shared">

@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "TextureManager.h"
+#include <XeGame/XeGameTextureManager.h>
+#include "XeSDK/XeCore.h"
 
 namespace Xe { namespace Game {
 
@@ -55,11 +56,21 @@ namespace Xe { namespace Game {
 
 	//	}
 
+	//	TexId Search(ctstring name)
+	//	{
+	//		return Crc32_c()
+	//	}
+
+	//	TexId Search(u32 id)
+	//	{
+
+	//	}
+
 	//	#pragma region Inherited via ITextureManager
 	//	TexId Open(Graphics::Imaging::IImage& image, ctstring name)
 	//	{
 	//		// La texture è già stata caricata in precedenza?
-	//		TexId texId = Search(path);
+	//		TexId texId = Search(name);
 	//		if (texId != TexInvalid)
 	//		{
 	//			AddReference(texId);
@@ -91,7 +102,7 @@ namespace Xe { namespace Game {
 	//				pImage->Release();
 	//				m_ActivedTextureCount++;
 	//				m_UsedTextureCount++;
-	//				Logger::Info("Texture %s opened as %i.\n", name texId);
+	//				Logger::Info("Texture %s opened as %i.\n", name, texId);
 	//			}
 	//			else {
 	//				Logger::Error("Unable to allocate %s.\n", name);
@@ -136,8 +147,8 @@ namespace Xe { namespace Game {
 	//	#pragma endregion
 	//};
 
-	void FactorySimple(ITextureManager*& ppTextureManager)
+	void TextureManager::FactorySimple(ITextureManager*& pTextureManager)
 	{
-		//ppTextureManager = new SimpleTextureManager;
+		//pTextureManager = new SimpleTextureManager;
 	}
 } }

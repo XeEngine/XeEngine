@@ -59,7 +59,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GamePlatform.Steam", "src\G
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4

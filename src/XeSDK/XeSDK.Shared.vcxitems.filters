@@ -253,15 +253,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsTilemap.h">
       <Filter>Graphics\Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeLogger.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IDriverInputEnumerator.h">
       <Filter>Driver\Input</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc32.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc64.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -405,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad.cpp">
       <Filter>IO\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Luciano\source\xeengine\src\XeSDK\XeCryptoCrc.cpp">
+      <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

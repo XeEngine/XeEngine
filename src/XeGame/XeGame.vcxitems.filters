@@ -27,9 +27,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TextureManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatform.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -42,6 +39,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAchievement.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -50,14 +51,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TextureManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp" />
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)TextureManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,8 +32,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatformCallback.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlatformConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h" />
   </ItemGroup>
 </Project>

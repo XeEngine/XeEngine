@@ -1,5 +1,7 @@
 #include "pch.h"
-#include "TextureManager.h"
+#include <XeGame/XeGameTextureManager.h>
+#include "XeGameTextureManagerDef.h"
+#include <XeGame/ITextureManager.h>
 
 using namespace Xe::IO;
 using namespace Xe::Graphics;
@@ -7,7 +9,7 @@ using namespace Xe::Graphics::Imaging;
 using namespace Xe::Storage;
 
 namespace Xe { namespace Game {
-	TexId ITextureManager::Open(ITextureManager& textureManager, Storage::IStorage& storage, ctstring path)
+	TexId TextureManager::Open(ITextureManager& textureManager, Storage::IStorage& storage, ctstring path)
 	{
 		TexId texId;
 		IFileStream* pFileStream;
@@ -24,12 +26,12 @@ namespace Xe { namespace Game {
 		return texId;
 	}
 
-	TexId ITextureManager::Open(ITextureManager& textureManager, IO::IFileStream& fileStream)
+	TexId TextureManager::Open(ITextureManager& textureManager, IO::IFileStream& fileStream)
 	{
 		return Open(textureManager, fileStream, fileStream.GetFilename());
 	}
 
-	TexId ITextureManager::Open(ITextureManager& textureManager, IO::IStream& stream, ctstring name)
+	TexId TextureManager::Open(ITextureManager& textureManager, IO::IStream& stream, ctstring name)
 	{
 		TexId texId;
 		IImage* pImage;
