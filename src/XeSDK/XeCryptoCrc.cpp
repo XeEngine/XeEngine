@@ -39,13 +39,13 @@ namespace Xe { namespace Crypto {
 		CrcGenerateTable(Table, polynomial);
 	}
 
-	u32 Crc32::Calculate(ctstring str)
+	u32 Crc32::Calculate(ctstring str) const
 	{
 		int strLen = Xe::String::GetLength(str);
 		return Calculate(str, 0, strLen);
 	}
 
-	u32 Crc32::Calculate(const char* data, int offset, int length)
+	u32 Crc32::Calculate(const char* data, int offset, int length) const
 	{
 		return CrcCalculate<u32>(Table, data, offset, length);
 	}
@@ -55,13 +55,13 @@ namespace Xe { namespace Crypto {
 		CrcGenerateTable(Table, polynomial);
 	}
 
-	u64 Crc64::Calculate(ctstring str)
+	u64 Crc64::Calculate(ctstring str) const
 	{
 		int strLen = Xe::String::GetLength(str);
 		return Calculate(str, 0, strLen);
 	}
 
-	u64 Crc64::Calculate(const char* data, int offset, int length)
+	u64 Crc64::Calculate(const char* data, int offset, int length) const
 	{
 		return CrcCalculate<u64>(Table, data, offset, length);
 	}

@@ -89,13 +89,13 @@ namespace Xe { namespace Crypto {
 		Crc64(u64 polynomial = 0xC96C5795D7870F42);
 
 		template <int length>
-		constexpr u64 Calculate(const char(&data)[length]) {
+		constexpr u64 Calculate(const char(&data)[length]) const {
 			return Calculate(data, 0, length);
 		}
 
-		u64 Calculate(ctstring str);
+		u64 Calculate(ctstring str) const;
 
-		u64 Calculate(const char* data, int offset, int length);
+		u64 Calculate(const char* data, int offset, int length) const;
 
 	private:
 		u64 Table[0x100];

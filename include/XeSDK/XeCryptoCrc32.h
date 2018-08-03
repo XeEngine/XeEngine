@@ -57,13 +57,13 @@ namespace Xe { namespace Crypto {
 		Crc32(u32 polynomial = 0xedb88320);
 
 		template <int length>
-		constexpr u32 Calculate(const char(&data)[length]) {
+		constexpr u32 Calculate(const char(&data)[length]) const {
 			return Calculate(data, 0, length);
 		}
 
-		u32 Calculate(ctstring str);
+		u32 Calculate(ctstring str) const;
 
-		u32 Calculate(const char* data, int offset, int length);
+		u32 Calculate(const char* data, int offset, int length) const;
 
 	private:
 		u32 Table[0x100];
