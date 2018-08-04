@@ -90,11 +90,24 @@ namespace Xe {
 			return false;
 		}
 		CContextGLCommon::CSurface::CSurface(IContext *context, GLuint id, SurfaceType type, const Size &size, Color::Format format) :
-			ISurface(type, size, format),
+			ISurface(context, type, size, format),
 			m_context(context),
 			m_GlId(id) {
 		}
 		CContextGLCommon::CSurface::~CSurface() {
+		}
+
+		bool CContextGLCommon::CSurface::SubLock(DataDesc & map, LockType type)
+		{
+			ASSERT(!"SubLock not implemented yet.");
+			map.data = nullptr;
+			map.pitch = 0;
+			return false;
+		}
+
+		void CContextGLCommon::CSurface::SubUnlock()
+		{
+			ASSERT(!"SubUnlock not implemented yet.");
 		}
 	}
 }

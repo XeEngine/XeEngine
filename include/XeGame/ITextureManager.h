@@ -55,8 +55,14 @@ namespace Xe { namespace Game {
 		//! \brief Get the surface from a texture id.
 		virtual Xe::Graphics::ISurface* GetSurface(TexId texId) = 0;
 
+		//! \brief Get the surface from a texture id.
+		virtual Xe::Graphics::ISurface* GetClutSurface() = 0;
+
 		//! \brief Select the texture for the next draw.
-		virtual void Select(TexId texId, int slot) = 0;
+		virtual void SelectTexture(TexId texId, int slot) = 0;
+
+		//! \brief Select the texture for the next draw.
+		virtual void SelectClut(int slot) = 0;
 
 		//! \brief Transform the specified UV coordinates into the correct versions.
 		virtual void GetUv(TexId texId, Math::Vector2f(uv)[4]) = 0;
@@ -105,10 +111,13 @@ namespace Xe { namespace Game {
 		//! \brief Get the normalized lines index.
 		virtual float GetClutIndexf(ClutId clutId) const = 0;
 
-		//! \brief Get the data for the specified Clut
+		//! \brief Lock the data for the specified Clut. The data must be then unlocked.
 		//! \param[in] clutId
 		//! \param[out] cllutData
-		virtual void GetClutData(ClutId clutId, ClutData& clutData) = 0;
+		virtual void LockClut(ClutId clutId, ClutData& clutData) = 0;
+
+		//! \brief Unlock a previously locked data.
+		virtual void UnlockClut(ClutId clutId, ClutData& clutData) = 0;
 
 		//! \brief Get a snapshot of the current usage profile
 		//! \param[out] profile Profile to fill

@@ -43,6 +43,8 @@ namespace Xe { namespace Game {
 		// Takes count of the used cluts.
 		int m_ClutsCount;
 
+		bool m_ClutInvalidated;
+
 		Xe::Graphics::ISurface* m_SurfacePalette;
 
 		// Array of texture entries
@@ -54,6 +56,8 @@ namespace Xe { namespace Game {
 		SimpleTextureManager(Xe::Graphics::IContext& context) :
 			m_Context(context),
 			m_TexturesCount(0),
+			m_ClutsCount(0),
+			m_ClutInvalidated(true),
 			m_SurfacePalette(nullptr)
 		{
 			for (int i = 0; i < lengthof(m_Texture); i++)
@@ -187,7 +191,10 @@ namespace Xe { namespace Game {
 
 			for (int i = 0; i < MaxSubClutsCount; i++)
 			{
-				texture.Palette[i] = ClutInvalid;
+				if (texture.Palette[i] != ClutInvalid)
+				{
+					DeletePalette(texture.Palette[i]);
+				}
 			}
 
 			if (texture.Surface) { texture.Surface->Release(); texture.Surface = nullptr; }
@@ -218,25 +225,11 @@ namespace Xe { namespace Game {
 					paletteData[i] = data;
 				}
 
-				if (m_SurfacePalette)
-					m_SurfacePalette->Release();
-
-				bool success = m_Context.CreateSurface(
-					&m_SurfacePalette,
-					Xe::Graphics::SurfaceType_Texture,
-					Xe::Graphics::Size(ColorsCount, MaxClutsCount),
-					Xe::Graphics::Color::Format_BGRA8888,
-					Xe::Graphics::DataDesc(m_PaletteData, ColorsCount * sizeof(u32)));
-
-				if (!success)
-				{
-					clutId = ClutInvalid;
-					Logger::DebugError("Unable to create the clut's texture.");
-				}
+				InvalidateClut();
 			}
 			else
 			{
-				Logger::DebugError("Clut slots full.");
+				Logger::DebugError("Clut slots full.\n");
 			}
 
 			return clutId;
@@ -244,7 +237,56 @@ namespace Xe { namespace Game {
 
 		void DeletePalette(ClutId clutId)
 		{
+			m_ClutsCount--;
 			ResetClutSlotUsed((int)clutId);
+		}
+
+		void InvalidateClut()
+		{
+			m_ClutInvalidated = true;
+		}
+
+		void ValidateClut()
+		{
+			if (m_ClutInvalidated)
+			{
+				if (m_SurfacePalette == nullptr)
+				{
+					bool success = m_Context.CreateSurface(
+						&m_SurfacePalette,
+						Xe::Graphics::SurfaceType_Texture,
+						Xe::Graphics::Size(ColorsCount, MaxClutsCount),
+						Xe::Graphics::Color::Format_BGRA8888,
+						Xe::Graphics::DataDesc(m_PaletteData, ColorsCount * sizeof(u32)));
+
+					if (success)
+					{
+						m_ClutInvalidated = false;
+					}
+					else
+					{
+						Logger::DebugError("Unable to create the clut's surface.\n");
+					}
+				}
+				else
+				{
+					Xe::Graphics::DataDesc desc;
+					if (m_SurfacePalette->Lock(desc, Xe::Graphics::Lock_Write))
+					{
+						Memory::Copy((void*)desc.data, m_PaletteData, sizeof(m_PaletteData));
+						m_SurfacePalette->Unlock();
+						m_ClutInvalidated = false;
+					}
+					else
+					{
+						Logger::DebugWarning("Unable to lock the clut's surface; it will be recreated.\n");
+
+						m_SurfacePalette->Release();
+						m_SurfacePalette = nullptr;
+						ValidateClut();
+					}
+				}
+			}
 		}
 
 		#pragma region Inherited via ITextureManager
@@ -321,7 +363,13 @@ namespace Xe { namespace Game {
 			}
 		}
 
-		void Select(TexId texId, int slot)
+		Xe::Graphics::ISurface* GetClutSurface()
+		{
+			ValidateClut();
+			return m_SurfacePalette;
+		}
+
+		void SelectTexture(TexId texId, int slot)
 		{
 			if (texId != TexInvalid)
 			{
@@ -337,6 +385,11 @@ namespace Xe { namespace Game {
 			{
 				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "Select");
 			}
+		}
+
+		void SelectClut(int slot)
+		{
+			m_Context.SelectSurface(GetClutSurface(), slot);
 		}
 
 		void GetUv(TexId texId, Math::Vector2f(uv)[4])
@@ -387,6 +440,7 @@ namespace Xe { namespace Game {
 				if (--m_Texture[(int)texId].ReferencesCount == 0)
 				{
 					DeleteTexture(m_Texture[(int)texId]);
+					return TexInvalid;
 				}
 			}
 			else
@@ -427,6 +481,8 @@ namespace Xe { namespace Game {
 				{
 					if (texture.ClutsCount < MaxSubClutsCount)
 					{
+						AddReference(texId);
+
 						ClutId clutId = GetFreeClutSlot();
 						ASSERT(clutId != ClutInvalid);
 
@@ -487,8 +543,8 @@ namespace Xe { namespace Game {
 				}
 				ASSERT(clutsToFreeFound == true);
 				
-				m_PaletteSlot[(int)clutId] = TexInvalid;
-				return texture.Palette[0];
+				DeletePalette(clutId);
+				return RemoveReference(texId) != TexInvalid ? texture.Palette[0] : ClutInvalid;
 			}
 			else
 			{
@@ -514,7 +570,7 @@ namespace Xe { namespace Game {
 			return (float)(int)clutId / MaxClutsCount + 0.5f / MaxClutsCount;
 		}
 
-		void GetClutData(ClutId clutId, ClutData& clutData)
+		void LockClut(ClutId clutId, ClutData& clutData)
 		{
 			ASSERT((int)clutId >= 0 || (int)clutId < MaxClutsCount);
 			if (clutId != ClutInvalid)
@@ -527,6 +583,11 @@ namespace Xe { namespace Game {
 			{
 				Logger::DebugError("An invalid Id has been specified for %s.\n", "GetClutData");
 			}
+		}
+
+		void UnlockClut(ClutId clutId, ClutData& clutData)
+		{
+			InvalidateClut();
 		}
 
 		bool GetProfile(TextureManagerProfile& profile, int maxEntriesCount)

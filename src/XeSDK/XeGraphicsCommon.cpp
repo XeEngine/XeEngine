@@ -50,7 +50,7 @@ namespace Xe {
         {
             switch (m_Usage) {
                 case Usage_Standard:
-                    return false;
+					break;
                 case Usage_Static:
                     return false;
                 case Usage_Dynamic:

@@ -3,6 +3,7 @@
 ## [0.8.1] - 2018-08-04
 
 ### Added in XeSDK
+- Added ISurface::Lock and ISurface::Unlock.
 - Added Xe::Crypto::Crc32 and Xe::Crypto::Crc64.
 - Added Xe::Crypto::Fnv1a32 and Xe::Crypto::Fnv1a64.
 

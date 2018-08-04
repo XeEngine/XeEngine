@@ -60,6 +60,10 @@ namespace Xe {
 				bool Query(IObject **obj, UID id);
 				CSurface(IContext *context, GLuint id, SurfaceType type, const Size &size, Color::Format format);
 				~CSurface();
+
+				// Inherited via ISurface
+				bool SubLock(DataDesc & map, LockType type);
+				void SubUnlock();
 			};
 			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 			void SelectSurface(ISurface *surface, svar index);

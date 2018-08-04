@@ -45,15 +45,14 @@ namespace Xe {
 		};
 
 		//! \brief Surface used as texture or render target
-		class ISurface : public IObject {
-			SurfaceType m_type;
-			Size m_size;
-			Color::Format m_colorformat;
+		class ISurface : public IResource {
 		public:
 			static const UID ID = 0xffc01cf158aa4b71ULL;
 
-			ISurface(SurfaceType type, const Size& size, Color::Format format) :
-				m_type(type), m_size(size), m_colorformat(format) {}
+			ISurface(IContext* context, SurfaceType type, const Size& size, Color::Format format) :
+				m_type(type), m_size(size), m_colorformat(format),
+				IResource(context, Usage_Standard)
+			{}
 
 			//! \brief get the type of the surface
 			SurfaceType GetType() const {
@@ -67,6 +66,11 @@ namespace Xe {
 			Color::Format GetColorFormat() const {
 				return m_colorformat;
 			}
+
+		protected:
+			SurfaceType m_type;
+			Size m_size;
+			Color::Format m_colorformat;
 		};
 	}
 }

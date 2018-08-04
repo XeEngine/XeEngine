@@ -13,7 +13,6 @@ namespace Xe {
 			class CSurface : public ISurface {
 			public:
 				static const UID ID = 0x74d30401d65e4d72ULL;
-				IContext *m_context;
 				ID3D11Resource *m_pResource;
 				ID3D11ShaderResourceView *m_pResourceView;
 				ID3D11RenderTargetView *m_pTargetView;
@@ -22,6 +21,15 @@ namespace Xe {
 				CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format,
 					ID3D11Resource *resource, ID3D11ShaderResourceView *resourceView, ID3D11RenderTargetView *targetView);
 				~CSurface();
+
+				// Inherited via ISurface
+				bool SubLock(DataDesc & map, LockType type);
+				void SubUnlock();
+
+			private:
+				void* m_LockBuffer;
+				bool m_IsLocked;
+				bool m_DirectMode;
 			};
 
 			class CDepthStencilState : public IDepthStencilState {

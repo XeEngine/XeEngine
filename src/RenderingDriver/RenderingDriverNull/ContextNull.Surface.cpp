@@ -46,10 +46,19 @@ namespace Xe {
 			return false;
 		}
 		CContextNull::CSurface::CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format) :
-			ISurface(type, size, format),
+			ISurface(context, type, size, format),
 			m_context(context) {
 		}
 		CContextNull::CSurface::~CSurface() {
+		}
+		bool CContextNull::CSurface::SubLock(DataDesc & map, LockType type)
+		{
+			map.data = nullptr;
+			map.pitch = 0;
+			return false;
+		}
+		void CContextNull::CSurface::SubUnlock()
+		{
 		}
 	}
 }

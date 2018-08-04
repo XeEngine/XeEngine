@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ContextD3D11.h"
+#include <XeSDK/XeMemory.h>
+#include <XeSDK/XeGraphicsColor.h>
 
 using namespace Xe::Debug;
 
@@ -129,13 +131,11 @@ namespace Xe {
 				if (surface != nullptr) {
 					CSurface *p;
 					if (surface->Query((IObject**)&p, CSurface::ID)) {
-						if (p->m_context == this) {
-							m_Drawing->Flush();
-							if (m_Surface[index]) m_Surface[index]->Release();
-							m_Surface[index] = p;
-							m_Surface[index]->AddRef();
-							m_d3dContext->PSSetShaderResources((UINT)index, 1, &p->m_pResourceView);
-						}
+						m_Drawing->Flush();
+						if (m_Surface[index]) m_Surface[index]->Release();
+						m_Surface[index] = p;
+						m_Surface[index]->AddRef();
+						m_d3dContext->PSSetShaderResources((UINT)index, 1, &p->m_pResourceView);
 						p->Release();
 					}
 					// If the object does not belong to current context, then ignore it.
@@ -162,16 +162,104 @@ namespace Xe {
 		}
 		CContextD3D11::CSurface::CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format,
 			ID3D11Resource *resource, ID3D11ShaderResourceView *resourceView, ID3D11RenderTargetView *targetView) :
-			ISurface(type, size, format),
-			m_context(context),
+			ISurface(context, type, size, format),
 			m_pResource(resource),
 			m_pResourceView(resourceView),
-			m_pTargetView(targetView) {
+			m_pTargetView(targetView),
+			m_IsLocked(false)
+		{
+			m_length = size.x * size.y * Xe::Graphics::Color::GetBitsPerPixel(format) / 8;
+
 		}
 		CContextD3D11::CSurface::~CSurface() {
 			if (m_pTargetView) m_pTargetView->Release();
 			if (m_pResourceView) m_pResourceView->Release();
 			if (m_pResource) m_pResource->Release();
+		}
+
+		bool CContextD3D11::CSurface::SubLock(DataDesc & map, LockType type)
+		{
+			map.data = nullptr;
+			map.pitch = 0;
+
+			if (m_IsLocked)
+			{
+				Logger::DebugError("Unable to lock the surface: it was already locked");
+				return false;
+			}
+
+			if (m_Usage == Usage_Static)
+			{
+				Logger::DebugWarning("Unable to lock a static surface");
+				return false;
+			}
+
+			ASSERT(m_LockBuffer == nullptr);
+
+			D3D11_MAPPED_SUBRESOURCE mappedSubresource;
+			HRESULT hr = ((CContextD3D11*)m_pContext)
+				->m_d3dContext
+				->Map(
+					m_pResource, // pResource
+					0, // Subresource
+					GetMapType(type), // MapType
+					0, // MapFlags
+					&mappedSubresource // MappedResource
+				);
+
+			if (FAILED(hr)) {
+				Logger::DebugWarning("Unable to lock the current buffer, trying to clone the resource (slower but it does work!).");
+
+				map.data = m_LockBuffer = Xe::Memory::Alloc(m_length);
+				map.pitch = m_length;
+				m_DirectMode = false;
+			}
+			else {
+				map.data = mappedSubresource.pData;
+				map.pitch = mappedSubresource.DepthPitch;
+				m_DirectMode = true;
+			}
+
+			m_IsLocked = true;
+			return true;
+		}
+
+		void CContextD3D11::CSurface::SubUnlock()
+		{
+			if (!m_IsLocked)
+			{
+				Logger::DebugError("Unable to unlock the buffer: it was not locked");
+			}
+
+			if (!m_DirectMode)
+			{
+				DataDesc dataDesc;
+				dataDesc.data = m_LockBuffer;
+				dataDesc.pitch = m_size.x * Xe::Graphics::Color::GetBitsPerPixel(m_colorformat) / 8;
+
+				Xe::Graphics::ISurface* tmpSurface;
+				if (m_pContext->CreateSurface(&tmpSurface, m_type, m_size, m_colorformat, dataDesc))
+				{
+					CSurface* d3dSurface = (CSurface*)tmpSurface;
+
+					((CContextD3D11*)m_pContext)->m_d3dContext->
+						CopyResource(this->m_pResource, d3dSurface->m_pResource);
+					tmpSurface->Release();
+				}
+				else
+				{
+					Logger::DebugError("Unable to create a temporary surface for undirect SubLock.");
+				}
+
+				Xe::Memory::Free(m_LockBuffer);
+				m_LockBuffer = nullptr;
+			}
+			else
+			{
+				((CContextD3D11*)m_pContext)->m_d3dContext->Unmap(m_pResource, 0);
+			}
+
+			m_IsLocked = false;
 		}
 	}
 }

@@ -17,6 +17,10 @@ namespace Xe {
 				bool Query(IObject **obj, UID id);
 				CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format);
 				~CSurface();
+
+				// Inherited via ISurface
+				virtual bool SubLock(DataDesc& map, LockType type);
+				virtual void SubUnlock();
 			};
 			class CDepthStencilState : public IDepthStencilState {
 			public:
