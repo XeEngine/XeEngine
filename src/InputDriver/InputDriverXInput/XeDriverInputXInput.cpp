@@ -179,23 +179,23 @@ namespace Xe { namespace Driver { namespace Input {
 		u32 TranslateButtons(WORD id) {
 			u32 data = 0;
 
-			if (id & XINPUT_GAMEPAD_DPAD_UP) data &= 1 << 0;
-			if (id & XINPUT_GAMEPAD_DPAD_DOWN) data &= 1 << 1;
-			if (id & XINPUT_GAMEPAD_DPAD_LEFT) data &= 1 << 2;
-			if (id & XINPUT_GAMEPAD_DPAD_RIGHT) data &= 1 << 3;
+			if (id & XINPUT_GAMEPAD_DPAD_UP) data |= 1 << 0;
+			if (id & XINPUT_GAMEPAD_DPAD_DOWN) data |= 1 << 1;
+			if (id & XINPUT_GAMEPAD_DPAD_LEFT) data |= 1 << 2;
+			if (id & XINPUT_GAMEPAD_DPAD_RIGHT) data |= 1 << 3;
 
-			if (id & XINPUT_GAMEPAD_START) data &= 1 << 15;
-			if (id & XINPUT_GAMEPAD_BACK) data &= 1 << 14;
+			if (id & XINPUT_GAMEPAD_START) data |= 1 << 15;
+			if (id & XINPUT_GAMEPAD_BACK) data |= 1 << 14;
 
-			if (id & XINPUT_GAMEPAD_LEFT_THUMB) data &= 1 << 12;
-			if (id & XINPUT_GAMEPAD_RIGHT_THUMB) data &= 1 << 13;
-			if (id & XINPUT_GAMEPAD_LEFT_SHOULDER) data &= 1 << 8;
-			if (id & XINPUT_GAMEPAD_RIGHT_SHOULDER) data &= 1 << 9;
+			if (id & XINPUT_GAMEPAD_LEFT_THUMB) data |= 1 << 12;
+			if (id & XINPUT_GAMEPAD_RIGHT_THUMB) data |= 1 << 13;
+			if (id & XINPUT_GAMEPAD_LEFT_SHOULDER) data |= 1 << 8;
+			if (id & XINPUT_GAMEPAD_RIGHT_SHOULDER) data |= 1 << 9;
 
-			if (id & XINPUT_GAMEPAD_A) data &= 1 << 5;
-			if (id & XINPUT_GAMEPAD_B) data &= 1 << 7;
-			if (id & XINPUT_GAMEPAD_X) data &= 1 << 6;
-			if (id & XINPUT_GAMEPAD_Y) data &= 1 << 4;
+			if (id & XINPUT_GAMEPAD_A) data |= 1 << 5;
+			if (id & XINPUT_GAMEPAD_B) data |= 1 << 7;
+			if (id & XINPUT_GAMEPAD_X) data |= 1 << 6;
+			if (id & XINPUT_GAMEPAD_Y) data |= 1 << 4;
 
 			return data;
 		}
