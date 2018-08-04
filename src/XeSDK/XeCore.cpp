@@ -6,10 +6,10 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 8
-#define VERSION_BUILD 0
+#define VERSION_BUILD 1
 #define ENGINE_NAME _T("XeEngine")
 #define ENGINE_DEVELOPER _T("Luciano Ciccariello (Xeeynamo)")
-#define ENGINE_VERSION _T("0.8.0")
+#define ENGINE_VERSION _T("0.8.1")
 
 namespace Xe {
     namespace Core {

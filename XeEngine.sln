@@ -57,6 +57,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform Drivers", "Platfor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GamePlatform.Steam", "src\GamePlatformDriver\GamePlatform.Steam\GamePlatform.Steam.vcxitems", "{DCCB15FF-2DA3-4CC6-A918-D5633E64D85C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{871CA8C3-DE33-4429-A17B-18ADC52C5F8B}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
