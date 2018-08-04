@@ -5,6 +5,7 @@
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeMath.h>
+#include <XeSDK/XeCryptoFnv1a.h>
 #include <string.h>
 #include <cwchar>
 
@@ -14,21 +15,6 @@
 
 #define CAPACITY_MULTIPLIER	0x10
 
-namespace Xe {
-	// Using Adler-32 algorithm
-	template <int i>
-	const UID inline _ComputeStrHash(const char *c) {
-		return (_ComputeStrHash<i - 1>(c) ^ c[i]) * 1099511628213ULL;
-	}
-	template<>
-	const UID inline _ComputeStrHash<0>(const char *c) {
-		return (14695981039346656037ULL ^ *c) * 1099511628213ULL;
-	}
-	template <size_t length>
-	const UID inline ComputeStrHash(const char(&str)[length]) {
-		return _ComputeStrHash<length - 2>(str);
-	}
-}
 bool Xe::String::Query(IObject **obj, UID id)
 {
 	switch (id)
@@ -566,19 +552,6 @@ template <typename T> svar Itoa(svar value, T *str, svar base)
 	}
 	return strLength;
 }
-template <typename T> u64 GetHashFNV1a(const T *str, svar length)
-{
-	static const u64 OffsetBasis = 14695981039346656037ULL;
-	static const u64 Prime = 1099511628213ULL;
-
-	u64 hash = OffsetBasis;
-	for (svar i = 0; i < length; i++)
-	{
-		hash ^= str[i];
-		hash *= Prime;
-	}
-	return hash;
-}
 
 #define CHPROP_ISSPACE 0x01
 #define CHPROP_ISDIGIT 0x04
@@ -1028,9 +1001,9 @@ svar Xe::String::NCopy(tchar* dst, ctstring src, svar length)
 }
 u64 Xe::String::GetHashFNV1a(const char *str, svar length)
 {
-	return ::GetHashFNV1a<char>(str, length);
+	return Xe::Crypto::Fnv1a64(str, length);
 }
 u64 Xe::String::GetHashFNV1a(const wchar_t *str, svar length)
 {
-	return ::GetHashFNV1a<wchar_t>(str, length);
+	return Xe::Crypto::Fnv1a64((const char*)str, length * sizeof(wchar_t));
 }
