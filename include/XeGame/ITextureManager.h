@@ -1,6 +1,7 @@
 #pragma once
 #include <XeSDK/IStorage.h>
 #include <XeSDK/XeGraphicsImaging.h>
+#include <XeSDK/XeMathVector2.h>
 
 namespace Xe { namespace Game {
 	struct _TexId;
@@ -49,7 +50,19 @@ namespace Xe { namespace Game {
 		//! \brief Get the TexId from the unique name
 		//! \param[in] name Unique name of the image; cannot be null.
 		//! \return A proper TexId or TexInvalid if it was not found.
-		virtual TexId Get(ctstring name) const = 0;
+		virtual TexId GetTextureId(ctstring name) const = 0;
+
+		//! \brief Get the surface from a texture id.
+		virtual Xe::Graphics::ISurface* GetSurface(TexId texId) = 0;
+
+		//! \brief Select the texture for the next draw.
+		virtual void Select(TexId texId, int slot) = 0;
+
+		//! \brief Transform the specified UV coordinates into the correct versions.
+		virtual void GetUv(TexId texId, Math::Vector2f(uv)[4]) = 0;
+
+		//! \brief Get the UV coordinates from the LTRB.
+		virtual void GetUvLTRB(TexId texId, Math::Vector2f(uv)[4], u16 left, u16 top, s16 right, s16 bottom) = 0;
 
 		//! \brief Increases the references count of a texture.
 		//! \param[in] texId lower the references count by 1.
@@ -87,7 +100,10 @@ namespace Xe { namespace Game {
 		virtual ClutId FreeClut(ClutId clutId) = 0;
 
 		//! \brief Get the texture from the ClutId
-		virtual TexId GetTexture(ClutId clutId) const = 0;
+		virtual TexId GetTextureId(ClutId clutId) const = 0;
+
+		//! \brief Get the normalized lines index.
+		virtual float GetClutIndexf(ClutId clutId) const = 0;
 
 		//! \brief Get the data for the specified Clut
 		//! \param[in] clutId

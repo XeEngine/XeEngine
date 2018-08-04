@@ -11,7 +11,7 @@ namespace Xe { namespace Storage {
 } }
 
 namespace Xe { namespace Game {
-	class TextureManager
+	struct TextureManager
 	{
 		static void FactorySimple(ITextureManager*& pTextureManager, Xe::Graphics::IContext& context);
 

@@ -154,13 +154,13 @@ namespace Xe { namespace Game {
 			m_PaletteSlot[clutIndex] = TexInvalid;
 		}
 
-		const Texture& GetTextureConst(TexId texId) const
+		const Texture& GetInternalTextureConst(TexId texId) const
 		{
 			ASSERT((int)texId >= 0 || (int)texId < MaxTexturesCount);
 			return m_Texture[(int)texId];
 		}
 
-		Texture& GetTexture(TexId texId)
+		Texture& GetInternalTexture(TexId texId)
 		{
 			ASSERT((int)texId >= 0 || (int)texId < MaxTexturesCount);
 			return m_Texture[(int)texId];
@@ -174,7 +174,6 @@ namespace Xe { namespace Game {
 
 		bool AllocateTexture(Xe::Graphics::Imaging::IImage& image, Xe::Graphics::ISurface*& pSurface)
 		{
-			ASSERT(pSurface != nullptr);
 			return Xe::Graphics::Imaging::CreateSurface(&m_Context, &pSurface,
 				Xe::Graphics::SurfaceType_Texture, &image);
 		}
@@ -265,7 +264,7 @@ namespace Xe { namespace Game {
 			texId = GetFreeTextureSlot();
 			if (texId != TexInvalid)
 			{
-				Texture& tex = GetTexture(texId);
+				Texture& tex = GetInternalTexture(texId);
 
 				// Check if it is possible to allocate the texture.
 				if (AllocateTexture(image, tex.Surface))
@@ -304,10 +303,65 @@ namespace Xe { namespace Game {
 			return texId;
 		}
 
-		TexId Get(ctstring name) const
+		TexId GetTextureId(ctstring name) const
 		{
 			ASSERT(name != nullptr);
 			return Search(crc.Calculate(name));
+		}
+
+		Xe::Graphics::ISurface* GetSurface(TexId texId)
+		{
+			if (texId != TexInvalid)
+			{
+				return GetInternalTextureConst(texId).Surface;
+			}
+			else
+			{
+				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "GetTexture");
+			}
+		}
+
+		void Select(TexId texId, int slot)
+		{
+			if (texId != TexInvalid)
+			{
+				// Block probably not needed.
+				Xe::Graphics::IDrawing2d* pDrawing;
+				m_Context.GetDrawing(&pDrawing);
+				pDrawing->Flush(); 
+				pDrawing->Release();
+
+				m_Context.SelectSurface(GetSurface(texId), slot);
+			}
+			else
+			{
+				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "Select");
+			}
+		}
+
+		void GetUv(TexId texId, Math::Vector2f(uv)[4])
+		{
+		}
+
+		void GetUvLTRB(TexId texId, Math::Vector2f(uv)[4], u16 left, u16 top, s16 right, s16 bottom)
+		{
+			if (texId != TexInvalid)
+			{
+				auto& texture = GetInternalTextureConst(texId);
+				const Graphics::Size& size = texture.Surface->GetSize();
+				uv[0].x = 1.0f / (float)size.x * (float)left;
+				uv[0].y = 1.0f / (float)size.y * (float)top;
+				uv[1].x = 1.0f / (float)size.x * (float)right;
+				uv[1].y = uv[0].y;
+				uv[2].x = uv[0].x;
+				uv[2].y = 1.0f / (float)size.y * (float)bottom;
+				uv[3].x = uv[1].x;
+				uv[3].y = uv[2].y;
+			}
+			else
+			{
+				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "GetUvLTRB");
+			}
 		}
 
 		TexId AddReference(TexId texId)
@@ -360,12 +414,12 @@ namespace Xe { namespace Game {
 
 		ClutId GetDefaultClut(TexId texId) const
 		{
-			return GetTextureConst(texId).Palette[0];
+			return GetInternalTextureConst(texId).Palette[0];
 		}
 
 		ClutId AllocateClut(TexId texId)
 		{
-			auto& texture = GetTexture(texId);
+			auto& texture = GetInternalTexture(texId);
 
 			if (texture.ClutsCount > 0)
 			{
@@ -412,10 +466,10 @@ namespace Xe { namespace Game {
 			{
 				ASSERT((int)clutId >= 0 || (int)clutId < MaxClutsCount);
 
-				TexId texId = GetTexture(clutId);
+				TexId texId = GetTextureId(clutId);
 				ASSERT(texId != TexInvalid);
 
-				Texture& texture = GetTexture(texId);
+				Texture& texture = GetInternalTexture(texId);
 				bool clutsToFreeFound = false;
 				for (int i = 1; i < texture.ClutsCount; i++)
 				{
@@ -444,7 +498,7 @@ namespace Xe { namespace Game {
 			return ClutInvalid;
 		}
 
-		TexId GetTexture(ClutId clutId) const
+		TexId GetTextureId(ClutId clutId) const
 		{
 			if (clutId != ClutInvalid)
 			{
@@ -453,7 +507,11 @@ namespace Xe { namespace Game {
 			}
 
 			return TexInvalid;
+		}
 
+		float GetClutIndexf(ClutId clutId) const
+		{
+			return (float)(int)clutId / MaxClutsCount + 0.5f / MaxClutsCount;
 		}
 
 		void GetClutData(ClutId clutId, ClutData& clutData)
