@@ -410,9 +410,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad.cpp">
       <Filter>IO\Private</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Luciano\source\xeengine\src\XeSDK\XeCryptoCrc.cpp">
-      <Filter>Private</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">

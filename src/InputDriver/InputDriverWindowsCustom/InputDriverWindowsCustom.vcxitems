@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{69c0c0a8-0787-4bcd-993f-fbc1c05dd267}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Dualshock4.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Dualshock4bt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Dualshock4v2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamepadGeneric.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriverInputWindowsCustom.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Dualshock4.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Dualshock4bt.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Dualshock4v2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamepadGeneric.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDriverInputWindowsCustom.cpp" />
+  </ItemGroup>
+</Project>
