@@ -7,13 +7,13 @@ namespace Xe { namespace IO {
 } }
 
 namespace Xe { namespace Storage {
-	struct IStorage;
+	class IStorage;
 } }
 
 namespace Xe { namespace Game {
 	class TextureManager
 	{
-		static void FactorySimple(ITextureManager*& pTextureManager);
+		static void FactorySimple(ITextureManager*& pTextureManager, Xe::Graphics::IContext& context);
 
 		static TexId Open(ITextureManager& textureManager, Storage::IStorage& storage, ctstring path);
 		static TexId Open(ITextureManager& textureManager, IO::IFileStream& fileStream);

@@ -7,7 +7,7 @@ namespace Xe { namespace Game {
 
 	};
 
-	struct _PalId
+	struct _ClutId
 	{
 
 	};
