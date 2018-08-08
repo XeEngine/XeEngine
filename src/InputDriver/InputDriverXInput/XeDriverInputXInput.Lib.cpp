@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "XeDriverInputXInput.h"
 
-namespace Xe { namespace Driver { namespace Input {
+namespace Xe { namespace Drivers { namespace Input {
 	void XInputLib::Initialize() {
 		static const Versions XINPUT_VER[] =
 		{
