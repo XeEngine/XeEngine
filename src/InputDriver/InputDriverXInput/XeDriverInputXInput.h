@@ -1,5 +1,5 @@
 #pragma once
-#include "IDriverInputEnumerator.h"
+#include <XeSDK/IDriversGamepadDriver.h>
 
 #include <Windows.h>
 #include <XInput.h>
@@ -41,9 +41,18 @@ typedef DWORD(WINAPI *PFNXINPUTGETAUDIODEVICESIDSPROC) (
 	_Inout_opt_  UINT *pCaptureCount
 	);
 
-namespace Xe { namespace Driver { namespace Input {
+namespace Xe { namespace Drivers { namespace Input {
 
-	class XInput : public Enumerator {
+	class XInput : public IGamepadDriver {
+
+		// Inherited from IDriver
+		const char* GetDriverName() const { return "XInput"; }
+		DriverType GetDriverType() const { return DriverType_Input; }
+
+		// Inherited from IInputDriver
+		InputDeviceType GetInputDeviceType() const { return InputDeviceType_Gamepad; }
+
+		// Inherited from IGamepadDriver
 		bool OpenDevice(
 			Xe::IO::Gamepad** ppGamepad,
 			const Xe::IO::GamepadEntry& entry);

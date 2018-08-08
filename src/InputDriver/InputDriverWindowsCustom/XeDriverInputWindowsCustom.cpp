@@ -22,7 +22,7 @@
 #define VID_SONY_DS4V2 0x09CC
 #define VID_SONY_DS4W 0x0BA0
 
-namespace Xe { namespace Driver { namespace Input
+namespace Xe { namespace Drivers { namespace Input
 {
 	struct InternalGamepad
 	{
@@ -33,6 +33,13 @@ namespace Xe { namespace Driver { namespace Input
 	size_t g_GamepadsCount = 0;
 	InternalGamepad g_Gamepads[16];
 
+	const char* WindowsCustom::GetDriverName() const { return "WindowsCustom"; }
+	DriverType WindowsCustom::GetDriverType() const { return DriverType_Input; }
+
+	// Inherited from IInputDriver
+	InputDeviceType WindowsCustom::GetInputDeviceType() const { return InputDeviceType_Gamepad; }
+
+	// Inherited from IGamepadDriver
 	bool WindowsCustom::OpenDevice(
 		Xe::IO::Gamepad** ppGamepad,
 		const Xe::IO::GamepadEntry& entry)
