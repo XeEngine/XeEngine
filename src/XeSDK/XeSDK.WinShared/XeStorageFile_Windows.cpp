@@ -267,7 +267,7 @@ namespace Xe {
 			{
 				int filenameLength = Xe::String::GetLength(filename);
 				wchar_t* filenameW = new wchar_t[filenameLength + 1];
-				mbtowc(filenameW, filename, filenameLength + 1);
+				mbstowcs(filenameW, filename, filenameLength + 1);
 
 				handle = CreateFile2(filenameW, DESIDER_ACCESS[access],
 					dwShareMode, dwCreationDisposition, &exParams);
