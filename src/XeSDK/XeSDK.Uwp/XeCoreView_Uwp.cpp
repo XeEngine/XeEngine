@@ -14,7 +14,6 @@ using namespace ABI::Windows::Graphics::Display;
 using namespace ABI::Windows::UI::Core;
 using namespace ABI::Windows::UI::ViewManagement;
 
-
 typedef IEventHandler<SuspendingEventArgs*> SuspendingEvent;
 typedef IEventHandler<IInspectable*> ResumingEvent;
 typedef ITypedEventHandler<CoreApplicationView *, IActivatedEventArgs *> IActivatedEventHandler;
@@ -49,6 +48,8 @@ auto GetActivationFactory(WCHAR const (&classId)[Count]) -> ComPtr<T>
 
 namespace Xe {
 	namespace Core {
+		void GetViewInternal(IView* pView, ViewInternal& viewInternal);
+
 		struct CFrameView :
 			public IFrameworkViewSource,
 			IFrameworkView,
@@ -58,11 +59,7 @@ namespace Xe {
 			ULONG m_ref;
 			ComPtr<ICoreWindow> m_Window;
 			ComPtr<IApplicationView> m_ApplicationView;
-#ifndef PLATFORM_WINAPP
-#ifdef PLATFORM_WINUNIVERSAL
 			ComPtr<IApplicationView3> m_ApplicationView3;
-#endif
-#endif
 			ComPtr<IDisplayInformationStatics> m_DisplayInformationStatics;
 			ComPtr<ICoreDispatcher> m_Dispatcher;
 			bool m_IsClosed;
@@ -164,7 +161,6 @@ namespace Xe {
 				m_Window->add_PointerReleased(Callback<PointerEvent>(this, &CFrameView::OnPointerReleased).Get(), &token);
 				m_Window->add_PointerWheelChanged(Callback<PointerEvent>(this, &CFrameView::OnPointerWheelChanged).Get(), &token);
 
-#ifdef PLATFORM_WINUNIVERSAL
 				auto ApplicationViewStatic3 = GetActivationFactory<IApplicationViewStatics3>(RuntimeClass_Windows_UI_ViewManagement_ApplicationView);
 				if (ApplicationViewStatic3) {
 					if (m_Properties.Size.x > 0 && m_Properties.Size.y > 0) {
@@ -178,26 +174,34 @@ namespace Xe {
 					else windowingMode = ApplicationViewWindowingMode_PreferredLaunchViewSize;
 					ApplicationViewStatic3->put_PreferredLaunchWindowingMode(windowingMode);
 				}
-#endif
+				
 				auto ApplicationViewStatic2 = GetActivationFactory<IApplicationViewStatics2>(RuntimeClass_Windows_UI_ViewManagement_ApplicationView);
-				if (ApplicationViewStatic2) ApplicationViewStatic2->GetForCurrentView(&m_ApplicationView);
-#ifndef PLATFORM_WINAPP
-				if (m_ApplicationView) {
-					ComPtr<IApplicationView2> ApplicationView2;
-					if (m_ApplicationView.As(&ApplicationView2) == S_OK)
-						ApplicationView2->put_SuppressSystemOverlays((boolean)m_Properties.IsFullscreen);
-#ifdef PLATFORM_WINUNIVERSAL
-					if (m_ApplicationView.As(&m_ApplicationView3) == S_OK) {
-						FullScreenSystemOverlayMode overlayMode;
-						if (m_Properties.IsFullscreen) overlayMode = FullScreenSystemOverlayMode_Minimal;
-						else overlayMode = FullScreenSystemOverlayMode_Standard;
-						m_ApplicationView3->put_FullScreenSystemOverlayMode(overlayMode);
-						boolean success;
-						if (m_Properties.IsFullscreen) m_ApplicationView3->TryEnterFullScreenMode(&success);
-					}
-#endif
+				if (ApplicationViewStatic2)
+				{
+					ApplicationViewStatic2->GetForCurrentView(&m_ApplicationView);
 				}
-#endif
+
+				if (m_ApplicationView)
+				{
+					// DEPRECATED
+					//ComPtr<IApplicationView2> ApplicationView2;
+					//if (m_ApplicationView.As(&ApplicationView2) == S_OK)
+					//{
+					//	ApplicationView2->put_SuppressSystemOverlays((boolean)m_Properties.IsFullscreen);
+					//}
+
+					if (m_ApplicationView.As(&m_ApplicationView3) == S_OK)
+					{
+						FullScreenSystemOverlayMode overlayMode = m_Properties.IsFullscreen ?
+							FullScreenSystemOverlayMode_Minimal : FullScreenSystemOverlayMode_Standard;
+						m_ApplicationView3->put_FullScreenSystemOverlayMode(overlayMode);
+
+						if (m_Properties.IsFullscreen)
+						{
+							SetFullScreen(true);
+						}
+					}
+				}
 
 				float dpi;
 				IDisplayInformation *pDisplayInformation;
@@ -270,22 +274,33 @@ namespace Xe {
 			void SetTitle(const String& title) {
 				HSTRING_HEADER header;
 				HSTRING string;
-				if (WindowsCreateStringReference(title, title.GetLength(), &header, &string) == S_OK)
+
+				int strLength = Xe::String::GetLength(title);
+				wchar_t* strW = new wchar_t[strLength + 1];
+				mbtowc(strW, title, strLength + 1);
+
+
+				if (WindowsCreateStringReference(strW, title.GetLength(), &header, &string) == S_OK)
 					m_ApplicationView->put_Title(string);
+
+				delete[] strW;
 			}
 			Graphics::Size GetSize() const {
 				return m_Size;
 			}
 			bool SetSize(const Graphics::Size& size) {
-#ifdef PLATFORM_WINUNIVERSAL
 				ABI::Windows::Foundation::Size newsize;
 				newsize.Width = (FLOAT)size.x;
 				newsize.Height = (FLOAT)size.y;
 				boolean success;
 				if (m_ApplicationView3->TryResizeView(newsize, &success) == S_OK)
 					return success != 0;
-#endif
 				return false;
+			}
+			void SetFullScreen(bool fullScreen)
+			{
+				boolean success;
+				m_ApplicationView3->TryEnterFullScreenMode(&success);
 			}
 			Xe::Graphics::Orientation GetOrientation() const {
 				return m_Orientation;
@@ -295,6 +310,12 @@ namespace Xe {
 			}
 			float GetScale() const {
 				return m_Scale;
+			}
+			void* GetSystemWindow() const
+			{
+				Xe::Core::ViewInternal viewInternal;
+				GetViewInternal(m_pView, viewInternal);
+				return viewInternal.Window;
 			}
 
 			///////////////////////////////////////////////////////////////////////////
