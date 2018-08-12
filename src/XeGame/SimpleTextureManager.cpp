@@ -361,6 +361,8 @@ namespace Xe { namespace Game {
 			{
 				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "GetTexture");
 			}
+
+			return nullptr;
 		}
 
 		Xe::Graphics::ISurface* GetClutSurface()

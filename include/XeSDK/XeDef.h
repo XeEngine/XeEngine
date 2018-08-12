@@ -76,14 +76,20 @@ typedef unsigned int		uvar;
 
 // Unicode support
 #if defined(UNICODE) || defined(_UNICODE)
-#define PLATFORM_UNICODE
-#define _SS(x) _S(x)
-#define __TFILE__	_SS(__FILE__)
-#define _S(str) L ## str
-#define _T(str) L ## str
-typedef wchar_t tchar;
-typedef wchar_t* tstring;
-typedef const wchar_t* ctstring;
+//#define PLATFORM_UNICODE
+//#define _SS(x) _S(x)
+//#define __TFILE__	_SS(__FILE__)
+//#define _S(str) L ## str
+//#define _T(str) L ## str
+//typedef wchar_t tchar;
+//typedef wchar_t* tstring;
+//typedef const wchar_t* ctstring;
+#define __TFILE__	__FILE__
+#define _S(str) str
+#define _T(str) str
+typedef char tchar;
+typedef char* tstring;
+typedef const char* ctstring;
 #else
 #define __TFILE__	__FILE__
 #define _S(str) str

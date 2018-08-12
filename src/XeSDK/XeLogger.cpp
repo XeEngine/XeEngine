@@ -76,7 +76,7 @@ namespace Xe {
 #ifdef PLATFORM_WINDOWS
 		static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-        OutputDebugString(str);
+        OutputDebugStringA(str);
 
 		WORD attributes;
 		switch (level) {

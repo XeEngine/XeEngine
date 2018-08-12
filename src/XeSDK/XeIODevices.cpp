@@ -1,6 +1,5 @@
 #include "pch.h"
 #include <XeSDK/XeIODevices.h>
-#include "IDriverInputEnumerator.h"
 
 namespace Xe { namespace IO {
 	std::vector<HidDevice> GetHidDevices() {

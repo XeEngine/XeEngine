@@ -7,6 +7,8 @@
 #ifndef PLATFORM_WINDOWS
 #include <sys/socket.h>
 #include <unistd.h>
+#elif PLATFORM_UWP
+#include <Winsock2.h>
 #endif
 
 namespace Xe {

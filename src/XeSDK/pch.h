@@ -8,12 +8,17 @@
 #endif
 
 #ifdef PLATFORM_WINDOWS
-// Stuff from Microsoft products
+
+#ifndef WIN32_LEAN_AND_MEAN
+//#define WIN32_LEAN_AND_MEAN
+#endif
+#include <SDKDDKVer.h>
 #include <windows.h>
 #include <d3d11.h>
 #include <d3d11_1.h>
 #include "ShaderD3D11_VSDefault.h"
 #include "ShaderD3D11_FSDefault.h"
+
 #ifdef PLATFORM_WINRT
 // Stuff from Windows Runtime API
 #include <wrl.h>

@@ -37,10 +37,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.Unix", "src\Xe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.Dummy", "src\XeSDK\XeSDK.Shared.Dummy\XeSDK.Shared.Dummy.vcxitems", "{23C41DE4-1F9C-4556-9391-532353102816}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.Win32", "src\XeSDK\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems", "{E0523D5A-7F1C-46EA-94A3-F9A89DC2DFBF}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared.WinRT", "src\XeSDK\XeSDK.Shared.WinRT\XeSDK.Shared.WinRT.vcxitems", "{FBADE22C-9443-4292-BA13-B97D2720B2EB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input Driver", "Input Driver", "{3F51B60D-7DFE-40B2-948A-251513107990}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InputDriverXInput", "src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems", "{D0662974-0A87-4CAF-9CDA-6C2A5FF1AB81}"
@@ -75,7 +71,6 @@ Global
 		src\ThirdParty\winsdk\winsdk.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\zlib\zlib.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.Shared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
-		src\XeSDK\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.WinShared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.Shared.Unix\XeSDK.Shared.Unix.vcxitems*{1e4b9a2c-c668-4671-8b81-fe0f23326787}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.Dummy\XeSDK.Shared.Dummy.vcxitems*{23c41de4-1f9c-4556-9391-532353102816}*SharedItemsImports = 9
@@ -94,9 +89,7 @@ Global
 		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{d0662974-0a87-4caf-9cda-6c2a5ff1ab81}*SharedItemsImports = 9
 		src\GamePlatformDriver\GamePlatform.Steam\GamePlatform.Steam.vcxitems*{dccb15ff-2da3-4cc6-a918-d5633e64d85c}*SharedItemsImports = 9
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{dfd54352-b7ab-40e2-b9a8-8401488e02ae}*SharedItemsImports = 9
-		src\XeSDK\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems*{e0523d5a-7f1c-46ea-94a3-f9a89dc2dfbf}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.WinShared.vcxitems*{ef4e1787-9547-4aef-af68-f75347d19383}*SharedItemsImports = 9
-		src\XeSDK\XeSDK.Shared.WinRT\XeSDK.Shared.WinRT.vcxitems*{fbade22c-9443-4292-ba13-b97d2720b2eb}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -149,8 +142,6 @@ Global
 		{69D5BB40-2D91-407B-8B87-1089E02A4032} = {F76BC7A6-29D6-4290-BF04-DD6DAF9321B6}
 		{1E4B9A2C-C668-4671-8B81-FE0F23326787} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
 		{23C41DE4-1F9C-4556-9391-532353102816} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
-		{E0523D5A-7F1C-46EA-94A3-F9A89DC2DFBF} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
-		{FBADE22C-9443-4292-BA13-B97D2720B2EB} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
 		{D0662974-0A87-4CAF-9CDA-6C2A5FF1AB81} = {3F51B60D-7DFE-40B2-948A-251513107990}
 		{69C0C0A8-0787-4BCD-993F-FBC1C05DD267} = {3F51B60D-7DFE-40B2-948A-251513107990}
 		{364E7032-37E4-42B0-8617-FEDB3B7673B5} = {888BD4A4-767A-4CE7-8DCF-996B476801AB}

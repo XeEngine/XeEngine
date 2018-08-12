@@ -30,6 +30,9 @@
     <ClCompile Include="ContextGL_Win32.cpp" />
     <ClCompile Include="ContextGL_Windows.cpp" />
     <ClCompile Include="XeCoreMain_Win32.cpp" />
+    <ClCompile Include="XeCoreView_Win32.cpp" />
+    <ClCompile Include="XeGraphics_Win32.cpp" />
+    <ClCompile Include="XeIODevices_Win32.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{11F0CE85-E904-4231-A27C-F7FF076FC7FB}</ProjectGuid>
@@ -91,7 +94,6 @@
     <Import Project="..\..\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems" Label="Shared" />
     <Import Project="..\..\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems" Label="Shared" />
     <Import Project="..\..\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems" Label="Shared" />
-    <Import Project="..\XeSDK.Shared.Win32\XeSDK.Shared.Win32.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems" Label="Shared" />
     <Import Project="..\..\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems" Label="Shared" />
   </ImportGroup>

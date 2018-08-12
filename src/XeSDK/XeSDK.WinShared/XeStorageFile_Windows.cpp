@@ -127,13 +127,13 @@ namespace Xe {
 		bool File::Exists(ctstring filename)
 		{
 			WIN32_FILE_ATTRIBUTE_DATA attributeData;
-			if (GetFileAttributesEx(filename, GetFileExInfoStandard, &attributeData))
+			if (GetFileAttributesExA(filename, GetFileExInfoStandard, &attributeData))
 				return (attributeData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0;
 			return false;
 		}
 		RESULT File::Delete(ctstring filename)
 		{
-			if (DeleteFile(filename) == 0)
+			if (DeleteFileA(filename) == 0)
 			{
 				DWORD err = GetLastError();
 				switch (err)
@@ -154,7 +154,7 @@ namespace Xe {
 				return Error::IO_NOT_FOUND;
 			if (Exists(newfilename))
 				return Error::IO_ALREADY_EXISTS;
-			if (MoveFileEx(oldfilename, newfilename, MOVEFILE_COPY_ALLOWED) == 0)
+			if (MoveFileExA(oldfilename, newfilename, MOVEFILE_COPY_ALLOWED) == 0)
 				return Error::OK;
 			return Error::GENERIC_ERROR;
 		}
@@ -253,12 +253,27 @@ namespace Xe {
 				dwCreationDisposition,             // dwCreationDisposition
 				dwFlags,                           // dwFlagsAndAttributes
 				nullptr);                          // hTemplateFile
-#elif defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE) || defined(PLATFORM_WINUNIVERSAL)
+#elif defined(PLATFORM_UWP)
 			CREATEFILE2_EXTENDED_PARAMETERS exParams = { 0 };
 			exParams.dwSize = sizeof(exParams);
 			exParams.dwFileAttributes = dwFlags;
-			handle = CreateFile2(filename, DESIDER_ACCESS[access],
-				dwShareMode, dwCreationDisposition, &exParams);
+
+			if (sizeof(tchar) == sizeof(wchar_t))
+			{
+				handle = CreateFile2((wchar_t*)filename, DESIDER_ACCESS[access],
+					dwShareMode, dwCreationDisposition, &exParams);
+			}
+			else
+			{
+				int filenameLength = Xe::String::GetLength(filename);
+				wchar_t* filenameW = new wchar_t[filenameLength + 1];
+				mbtowc(filenameW, filename, filenameLength + 1);
+
+				handle = CreateFile2(filenameW, DESIDER_ACCESS[access],
+					dwShareMode, dwCreationDisposition, &exParams);
+
+				delete[] filenameW;
+			}
 #endif
 			if (handle != INVALID_HANDLE_VALUE) {
 				*fstream = new FileStream(handle, filename, access);

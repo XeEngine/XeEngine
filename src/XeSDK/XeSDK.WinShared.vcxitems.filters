@@ -1,18 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="$(MSBuildThisFileDirectory)ShaderD3D11_FSDefault.hlsl" />
-    <FxCompile Include="$(MSBuildThisFileDirectory)ShaderD3D11_VSDefault.hlsl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystemWinRT.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="D3D11">
-      <UniqueIdentifier>{33a461d8-8ca1-4727-9e57-373d3bb8d7ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D12">
-      <UniqueIdentifier>{9a03666d-45c1-4830-b292-c263cfaae216}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeThread_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeMemory_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeStorageDirectory_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeStorageFile_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeTimer_Windows.cpp" />
   </ItemGroup>
 </Project>

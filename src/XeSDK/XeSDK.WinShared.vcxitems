@@ -17,16 +17,11 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="$(MSBuildThisFileDirectory)ShaderD3D11_FSDefault.hlsl">
-      <ShaderType>Pixel</ShaderType>
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)ShaderD3D11_VSDefault.hlsl">
-      <ShaderType>Vertex</ShaderType>
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeMemory_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeStorageDirectory_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeStorageFile_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeThread_Windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeTimer_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystemWinRT.cpp" />
   </ItemGroup>
 </Project>

@@ -380,9 +380,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp">
       <Filter>Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeThread_Windows.cpp">
-      <Filter>Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp">
       <Filter>Core\private</Filter>
     </ClCompile>
