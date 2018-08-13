@@ -219,6 +219,8 @@ namespace Xe {
 			void GetDrawing(IDrawing2d** drawing);
 			void CreateTilemap(ITilemap** pTilemap);
 
+			void GetCapabilities(Capabilities& capabilities);
+
 			const Color &GetClearColor() const;
 			void SetClearColor(const Color &color);
 			float GetClearDepth() const;

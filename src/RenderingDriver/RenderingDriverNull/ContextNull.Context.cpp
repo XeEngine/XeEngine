@@ -34,6 +34,18 @@ namespace Xe {
 			*tilemap = new CTilemap(this);
 		}
 
+		void CContextNull::GetCapabilities(Capabilities& capabilities)
+		{
+			capabilities.MaxTexture1DSize = 0;
+			capabilities.MaxTexture1DArrayLength = 0;
+			capabilities.MaxTexture2DSize = 0;
+			capabilities.MaxTexture2DArrayLength = 0;
+			capabilities.MaxTexture3DSize = 0;
+			capabilities.MaxTextureCubeSize = 0;
+			capabilities.MaxTextureUnits = 0;
+			capabilities.MaxAntisotropy = 0;
+		}
+
 		const Color &CContextNull::GetClearColor() const {
 			return m_ClearColor;
 		}

@@ -104,6 +104,18 @@ namespace Xe { namespace Graphics {
 		*pTilemap = new CTilemap(this);
 	}
 
+	void CContextD3D11::GetCapabilities(Capabilities& capabilities)
+	{
+		capabilities.MaxTexture1DSize = D3D11_REQ_TEXTURE1D_U_DIMENSION;
+		capabilities.MaxTexture1DArrayLength = D3D11_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION;
+		capabilities.MaxTexture2DSize = D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION;
+		capabilities.MaxTexture2DArrayLength = D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION;
+		capabilities.MaxTexture3DSize = D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION;
+		capabilities.MaxTextureCubeSize = D3D11_REQ_TEXTURECUBE_DIMENSION;
+		capabilities.MaxTextureUnits = D3D11_VS_INPUT_REGISTER_COUNT;
+		capabilities.MaxAntisotropy = D3D11_REQ_MAXANISOTROPY;
+	}
+
 	void CContextD3D11::SetInternalResolution(const Size& size) {
 		if (m_pBackbufferTexture)
 		{

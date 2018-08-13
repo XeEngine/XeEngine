@@ -110,6 +110,8 @@ namespace Xe {
 			void GetDrawing(IDrawing2d** drawing);
 			void CreateTilemap(ITilemap** pTilemap);
 
+			void GetCapabilities(Capabilities& capabilities);
+
 			void SetClearDepth(float depth);
 			void SwapBuffers(VBlankSync sync);
 		};

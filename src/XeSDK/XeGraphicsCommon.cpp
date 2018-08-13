@@ -5,9 +5,6 @@
 
 namespace Xe {
     namespace Graphics {
-        Capabilities::Capabilities() :
-                MaxTextureUnits(0),
-                MaxTextureSize(0) { }
         DataDesc::DataDesc() :
                 data(nullptr), pitch(0) {}
         DataDesc::DataDesc(const void *data, svar pitch) :
