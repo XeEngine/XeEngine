@@ -54,11 +54,18 @@ namespace Xe {
 		};
 
 		//! \brief describe capabilities of specified context
-		struct Capabilities {
-			svar MaxTextureUnits;
-			svar MaxTextureSize;
-			Capabilities();
+		struct Capabilities
+		{
+			int MaxTexture1DSize;
+			int MaxTexture1DArrayLength;
+			int MaxTexture2DSize;
+			int MaxTexture2DArrayLength;
+			int MaxTexture3DSize;
+			int MaxTextureCubeSize;
+			int MaxTextureUnits;
+			int MaxAntisotropy;
 		};
+
 		//! \brief state description of a depth & stencil state
 		struct DepthStencilStateDesc
 		{
@@ -109,6 +116,8 @@ namespace Xe {
 
 			virtual void GetDrawing(IDrawing2d **ppDrawing) = 0;
 			virtual void CreateTilemap(ITilemap **ppTilemap) = 0;
+
+			virtual void GetCapabilities(Capabilities& capabilities) = 0;
 
 			///////////////////////////////////////////////////////////////////
 			// States
