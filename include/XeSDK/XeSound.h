@@ -15,8 +15,9 @@ namespace Xe {
 		svar GetBitsPerSample(BitFormat format);
 		void Convert(float *pDataOut, const void *pDataIn, BitFormat format, svar samplesCount);
 
-		bool IsSupported(AudioEngine audioEngine);
-		AudioEngine GetDefaultAudioEngine();
+		//! \warning DEPRECATED
 		RESULT Create(IAudio **audio, AudioEngine audioEngine = AudioEngine_Default);
+
+		bool Create(IAudio **audio, ctstring driverName);
 	}
 }
