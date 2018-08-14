@@ -4,11 +4,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XAudioBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XAudioEngine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversSoundXAudioDriver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)XAudioBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XAudioCompatibilityLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XAudioDefinitions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XAudioEngine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversSoundXAudioDriver.h" />
   </ItemGroup>
 </Project>
