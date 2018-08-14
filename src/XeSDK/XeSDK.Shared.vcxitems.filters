@@ -277,9 +277,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversGamepadDriver.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Luciano\source\xeengine\src\XeSDK\..\..\include\XeSDK\IDriversRenderingDriver.h">
-      <Filter>Public</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversRenderingDriver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
