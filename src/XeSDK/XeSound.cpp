@@ -2,6 +2,12 @@
 #include <XeSDK/ISound.h>
 #include <XeSDK/XeSound.h>
 #include <XeSDK/XeMemory.h>
+#include <XeSDK/XeDrivers.h>
+#include <XeSDK/IDriversSoundDriver.h>
+
+#define DRIVER_NULL "Sound null"
+#define DRIVER_WASAPI "Wasapi"
+#define DRIVER_XAUDIO "XAudio2"
 
 using namespace Xe::Debug;
 
@@ -134,62 +140,57 @@ namespace Xe {
 			}
 		};
 
-		extern bool IsXAudioSupported();
 		extern bool CreateXAudio(IAudio **pAudio);
-		extern bool IsWasapiSupported();
 		extern bool CreateWasapi(IAudio **pAudio);
 
-		bool IsSupported(AudioEngine audioEngine) {
-			switch (audioEngine) {
-			case AudioEngine_Null:
-				return true;
-			case AudioEngine_Wasapi:
-				return false;
-			case AudioEngine_XAudio:
-				return IsXAudioSupported();
-			default:
-				return false;
-			}
-		}
 		RESULT Create(IAudio **audio, AudioEngine engine) {
-			static const ctstring StrEngineName[] = {
-				_T("DEFAULT"),
-				_T("NULL"),
-				_T("WASAPI"),
-				_T("XAUDIO2"),
-			};
-			static const Log::Type LogType = Log::Type_Sound;
-
-			*audio = nullptr;
-			if (engine != AudioEngine_Default)
+			static const ctstring DriverName[] =
 			{
-				LOG(Log::Priority_Diagnostics, LogType, _T("Checking if engine %s is supported..."), StrEngineName[engine]);
-				if (!IsSupported(engine)) {
-					LOG(Log::Priority_Error, LogType, _T("Engine %s is not supported."), StrEngineName[engine]);
-					return Error::GENERIC_ERROR;
+				DRIVER_XAUDIO,
+				DRIVER_NULL,
+				DRIVER_WASAPI,
+				DRIVER_XAUDIO
+			};
+
+			return Create(audio, DriverName[engine]) ? Error::OK : Error::GENERIC_ERROR;
+		}
+
+
+		bool Create(IAudio **audio, ctstring driverName)
+		{
+			LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking for '%s' sound driver..."), driverName);
+
+			Xe::Drivers::Sound::ISoundDriver* soundDriver = nullptr;
+			auto drivers = Xe::Drivers::GetDrivers(Xe::Drivers::DriverTypeFilter_Sound);
+			for (auto it = drivers.begin(); it != drivers.end(); it++)
+			{
+				auto currentDriverName = (*it)->GetDriverName();
+				if (strcmp(currentDriverName, driverName) == 0)
+				{
+					soundDriver = (Xe::Drivers::Sound::ISoundDriver*)*it;
 				}
 			}
-			else {
-				LOG(Log::Priority_Diagnostics, LogType, _T("Default engine specified."));
-				engine = GetDefaultAudioEngine();
+
+			if (soundDriver != nullptr)
+			{
+				LOG(Log::Priority_Info, Log::Type_Graphics, _T("Sound driver %s found!"), driverName);
+				if (soundDriver->Factory(audio))
+				{
+					LOG(Log::Priority_Info, Log::Type_Graphics, _T("Sound driver %s initialized with success!"), driverName);
+					return true;
+				}
+				else
+				{
+					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to initialize the sound driver %s."), driverName);
+				}
 			}
-			LOG(Log::Priority_Diagnostics, LogType, _T("Creating engine %s..."), StrEngineName[engine]);
-			switch (engine) {
-			case AudioEngine_Null:
-				*audio = new AudioNull;
-				break;
-			case AudioEngine_Wasapi:
-				CreateWasapi(audio);
-				break;
-			case AudioEngine_XAudio:
-				CreateXAudio(audio);
-				break;
-			default:
-				LOG(Log::Priority_Error, LogType, _T("Ooops, engine %s is not yet supported"), StrEngineName[engine]);
-				return Error::NOT_IMPLEMENTED;
+			else
+			{
+				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Sound driver %s not found."), driverName);
 			}
-			LOG(Log::Priority_Info, LogType, _T("Engine %s was created."), StrEngineName[engine]);
-			return Error::OK;
+
+			*audio = nullptr;
+			return false;
 		}
 	}
 }

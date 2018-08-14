@@ -10,7 +10,6 @@ namespace Xe { namespace Sound {
 
 	public:
 		static void LogHresult(HRESULT hr);
-		static bool IsXAudioSupported();
 
 		bool Query(IObject **obj, UID id);
 

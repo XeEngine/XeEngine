@@ -23,6 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversGamepadDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversRenderingDriver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversSoundDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IEnumerable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGameComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsBuffer.h" />
@@ -153,8 +154,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Wasapi.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Windows.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_XAudio2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageContainerXefs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp" />

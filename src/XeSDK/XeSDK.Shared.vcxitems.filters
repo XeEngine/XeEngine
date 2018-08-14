@@ -269,15 +269,24 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDriversDefinition.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDrivers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversDriver.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversGamepadDriver.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversRenderingDriver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversSoundDriver.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversRenderingDriver.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDrivers.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -328,9 +337,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Wasapi.cpp">
       <Filter>Sound\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_XAudio2.cpp">
-      <Filter>Sound\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp">
       <Filter>Sound\Private</Filter>
     </ClCompile>
@@ -373,9 +379,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentPosition2d.cpp">
       <Filter>Game\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Windows.cpp">
-      <Filter>Sound\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImaging.cpp">
       <Filter>Graphics\Imaging\Private</Filter>
     </ClCompile>
@@ -412,19 +415,23 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp">
       <Filter>Debug\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeLogger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIODevices.cpp">
       <Filter>IO\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad.cpp">
       <Filter>IO\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDrivers.cpp">
       <Filter>Driver</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversInput.cpp">
       <Filter>Driver\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeLogger.cpp">
+      <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
