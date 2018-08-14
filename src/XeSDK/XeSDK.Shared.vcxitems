@@ -153,7 +153,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Wasapi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageContainerXefs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp" />

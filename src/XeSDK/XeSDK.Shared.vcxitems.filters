@@ -334,9 +334,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp">
       <Filter>Sound\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSound_Wasapi.cpp">
-      <Filter>Sound\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp">
       <Filter>Sound\Private</Filter>
     </ClCompile>
