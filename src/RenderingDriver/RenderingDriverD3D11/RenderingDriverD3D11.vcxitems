@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextD3D11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversRenderingD3D11Driver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Buffer.cpp" />
@@ -26,5 +27,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.States.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Surface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Tilemap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversRenderingD3D11Driver.cpp" />
   </ItemGroup>
 </Project>
