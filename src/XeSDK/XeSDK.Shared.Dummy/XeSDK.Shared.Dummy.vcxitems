@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_Dummy.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_Dummy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Dummy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Dummy.cpp" />
   </ItemGroup>

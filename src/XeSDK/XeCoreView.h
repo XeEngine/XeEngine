@@ -7,15 +7,13 @@
 #include <Unknwn.h>
 #endif
 
-namespace Xe {
-	namespace Core {
-		struct ViewInternal {
+namespace Xe { namespace Core {
+	struct ViewInternal {
 #if defined(PLATFORM_WIN32)
-			HWND Window;
+		HWND Window;
 #elif defined(PLATFORM_WINRT)
-			IUnknown* Window;
+		IUnknown* Window;
 #endif
-		};
-		void GetViewInternal(IView* pView, ViewInternal& viewInternal);
-	}
-}
+	};
+	void GetViewInternal(IView* pView, ViewInternal& viewInternal);
+} }

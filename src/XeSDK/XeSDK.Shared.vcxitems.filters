@@ -269,10 +269,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDriversDefinition.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversDriver.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversGamepadDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDrivers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversDriver.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversGamepadDriver.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Luciano\source\xeengine\src\XeSDK\..\..\include\XeSDK\IDriversRenderingDriver.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">

@@ -7,7 +7,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageFile_Unix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer_Linux.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_X11.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_Unix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView_X11.h" />

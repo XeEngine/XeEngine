@@ -22,6 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDictionary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversGamepadDriver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversRenderingDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IEnumerable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGameComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsBuffer.h" />

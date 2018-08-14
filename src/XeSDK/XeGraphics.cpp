@@ -1,88 +1,69 @@
 #include "pch.h"
 #include <XeSDK/XeGraphics.h>
-//#include "XeGraphics_RenderD3D11.h"
-//#include "XeGraphics_GLES.h"
+#include <XeSDK/XeDrivers.h>
+#include <XeSDK/IDriversRenderingDriver.h>
 
 using namespace Xe::Debug;
 
-namespace Xe {
-    namespace Graphics {
-        bool CreateContextNull(IContext **context, Core::IView* pView, const ContextProperties& properties);
-        bool CreateContextGL(IContext **context, Core::IView* pView, const ContextProperties& properties);
-        bool CreateContextD3D11(IContext **context, Core::IView* pView, const ContextProperties& properties);
+#define DRIVER_NULL "Null render"
+#define DRIVER_D3D9 "Direct3D 9"
+#define DRIVER_D3D10 "Direct3D 10"
+#define DRIVER_D3D11 "Direct3D 11"
+#define DRIVER_OPENGL "OpenGL"
 
-        RESULT Create(IContext **context, Core::IView* pView, const ContextProperties& properties) {
-            static const ctstring RenderEngineStr[] = {
-                    _T("Instance"),
-                    _T("NULL"),
-                    _T("D3D9"),
-                    _T("D3D11"),
-                    _T("D3D12"),
-                    _T("GL21"),
-                    _T("GL33"),
-                    _T("GLES20"),
-            };
+namespace Xe { namespace Graphics {
 
-            *context = 0;
-            RenderEngine renderer = properties.Render;
-            ctstring renderEngineName = RenderEngineStr[renderer];
-            if (renderer != RenderEngine_Default)
-            {
-                LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking if render engine %s is supported..."), renderEngineName);
-                if (renderer != RenderEngine_Null) {
-                    if (!IsSupported(renderer)) {
-                        LOG(Log::Priority_Error, Log::Type_Graphics, _T("Render engine %s is not supported."), renderEngineName);
-                        return Error::GENERIC_ERROR;
-                    }
-                }
-            }
-            else {
-                LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Default render engine specified."));
-                renderer = GetDefaultRenderEngine();
-            }
-            renderEngineName = RenderEngineStr[renderer];
-            LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Creating render engine %s..."), renderEngineName);
-            bool (*pfnCreateContext)(IContext **pContext, Core::IView* pView, const ContextProperties& properties);
-            switch (renderer) {
-                case RenderEngine_Null:
-                    pfnCreateContext = CreateContextNull;
-                    break;
-                case RenderEngine_D3D9:
-                    pfnCreateContext = 0;
-                    break;
-                case RenderEngine_D3D11:
-                    pfnCreateContext = CreateContextD3D11;
-                    break;
-                case RenderEngine_D3D12:
-                    pfnCreateContext = 0;
-                    break;
-                case RenderEngine_OpenGL:
-#if defined(PLATFORM_GL)
-                    pfnCreateContext = CreateContextGL;
-#else
-                    pfnCreateContext = 0;
-#endif
-                    break;
-                    /*case RenderEngine_GL33:
-                        pfnCreateContext = CreateContextGL;
-                        break;
-                    case RenderEngine_GLES20:
-                        pfnCreateContext = CreateContextGLES;
-                        break;*/
-                default:
-                    LOG(Log::Priority_Error, Log::Type_Graphics, _T("Invalid render engine specified (%i)."), renderEngineName);
-                    return Error::INVALID_PARAMETER;
-            }
-            if (pfnCreateContext != 0) {
-                if (pfnCreateContext(context, pView, properties)) {
-                    LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render engine %s was created."), renderEngineName);
-                    return Error::OK;
-                }
-                LOG(Log::Priority_Info, Log::Type_Graphics, _T("Unable to create render engine %s."), renderEngineName);
-                return Error::GENERIC_ERROR;
-            }
-            LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Ooops, render engine %s is not yet supported"), renderEngineName);
-            return Error::NOT_IMPLEMENTED;
-        }
+	bool Create(IContext **context, RenderEngine renderEngine, Core::IView* pView, const ContextProperties& properties)
+	{
+		ctstring DriverNames[]
+		{
+			DRIVER_D3D11,
+			DRIVER_NULL,
+			DRIVER_D3D9,
+			DRIVER_D3D10,
+			DRIVER_D3D11,
+			DRIVER_OPENGL
+		};
+
+		ASSERT((unsigned int)renderEngine > lengthof(DriverNames));
+
+		return Create(context, DriverNames[renderEngine], pView, properties);
+	}
+
+    bool Create(IContext **context, ctstring driverName, Core::IView* pView, const ContextProperties& properties)
+	{
+		LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking for '%s' rendering driver..."), driverName);
+
+		Xe::Drivers::Rendering::IRenderingDriver* renderingDriver = nullptr;
+		auto drivers = Xe::Drivers::GetDrivers(Xe::Drivers::DriverTypeFilter_Rendering);
+		for (auto it = drivers.begin(); it != drivers.end(); it++)
+		{
+			auto currentDriverName = (*it)->GetDriverName();
+			if (strcmp(currentDriverName, driverName) == 0)
+			{
+				renderingDriver = (Xe::Drivers::Rendering::IRenderingDriver*)*it;
+			}
+		}
+
+		if (renderingDriver != nullptr)
+		{
+			LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render driver %s found!"), driverName);
+			if (renderingDriver->Factory(context, pView, properties))
+			{
+				LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render driver %s initialized with success!"), driverName);
+				return true;
+			}
+			else
+			{
+				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to initialize the rendering driver %s."), driverName);
+			}
+		}
+		else
+		{
+			LOG(Log::Priority_Error, Log::Type_Graphics, _T("Render driver %s not found."), driverName);
+		}
+
+		*context = nullptr;
+		return false;
     }
-}
+} }

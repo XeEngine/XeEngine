@@ -15,6 +15,7 @@ namespace Xe {
 		typedef Math::Vector2i Size;
 
 		//! \brief Specify a render engine used to draw on screen.
+		//! \warning DEPRECATED!!!
 		enum RenderEngine {
 			//! \brief Defaut value for rendering.
 			//! \sa GetDefaultRenderEngine
@@ -45,24 +46,23 @@ namespace Xe {
 
 		//! \brief Define the properties during Context initialization
 		struct ContextProperties {
-			//! \brief Renderer to use.
-			RenderEngine Render;
 			//! \brief What video-card to use.
 			//! \details Specify 0 to use default video-card.
 			uvar VideoCardIndex;
+
 			//\ brief Specify what display to use.
 			//! \details Specify 0 to use default display.
 			uvar DisplayIndex;
 
 			ContextProperties() :
-				Render(RenderEngine_Default),
 				VideoCardIndex(0),
 				DisplayIndex(0)
 			{}
 		};
 
-		bool IsSupported(RenderEngine renderEngine);
-		RenderEngine GetDefaultRenderEngine();
-		RESULT Create(IContext **context, Core::IView* pView, const ContextProperties& properties = ContextProperties());
+		//! \warning DEPRECATED; for backward compatibility only.
+		bool Create(IContext **context, RenderEngine renderEngine, Core::IView* pView, const ContextProperties& properties = ContextProperties());
+
+		bool Create(IContext **context, ctstring driverName, Core::IView* pView, const ContextProperties& properties = ContextProperties());
 	}
 }

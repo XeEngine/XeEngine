@@ -27,8 +27,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ContextGL_Win32.cpp" />
-    <ClCompile Include="ContextGL_Windows.cpp" />
     <ClCompile Include="XeCoreMain_Win32.cpp" />
     <ClCompile Include="XeCoreView_Win32.cpp" />
     <ClCompile Include="XeGraphics_Win32.cpp" />
