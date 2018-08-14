@@ -2,7 +2,7 @@
 #include <XeSDK/IDriversSoundDriver.h>
 
 namespace Xe { namespace Drivers { namespace Sound {
-	struct XAudioDriver : public ISoundDriver
+	struct NullDriver : public ISoundDriver
 	{
 		const char* GetDriverName() const;
 		DriverType GetDriverType() const;

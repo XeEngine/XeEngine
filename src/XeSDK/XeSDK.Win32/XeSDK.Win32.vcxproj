@@ -85,6 +85,8 @@
     <Import Project="..\..\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems" Label="Shared" />
+    <Import Project="..\..\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems" Label="Shared" />
+    <Import Project="..\..\SoundDriver\SoundDriverWasapi\SoundDriverWasapi.vcxitems" Label="Shared" />
     <Import Project="..\..\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems" Label="Shared" />
     <Import Project="..\..\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems" Label="Shared" />
     <Import Project="..\..\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems" Label="Shared" />
