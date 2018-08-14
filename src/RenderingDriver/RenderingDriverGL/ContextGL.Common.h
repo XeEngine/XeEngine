@@ -107,9 +107,9 @@ namespace Xe {
 			void ShaderError(GLuint object, PFNGLGETSHADERIVPROC glGet__iv, PFNGLGETSHADERINFOLOGPROC glGet__InfoLog);
 
 			// Implemented between operating systems
-			static svar GetFormatsCount();
-			static svar GetFormatsArray(Format *format, svar maxcount);
-			static bool SetFormat(const Format &format);
+			virtual svar GetFormatsCount() const = 0;
+			virtual svar GetFormatsArray(Format *format, svar maxcount) const = 0;
+			virtual bool SetFormat(const Format &format) const = 0;
 
 			static GLenum GetPrimitive(Primitive primitive);
 

@@ -2,15 +2,32 @@
 #include <XeSDK/XeStorage.h>
 #include <XeSDK/IStorageDirectory.h>
 #include <XeSDK/XeDrivers.h>
-#include <XeSDK/IDriversGamepadDriver.h>
 
+#include "XeDriversRenderingNullDriver.h"
+#include "XeDriversRenderingD3D11Driver.h"
+#include "XeDriversRenderingOpenGlDriver.h"
 #include "XeDriverInputWindowsCustom.h"
 #include "XeDriverInputXInput.h"
 
 namespace Xe {
 
+	Xe::Drivers::Rendering::NullDriver g_DriverRenderingNull;
+	Xe::Drivers::Rendering::D3D11Driver g_DriverRenderingD3D11;
+	Xe::Drivers::Rendering::OpenGlDriver g_DriverRenderingOpenGl;
 	Xe::Drivers::Input::WindowsCustom g_DriverInputCustom;
 	Xe::Drivers::Input::XInput g_DriverInputXInput;
+
+	void RegisterRenderingDrivers()
+	{
+		Xe::Drivers::RegisterDriver(&g_DriverRenderingNull);
+		Xe::Drivers::RegisterDriver(&g_DriverRenderingD3D11);
+		Xe::Drivers::RegisterDriver(&g_DriverRenderingOpenGl);
+	}
+
+	void RegisterAudioDrivers()
+	{
+
+	}
 
 	void RegisterInputDrivers()
 	{
@@ -22,6 +39,8 @@ namespace Xe {
 	{
 		void Initialize()
 		{
+			RegisterRenderingDrivers();
+			RegisterAudioDrivers();
 			RegisterInputDrivers();
 		}
 	}

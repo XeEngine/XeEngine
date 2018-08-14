@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView_X11.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_Unix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOGamepad_Linux.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMemory_libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageDirectory_Unix.cpp" />

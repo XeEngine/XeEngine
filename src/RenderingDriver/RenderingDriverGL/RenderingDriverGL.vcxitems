@@ -18,6 +18,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.Common.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.Library.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversRenderingOpenGlDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsGl.h" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.States.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Surface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Tilemap.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Win32.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversRenderingOpenGlDriver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsGl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)ContextGL.Win32.h" />
   </ItemGroup>
 </Project>
