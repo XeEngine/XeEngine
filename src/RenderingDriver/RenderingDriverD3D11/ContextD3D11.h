@@ -1,4 +1,6 @@
 #pragma once
+#include <d3d11.h>
+#include <d3d11_1.h>
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>

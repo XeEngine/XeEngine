@@ -46,7 +46,7 @@ namespace Xe {
             }
 
             bool DispatchEvents(DispatchType type) {
-
+				return true;
             }
 
             void SetTitle(const String& title) {

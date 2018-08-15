@@ -4,19 +4,12 @@
     <Filter Include="Core">
       <UniqueIdentifier>{71bd8950-6046-4ed7-a8fd-1cde4257770a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{4b5084d9-35d5-494e-b892-b3072c7c2b1b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XeCoreMain_Uwp.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="XeGraphics_Uwp.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="CFrameView.Uwp.cpp" />
-    <ClCompile Include="XeCoreFrameView.cpp">
+    <ClCompile Include="XeCoreView_Uwp.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
