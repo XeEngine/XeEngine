@@ -102,6 +102,7 @@
     <Import Project="..\..\ThirdParty\tinyxml\tinyxml.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems" Label="Shared" />
     <Import Project="..\..\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems" Label="Shared" />
+    <Import Project="..\..\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />

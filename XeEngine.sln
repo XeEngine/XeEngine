@@ -104,6 +104,7 @@ Global
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{dfd54352-b7ab-40e2-b9a8-8401488e02ae}*SharedItemsImports = 9
 		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
 		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
 		src\ThirdParty\libpng\libpng.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
 		src\ThirdParty\tinyxml\tinyxml.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4

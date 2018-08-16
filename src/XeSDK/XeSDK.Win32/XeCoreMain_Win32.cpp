@@ -13,7 +13,6 @@
 #include "XeDriverInputXInput.h"
 
 namespace Xe {
-
 	Xe::Drivers::Rendering::NullDriver g_DriverRenderingNull;
 	Xe::Drivers::Rendering::D3D11Driver g_DriverRenderingD3D11;
 	Xe::Drivers::Rendering::OpenGlDriver g_DriverRenderingOpenGl;
