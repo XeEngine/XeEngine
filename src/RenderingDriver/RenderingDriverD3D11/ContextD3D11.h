@@ -1,6 +1,11 @@
 #pragma once
+
+#if WINAPI_FAMILY != WINAPI_FAMILY_TV_TITLE
 #include <d3d11.h>
 #include <d3d11_1.h>
+#else
+#include <d3d11_x.h>
+#endif
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>

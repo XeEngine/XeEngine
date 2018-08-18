@@ -154,8 +154,11 @@ namespace Xe {
 				return Error::IO_NOT_FOUND;
 			if (Exists(newfilename))
 				return Error::IO_ALREADY_EXISTS;
+#if WINAPI_FAMILY != WINAPI_FAMILY_TV_TITLE
+			// MoveFileExA cannot be linked when using Durango SDK
 			if (MoveFileExA(oldfilename, newfilename, MOVEFILE_COPY_ALLOWED) == 0)
 				return Error::OK;
+#endif
 			return Error::GENERIC_ERROR;
 		}
 
