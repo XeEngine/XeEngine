@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "XeDriverInputXInput.h"
 
+#if SETTINGS_LOADLIBRARY == 1
+#else
+#pragma comment(lib, "xinput.lib")
+#endif
+
 namespace Xe { namespace Drivers { namespace Input {
 	void XInputLib::Initialize() {
 		static const Versions XINPUT_VER[] =
@@ -12,7 +17,7 @@ namespace Xe { namespace Drivers { namespace Input {
 			{ L"XINPUT1_1.DLL", 0x0101 },	// DXSDK April 2006
 		};
 
-#ifdef _WIN32
+#if SETTINGS_LOADLIBRARY == 1
 		// If using Win32 API, the engine can be run from Vista or later.
 		// In this case we should check what library is installed.
 		for (size_t i = 0; i < lengthof(XINPUT_VER); i++)
@@ -48,11 +53,7 @@ namespace Xe { namespace Drivers { namespace Input {
 		}
 #else
 		// We know for sure that Windows Runtime API has XInput 1.4
-
-#if defined(PLATFORM_WINUNIVERSAL)
-#else
-		XInputEnable(TRUE);
-#endif
+		//XInputEnable(TRUE);
 		pXInputGetCapabilities = (PFNXINPUTGETCAPABILITIESPROC)XInputGetCapabilities;
 		pXInputGetState = (PFNXINPUTGETSTATEPROC)XInputGetState;
 		pXInputSetState = (PFNXINPUTSETSTATEPROC)XInputSetState;

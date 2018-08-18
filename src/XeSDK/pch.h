@@ -1,7 +1,9 @@
-﻿
-#pragma once
-#if defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE) || defined(PLATFORM_WINUNIVERSAL)
+﻿#pragma once
+#if defined(PLATFORM_UWP)
+#define SETTINGS_LOADLIBRARY 0
 #define PLATFORM_WINRT
+#elif defined(PLATFORM_WIN32)
+#define SETTINGS_LOADLIBRARY 1
 #endif
 #if defined(PLATFORM_WIN32) || defined(PLATFORM_WINRT)
 #define PLATFORM_WINDOWS
