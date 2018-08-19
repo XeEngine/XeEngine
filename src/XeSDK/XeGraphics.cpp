@@ -13,7 +13,7 @@ using namespace Xe::Debug;
 
 namespace Xe { namespace Graphics {
 
-	bool Create(IContext **context, RenderEngine renderEngine, Core::IView* pView, const ContextProperties& properties)
+	bool Create(IContext **context, RenderEngine renderEngine, const ContextInitDesc& properties)
 	{
 		ctstring DriverNames[]
 		{
@@ -26,10 +26,10 @@ namespace Xe { namespace Graphics {
 
 		ASSERT((unsigned int)renderEngine < lengthof(DriverNames));
 
-		return Create(context, DriverNames[renderEngine], pView, properties);
+		return Create(context, DriverNames[renderEngine], properties);
 	}
 
-    bool Create(IContext **context, ctstring driverName, Core::IView* pView, const ContextProperties& properties)
+    bool Create(IContext **context, ctstring driverName, const ContextInitDesc& properties)
 	{
 		LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking for '%s' rendering driver..."), driverName);
 
@@ -47,7 +47,7 @@ namespace Xe { namespace Graphics {
 		if (renderingDriver != nullptr)
 		{
 			LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render driver %s found!"), driverName);
-			if (renderingDriver->Factory(context, pView, properties))
+			if (renderingDriver->Factory(context, properties))
 			{
 				LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render driver %s initialized with success!"), driverName);
 				return true;

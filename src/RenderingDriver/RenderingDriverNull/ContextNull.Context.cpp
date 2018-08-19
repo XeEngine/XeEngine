@@ -39,7 +39,7 @@ namespace Xe {
 			if (m_Drawing) m_Drawing->Release();
 		}
 
-		bool CContextNull::Initialize(const ContextProperties& properties) {
+		bool CContextNull::Initialize(const ContextInitDesc& properties) {
 			m_Drawing = new CDrawing(this);
 			return true;
 		}
@@ -84,7 +84,7 @@ namespace Xe {
 
 		}
 
-		bool CreateContextNull(IContext **context, Core::IView* pView, const ContextProperties& properties) {
+		bool CreateContextNull(IContext **context, const ContextInitDesc& properties) {
 			CContextNull *tmp = new CContextNull;
 			if (tmp->Initialize(properties)) {
 				*context = tmp;

@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sound Drivers", "Sound Driv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundDriverXAudio", "src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems", "{69D5BB40-2D91-407B-8B87-1089E02A4032}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input Driver", "Input Driver", "{3F51B60D-7DFE-40B2-948A-251513107990}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input Drivers", "Input Drivers", "{3F51B60D-7DFE-40B2-948A-251513107990}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InputDriverXInput", "src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems", "{D0662974-0A87-4CAF-9CDA-6C2A5FF1AB81}"
 EndProject
@@ -55,8 +55,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeGame.Win32", "src\XeGame\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeGame.Uwp", "src\XeGame\XeGame.Uwp\XeGame.Uwp.vcxproj", "{8BCB4471-511B-4C31-865C-D013788E73F7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform Drivers", "Platform Drivers", "{CCFCB05E-F019-4E1D-9E35-26116C6616BD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{871CA8C3-DE33-4429-A17B-18ADC52C5F8B}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
@@ -66,13 +64,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundDriverNull", "src\Soun
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoundDriverWasapi", "src\SoundDriver\SoundDriverWasapi\SoundDriverWasapi.vcxitems", "{CBA78208-5576-434F-BAC5-DA1B95461780}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform Drivers", "Platform Drivers", "{70F027B3-6B37-484C-9783-75C473393BC8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{0f968996-a09c-4dda-85cb-575a5ed8059d}*SharedItemsImports = 9
 		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
-		src\RenderingDriver\RenderingDriverGL\RenderingDriverGL.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\SoundDriver\SoundDriverWasapi\SoundDriverWasapi.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
@@ -209,7 +208,7 @@ Global
 		{69D5BB40-2D91-407B-8B87-1089E02A4032} = {F76BC7A6-29D6-4290-BF04-DD6DAF9321B6}
 		{D0662974-0A87-4CAF-9CDA-6C2A5FF1AB81} = {3F51B60D-7DFE-40B2-948A-251513107990}
 		{69C0C0A8-0787-4BCD-993F-FBC1C05DD267} = {3F51B60D-7DFE-40B2-948A-251513107990}
-		{DCCB15FF-2DA3-4CC6-A918-D5633E64D85C} = {CCFCB05E-F019-4E1D-9E35-26116C6616BD}
+		{DCCB15FF-2DA3-4CC6-A918-D5633E64D85C} = {70F027B3-6B37-484C-9783-75C473393BC8}
 		{4385B406-A2EA-4DD0-9F9B-CFDBC27FC12E} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}
 		{2CD3C38F-9921-4736-8AFE-0B8C947CD36F} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}
 		{7745487A-B7CA-4073-B035-621710B56CD2} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}

@@ -31,7 +31,7 @@ namespace Xe {
 			CContextGLCommon(Core::IView *pView);
 			~CContextGLCommon();
 
-			virtual bool Initialize(const ContextProperties& properties);
+			virtual bool Initialize(const ContextInitDesc& properties);
 			GLVersion LoadLibraries();
 			GLVersion GetVersion() const;
 

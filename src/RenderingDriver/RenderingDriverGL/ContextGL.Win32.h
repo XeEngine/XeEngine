@@ -17,10 +17,10 @@ namespace Xe { namespace Graphics {
 		bool CreateContext();
 
 	public:
-		ContextGL_Win32(Core::IView* pView);
+		ContextGL_Win32();
 		~ContextGL_Win32();
 
-		bool Initialize(const ContextProperties& properties);
+		bool Initialize(const ContextInitDesc& properties);
 		void SwapBuffersSub(VBlankSync sync);
 
 		svar GetFormatsCount() const;

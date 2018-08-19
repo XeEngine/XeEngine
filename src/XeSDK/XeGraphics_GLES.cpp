@@ -725,7 +725,7 @@ namespace Xe {
 			{ Color::Format_Indexed16, GL_ALPHA, GL_ALPHA, GL_UNSIGNED_SHORT },
 			{ Color::Format_Indexed32, GL_ALPHA, GL_ALPHA, GL_UNSIGNED_INT },
 		};
-		bool CreateContextGLES(IContext **context, const ContextProperties& properties) {
+		bool CreateContextGLES(IContext **context, const ContextInitDesc& properties) {
 			ContextGLES *pContext = new ContextGLES;
 			if (pContext->Initialize()) {
 				*context = pContext;
@@ -739,7 +739,7 @@ namespace Xe {
 #else
 namespace Xe {
 	namespace Graphics {
-		bool CreateContextGLES(IContext **context, const ContextProperties& properties) {
+		bool CreateContextGLES(IContext **context, const ContextInitDesc& properties) {
 			*context = nullptr;
 			return false;
 		}

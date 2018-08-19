@@ -15,8 +15,12 @@
     <ClCompile Include="XeGraphics_Uwp.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="XeCoreView_Uwp.cpp">
+    <ClCompile Include="CFrameView.Uwp.cpp" />
+    <ClCompile Include="XeCoreFrameView.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CFrameView.h" />
   </ItemGroup>
 </Project>

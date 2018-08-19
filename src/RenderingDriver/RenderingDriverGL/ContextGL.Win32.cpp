@@ -7,30 +7,27 @@
 
 #pragma comment(lib, "Opengl32.lib")
 
-namespace Xe { namespace Core {
-	class IView;
-} }
-
 namespace Xe { namespace Graphics {
 	ContextGL_Win32::ContextGL_Win32(Core::IView* pView) :
 		CContextGL(pView),
 		m_IsInitialized(false),
 		m_Sync(VBlank_Wait),
 		m_hDc(nullptr),
-		m_hGlRc(nullptr) {
-
-		Xe::Core::ViewInternal view;
-		Xe::Core::GetViewInternal(m_pView, view);
-		m_hWnd = view.Window;
-	}
+		m_hGlRc(nullptr)
+	{ }
 
 	ContextGL_Win32::~ContextGL_Win32() {
 		if (m_hGlRc) wglDeleteContext(m_hGlRc);
 		if (m_hDc) ReleaseDC(m_hWnd, m_hDc);
 	}
 
-	bool ContextGL_Win32::Initialize(const ContextProperties& properties) {
+	bool ContextGL_Win32::Initialize(const ContextInitDesc& properties)
+	{
+		ASSERT(properties.FrameView != nullptr);
 		if (m_IsInitialized) return true;
+
+		m_hWnd = (HWND)properties.FrameView->GetSystemWindow();
+
 		// Now try to create a valid GL context
 		if (CreateContext(/*m_pView*/)) {
 			// Then initialize the real GL stuff

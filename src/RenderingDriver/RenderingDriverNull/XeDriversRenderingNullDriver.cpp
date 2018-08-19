@@ -13,7 +13,7 @@ namespace Xe { namespace Drivers { namespace Rendering {
 		return DriverType_Rendering;
 	}
 
-	bool NullDriver::Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextProperties& properties)
+	bool NullDriver::Factory(Xe::Graphics::IContext** pContext, const Xe::Graphics::ContextInitDesc& properties)
 	{
 		ASSERT(pContext != nullptr);
 		auto driver = new Xe::Graphics::CContextNull;

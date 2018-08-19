@@ -96,7 +96,7 @@ namespace Xe {
 			CContextNull();
 			~CContextNull();
 
-			bool Initialize(const ContextProperties& properties);
+			bool Initialize(const ContextInitDesc& properties);
 			void GetDrawing(IDrawing2d** drawing);
 			void CreateTilemap(ITilemap** tilemap);
 
