@@ -39,7 +39,7 @@ namespace Xe { namespace Game {
 		TextureManagerProfileEntry *Textures;
 	};
 
-	struct ITextureManager
+	interface ITextureManager
 	{
 		//! \brief Create a texture from an image.
 		//! \param[in] image Image that will be loaded and transformed as a texture.

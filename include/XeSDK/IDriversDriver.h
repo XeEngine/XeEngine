@@ -5,7 +5,7 @@
 namespace Xe { namespace Drivers {
 
 	//! \brief Low-level driver contract to register it in the drivers chain.
-	struct IDriver : public IObject
+	interface IDriver : public IObject
 	{
 		//! \brief Get the name of the driver
 		virtual const char* GetDriverName() const = 0;

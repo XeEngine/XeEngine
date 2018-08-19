@@ -2,12 +2,12 @@
 #include "ITextureManager.h"
 
 namespace Xe { namespace IO {
-	struct IStream;
-	struct IFileStream;
+	interface IStream;
+	interface IFileStream;
 } }
 
 namespace Xe { namespace Storage {
-	class IStorage;
+	interface IStorage;
 } }
 
 namespace Xe { namespace Game {

@@ -17,7 +17,7 @@ namespace Xe
 	* in fact it implements the basis of
 	* AddRef and Release.
 	*/
-	class IObject
+	interface IObject
 	{
 		uvar i_count;
 	public:

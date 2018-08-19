@@ -8,27 +8,22 @@
 #pragma once
 #include <XeSDK/IObject.h>
 
-namespace Xe
-{
-	namespace Collections
+namespace Xe { namespace Collections {
+	interface IHashable : public IObject
 	{
-		class IHashable : public IObject
+		//! \brief interface id
+		static const UID ID = 0x24e4ff4946a0464fL;
+
+		//! \brief get the hash from current object
+		//! \return hash code
+		virtual u64 GetHash() const = 0;
+
+		//! \brief get the hash from current object
+		//! \details same as GetHash
+		//! \sa GetHash
+		u64 operator () () const
 		{
-		public:
-			//! \brief interface id
-			static const UID ID = 0x24e4ff4946a0464fL;
-
-			//! \brief get the hash from current object
-			//! \return hash code
-			virtual u64 GetHash() const = 0;
-
-			//! \brief get the hash from current object
-			//! \details same as GetHash
-			//! \sa GetHash
-			u64 operator () () const
-			{
-				return GetHash();
-			}
-		};
-	}
-}
+			return GetHash();
+		}
+	};
+} }

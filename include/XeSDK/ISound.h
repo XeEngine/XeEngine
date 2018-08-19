@@ -31,7 +31,7 @@ namespace Xe {
 		//! \brief where to write audio data to send it to audio card
 		class IAudioBuffer : public IObject {
 		public:
-			struct ICallback {
+			interface ICallback {
 				virtual void OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired) = 0;
 				virtual void OnBufferProcessed() = 0;
 			};
@@ -68,7 +68,7 @@ namespace Xe {
 			const WaveFormat m_format;
 			const ICallback *m_pCallback;
 		};
-		class IAudio : public IObject {
+		interface IAudio : public IObject {
 		public:
 			static const UID ID = 0x93b3a075c0ee4125ULL;
 

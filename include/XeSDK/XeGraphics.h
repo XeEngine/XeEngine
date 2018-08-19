@@ -5,12 +5,12 @@
 
 namespace Xe {
 	namespace Core {
-		INTERFACE IFrameView;
+		interface IFrameView;
 	}
 
 	//! \brief Graphics and drawing management
 	namespace Graphics {
-		class IContext;
+		interface IContext;
 		typedef Math::Vector2i Position;
 		typedef Math::Vector2i Size;
 

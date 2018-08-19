@@ -9,14 +9,14 @@ namespace Xe { namespace Drivers { namespace Input {
 	};
 
 	//! \brief Contract for Input Drivers
-	struct IInputDriver : public IDriver
+	interface IInputDriver : public IDriver
 	{
 		//! \brief Get the device type which the driver is referring on.
 		virtual InputDeviceType GetInputDeviceType() const = 0;
 	};
 
 	//! \brief Contract for a Gamepad Input Driver.
-	struct IGamepadDriver : public IInputDriver
+	interface IGamepadDriver : public IInputDriver
 	{
 		//! \brief Open a specific device.
 		//! \param[out] ppGamepad The gamepad object

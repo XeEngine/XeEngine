@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Xe { namespace Game {
-	struct IAtom
+	interface IAtom
 	{
 		virtual void Update(double deltaTime) = 0;
 	};

@@ -6,7 +6,7 @@ namespace Xe
 	namespace IO
 	{
 		//! \brief manage streams that works directly on main memory
-		class IMemoryStream : public IStream
+		interface IMemoryStream : public IStream
 		{
 		public:
 			//! \brief interface id

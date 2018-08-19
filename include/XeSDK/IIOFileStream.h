@@ -2,7 +2,7 @@
 #include <XeSDK/IIOStream.h>
 
 namespace Xe { namespace IO {
-	struct IFileStream : public IStream
+	interface IFileStream : public IStream
 	{
 		static const UID ID = 0x19176c1c0b1f4f7cULL;
 

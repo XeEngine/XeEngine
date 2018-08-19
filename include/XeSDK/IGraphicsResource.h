@@ -39,7 +39,7 @@ namespace Xe {
 			DataDesc(const void *data, svar pitch);
 		};
 
-		class IContext;
+		interface IContext;
 
 		//! \brief IResource interface
 		//! \details Basic management for every resource in VRAM

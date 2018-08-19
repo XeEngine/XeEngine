@@ -1,7 +1,7 @@
 #pragma once
 
 namespace Xe { namespace Game {
-	struct IGamePlatformCallback
+	interface IGamePlatformCallback
 	{
 		//! \brief Called when the platform overlay changed its state.
 		//! \param[in] activated If the overlay is currently activated or not.
