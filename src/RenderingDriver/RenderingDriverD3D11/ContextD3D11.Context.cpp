@@ -25,8 +25,7 @@ namespace Xe { namespace Graphics {
 		*obj = nullptr;
 		return false;
 	}
-	CContextD3D11::CContextD3D11(Core::IView *pView) :
-		m_pView(pView),
+	CContextD3D11::CContextD3D11() :
 		m_Drawing(nullptr),
 		m_Size(800, 480),
 		m_ClearColor(Color::Black),
@@ -78,17 +77,24 @@ namespace Xe { namespace Graphics {
 			if (m_pDepthStencilView) m_pDepthStencilView->Release();
 			m_swapChain->Release();
 		}
+
+		m_pFrameView->Release();
 	}
 
-	bool CContextD3D11::Initialize(const ContextProperties& properties) {
-		bool r = CreateDevice(properties) && CreateResources() &&
+	bool CContextD3D11::Initialize(const ContextInitDesc& properties) {
+		ASSERT(properties.FrameView != nullptr);
+
+		bool success = CreateDevice(properties) && CreateResources() &&
 			CreateWindowSizeDependentResources();
-		if (r) {
-			SetViewport(m_pView->GetSize());
+		if (success == true)
+		{
+			m_pFrameView = properties.FrameView;
+			m_pFrameView->AddRef();
+			SetViewport(m_pFrameView->GetSize());
 			for (svar i = 0; i < lengthof(m_Surface); i++)
 				SelectSurface(nullptr, i);
 		}
-		return r;
+		return success;
 	}
 	void CContextD3D11::GetDrawing(IDrawing2d** drawing) {
 		if (m_Drawing == nullptr)
@@ -186,8 +192,8 @@ namespace Xe { namespace Graphics {
 		}
 	}
 
-	bool CreateContextD3D11(IContext **context, Core::IView* pView, const ContextProperties& properties) {
-		CContextD3D11 *tmp = new CContextD3D11(pView);
+	bool CreateContextD3D11(IContext **context, const ContextInitDesc& properties) {
+		CContextD3D11 *tmp = new CContextD3D11();
 		if (tmp->Initialize(properties)) {
 			*context = tmp;
 			return true;

@@ -109,7 +109,7 @@ namespace Xe {
 			CContextGL(Core::IView* pView);
 			~CContextGL();
 
-			virtual bool Initialize(const ContextProperties& properties);
+			virtual bool Initialize(const ContextInitDesc& properties);
 			void GetDrawing(IDrawing2d** drawing);
 			void CreateTilemap(ITilemap** pTilemap);
 

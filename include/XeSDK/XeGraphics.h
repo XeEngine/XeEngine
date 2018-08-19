@@ -5,7 +5,7 @@
 
 namespace Xe {
 	namespace Core {
-		class IView;
+		INTERFACE IFrameView;
 	}
 
 	//! \brief Graphics and drawing management
@@ -45,7 +45,8 @@ namespace Xe {
 		};
 
 		//! \brief Define the properties during Context initialization
-		struct ContextProperties {
+		struct ContextInitDesc
+		{
 			//! \brief What video-card to use.
 			//! \details Specify 0 to use default video-card.
 			uvar VideoCardIndex;
@@ -54,15 +55,19 @@ namespace Xe {
 			//! \details Specify 0 to use default display.
 			uvar DisplayIndex;
 
-			ContextProperties() :
+			//! brief Set the frame which the context should write on
+			Xe::Core::IFrameView* FrameView;
+
+			ContextInitDesc() :
 				VideoCardIndex(0),
-				DisplayIndex(0)
-			{}
+				DisplayIndex(0),
+				FrameView(nullptr)
+			{ }
 		};
 
 		//! \warning DEPRECATED; for backward compatibility only.
-		bool Create(IContext **context, RenderEngine renderEngine, Core::IView* pView, const ContextProperties& properties = ContextProperties());
+		bool Create(IContext **context, RenderEngine renderEngine, const ContextInitDesc& properties = ContextInitDesc());
 
-		bool Create(IContext **context, ctstring driverName, Core::IView* pView, const ContextProperties& properties = ContextProperties());
+		bool Create(IContext **context, ctstring driverName, const ContextInitDesc& properties = ContextInitDesc());
 	}
 }

@@ -92,7 +92,7 @@ namespace Xe {
 		//! \brief Call this when content does not needed to be drawn.
 		void Flush();
 
-		virtual void OnContextInitialize(Graphics::ContextProperties& properties) = 0;
+		virtual void OnContextInitialize(Graphics::ContextInitDesc& properties) = 0;
 
 		virtual void OnKeybDown(const Key &key);
 		virtual void OnKeybUp(const Key &key);

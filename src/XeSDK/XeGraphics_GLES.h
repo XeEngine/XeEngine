@@ -3,7 +3,7 @@
 namespace Xe {
 	namespace Graphics {
 		class IContext;
-		struct ContextProperties;
-		bool CreateContextGLES(IContext **context, const ContextProperties& properties);
+		struct ContextInitDesc;
+		bool CreateContextGLES(IContext **context, const ContextInitDesc& properties);
 	}
 }

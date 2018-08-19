@@ -28,7 +28,7 @@ namespace Xe {
 			if (m_DepthStencilState) m_DepthStencilState->Release();
 		}
 
-		bool CContextGLCommon::Initialize(const ContextProperties& properties) {
+		bool CContextGLCommon::Initialize(const ContextInitDesc& properties) {
 			// Enumerate formats
 			svar fCount = GetFormatsCount();
 			Format *pFormat = (Format*)Memory::Alloc(sizeof(Format) * fCount);

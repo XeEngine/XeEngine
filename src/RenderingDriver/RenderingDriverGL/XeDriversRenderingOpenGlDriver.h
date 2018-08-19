@@ -6,6 +6,6 @@ namespace Xe { namespace Drivers { namespace Rendering {
 	{
 		const char* GetDriverName() const;
 		DriverType GetDriverType() const;
-		bool Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextProperties& properties);
+		bool Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextInitDesc& properties);
 	};
 } } }

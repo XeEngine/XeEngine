@@ -25,7 +25,7 @@ namespace Xe { namespace Drivers { namespace Rendering {
 		return DriverType_Rendering;
 	}
 
-	bool OpenGlDriver::Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextProperties& properties)
+	bool OpenGlDriver::Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextInitDesc& properties)
 	{
 		ASSERT(pContext != nullptr);
 		auto driver = CREATECONTEXT;

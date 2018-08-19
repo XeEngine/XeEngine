@@ -13,10 +13,10 @@ namespace Xe { namespace Drivers { namespace Rendering {
 		return DriverType_Rendering;
 	}
 
-	bool D3D11Driver::Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextProperties& properties)
+	bool D3D11Driver::Factory(Xe::Graphics::IContext** pContext, const Xe::Graphics::ContextInitDesc& properties)
 	{
 		ASSERT(pContext != nullptr);
-		auto driver = new Xe::Graphics::CContextD3D11(pView);
+		auto driver = new Xe::Graphics::CContextD3D11;
 
 		ASSERT(driver != nullptr);
 		bool result = driver->Initialize(properties);

@@ -153,7 +153,7 @@ namespace Xe {
 				~CTilemap();
 			};
 
-			Core::IView* m_pView;
+			Xe::Core::IFrameView* m_pFrameView;
 			CDrawing *m_Drawing;
 			Size m_Size;
 			Color m_ClearColor;
@@ -194,7 +194,7 @@ namespace Xe {
 			ID3D11DepthStencilView* m_pDepthStencilView;
 			
 			bool CreateFactory();
-			bool CreateDevice(const ContextProperties& properties);
+			bool CreateDevice(const ContextInitDesc& properties);
 			bool CreateResources();
 			bool CreateWindowSizeDependentResources();
 			bool CreateResourcesForSwapchain();
@@ -205,10 +205,10 @@ namespace Xe {
 
 		public:
 			bool Query(IObject **obj, UID id);
-			CContextD3D11(Core::IView *pView);
+			CContextD3D11();
 			~CContextD3D11();
 
-			bool Initialize(const ContextProperties& properties);
+			bool Initialize(const ContextInitDesc& properties);
 			void GetDrawing(IDrawing2d** drawing);
 			void CreateTilemap(ITilemap** pTilemap);
 

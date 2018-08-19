@@ -1,4 +1,7 @@
 #include <XeSDK/IDriversDriver.h>
+#include <XeSDK/IDriversRenderingDriver.h>
+#include <XeSDK/IDriversSoundDriver.h>
+#include <XeSDK/IDriversGamepadDriver.h>
 #include <list>
 
 namespace Xe { namespace Drivers {

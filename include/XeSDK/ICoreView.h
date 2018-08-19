@@ -1,6 +1,12 @@
 #pragma once
+#include <XeSDK/XeDef.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeIOPointer.h>
+#include <XeSDK/IFrameView.h>
+
+namespace Xe { namespace Graphics {
+	typedef Xe::Core::Orientation Orientation;
+} }
 
 namespace Xe {
 	namespace IO {
@@ -25,150 +31,11 @@ namespace Xe {
 			u32 Character;
 		};
 	}
-	namespace Graphics {
-		//! \brief Type of orientation.
-		enum Orientation {
-			//! \brief Not specified or not supported by current device.
-			Orientation_Unknown,
-			Orientation_Landscape,
-			Orientation_Portrait,
-			Orientation_LandscapeFlipped,
-			Orientation_PortraitFlipped,
-		};
-	}
-	namespace Core {
-		//! \brief Specify how to control the event dispatcher of the OS.
-		/** \details When OnUpdate event finish the control is passed to the
-		* operating system, that has the task to process all the events in
-		* queue like window management, pointer and keyboard. After the OS
-		* event dispatcher the control returns to the app, calling OnDraw
-		* and OnUpdate when needed. This enum helps to decide how to manage
-		* the operating system control.
-		* To manually dispatch an event, see Graphics::IContext::Process.
-		*/
-		enum DispatchType {
-			//! \brief Exit from the loop.
-			/** \details Do not process any other event and exit immediately.
-			* No other events than OnDestroy will be called.
-			*/
-			DispatchType_Exit,
 
-			//! \brief Do not dispatch any event.
-			/** \details This is the faster option, but can cause the OS or its
-			* window to be froze. Because of this we reccomend to not dispatch
-			* events in queue
-			*/
-			DispatchType_None,
-
-			//! \brief Dispatch one event then return immediately.
-			/** \details This is a good compromise between None and All.
-			* If the events arrives faster than the deltaTime then the
-			* latency to process them will be very high. It's reccomended to
-			* not use this on heavy application or when VBlank is evaluated.
-			*/
-			DispatchType_One,
-
-			//! \brief Dispatch all events then return immediately.
-			/** \details This is the most common use of the event dispatcher.
-			* There are no risk and the events processing latency is reduces
-			* to the minimum.
-			*/
-			DispatchType_All,
-
-			//! \brief Dispatch all events on queue then wait until a new one.
-			/** \details This can be used to those application that do use of
-			* rendering on demand. The update and drawing are called only when
-			* needed, safing CPU clocks and improve power compsum.
-			*/
-			DispatchType_WaitOnce,
-
-			//! \brief Dispatch every event until closure.
-			/** \details This is useful when an application needs to
-			* respond only to input events.
-			*/
-			DispatchType_WaitUntilQuit,
-		};
-
-		//! \internal
-		class IFrameView {
-		public:
-			virtual bool DispatchEvents(DispatchType type) = 0;
-			virtual void SetTitle(const String& title) = 0;
-			virtual Graphics::Size GetSize() const = 0;
-			virtual bool SetSize(const Graphics::Size& size) = 0;
-			virtual void SetFullScreen(bool fullScreen) = 0;
-			virtual Xe::Graphics::Orientation GetOrientation() const = 0;
-			virtual void SetPreferredOrientation(Xe::Graphics::Orientation orientation) = 0;
-			virtual float GetScale() const = 0;
-			virtual void* GetSystemWindow() const = 0;
-		};
-
-		//! \brief Offers a space for drawing and event handling.
-		/** \details The IView is that kind of abstraction layer between an app
-		 * and the window management and event handler of the operating system.
-		 */
-		class IView : public IObject {
-		public:
-			IFrameView *m_FrameView;
-		public:
-			//! \brief Used to define some properties of IView.
-			struct InitProperties {
-				//! \brief The title of the application, if available.
-				String Title;
-				//! \brief Initial size of window, if supported.
-				Graphics::Size Size;
-				//! \brief Set if window's context can change its size.
-				//! \details In Windows Store builds this value is ignored.
-				bool IsResizable;
-				//! \brief Set if the application run in full-screen.
-				bool IsFullscreen;
-
-				InitProperties() :
-					Title("XeEngine application"),
-					Size(960, 540),
-					IsResizable(false),
-					IsFullscreen(false)
-				{}
-			};
-
-			static const UID ID = 0xd3a5204caaad42eaULL;
-
-			//! \brief Manage the life cycle of a view.
-			/** \details When Run is called, OnInitialize is called. If it
-			 * returns true, then OnRun is called too. Before to exit,
-			 * OnDestroy is called to revert initialization state.
-			 */
-			static void Run(IView *pView, const InitProperties& properties = InitProperties());
-
-			//! \brief Process and remove from the event queue the events.
-			bool DispatchEvents(DispatchType type);
-
-			//! \brief Set a new title
-			void SetTitle(const String& title);
-
-			//! \brief Get the current size
-			Graphics::Size GetSize() const;
-
-			//! \brief Specify a new size, when possible.
-			//! \return false if param is invalid or device does not support it.
-			bool SetSize(const Graphics::Size& size);
-
-			//! \brief Enable the fullscreen mode, if supported.
-			//! \param[in] fullScreen set or reset the fullscreen.
-			void SetFullScreen(bool fullScreen);
-
-			//! \brief Get current orientation of device.
-			Xe::Graphics::Orientation GetOrientation() const;
-
-			//! \brief Set a new orientation, when possible.
-			void SetPreferredOrientation(Xe::Graphics::Orientation orientation);
-
-			//! \brief Get a scale value to adapt output to physical device size.
-			float GetScale() const;
-
-			//! \brief Get a pointer of window system's object.
-			void* GetSystemWindow() const;
-
+	namespace Core
+	{
+		INTERFACE IApplicationHandler : public IObject
+		{
 			//! \brief This is called before any other event.
 			//! \return false if initialization was unsuccessful.
 			virtual bool OnInitialize() = 0;
@@ -187,8 +54,10 @@ namespace Xe {
 
 			//! \brief When the application needs a re-draw of screen content.
 			virtual void OnDraw() = 0;
+		};
 
-
+		INTERFACE IFrameHandler : public IObject
+		{
 			virtual bool OnClosing(bool forced) = 0;
 			virtual void OnFocusGot() = 0;
 			virtual void OnFocusLost() = 0;
@@ -196,11 +65,17 @@ namespace Xe {
 			virtual void OnSizeChanged(const Graphics::Size& size) = 0;
 			virtual void OnOrientationChanged(Graphics::Orientation orientation) = 0;
 			virtual void OnDpiChanged(float dpi) = 0;
+		};
 
+		INTERFACE IKeyboardHandler : public IObject
+		{
 			virtual void OnCharacter(const IO::CharacterEvent& e) = 0;
 			virtual void OnKeyPressed(const IO::KeyboardEvent& e) = 0;
 			virtual void OnKeyReleased(const IO::KeyboardEvent& e) = 0;
+		};
 
+		INTERFACE IPointerHandler : public IObject
+		{
 			virtual void OnPointerMoved(const IO::PointerEvent& e) = 0;
 			virtual void OnPointerPressed(const IO::PointerEvent& e) = 0;
 			virtual void OnPointerReleased(const IO::PointerEvent& e) = 0;

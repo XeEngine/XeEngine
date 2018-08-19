@@ -1,10 +1,6 @@
 #pragma once
 #include <XeSDK/IDriversDriver.h>
 
-namespace Xe { namespace Core {
-	class IView;
-} }
-
 namespace Xe { namespace Sound {
 	class IAudio;
 } }
