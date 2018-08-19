@@ -18,7 +18,7 @@ namespace Xe { namespace IO {
 	};
 
 	//! \brief manage generic input / output streams
-	struct IStream : public IObject
+	interface IStream : public IObject
 	{
 		//! \brief interface id
 		static const UID ID = 0xa68eb1d3541549dbULL;

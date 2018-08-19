@@ -3,7 +3,7 @@
 #include <XeSDK/XeIOPointer.h>
 
 namespace Xe {
-	class IApplication : public IObject {
+	interface IApplication : public IObject {
 	public:
 		struct Key {
 			uint key;

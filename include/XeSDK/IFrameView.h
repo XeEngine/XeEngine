@@ -3,10 +3,10 @@
 
 namespace Xe { namespace Core {
 
-	INTERFACE IApplicationHandler;
-	INTERFACE IFrameHandler;
-	INTERFACE IKeyboardHandler;
-	INTERFACE IPointerHandler;
+	interface IApplicationHandler;
+	interface IFrameHandler;
+	interface IKeyboardHandler;
+	interface IPointerHandler;
 
 	//! \brief Specify how to control the event dispatcher of the OS.
 	/** \details When OnUpdate event finish the control is passed to the
@@ -73,7 +73,7 @@ namespace Xe { namespace Core {
 	};
 
 	//! \internal
-	INTERFACE IFrameView : public IObject
+	interface IFrameView : public IObject
 	{
 		virtual void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler) = 0;
 		virtual void SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler) = 0;

@@ -4,7 +4,7 @@
 namespace Xe {
 	namespace Sound {
 		struct WaveFormat;
-		class IEffect : public IObject {
+		interface IEffect : public IObject {
 		public:
 			static const UID ID = 0xb7fd310af5404c47ULL;
 

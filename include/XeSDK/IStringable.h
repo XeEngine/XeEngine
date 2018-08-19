@@ -12,9 +12,8 @@ namespace Xe
 	class String;
 	namespace Collections
 	{
-		class IStringable : public IObject
+		interface IStringable : public IObject
 		{
-		public:
 			//! \brief interface id
 			static const UID ID = 0xb52ea8117f1d469aL;
 

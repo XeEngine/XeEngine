@@ -30,7 +30,7 @@ namespace Xe {
 
 	namespace Core
 	{
-		INTERFACE IApplicationHandler : public IObject
+		interface IApplicationHandler : public IObject
 		{
 			//! \brief This is called before any other event.
 			//! \return false if initialization was unsuccessful.
@@ -52,7 +52,7 @@ namespace Xe {
 			virtual void OnDraw() = 0;
 		};
 
-		INTERFACE IFrameHandler : public IObject
+		interface IFrameHandler : public IObject
 		{
 			virtual bool OnClosing(bool forced) = 0;
 			virtual void OnFocusGot() = 0;
@@ -63,14 +63,14 @@ namespace Xe {
 			virtual void OnDpiChanged(float dpi) = 0;
 		};
 
-		INTERFACE IKeyboardHandler : public IObject
+		interface IKeyboardHandler : public IObject
 		{
 			virtual void OnCharacter(const IO::CharacterEvent& e) = 0;
 			virtual void OnKeyPressed(const IO::KeyboardEvent& e) = 0;
 			virtual void OnKeyReleased(const IO::KeyboardEvent& e) = 0;
 		};
 
-		INTERFACE IPointerHandler : public IObject
+		interface IPointerHandler : public IObject
 		{
 			virtual void OnPointerMoved(const IO::PointerEvent& e) = 0;
 			virtual void OnPointerPressed(const IO::PointerEvent& e) = 0;
