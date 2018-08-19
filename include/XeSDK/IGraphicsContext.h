@@ -94,16 +94,15 @@ namespace Xe {
 		};
 
 		//! \brief State of depth and stencil associated to a context
-		class IDepthStencilState : public IObject
+		interface IDepthStencilState : public IObject
 		{
-		public:
 			//! \brief interface id
 			static const UID ID = 0x79a9356601dc4475L;
 		};
 
-		class IDrawing2d;
-		class IContext : public IObject {
-		public:
+		interface IDrawing2d;
+		interface IContext : public IObject
+		{
 			static const UID ID = 0x7c368cde9f314894ULL;
 
 			//! \brief used to syncronize swap buffers with v-blank

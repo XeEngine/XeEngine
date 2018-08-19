@@ -28,7 +28,8 @@ namespace Xe { namespace Graphics {
 		Math::Vector2i Size;
 	};
 
-	struct ITilemap : IObject {
+	interface ITilemap : public IObject
+	{
 		enum DrawFlags {
 			Draw_Default = 0,
 			Draw_Flip = 1,

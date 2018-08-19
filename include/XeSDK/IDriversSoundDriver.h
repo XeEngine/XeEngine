@@ -2,12 +2,12 @@
 #include <XeSDK/IDriversDriver.h>
 
 namespace Xe { namespace Sound {
-	class IAudio;
+	interface IAudio;
 } }
 
 namespace Xe { namespace Drivers { namespace Sound {
 	//! \brief Contract for a Sound Driver
-	struct ISoundDriver : public IDriver
+	interface ISoundDriver : public IDriver
 	{
 		virtual bool Factory(Xe::Sound::IAudio** pContext) = 0;
 	};

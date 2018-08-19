@@ -69,7 +69,7 @@ typedef unsigned int		uvar;
 #endif // _MSC_VER
 
 // Utilities
-#define INTERFACE struct
+#define interface struct
 #define lengthof(x) (sizeof(x) / sizeof(*x))
 #ifndef NULL
 #define NULL 0

@@ -49,7 +49,7 @@ namespace Xe
 			Mode_Temporarily
 		};
 
-		class IStorage : public IObject
+		interface IStorage : public IObject
 		{
 		public:
 			static const UID ID = 0x3e2a04d5874b4483ULL;

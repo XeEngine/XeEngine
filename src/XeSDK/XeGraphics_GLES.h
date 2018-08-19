@@ -1,8 +1,9 @@
 #pragma once
+#include <XeSDK/XeDef.h>
 
 namespace Xe {
 	namespace Graphics {
-		class IContext;
+		interface IContext;
 		struct ContextInitDesc;
 		bool CreateContextGLES(IContext **context, const ContextInitDesc& properties);
 	}

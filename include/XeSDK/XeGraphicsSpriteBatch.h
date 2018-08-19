@@ -6,7 +6,7 @@
 
 namespace Xe {
 	namespace Graphics {
-		class IContext;
+		interface IContext;
 
 		//! \brief Draw sprites on an orthogonal space as fast as possible.
 		class SpriteBatch : public IObject {

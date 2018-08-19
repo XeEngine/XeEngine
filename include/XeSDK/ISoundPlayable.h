@@ -10,7 +10,7 @@ namespace Xe {
 			State_End,
 		};
 
-		class IPlayable : public IObject {
+		interface IPlayable : public IObject {
 		public:
 			static const UID ID = 0xae945bd9671a4758ULL;
 

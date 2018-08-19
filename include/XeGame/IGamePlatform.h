@@ -9,7 +9,7 @@ namespace Xe { namespace Game {
 		IGamePlatformCallback* Callback;
 	};
 
-	struct IGamePlatform : IObject
+	interface IGamePlatform : public IObject
 	{
 		virtual void Update(double deltaTime) = 0;
 
