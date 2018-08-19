@@ -59,8 +59,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeGame.Uwp", "src\XeGame\Xe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeGame.Durango", "src\XeGame\XeGame.Durango\XeGame.Durango.vcxproj", "{5941D254-2BDC-4361-BBFD-7FF72FD9260B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform Drivers", "Platform Drivers", "{CCFCB05E-F019-4E1D-9E35-26116C6616BD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{871CA8C3-DE33-4429-A17B-18ADC52C5F8B}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md

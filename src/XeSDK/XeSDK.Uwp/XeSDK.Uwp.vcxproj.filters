@@ -9,7 +9,8 @@
     <ClCompile Include="XeCoreMain_Uwp.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="XeCoreView_Uwp.cpp">
+    <ClCompile Include="CFrameView.Uwp.cpp" />
+    <ClCompile Include="XeCoreFrameView.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
