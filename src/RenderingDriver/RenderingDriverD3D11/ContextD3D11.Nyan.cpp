@@ -2,7 +2,6 @@
 #include "ContextD3D11.h"
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
-#include "XeCoreView.h"
 
 using namespace Xe::Debug;
 
@@ -38,7 +37,7 @@ namespace Xe {
 			}
 			return true;
 		}
-		bool CContextD3D11::CreateDevice(const ContextProperties& properties) {
+		bool CContextD3D11::CreateDevice(const ContextInitDesc& properties) {
 			/*HRESULT result;
 			IDXGIFactory *factory;
 			IDXGIOutput *adapterOutput;
@@ -295,11 +294,12 @@ namespace Xe {
 				DXGI_FORMAT_B8G8R8A8_UNORM, // DX9.1
 				DXGI_FORMAT_R8G8B8A8_UNORM, // most compatible
 			};
-			const Graphics::Size& WindowSize = m_pView->GetSize();
+
+			const auto& frameViewSize = m_pFrameView->GetSize();
 
 			HRESULT hr = S_FALSE;
-			UINT Width = (UINT)WindowSize.x;
-			UINT Height = (UINT)WindowSize.y;
+			UINT Width = (UINT)frameViewSize.x;
+			UINT Height = (UINT)frameViewSize.y;
 			UINT SampleDescCount = 1;
 			UINT SampleDescQuality = 0;
 			DXGI_USAGE BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_BACK_BUFFER;
@@ -324,8 +324,7 @@ namespace Xe {
 			SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 #endif
 
-			Core::ViewInternal viewWnd;
-			Core::GetViewInternal(m_pView, viewWnd);
+			auto systemWindow = m_pFrameView->GetSystemWindow();
 
 			DXGI_SWAP_CHAIN_FULLSCREEN_DESC fullScreenDesc;
 			if (m_pFactory2) {
@@ -367,7 +366,7 @@ namespace Xe {
 				m_swapChainDesc.SampleDesc.Quality = SampleDescQuality;
 				m_swapChainDesc.BufferUsage = BufferUsage;
 				m_swapChainDesc.BufferCount = BufferCount;
-				m_swapChainDesc.OutputWindow = viewWnd.Window;
+				m_swapChainDesc.OutputWindow = (HWND)systemWindow;
 				m_swapChainDesc.Windowed = Windowed;
 				m_swapChainDesc.SwapEffect = SwapEffect; // Only value supported from multi-sampling
 				m_swapChainDesc.Flags = Flags; // Only valid on full-screen
@@ -382,11 +381,11 @@ namespace Xe {
 				if (m_pFactory2) {
 					m_swapChainDesc1.Format = Format;
 #ifndef PLATFORM_WINRT
-					hr = m_pFactory2->CreateSwapChainForHwnd(p_d3dDevice, viewWnd.Window,
+					hr = m_pFactory2->CreateSwapChainForHwnd(p_d3dDevice, (HWND)systemWindow,
 						&m_swapChainDesc1, &fullScreenDesc, nullptr, &m_swapChain1);
 #else
 					m_swapChainDesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
-					hr = m_pFactory2->CreateSwapChainForCoreWindow(p_d3dDevice, viewWnd.Window,
+					hr = m_pFactory2->CreateSwapChainForCoreWindow(p_d3dDevice, (IUnknown*)systemWindow,
 						&m_swapChainDesc1, nullptr, &m_swapChain1);
 #endif
 					if (FAILED(hr)) {

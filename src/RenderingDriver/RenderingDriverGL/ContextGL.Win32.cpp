@@ -7,10 +7,6 @@
 
 #pragma comment(lib, "Opengl32.lib")
 
-namespace Xe { namespace Core {
-	class IView;
-} }
-
 namespace Xe { namespace Graphics {
 	ContextGL_Win32::ContextGL_Win32(Core::IView* pView) :
 		CContextGL(pView),
@@ -29,7 +25,7 @@ namespace Xe { namespace Graphics {
 		if (m_hDc) ReleaseDC(m_hWnd, m_hDc);
 	}
 
-	bool ContextGL_Win32::Initialize(const ContextProperties& properties) {
+	bool ContextGL_Win32::Initialize(const ContextInitDesc& properties) {
 		if (m_IsInitialized) return true;
 		// Now try to create a valid GL context
 		if (CreateContext(/*m_pView*/)) {

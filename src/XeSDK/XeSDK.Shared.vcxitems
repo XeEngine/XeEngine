@@ -25,6 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversRenderingDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversSoundDriver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IEnumerable.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IFrameView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGameComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsContext.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCoreFrameView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoFnv1a.h" />
@@ -101,10 +103,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyFrameHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeError.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h" />
@@ -113,7 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />

@@ -32,7 +32,7 @@ namespace Xe {
 			if (m_Drawing) m_Drawing->Release();
 		}
 
-		bool CContextGL::Initialize(const ContextProperties& properties) {
+		bool CContextGL::Initialize(const ContextInitDesc& properties) {
 			if (CContextGLCommon::Initialize(properties)) {
 				return true;
 			}
@@ -63,7 +63,7 @@ namespace Xe {
 #else
 namespace Xe {
 	namespace Graphics {
-		bool CreateContextGL(IContext **context, Core::IView* pView, const ContextProperties& properties) {
+		bool CreateContextGL(IContext **context, Core::IView* pView, const ContextInitDesc& properties) {
 			*context = nullptr;
 			return false;
 		}

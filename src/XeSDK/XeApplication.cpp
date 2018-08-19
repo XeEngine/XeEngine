@@ -44,9 +44,9 @@ namespace Xe {
                 m_App->Release();
             }
             bool Initialize() {
-                Graphics::ContextProperties p;
+                Graphics::ContextInitDesc p;
                 m_App->OnContextInitialize(p);
-                if (Xe::Graphics::Create(&m_App->m_pContext, Xe::Graphics::RenderEngine_Default, nullptr, p) != Error::OK)
+                if (Xe::Graphics::Create(&m_App->m_pContext, Xe::Graphics::RenderEngine_Default, p) != Error::OK)
                     return false;
                 m_Initialized = true;
                 if (!m_App->OnInitialize())

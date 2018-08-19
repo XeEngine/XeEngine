@@ -217,9 +217,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreView.h">
       <Filter>Core\public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreView.h">
-      <Filter>Core\private</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCore.h">
       <Filter>Core\public</Filter>
     </ClInclude>
@@ -286,6 +283,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDrivers.h">
       <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IFrameView.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCoreFrameView.h">
+      <Filter>Core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyFrameHandler.h">
+      <Filter>Core\private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h">
+      <Filter>Core\private</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Luciano\source\xeengine\src\XeSDK\DummyKeyboardHandler.h">
+      <Filter>Core\private</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,9 +399,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread_Windows.cpp">
       <Filter>Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeCoreView.cpp">
-      <Filter>Core\private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp">
       <Filter>Core\private</Filter>

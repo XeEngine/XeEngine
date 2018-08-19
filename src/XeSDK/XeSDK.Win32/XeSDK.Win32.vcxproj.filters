@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="XeCoreFrameView.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CFrameView.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CFrameView.Events.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="XeCoreMain_Win32.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -9,5 +18,10 @@
     <Filter Include="Core">
       <UniqueIdentifier>{9fdad279-0b7f-4906-94f1-064533036f2e}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CFrameView.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
