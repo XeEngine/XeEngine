@@ -23,8 +23,7 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 		case SIZE_MAXHIDE:
 			if (m_isWindowMinimized) {
 				m_isWindowMinimized = false;
-				if (m_IsViewInitialized)
-					m_pFrameHandler->OnVisibilityChanged(true);
+				m_pFrameHandler->OnVisibilityChanged(true);
 			}
 			m_size.x = LOWORD(lParam);
 			m_size.y = HIWORD(lParam);
@@ -32,74 +31,60 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 			m_pointerEvent.CurrentPointer.Device.Rectangle.top = 0;
 			m_pointerEvent.CurrentPointer.Device.Rectangle.right = m_size.x;
 			m_pointerEvent.CurrentPointer.Device.Rectangle.bottom = m_size.y;
-			if (m_IsViewInitialized)
-				m_pFrameHandler->OnSizeChanged(GetSize());
+			m_pFrameHandler->OnSizeChanged(GetSize());
 			break;
 		case SIZE_MINIMIZED:
 			m_isWindowMinimized = true;
-			if (m_IsViewInitialized)
-				m_pFrameHandler->OnVisibilityChanged(false);
+			m_pFrameHandler->OnVisibilityChanged(false);
 			break;
 		}
 		break;
 	case WM_SETFOCUS:
-		if (m_IsViewInitialized)
-			m_pFrameHandler->OnFocusGot();
+		m_pFrameHandler->OnFocusGot();
 		break;
 	case WM_KILLFOCUS:
-		if (m_IsViewInitialized)
-			m_pFrameHandler->OnFocusLost();
+		m_pFrameHandler->OnFocusLost();
 		break;
 	case WM_PAINT:
 		break;
 	case WM_CLOSE:
-		if (m_IsViewInitialized)
-			if (m_pFrameHandler->OnClosing(false))
-				DestroyWindow(hWnd);
+		if (m_pFrameHandler->OnClosing(false))
+			DestroyWindow(hWnd);
 		return 0;
 	case WM_ERASEBKGND:
 		return 0;
 	case WM_KEYDOWN:
-		if (m_IsViewInitialized)
-			OnKey(wParam, lParam, false);
+		OnKey(wParam, lParam, false);
 		break;
 	case WM_KEYUP:
-		if (m_IsViewInitialized)
-			OnKey(wParam, lParam, true);
+		OnKey(wParam, lParam, true);
 		break;
 	case WM_CHAR:
-		if (m_IsViewInitialized)
-			OnChar(wParam, lParam);
+		OnChar(wParam, lParam);
 		break;
 	case WM_MOUSEMOVE:
-		if (m_IsViewInitialized)
-			OnMouseMove(wParam, lParam);
+		OnMouseMove(wParam, lParam);
 		break;
 	case WM_LBUTTONDOWN:
 	case WM_RBUTTONDOWN:
 	case WM_MBUTTONDOWN:
 	case WM_XBUTTONDOWN:
-		if (m_IsViewInitialized)
-			OnMouseButton(wParam, lParam, false);
+		OnMouseButton(wParam, lParam, false);
 		break;
 	case WM_LBUTTONUP:
 	case WM_RBUTTONUP:
 	case WM_MBUTTONUP:
 	case WM_XBUTTONUP:
-		if (m_IsViewInitialized)
-			OnMouseButton(wParam, lParam, true);
+		OnMouseButton(wParam, lParam, true);
 		break;
 	case WM_MOUSEWHEEL:
-		if (m_IsViewInitialized)
-			OnMouseWheel(wParam, lParam, false);
+		OnMouseWheel(wParam, lParam, false);
 		break;
 	case WM_MOUSEHWHEEL:
-		if (m_IsViewInitialized)
-			OnMouseWheel(wParam, lParam, true);
+		OnMouseWheel(wParam, lParam, true);
 		break;
 	case WM_TOUCH:
-		if (m_IsViewInitialized)
-			OnTouch(hWnd, wParam, lParam);
+		OnTouch(hWnd, wParam, lParam);
 		break;
 	case WM_MOUSELEAVE:
 		break;

@@ -76,7 +76,6 @@ namespace Xe { namespace Core {
 	interface IFrameView : public IObject
 	{
 		virtual void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler) = 0;
-		virtual void SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler) = 0;
 		virtual void SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler) = 0;
 		virtual void SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler) = 0;
 

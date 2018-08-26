@@ -1,19 +1,17 @@
+#include "..\..\..\include\XeSDK\XeCoreFrameView.h"
 #include "pch.h"
 #include <XeSDK/XeCoreFrameView.h>
+#include <XeSDK/XeObjPtr.h>
 #include "CFrameView.h"
 
 namespace Xe { namespace Core {
-	bool Factory(IFrameView*& pFrameView,
-		const FrameViewInitDesc& desc)
-	{
-		auto frameView = new CFrameView();
-		if (frameView->Initialize(desc))
-		{
-			pFrameView = frameView;
-			return true;
-		}
 
-		pFrameView = nullptr;
-		return false;
+	bool Run(Xe::Core::IFrameHandler* pFrameHandler, const FrameViewInitDesc& desc)
+	{
+		ASSERT(pFrameHandler);
+
+		Xe::ObjPtr<CFrameView> pFrameView = new CFrameView(pFrameHandler);
+		pFrameHandler->OnAttach(pFrameView.Get());
+		return pFrameView->Initialize(desc) ? pFrameView->Run() : false;
 	}
 } }

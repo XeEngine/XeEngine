@@ -26,6 +26,7 @@ namespace Xe { namespace Graphics {
 		return false;
 	}
 	CContextD3D11::CContextD3D11() :
+		m_pFrameView(nullptr),
 		m_Drawing(nullptr),
 		m_Size(800, 480),
 		m_ClearColor(Color::Black),
@@ -81,19 +82,22 @@ namespace Xe { namespace Graphics {
 		m_pFrameView->Release();
 	}
 
-	bool CContextD3D11::Initialize(const ContextInitDesc& properties) {
+	bool CContextD3D11::Initialize(const ContextInitDesc& properties)
+	{
 		ASSERT(properties.FrameView != nullptr);
+
+		m_pFrameView = properties.FrameView;
+		m_pFrameView->AddRef();
 
 		bool success = CreateDevice(properties) && CreateResources() &&
 			CreateWindowSizeDependentResources();
 		if (success == true)
 		{
-			m_pFrameView = properties.FrameView;
-			m_pFrameView->AddRef();
 			SetViewport(m_pFrameView->GetSize());
 			for (svar i = 0; i < lengthof(m_Surface); i++)
 				SelectSurface(nullptr, i);
 		}
+
 		return success;
 	}
 	void CContextD3D11::GetDrawing(IDrawing2d** drawing) {
@@ -107,12 +111,19 @@ namespace Xe { namespace Graphics {
 	}
 
 	void CContextD3D11::SetInternalResolution(const Size& size) {
-		HRESULT hr;
-		m_pBackbufferTexture->Release();
-		m_pBackbufferRenderTargetView->Release();
-		m_pBackbufferTexture = nullptr;
-		m_pBackbufferRenderTargetView = nullptr;
-		hr = m_swapChain->ResizeBuffers(0, size.x, size.y, DXGI_FORMAT_UNKNOWN, 0);
+		if (m_pBackbufferTexture)
+		{
+			m_pBackbufferTexture->Release();
+			m_pBackbufferTexture = nullptr;
+		}
+
+		if (m_pBackbufferRenderTargetView)
+		{
+			m_pBackbufferRenderTargetView->Release();
+			m_pBackbufferRenderTargetView = nullptr;
+		}
+
+		HRESULT hr = m_swapChain->ResizeBuffers(0, size.x, size.y, DXGI_FORMAT_UNKNOWN, 0);
 		if (FAILED(hr)) {
 			LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to resize the swapchain."));
 		}

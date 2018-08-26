@@ -23,8 +23,11 @@ namespace Xe { namespace Drivers { namespace Rendering {
 		if (result)
 		{
 			*pContext = driver;
+			return true;
 		}
-
-		return result;
+		
+		delete driver;
+		*pContext = nullptr;
+		return false;
 	}
 } } }

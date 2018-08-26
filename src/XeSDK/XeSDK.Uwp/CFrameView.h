@@ -3,6 +3,7 @@
 #include <XeSDK/XeCoreFrameView.h>
 #include <XeSDK/XeIOPointer.h>
 #include <XeSDK/XeString.h>
+#include <XeSDK/XeObjPtr.h>
 
 using namespace Microsoft::WRL;
 using namespace Microsoft::WRL::Wrappers;
@@ -30,8 +31,8 @@ typedef ITypedEventHandler<DisplayInformation*, IInspectable*> DisplayEvent;
 
 class CFrameView :
 	public Xe::Core::IFrameView,
-	ABI::Windows::ApplicationModel::Core::IFrameworkViewSource,
-	ABI::Windows::ApplicationModel::Core::IFrameworkView
+	public ABI::Windows::ApplicationModel::Core::IFrameworkView,
+	public IActivatedEventHandler
 {
 	Xe::Graphics::Size m_Size;
 	Xe::Core::Orientation m_Orientation;
@@ -40,8 +41,8 @@ class CFrameView :
 	bool m_IsClosed;
 
 	// XeEngine stuff
-	Xe::Core::IApplicationHandler* m_pApplicationHandler;
 	Xe::Core::IFrameHandler* m_pFrameHandler;
+	Xe::Core::IApplicationHandler* m_pApplicationHandler;
 	Xe::Core::IKeyboardHandler* m_pKeyboardHandler;
 	Xe::Core::IPointerHandler* m_pPointerHandler;
 
@@ -55,7 +56,6 @@ class CFrameView :
 
 	// Inherted from IFrameView
 	void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler);
-	void SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler);
 	void SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler);
 	void SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler);
 	bool DispatchEvents(Xe::Core::DispatchType type);
@@ -77,9 +77,6 @@ class CFrameView :
 	HRESULT WINAPI GetIids(ULONG *, IID **);
 	HRESULT WINAPI GetRuntimeClassName(HSTRING *);
 	HRESULT WINAPI GetTrustLevel(TrustLevel *);
-
-	// Inherted from IFrameworkViewSource
-	HRESULT WINAPI CreateView(IFrameworkView ** result);
 
 	// Inherted from IFrameworkView
 	HRESULT WINAPI Initialize(ICoreApplicationView * view);
@@ -122,7 +119,7 @@ class CFrameView :
 	static void SetPreferredOrientation(IDisplayInformationStatics* pDisplayInformation, Xe::Core::Orientation orientation);
 
 public:
-	CFrameView();
+	CFrameView(Xe::Core::IFrameHandler* pFrameHandler);
 	~CFrameView();
 
 	bool Initialize(const Xe::Core::FrameViewInitDesc& desc);

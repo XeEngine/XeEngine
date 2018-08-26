@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <XeSDK/XeMath.h>
 #include "CFrameView.h"
+#include "Utilities.h"
 #include "DummyApplicationHandler.h"
 #include "DummyFrameHandler.h"
 #include "DummyKeyboardHandler.h"
@@ -12,33 +13,18 @@
 using namespace Xe;
 using namespace Xe::Core;
 
-template <typename T, unsigned Count>
-auto GetActivationFactory(WCHAR const (&classId)[Count]) -> ComPtr<T>
-{
-	HSTRING_HEADER header;
-	HSTRING string;
-	HR(WindowsCreateStringReference(classId,
-		Count - 1,
-		&header,
-		&string));
-	ComPtr<T> result;
-	HR(RoGetActivationFactory(string,
-		__uuidof(T),
-		reinterpret_cast<void **>(result.GetAddressOf())));
-	return result;
-}
-
-CFrameView::CFrameView() :
+CFrameView::CFrameView(IFrameHandler* pFrameHandler) :
+	m_pFrameHandler(pFrameHandler),
 	m_pApplicationHandler(new DummyApplicationHandler),
-	m_pFrameHandler(new DummyFrameHandler),
 	m_pKeyboardHandler(new DummyKeyboardHandler),
 	m_pPointerHandler(new DummyPointerHandler)
 {
+	m_pFrameHandler->AddRef();
 }
 CFrameView::~CFrameView()
 {
-	m_pApplicationHandler->Release();
 	m_pFrameHandler->Release();
+	m_pApplicationHandler->Release();
 	m_pKeyboardHandler->Release();
 	m_pPointerHandler->Release();
 }
@@ -64,20 +50,6 @@ void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicati
 	else
 	{
 		m_pApplicationHandler = new DummyApplicationHandler;
-	}
-}
-
-void CFrameView::SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler)
-{
-	m_pFrameHandler->Release();
-	m_pFrameHandler = m_pFrameHandler;
-	if (m_pFrameHandler != nullptr)
-	{
-		m_pFrameHandler->AddRef();
-	}
-	else
-	{
-		m_pFrameHandler = new DummyFrameHandler;
 	}
 }
 
@@ -191,6 +163,11 @@ float CFrameView::GetScale() const
 void* CFrameView::GetSystemWindow() const
 {
 	ComPtr<IUnknown> unk;
+	while (m_Window == nullptr)
+	{
+		SleepEx(1, TRUE);
+	}
+
 	m_Window.As(&unk);
 	return unk.Get();
 }
@@ -202,11 +179,10 @@ void* CFrameView::GetSystemWindow() const
 HRESULT WINAPI CFrameView::QueryInterface(IID const & id, void ** result)
 {
 	if (result == nullptr) return E_POINTER;
-	if (id == __uuidof(IFrameworkViewSource) ||
-		id == __uuidof(IInspectable) ||
+	if (id == __uuidof(IInspectable) ||
 		id == __uuidof(IUnknown))
 	{
-		*result = static_cast<IFrameworkViewSource *>(this);
+		*result = static_cast<IInspectable *>(this);
 	}
 	else if (id == __uuidof(IFrameworkView))
 	{
@@ -255,22 +231,12 @@ HRESULT WINAPI CFrameView::GetTrustLevel(TrustLevel *)
 
 #pragma endregion
 
-#pragma region IFrameworkViewSource
-
-HRESULT WINAPI CFrameView::CreateView(IFrameworkView ** result)
-{
-	*result = this;
-	(*result)->AddRef();
-	return S_OK;
-}
-
-#pragma endregion
-
 #pragma region IFrameworkview
 
 HRESULT WINAPI CFrameView::Initialize(ICoreApplicationView * view)
 {
 	EventRegistrationToken token;
+	view->add_Activated(this, &token);
 	view->add_Activated(Callback<IActivatedEventHandler>(this, &CFrameView::OnActivated).Get(), &token);
 
 	auto CoreApplication = GetActivationFactory<ICoreApplication>(RuntimeClass_Windows_ApplicationModel_Core_CoreApplication);
@@ -355,23 +321,33 @@ HRESULT WINAPI CFrameView::SetWindow(ICoreWindow * window)
 	m_Size.y = (svar)Math::Round(rect.Height * m_Scale);
 	return S_OK;
 }
-auto WINAPI CFrameView::Load(HSTRING) -> HRESULT
+HRESULT WINAPI CFrameView::Load(HSTRING)
 {
 	// Load all the shit here, during splashscreen
 	return S_OK;
 }
-auto WINAPI CFrameView::Invoke(ICoreApplicationView *, IActivatedEventArgs *) -> HRESULT
+HRESULT WINAPI CFrameView::Invoke(ICoreApplicationView *, IActivatedEventArgs *)
 {
 	m_Window->Activate();
 	return S_OK;
 }
 HRESULT WINAPI CFrameView::Run()
 {
-	m_Window->get_Dispatcher(m_Dispatcher.GetAddressOf());
+	HRESULT hr;
+
+	HR(m_Window->get_Dispatcher(m_Dispatcher.GetAddressOf()));
 	if (m_pApplicationHandler->OnInitialize())
+	{
 		m_pApplicationHandler->OnRun();
+		hr = S_OK;
+	}
+	else
+	{
+		hr = E_FAIL;
+	}
 	m_pApplicationHandler->OnDestroy();
-	return S_OK;
+
+	return hr;
 }
 HRESULT WINAPI CFrameView::Uninitialize()
 {
@@ -543,7 +519,7 @@ HRESULT CFrameView::OnOrientationChanged(IDisplayInformation* pDisplayInformatio
 
 #pragma region Utilities
 
-static Xe::Core::Orientation GetOrientation(IDisplayInformation* pDisplayInformation)
+Xe::Core::Orientation CFrameView::GetOrientation(IDisplayInformation* pDisplayInformation)
 {
 	DisplayOrientations displayOrientation;
 	pDisplayInformation->get_CurrentOrientation(&displayOrientation);
@@ -562,7 +538,8 @@ static Xe::Core::Orientation GetOrientation(IDisplayInformation* pDisplayInforma
 		return Xe::Core::Orientation_Unknown;
 	}
 }
-static void SetPreferredOrientation(IDisplayInformationStatics* pDisplayInformation, Xe::Core::Orientation orientation)
+
+void CFrameView::SetPreferredOrientation(IDisplayInformationStatics* pDisplayInformation, Xe::Core::Orientation orientation)
 {
 	DisplayOrientations displayOrientation;
 	switch (orientation) {

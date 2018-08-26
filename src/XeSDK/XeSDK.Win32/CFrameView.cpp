@@ -53,13 +53,16 @@ typedef void(WINAPI * PFNREGISTERTOUCHWINDOWPROC)(HWND hWnd, ULONG ulFlags);
 typedef BOOL(WINAPI * PFNSETPROCESSDPIAWAREPROC)(void);
 typedef BOOL(WINAPI * PFNSETPROCESSDPIAWARENESSPROC)(PROCESS_DPI_AWARENESS value);
 
-CFrameView::CFrameView() :
+svar CFrameView::m_classesInstanceCount = 0;
+ATOM CFrameView::m_atom = 0;
+
+CFrameView::CFrameView(Xe::Core::IFrameHandler* pFrameHandler) :
 	m_isClosed(true),
 	m_hWnd(nullptr),
-	m_pFrameHandler(new DummyFrameHandler),
+	m_pFrameHandler(pFrameHandler),
+	m_pApplicationHandler(new DummyApplicationHandler),
 	m_pKeyboardHandler(new DummyKeyboardHandler),
-	m_pPointerHandler(new DummyPointerHandler),
-	m_IsViewInitialized(false)
+	m_pPointerHandler(new DummyPointerHandler)
 {
 	m_hInstance = GetModuleHandle(NULL);
 
@@ -70,6 +73,8 @@ CFrameView::CFrameView() :
 	m_pointerEvent.CurrentPointer.Buttons = 0;
 	m_pointerEvent.CurrentPointer.Pressure = 0.0f;
 	m_pointerEvent.CurrentPointer.Time = Timer::Current();
+
+	pFrameHandler->AddRef();
 }
 CFrameView::~CFrameView()
 {
@@ -77,6 +82,7 @@ CFrameView::~CFrameView()
 	UnregisterWindowClass();
 
 	m_pFrameHandler->Release();
+	m_pApplicationHandler->Release();
 	m_pKeyboardHandler->Release();
 	m_pPointerHandler->Release();
 }
@@ -147,6 +153,18 @@ bool CFrameView::Initialize(const Xe::Core::FrameViewInitDesc& properties)
 	return true;
 }
 
+bool CFrameView::Run()
+{
+	bool result = m_pApplicationHandler->OnInitialize();
+	if (result)
+	{
+		m_pApplicationHandler->OnRun();
+	}
+	m_pApplicationHandler->OnDestroy();
+
+	return result;
+}
+
 void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler)
 {
 	m_pApplicationHandler->Release();
@@ -158,20 +176,6 @@ void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicati
 	else
 	{
 		m_pApplicationHandler = new DummyApplicationHandler;
-	}
-}
-
-void CFrameView::SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler)
-{
-	m_pFrameHandler->Release();
-	m_pFrameHandler = m_pFrameHandler;
-	if (m_pFrameHandler != nullptr)
-	{
-		m_pFrameHandler->AddRef();
-	}
-	else
-	{
-		m_pFrameHandler = new DummyFrameHandler;
 	}
 }
 
@@ -332,11 +336,6 @@ float CFrameView::GetScale() const
 void* CFrameView::GetSystemWindow() const
 {
 	return (void*)m_hWnd;
-}
-
-void CFrameView::SetViewInitializeState(bool isInitialized)
-{
-	m_IsViewInitialized = isInitialized;
 }
 
 void CFrameView::SetTitleT(const char* title)
