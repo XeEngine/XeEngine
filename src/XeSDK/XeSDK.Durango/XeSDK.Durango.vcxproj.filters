@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="XeCoreMain_Durango.cpp" />
+    <ClCompile Include="XeCoreFrameView.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="XeCoreMain_Durango.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{83a67588-d83f-422d-9fb3-b48931dba2f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -21,15 +21,14 @@
 #include "ShaderD3D11_VSDefault.h"
 #include "ShaderD3D11_FSDefault.h"
 
-#ifdef PLATFORM_WINRT
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP || WINAPI_FAMILY == WINAPI_FAMILY_TV_TITLE
 // Stuff from Windows Runtime API
 #include <wrl.h>
 #include <Windows.ApplicationModel.Core.h>
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 #include <windows.graphics.display.h>
-#include <windows.ui.viewmanagement.h>
 #endif
-#if !(defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE))
-// Stuff that does not belong to Windows 6.3 or previous kernels
+#include <windows.ui.viewmanagement.h>
 #endif
 
 #elif defined(PLATFORM_UNIX) || defined(PLATFORM_ANDROID) || defined(PLATFORM_IOS)

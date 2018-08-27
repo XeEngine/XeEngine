@@ -73,6 +73,19 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{0f968996-a09c-4dda-85cb-575a5ed8059d}*SharedItemsImports = 9
+		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverWasapi\SoundDriverWasapi.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\ThirdParty\libpng\libpng.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\ThirdParty\tinyxml\tinyxml.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\ThirdParty\winsdk\winsdk.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\ThirdParty\zlib\zlib.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.Shared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.WinShared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.Shared.Unix\XeSDK.Shared.Unix.vcxitems*{1e4b9a2c-c668-4671-8b81-fe0f23326787}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.Dummy\XeSDK.Shared.Dummy.vcxitems*{23c41de4-1f9c-4556-9391-532353102816}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.vcxitems*{26e3750a-fdf1-46ff-81ef-4031f3be2d43}*SharedItemsImports = 9
@@ -100,6 +113,16 @@ Global
 		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{d0662974-0a87-4caf-9cda-6c2a5ff1ab81}*SharedItemsImports = 9
 		src\GamePlatformDriver\GamePlatform.Steam\GamePlatform.Steam.vcxitems*{dccb15ff-2da3-4cc6-a918-d5633e64d85c}*SharedItemsImports = 9
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{dfd54352-b7ab-40e2-b9a8-8401488e02ae}*SharedItemsImports = 9
+		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\ThirdParty\libpng\libpng.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\ThirdParty\tinyxml\tinyxml.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\ThirdParty\zlib\zlib.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.Shared.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.WinShared.vcxitems*{ebf8450e-5107-4c6d-bd39-02044a25e4d0}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.WinShared.vcxitems*{ef4e1787-9547-4aef-af68-f75347d19383}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

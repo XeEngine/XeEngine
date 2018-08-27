@@ -17,11 +17,16 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UwpFrameView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeMemory_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeStorageDirectory_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeStorageFile_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeThread_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSDK.WinShared\XeTimer_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystemWinRT.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UwpFrameView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinRtUtilities.h" />
   </ItemGroup>
 </Project>

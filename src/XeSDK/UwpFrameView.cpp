@@ -1,7 +1,10 @@
 #include "pch.h"
+
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP || WINAPI_FAMILY == WINAPI_FAMILY_TV_TITLE
+
 #include <XeSDK/XeMath.h>
-#include "CFrameView.h"
-#include "Utilities.h"
+#include "UwpFrameView.h"
+#include "WinRtUtilities.h"
 #include "DummyApplicationHandler.h"
 #include "DummyFrameHandler.h"
 #include "DummyKeyboardHandler.h"
@@ -13,7 +16,11 @@
 using namespace Xe;
 using namespace Xe::Core;
 
-CFrameView::CFrameView(IFrameHandler* pFrameHandler) :
+UwpFrameView::UwpFrameView(IFrameHandler* pFrameHandler) :
+	m_Orientation(Orientation_Unknown),
+	m_Scale(1.0f),
+	m_IsFullscreen(false),
+	m_IsClosed(false),
 	m_pFrameHandler(pFrameHandler),
 	m_pApplicationHandler(new DummyApplicationHandler),
 	m_pKeyboardHandler(new DummyKeyboardHandler),
@@ -21,7 +28,7 @@ CFrameView::CFrameView(IFrameHandler* pFrameHandler) :
 {
 	m_pFrameHandler->AddRef();
 }
-CFrameView::~CFrameView()
+UwpFrameView::~UwpFrameView()
 {
 	m_pFrameHandler->Release();
 	m_pApplicationHandler->Release();
@@ -29,7 +36,7 @@ CFrameView::~CFrameView()
 	m_pPointerHandler->Release();
 }
 
-bool CFrameView::Initialize(const Xe::Core::FrameViewInitDesc& frameInitDesc)
+bool UwpFrameView::Initialize(const Xe::Core::FrameViewInitDesc& frameInitDesc)
 {
 	m_Size = frameInitDesc.Size;
 	m_IsFullscreen = frameInitDesc.IsFullscreen;
@@ -39,7 +46,7 @@ bool CFrameView::Initialize(const Xe::Core::FrameViewInitDesc& frameInitDesc)
 
 #pragma region IFrameView
 
-void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler)
+void UwpFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler)
 {
 	m_pApplicationHandler->Release();
 	m_pApplicationHandler = pApplicationHandler;
@@ -53,7 +60,7 @@ void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicati
 	}
 }
 
-void CFrameView::SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler)
+void UwpFrameView::SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler)
 {
 	m_pKeyboardHandler->Release();
 	m_pKeyboardHandler = pKeyboardHandler;
@@ -67,7 +74,7 @@ void CFrameView::SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler
 	}
 }
 
-void CFrameView::SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler)
+void UwpFrameView::SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler)
 {
 	m_pPointerHandler->Release();
 	m_pPointerHandler = pPointerHandler;
@@ -81,7 +88,7 @@ void CFrameView::SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler)
 	}
 }
 
-bool CFrameView::DispatchEvents(Xe::Core::DispatchType type)
+bool UwpFrameView::DispatchEvents(Xe::Core::DispatchType type)
 {
 	CoreProcessEventsOption option;
 	switch (type) {
@@ -108,8 +115,9 @@ bool CFrameView::DispatchEvents(Xe::Core::DispatchType type)
 	return !m_IsClosed;
 }
 
-void CFrameView::SetTitle(const Xe::String& title)
+void UwpFrameView::SetTitle(const Xe::String& title)
 {
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	HSTRING_HEADER header;
 	HSTRING string;
 
@@ -123,44 +131,53 @@ void CFrameView::SetTitle(const Xe::String& title)
 	}
 
 	delete[] strW;
+#endif
 }
 
-Xe::Graphics::Size CFrameView::GetSize() const
+Xe::Graphics::Size UwpFrameView::GetSize() const
 {
 	return m_Size;
 }
 
-bool CFrameView::SetSize(const Xe::Graphics::Size& size)
+bool UwpFrameView::SetSize(const Xe::Graphics::Size& size)
 {
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	ABI::Windows::Foundation::Size newsize;
 	newsize.Width = (FLOAT)size.x;
 	newsize.Height = (FLOAT)size.y;
 	boolean success;
 	return m_ApplicationView3->TryResizeView(newsize, &success) == S_OK;
+#else
+	return false;
+#endif
 }
 
-void CFrameView::SetFullScreen(bool fullScreen)
+void UwpFrameView::SetFullScreen(bool fullScreen)
 {
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	boolean success;
 	m_ApplicationView3->TryEnterFullScreenMode(&success);
+#endif
 }
 
-Xe::Core::Orientation CFrameView::GetOrientation() const
+Xe::Core::Orientation UwpFrameView::GetOrientation() const
 {
 	return m_Orientation;
 }
 
-void CFrameView::SetPreferredOrientation(Xe::Core::Orientation orientation)
+void UwpFrameView::SetPreferredOrientation(Xe::Core::Orientation orientation)
 {
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	SetPreferredOrientation(m_DisplayInformationStatics.Get(), orientation);
+#endif
 }
 
-float CFrameView::GetScale() const
+float UwpFrameView::GetScale() const
 {
 	return m_Scale;
 }
 
-void* CFrameView::GetSystemWindow() const
+void* UwpFrameView::GetSystemWindow() const
 {
 	ComPtr<IUnknown> unk;
 	while (m_Window == nullptr)
@@ -176,7 +193,7 @@ void* CFrameView::GetSystemWindow() const
 
 #pragma region IUnknown
 
-HRESULT WINAPI CFrameView::QueryInterface(IID const & id, void ** result)
+HRESULT WINAPI UwpFrameView::QueryInterface(IID const & id, void ** result)
 {
 	if (result == nullptr) return E_POINTER;
 	if (id == __uuidof(IInspectable) ||
@@ -197,12 +214,12 @@ HRESULT WINAPI CFrameView::QueryInterface(IID const & id, void ** result)
 	return S_OK;
 }
 
-ULONG WINAPI CFrameView::AddRef()
+ULONG WINAPI UwpFrameView::AddRef()
 {
 	return ++m_ref;
 }
 
-ULONG WINAPI CFrameView::Release()
+ULONG WINAPI UwpFrameView::Release()
 {
 	if (--m_ref) return m_ref;
 	delete this;
@@ -214,17 +231,17 @@ ULONG WINAPI CFrameView::Release()
 
 #pragma region IInspectable
 
-HRESULT WINAPI CFrameView::GetIids(ULONG *, IID **)
+HRESULT WINAPI UwpFrameView::GetIids(ULONG *, IID **)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT WINAPI CFrameView::GetRuntimeClassName(HSTRING *)
+HRESULT WINAPI UwpFrameView::GetRuntimeClassName(HSTRING *)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT WINAPI CFrameView::GetTrustLevel(TrustLevel *)
+HRESULT WINAPI UwpFrameView::GetTrustLevel(TrustLevel *)
 {
 	return E_NOTIMPL;
 }
@@ -233,39 +250,42 @@ HRESULT WINAPI CFrameView::GetTrustLevel(TrustLevel *)
 
 #pragma region IFrameworkview
 
-HRESULT WINAPI CFrameView::Initialize(ICoreApplicationView * view)
+HRESULT WINAPI UwpFrameView::Initialize(ICoreApplicationView * view)
 {
 	EventRegistrationToken token;
 	view->add_Activated(this, &token);
-	view->add_Activated(Callback<IActivatedEventHandler>(this, &CFrameView::OnActivated).Get(), &token);
+	view->add_Activated(Callback<IActivatedEventHandler>(this, &UwpFrameView::OnActivated).Get(), &token);
 
 	auto CoreApplication = GetActivationFactory<ICoreApplication>(RuntimeClass_Windows_ApplicationModel_Core_CoreApplication);
-	CoreApplication->add_Suspending(Callback<SuspendingEvent>(this, &CFrameView::OnSuspending).Get(), &token);
-	CoreApplication->add_Resuming(Callback<ResumingEvent>(this, &CFrameView::OnResuming).Get(), &token);
+	CoreApplication->add_Suspending(Callback<SuspendingEvent>(this, &UwpFrameView::OnSuspending).Get(), &token);
+	CoreApplication->add_Resuming(Callback<ResumingEvent>(this, &UwpFrameView::OnResuming).Get(), &token);
 
 	return S_OK;
 }
-HRESULT WINAPI CFrameView::SetWindow(ICoreWindow * window)
+HRESULT WINAPI UwpFrameView::SetWindow(ICoreWindow * window)
 {
 	EventRegistrationToken token;
 
 	m_Window = window;
-	m_Window->add_Closed(Callback<ClosedEvent>(this, &CFrameView::OnClosed).Get(), &token);
-	m_Window->add_SizeChanged(Callback<SizeChangedEvent>(this, &CFrameView::OnSizeChanged).Get(), &token);
-	m_Window->add_VisibilityChanged(Callback<VisibilityChangedEvent>(this, &CFrameView::OnVisibilityChanged).Get(), &token);
+	m_Window->add_Closed(Callback<ClosedEvent>(this, &UwpFrameView::OnClosed).Get(), &token);
+	m_Window->add_SizeChanged(Callback<SizeChangedEvent>(this, &UwpFrameView::OnSizeChanged).Get(), &token);
+	m_Window->add_VisibilityChanged(Callback<VisibilityChangedEvent>(this, &UwpFrameView::OnVisibilityChanged).Get(), &token);
 
-	m_Window->add_CharacterReceived(Callback<CharacterReceivedEvent>(this, &CFrameView::OnCharacterReceived).Get(), &token);
-	m_Window->add_KeyDown(Callback<KeyEvent>(this, &CFrameView::OnKeyDown).Get(), &token);
-	m_Window->add_KeyUp(Callback<KeyEvent>(this, &CFrameView::OnKeyUp).Get(), &token);
+	m_Window->add_CharacterReceived(Callback<CharacterReceivedEvent>(this, &UwpFrameView::OnCharacterReceived).Get(), &token);
+	m_Window->add_KeyDown(Callback<KeyEvent>(this, &UwpFrameView::OnKeyDown).Get(), &token);
+	m_Window->add_KeyUp(Callback<KeyEvent>(this, &UwpFrameView::OnKeyUp).Get(), &token);
 
-	m_Window->add_PointerCaptureLost(Callback<PointerEvent>(this, &CFrameView::OnPointerCaptureLost).Get(), &token);
-	m_Window->add_PointerEntered(Callback<PointerEvent>(this, &CFrameView::OnPointerEntered).Get(), &token);
-	m_Window->add_PointerExited(Callback<PointerEvent>(this, &CFrameView::OnPointerExited).Get(), &token);
-	m_Window->add_PointerMoved(Callback<PointerEvent>(this, &CFrameView::OnPointerMoved).Get(), &token);
-	m_Window->add_PointerPressed(Callback<PointerEvent>(this, &CFrameView::OnPointerPressed).Get(), &token);
-	m_Window->add_PointerReleased(Callback<PointerEvent>(this, &CFrameView::OnPointerReleased).Get(), &token);
-	m_Window->add_PointerWheelChanged(Callback<PointerEvent>(this, &CFrameView::OnPointerWheelChanged).Get(), &token);
-
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
+	m_Window->add_PointerCaptureLost(Callback<PointerEvent>(this, &UwpFrameView::OnPointerCaptureLost).Get(), &token);
+#endif
+	m_Window->add_PointerEntered(Callback<PointerEvent>(this, &UwpFrameView::OnPointerEntered).Get(), &token);
+	m_Window->add_PointerExited(Callback<PointerEvent>(this, &UwpFrameView::OnPointerExited).Get(), &token);
+	m_Window->add_PointerMoved(Callback<PointerEvent>(this, &UwpFrameView::OnPointerMoved).Get(), &token);
+	m_Window->add_PointerPressed(Callback<PointerEvent>(this, &UwpFrameView::OnPointerPressed).Get(), &token);
+	m_Window->add_PointerReleased(Callback<PointerEvent>(this, &UwpFrameView::OnPointerReleased).Get(), &token);
+	m_Window->add_PointerWheelChanged(Callback<PointerEvent>(this, &UwpFrameView::OnPointerWheelChanged).Get(), &token);
+	
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	auto ApplicationViewStatic3 = GetActivationFactory<IApplicationViewStatics3>(RuntimeClass_Windows_UI_ViewManagement_ApplicationView);
 	if (ApplicationViewStatic3)
 	{
@@ -306,14 +326,16 @@ HRESULT WINAPI CFrameView::SetWindow(ICoreWindow * window)
 	float dpi;
 	IDisplayInformation *pDisplayInformation;
 	m_DisplayInformationStatics = GetActivationFactory<IDisplayInformationStatics>(RuntimeClass_Windows_Graphics_Display_DisplayInformation);
-	m_DisplayInformationStatics->add_DisplayContentsInvalidated(Callback<DisplayEvent>(this, &CFrameView::OnDisplayContentsInvalidated).Get(), &token);
+	m_DisplayInformationStatics->add_DisplayContentsInvalidated(Callback<DisplayEvent>(this, &UwpFrameView::OnDisplayContentsInvalidated).Get(), &token);
 	m_DisplayInformationStatics->GetForCurrentView(&pDisplayInformation);
-	pDisplayInformation->add_DpiChanged(Callback<DisplayEvent>(this, &CFrameView::OnDpiChanged).Get(), &token);
-	pDisplayInformation->add_OrientationChanged(Callback<DisplayEvent>(this, &CFrameView::OnOrientationChanged).Get(), &token);
+	pDisplayInformation->add_DpiChanged(Callback<DisplayEvent>(this, &UwpFrameView::OnDpiChanged).Get(), &token);
+	pDisplayInformation->add_OrientationChanged(Callback<DisplayEvent>(this, &UwpFrameView::OnOrientationChanged).Get(), &token);
 	pDisplayInformation->get_LogicalDpi(&dpi);
 	pDisplayInformation->Release();
 
 	m_Scale = dpi / 96.0f;
+
+#endif
 
 	Rect rect;
 	m_Window->get_Bounds(&rect);
@@ -321,17 +343,17 @@ HRESULT WINAPI CFrameView::SetWindow(ICoreWindow * window)
 	m_Size.y = (svar)Math::Round(rect.Height * m_Scale);
 	return S_OK;
 }
-HRESULT WINAPI CFrameView::Load(HSTRING)
+HRESULT WINAPI UwpFrameView::Load(HSTRING)
 {
 	// Load all the shit here, during splashscreen
 	return S_OK;
 }
-HRESULT WINAPI CFrameView::Invoke(ICoreApplicationView *, IActivatedEventArgs *)
+HRESULT WINAPI UwpFrameView::Invoke(ICoreApplicationView *, IActivatedEventArgs *)
 {
 	m_Window->Activate();
 	return S_OK;
 }
-HRESULT WINAPI CFrameView::Run()
+HRESULT WINAPI UwpFrameView::Run()
 {
 	HRESULT hr;
 
@@ -349,7 +371,7 @@ HRESULT WINAPI CFrameView::Run()
 
 	return hr;
 }
-HRESULT WINAPI CFrameView::Uninitialize()
+HRESULT WINAPI UwpFrameView::Uninitialize()
 {
 	// Called only if Run exits
 	return S_OK;
@@ -359,12 +381,12 @@ HRESULT WINAPI CFrameView::Uninitialize()
 
 #pragma region CoreApplication
 
-HRESULT CFrameView::OnSuspending(IInspectable*, ISuspendingEventArgs* args)
+HRESULT UwpFrameView::OnSuspending(IInspectable*, ISuspendingEventArgs* args)
 {
 	m_pApplicationHandler->OnSuspend();
 	return S_OK;
 }
-HRESULT CFrameView::OnResuming(IInspectable*, IInspectable*)
+HRESULT UwpFrameView::OnResuming(IInspectable*, IInspectable*)
 {
 	m_pApplicationHandler->OnResume();
 	return S_OK;
@@ -374,11 +396,11 @@ HRESULT CFrameView::OnResuming(IInspectable*, IInspectable*)
 
 #pragma region IFrameworkView
 
-HRESULT CFrameView::OnActivated(ICoreApplicationView*, IActivatedEventArgs* args)
+HRESULT UwpFrameView::OnActivated(ICoreApplicationView*, IActivatedEventArgs* args)
 {
 	// Before this, an useless OnActivated : CodeActivated is sent. We won't this.
 	EventRegistrationToken token;
-	m_Window->add_Activated(Callback<ActivatedEvent>(this, &CFrameView::OnWindowActivated).Get(), &token);
+	m_Window->add_Activated(Callback<ActivatedEvent>(this, &UwpFrameView::OnWindowActivated).Get(), &token);
 	return S_OK;
 }
 
@@ -386,7 +408,7 @@ HRESULT CFrameView::OnActivated(ICoreApplicationView*, IActivatedEventArgs* args
 
 #pragma region ICoreWindow
 
-HRESULT CFrameView::OnWindowActivated(ICoreWindow* pCoreWindow, IWindowActivatedEventArgs* args)
+HRESULT UwpFrameView::OnWindowActivated(ICoreWindow* pCoreWindow, IWindowActivatedEventArgs* args)
 {
 	CoreWindowActivationState state;
 	args->get_WindowActivationState(&state);
@@ -403,11 +425,11 @@ HRESULT CFrameView::OnWindowActivated(ICoreWindow* pCoreWindow, IWindowActivated
 	}
 	return S_OK;
 }
-HRESULT CFrameView::OnClosed(ICoreWindow* pCoreWindow, ICoreWindowEventArgs* args)
+HRESULT UwpFrameView::OnClosed(ICoreWindow* pCoreWindow, ICoreWindowEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnSizeChanged(ICoreWindow* pCoreWindow, IWindowSizeChangedEventArgs* args)
+HRESULT UwpFrameView::OnSizeChanged(ICoreWindow* pCoreWindow, IWindowSizeChangedEventArgs* args)
 {
 	ABI::Windows::Foundation::Size size;
 	args->get_Size(&size);
@@ -416,14 +438,14 @@ HRESULT CFrameView::OnSizeChanged(ICoreWindow* pCoreWindow, IWindowSizeChangedEv
 	m_pFrameHandler->OnSizeChanged(m_Size);
 	return S_OK;
 }
-HRESULT CFrameView::OnVisibilityChanged(ICoreWindow* pCoreWindow, IVisibilityChangedEventArgs* args)
+HRESULT UwpFrameView::OnVisibilityChanged(ICoreWindow* pCoreWindow, IVisibilityChangedEventArgs* args)
 {
 	boolean visible;
 	args->get_Visible(&visible);
 	m_pFrameHandler->OnVisibilityChanged(visible != 0);
 	return S_OK;
 }
-HRESULT CFrameView::OnCharacterReceived(ICoreWindow* pCoreWindow, ICharacterReceivedEventArgs* args)
+HRESULT UwpFrameView::OnCharacterReceived(ICoreWindow* pCoreWindow, ICharacterReceivedEventArgs* args)
 {
 	UINT32 code;
 	CorePhysicalKeyStatus status;
@@ -435,7 +457,7 @@ HRESULT CFrameView::OnCharacterReceived(ICoreWindow* pCoreWindow, ICharacterRece
 	m_pKeyboardHandler->OnCharacter(e);
 	return S_OK;
 }
-HRESULT CFrameView::OnKeyDown(ICoreWindow* pCoreWindow, IKeyEventArgs* args)
+HRESULT UwpFrameView::OnKeyDown(ICoreWindow* pCoreWindow, IKeyEventArgs* args)
 {
 	ABI::Windows::UI::Core::CorePhysicalKeyStatus status;
 	ABI::Windows::System::VirtualKey vk;
@@ -448,7 +470,7 @@ HRESULT CFrameView::OnKeyDown(ICoreWindow* pCoreWindow, IKeyEventArgs* args)
 	m_pKeyboardHandler->OnKeyPressed(e);
 	return S_OK;
 }
-HRESULT CFrameView::OnKeyUp(ICoreWindow* pCoreWindow, IKeyEventArgs* args)
+HRESULT UwpFrameView::OnKeyUp(ICoreWindow* pCoreWindow, IKeyEventArgs* args)
 {
 	ABI::Windows::UI::Core::CorePhysicalKeyStatus status;
 	ABI::Windows::System::VirtualKey vk;
@@ -461,31 +483,34 @@ HRESULT CFrameView::OnKeyUp(ICoreWindow* pCoreWindow, IKeyEventArgs* args)
 	m_pKeyboardHandler->OnKeyReleased(e);
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerCaptureLost(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
+HRESULT UwpFrameView::OnPointerCaptureLost(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerEntered(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+#endif
+HRESULT UwpFrameView::OnPointerEntered(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerExited(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+HRESULT UwpFrameView::OnPointerExited(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerMoved(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+HRESULT UwpFrameView::OnPointerMoved(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerPressed(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+HRESULT UwpFrameView::OnPointerPressed(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerReleased(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+HRESULT UwpFrameView::OnPointerReleased(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
-HRESULT CFrameView::OnPointerWheelChanged(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
+HRESULT UwpFrameView::OnPointerWheelChanged(ICoreWindow* pCoreWindow, IPointerEventArgs* args)
 {
 	return S_OK;
 }
@@ -493,13 +518,14 @@ HRESULT CFrameView::OnPointerWheelChanged(ICoreWindow* pCoreWindow, IPointerEven
 
 #pragma region DisplayInformation
 
-HRESULT CFrameView::OnDisplayContentsInvalidated(IDisplayInformation* pDisplayInformation, IInspectable* value)
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
+HRESULT UwpFrameView::OnDisplayContentsInvalidated(IDisplayInformation* pDisplayInformation, IInspectable* value)
 {
 	m_pApplicationHandler->OnDraw();
 	return S_OK;
 }
 
-HRESULT CFrameView::OnDpiChanged(IDisplayInformation* pDisplayInformation, IInspectable* value)
+HRESULT UwpFrameView::OnDpiChanged(IDisplayInformation* pDisplayInformation, IInspectable* value)
 {
 	float dpi;
 	pDisplayInformation->get_LogicalDpi(&dpi);
@@ -508,18 +534,20 @@ HRESULT CFrameView::OnDpiChanged(IDisplayInformation* pDisplayInformation, IInsp
 	return S_OK;
 }
 
-HRESULT CFrameView::OnOrientationChanged(IDisplayInformation* pDisplayInformation, IInspectable* value)
+HRESULT UwpFrameView::OnOrientationChanged(IDisplayInformation* pDisplayInformation, IInspectable* value)
 {
 	m_Orientation = GetOrientation(pDisplayInformation);
 	m_pFrameHandler->OnOrientationChanged(m_Orientation);
 	return S_OK;
 }
+#endif
 
 #pragma endregion
 
 #pragma region Utilities
 
-Xe::Core::Orientation CFrameView::GetOrientation(IDisplayInformation* pDisplayInformation)
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
+Xe::Core::Orientation UwpFrameView::GetOrientation(IDisplayInformation* pDisplayInformation)
 {
 	DisplayOrientations displayOrientation;
 	pDisplayInformation->get_CurrentOrientation(&displayOrientation);
@@ -539,7 +567,7 @@ Xe::Core::Orientation CFrameView::GetOrientation(IDisplayInformation* pDisplayIn
 	}
 }
 
-void CFrameView::SetPreferredOrientation(IDisplayInformationStatics* pDisplayInformation, Xe::Core::Orientation orientation)
+void UwpFrameView::SetPreferredOrientation(IDisplayInformationStatics* pDisplayInformation, Xe::Core::Orientation orientation)
 {
 	DisplayOrientations displayOrientation;
 	switch (orientation) {
@@ -563,5 +591,8 @@ void CFrameView::SetPreferredOrientation(IDisplayInformationStatics* pDisplayInf
 	}
 	pDisplayInformation->put_AutoRotationPreferences(displayOrientation);
 }
+#endif
 
 #pragma endregion
+
+#endif

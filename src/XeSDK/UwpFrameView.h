@@ -1,4 +1,8 @@
 #pragma once
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP || WINAPI_FAMILY == WINAPI_FAMILY_TV_TITLE
+
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/XeCoreFrameView.h>
 #include <XeSDK/XeIOPointer.h>
@@ -13,7 +17,10 @@ using namespace ABI::Windows::UI::ViewManagement;
 using namespace ABI::Windows::Foundation;
 using namespace ABI::Windows::ApplicationModel;
 using namespace ABI::Windows::ApplicationModel::Activation;
+
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 using namespace ABI::Windows::Graphics::Display;
+#endif
 
 typedef IEventHandler<SuspendingEventArgs*> SuspendingEvent;
 typedef IEventHandler<IInspectable*> ResumingEvent;
@@ -27,9 +34,11 @@ typedef ITypedEventHandler<CoreWindow*, KeyEventArgs*> KeyEvent;
 typedef ITypedEventHandler<CoreWindow*, PointerEventArgs*> PointerEvent;
 typedef ITypedEventHandler<CoreWindow*, PointerEventArgs*> Display;
 
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 typedef ITypedEventHandler<DisplayInformation*, IInspectable*> DisplayEvent;
+#endif
 
-class CFrameView :
+class UwpFrameView :
 	public Xe::Core::IFrameView,
 	public ABI::Windows::ApplicationModel::Core::IFrameworkView,
 	public IActivatedEventHandler
@@ -50,9 +59,12 @@ class CFrameView :
 	ULONG m_ref;
 	ComPtr<ICoreWindow> m_Window;
 	ComPtr<ICoreDispatcher> m_Dispatcher;
+
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	ComPtr<IApplicationView> m_ApplicationView;
 	ComPtr<IApplicationView3> m_ApplicationView3;
 	ComPtr<IDisplayInformationStatics> m_DisplayInformationStatics;
+#endif
 
 	// Inherted from IFrameView
 	void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler);
@@ -101,7 +113,10 @@ class CFrameView :
 	HRESULT OnCharacterReceived(ICoreWindow* pCoreWindow, ICharacterReceivedEventArgs* args);
 	HRESULT OnKeyDown(ICoreWindow* pCoreWindow, IKeyEventArgs* args);
 	HRESULT OnKeyUp(ICoreWindow* pCoreWindow, IKeyEventArgs* args);
+
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	HRESULT OnPointerCaptureLost(ICoreWindow* pCoreWindow, IPointerEventArgs* args);
+#endif
 	HRESULT OnPointerEntered(ICoreWindow* pCoreWindow, IPointerEventArgs* args);
 	HRESULT OnPointerExited(ICoreWindow* pCoreWindow, IPointerEventArgs* args);
 	HRESULT OnPointerMoved(ICoreWindow* pCoreWindow, IPointerEventArgs* args);
@@ -109,6 +124,7 @@ class CFrameView :
 	HRESULT OnPointerReleased(ICoreWindow* pCoreWindow, IPointerEventArgs* args);
 	HRESULT OnPointerWheelChanged(ICoreWindow* pCoreWindow, IPointerEventArgs* args);
 
+#if WINAPI_FAMILY == WINAPI_FAMILY_APP
 	// Events from DisplayInformation
 	HRESULT OnDisplayContentsInvalidated(IDisplayInformation* pDisplayInformation, IInspectable* value);
 	HRESULT OnDpiChanged(IDisplayInformation* pDisplayInformation, IInspectable* value);
@@ -117,10 +133,13 @@ class CFrameView :
 	// Utilities
 	static Xe::Core::Orientation GetOrientation(IDisplayInformation* pDisplayInformation);
 	static void SetPreferredOrientation(IDisplayInformationStatics* pDisplayInformation, Xe::Core::Orientation orientation);
+#endif
 
 public:
-	CFrameView(Xe::Core::IFrameHandler* pFrameHandler);
-	~CFrameView();
+	UwpFrameView(Xe::Core::IFrameHandler* pFrameHandler);
+	~UwpFrameView();
 
 	bool Initialize(const Xe::Core::FrameViewInitDesc& desc);
 };
+
+#endif
