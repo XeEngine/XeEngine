@@ -2,19 +2,33 @@
 #include "ContextD3D11.h"
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
+#include <XeSDK/XeLogger.h>
+
+#if !_XBOX_ONE
 #include <dxgi1_2.h>
+#define MY_IID_PPV_ARGS IID_PPV_ARGS
+
+#else
+#define MY_IID_PPV_ARGS(ppType)  __uuidof(**(ppType)), (void**)(ppType)
+
+#endif
 
 using namespace Xe::Debug;
 
 namespace Xe {
 	namespace Graphics {
-		bool CContextD3D11::CreateFactory() {
-			if (!m_pFactory) {
+		bool CContextD3D11::CreateFactory()
+		{
+#if !_XBOX_ONE
+			if (!m_pFactory)
+			{
 				HRESULT hr;
 				hr = CreateDXGIFactory1(IID_PPV_ARGS(&m_pFactory2));
-				if (FAILED(hr)) {
+				if (FAILED(hr))
+				{
 					LOG(Log::Priority_Info, Log::Type_Graphics, _T("DXGI 1.2 not supported."));
 					hr = CreateDXGIFactory1(IID_PPV_ARGS(&m_pFactory1));
+
 #if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 					// Windows Store apps does not support CreateDXGIFactory
 					if (FAILED(hr)) {
@@ -24,10 +38,12 @@ namespace Xe {
 					else
 						m_pFactory1->QueryInterface(&m_pFactory);
 #endif
+
 					if (FAILED(hr)) {
 						LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to create DXGI Factory."));
 						return false;
 					}
+
 #if WINAPI_FAMILY != WINAPI_FAMILY_DESKTOP_APP
 					m_pFactory1->QueryInterface(&m_pFactory);
 #endif
@@ -38,7 +54,12 @@ namespace Xe {
 				}
 			}
 			return true;
+#else
+			return false;
+#endif
 		}
+
+#if !_XBOX_ONE
 		bool CContextD3D11::CreateDevice(const ContextInitDesc& properties) {
 			/*HRESULT result;
 			IDXGIFactory *factory;
@@ -130,11 +151,12 @@ namespace Xe {
 				D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 			HRESULT hr;
 
+			IDXGIAdapter *pAdapter;
+#if !_XBOX_ONE
 			if (!CreateFactory())
 				return false;
 
 			// Select a videocard (default one if fails)
-			IDXGIAdapter *pAdapter;
 			hr = m_pFactory->EnumAdapters((UINT)properties.VideoCardIndex, &pAdapter);
 			if (FAILED(hr))
 			{
@@ -147,6 +169,10 @@ namespace Xe {
 				LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Getting info from videocard %i..."), properties.VideoCardIndex);
 			if (FAILED(hr))
 				return false;
+#else
+			// Xbox One does not support multiple adapters.
+			pAdapter = nullptr;
+#endif
 
 			// Log some info about videocard
 #ifdef DEBUGLOG
@@ -193,17 +219,20 @@ namespace Xe {
 				if (FAILED(hr))
 					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create a D3D11 device."));
 			}
-			pAdapter->Release();
+
+			if (pAdapter)
+				pAdapter->Release();
+
 			if (FAILED(hr))
 				return false;
 			LOG(Log::Priority_Info, Log::Type_Graphics, _T("D3D11 device created with success. Feature level: %04X"), m_FeatureLevel);
 			p_d3dDevice = device;
 			m_d3dContext = context;
-			device->QueryInterface(IID_PPV_ARGS(&p_d3dDevice1));
-			context->QueryInterface(IID_PPV_ARGS(&m_d3dContext1));
+			device->QueryInterface(MY_IID_PPV_ARGS(&p_d3dDevice1));
+			context->QueryInterface(MY_IID_PPV_ARGS(&m_d3dContext1));
 
 			IDXGIDevice1* dxgiDevice;
-			if (SUCCEEDED(p_d3dDevice->QueryInterface(IID_PPV_ARGS(&dxgiDevice))))
+			if (SUCCEEDED(p_d3dDevice->QueryInterface(MY_IID_PPV_ARGS(&dxgiDevice))))
 			{
 				// Accertarsi che DXGI non metta in coda più di un frame alla volta. Ciò consente sia di ridurre la latenza sia
 				// di accertarsi che l'applicazione esegua il rendering dopo ogni VSync, in modo da ridurre al minimo il consumo di energia.
@@ -215,6 +244,68 @@ namespace Xe {
 				LOG(Log::Priority_Warning, Log::Type_Graphics, _T("Unable to set SetMaximumFrameLatency: current device does not support DXGI 1.1."));
 			return true;
 		}
+#else
+		bool CContextD3D11::CreateDevice(const ContextInitDesc& properties)
+		{
+			D3D11X_CREATE_DEVICE_PARAMETERS params = {};
+			params.Version = D3D11_SDK_VERSION;
+
+#ifdef _DEBUG
+			// Enable the debug layer.
+			params.Flags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+#ifdef PROFILE
+			// Enable the instrumented driver.
+			params.Flags |= D3D11_CREATE_DEVICE_INSTRUMENTED;
+#endif
+
+			params.Flags |= D3D11_CREATE_DEVICE_IMMEDIATE_CONTEXT_FAST_SEMANTICS;
+			params.Flags = 0;
+
+			HRESULT hr = D3D11XCreateDeviceX(&params, &p_d3dDevice, &m_d3dContext);
+			ASSERT(hr == S_OK);
+
+			if (hr == S_OK)
+			{
+#if _XDK_VER >= 0x3F6803F3 /* XDK Edition 170600 */
+				D3D11X_GPU_HARDWARE_CONFIGURATION hwConfig = {};
+				p_d3dDevice->GetGpuHardwareConfiguration(&hwConfig);
+				if (hwConfig.HardwareVersion >= D3D11X_HARDWARE_VERSION_XBOX_ONE_X)
+				{
+					Xe::Logger::Info("Xbox One X hardware found.");
+					//m_outputSize = { 0, 0, 3840, 2160 };
+				}
+				else
+				{
+					if (hwConfig.HardwareVersion >= D3D11X_HARDWARE_VERSION_XBOX_ONE_S)
+					{
+						Xe::Logger::Info("Xbox One S hardware found.");
+					}
+					else
+					{
+						Xe::Logger::Info("Xbox One hardware found.");
+					}
+
+					//m_outputSize = { 0, 0, 1920, 1080 };
+				}
+#else
+				//m_outputSize = { 0, 0, 1920, 1080 };
+#endif
+
+				p_d3dDevice->QueryInterface(MY_IID_PPV_ARGS(&m_dxgiDevice1));
+				m_dxgiDevice1->GetAdapter(&m_dxgiAdapter);
+				m_dxgiAdapter->GetParent(MY_IID_PPV_ARGS(&m_pFactory));
+				m_pFactory->QueryInterface(MY_IID_PPV_ARGS(&m_pFactory1));
+				m_pFactory->QueryInterface(MY_IID_PPV_ARGS(&m_pFactory2));
+
+				return true;
+			}
+
+			return false;
+		}
+#endif
+
 		bool CContextD3D11::CreateResources() {
 			HRESULT hr;
 			
@@ -295,6 +386,7 @@ namespace Xe {
 				DXGI_FORMAT_R10G10B10A2_UNORM, // DX10
 				DXGI_FORMAT_B8G8R8A8_UNORM, // DX9.1
 				DXGI_FORMAT_R8G8B8A8_UNORM, // most compatible
+				DXGI_FORMAT_UNKNOWN, // Desperate solution
 			};
 
 			const auto& frameViewSize = m_pFrameView->GetSize();
@@ -304,9 +396,14 @@ namespace Xe {
 			UINT Height = (UINT)frameViewSize.y;
 			UINT SampleDescCount = 1;
 			UINT SampleDescQuality = 0;
+#if !_XBOX_ONE
 			DXGI_USAGE BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_BACK_BUFFER;
+#else
+			DXGI_USAGE BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+#endif
+			
 			UINT BufferCount = 2;
-			UINT Flags = 0;
+			UINT Flags = 0; // DXGIX_SWAP_CHAIN_FLAG_QUANTIZATION_RGB_FULL
 			UINT RefreshRateNumerator = 0;
 			UINT RefreshRateDenominator = 0;
 			DXGI_MODE_SCANLINE_ORDER ScalineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
@@ -314,7 +411,7 @@ namespace Xe {
 			BOOL Windowed = TRUE;
 			DXGI_SWAP_EFFECT SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
-#if !(defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE))
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 			/*IDXGIFactory4* pFactory4;
 			if (SUCCEEDED(m_pFactory->QueryInterface(&pFactory4))) {
 				SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
@@ -329,40 +426,39 @@ namespace Xe {
 			auto systemWindow = m_pFrameView->GetSystemWindow();
 
 			DXGI_SWAP_CHAIN_FULLSCREEN_DESC fullScreenDesc;
-			if (m_pFactory2) {
-				m_swapChainDesc1.Width = Width;
-				m_swapChainDesc1.Height = Height;
-				m_swapChainDesc1.Format = DXGI_FORMAT_UNKNOWN;
-				m_swapChainDesc1.Stereo = FALSE;
-				m_swapChainDesc1.SampleDesc.Count = SampleDescCount;
-				m_swapChainDesc1.SampleDesc.Quality = SampleDescQuality;
-				m_swapChainDesc1.BufferUsage = BufferUsage;
-				m_swapChainDesc1.BufferCount = BufferCount;
-				m_swapChainDesc1.Scaling = DXGI_SCALING_STRETCH;
-				m_swapChainDesc1.SwapEffect = SwapEffect;
-				m_swapChainDesc1.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
-				m_swapChainDesc1.Flags = Flags;
+			fullScreenDesc.RefreshRate.Numerator = RefreshRateNumerator;
+			fullScreenDesc.RefreshRate.Denominator = RefreshRateDenominator;
+			fullScreenDesc.ScanlineOrdering = ScalineOrdering;
+			fullScreenDesc.Scaling = Scaling;
+			fullScreenDesc.Windowed = Windowed;
 
-				fullScreenDesc.RefreshRate.Numerator = RefreshRateNumerator;
-				fullScreenDesc.RefreshRate.Denominator = RefreshRateDenominator;
-				fullScreenDesc.ScanlineOrdering = ScalineOrdering;
-				fullScreenDesc.Scaling = Scaling;
-				fullScreenDesc.Windowed = Windowed;
+			m_swapChainDesc1.Width = Width;
+			m_swapChainDesc1.Height = Height;
+			m_swapChainDesc1.Format = DXGI_FORMAT_UNKNOWN;
+			m_swapChainDesc1.Stereo = FALSE;
+			m_swapChainDesc1.SampleDesc.Count = SampleDescCount;
+			m_swapChainDesc1.SampleDesc.Quality = SampleDescQuality;
+			m_swapChainDesc1.BufferUsage = BufferUsage;
+			m_swapChainDesc1.BufferCount = BufferCount;
+			m_swapChainDesc1.Scaling = DXGI_SCALING_STRETCH;
+			m_swapChainDesc1.SwapEffect = SwapEffect;
+			m_swapChainDesc1.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
+			m_swapChainDesc1.Flags = Flags;
 
-				if (m_swapChain1)
-					m_swapChain1->Release();
-			}
-#ifndef PLATFORM_WINRT
-			else {
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
+			if (m_pFactory2 == nullptr)
+			{
 				// Specifying 0, the system takes the size form window
 				m_swapChainDesc.BufferDesc.Width = Width;
 				m_swapChainDesc.BufferDesc.Height = Height;
+
 				// Refresh rate is need to be specified only in full-screen
 				m_swapChainDesc.BufferDesc.RefreshRate.Numerator = RefreshRateNumerator;
 				m_swapChainDesc.BufferDesc.RefreshRate.Denominator = RefreshRateDenominator;
 				m_swapChainDesc.BufferDesc.Format = DXGI_FORMAT_UNKNOWN;
 				m_swapChainDesc.BufferDesc.ScanlineOrdering = ScalineOrdering;
 				m_swapChainDesc.BufferDesc.Scaling = Scaling;
+
 				// Antialiasing
 				m_swapChainDesc.SampleDesc.Count = SampleDescCount;
 				m_swapChainDesc.SampleDesc.Quality = SampleDescQuality;
@@ -377,29 +473,36 @@ namespace Xe {
 			if (m_swapChain)
 				m_swapChain->Release();
 
-			for (uvar i = 0; i < lengthof(SWAPCHAINFORMAT); i++) {
+			for (uvar i = 0; i < lengthof(SWAPCHAINFORMAT); i++)
+			{
 				DXGI_FORMAT Format = SWAPCHAINFORMAT[i];
+
 				// If on DXGI 1.2, try to create a IDXGISwapChain1
 				if (m_pFactory2) {
 					m_swapChainDesc1.Format = Format;
-#ifndef PLATFORM_WINRT
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 					hr = m_pFactory2->CreateSwapChainForHwnd(p_d3dDevice, (HWND)systemWindow,
 						&m_swapChainDesc1, &fullScreenDesc, nullptr, &m_swapChain1);
 #else
-					m_swapChainDesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
+					//m_swapChainDesc1.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 					hr = m_pFactory2->CreateSwapChainForCoreWindow(p_d3dDevice, (IUnknown*)systemWindow,
 						&m_swapChainDesc1, nullptr, &m_swapChain1);
 #endif
-					if (FAILED(hr)) {
+
+					if (FAILED(hr))
+					{
 						LOG(Log::Priority_Info, Log::Type_Graphics, _T("Unable to create swapchain with format %i."), Format);
 					}
-					else {
-						m_swapChain1->QueryInterface(&m_swapChain);
+					else
+					{
+						m_swapChain1->QueryInterface(MY_IID_PPV_ARGS(&m_swapChain));
 						break;
 					}
 				}
-#ifndef PLATFORM_WINRT // Windows Store apps does not support IDXGISwapChain creation
-				else {
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
+				// Windows Store apps does not support IDXGISwapChain creation
+				else
+				{
 					m_swapChainDesc.BufferDesc.Format = Format;
 					hr = m_pFactory->CreateSwapChain(p_d3dDevice, &m_swapChainDesc, &m_swapChain);
 					if (FAILED(hr)) {
@@ -410,28 +513,36 @@ namespace Xe {
 				}
 #endif
 			}
-			if (FAILED(hr)) {
+
+			if (FAILED(hr))
+			{
 				LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to create swapchain in any specified format."));
 				return false;
 			}
+
 			return CreateResourcesForSwapchain();
 		}
-		bool CContextD3D11::CreateResourcesForSwapchain() {
-			if (GetResourcesFromSwapchain()) {
+		bool CContextD3D11::CreateResourcesForSwapchain()
+		{
+			if (GetResourcesFromSwapchain())
+			{
 				DXGI_SWAP_CHAIN_DESC desc;
 				m_swapChain->GetDesc(&desc);
-				if (CreateDepthBuffer(desc.BufferDesc.Width, desc.BufferDesc.Height)) {
+
+				if (CreateDepthBuffer(desc.BufferDesc.Width, desc.BufferDesc.Height))
+				{
 					m_d3dContext->OMSetRenderTargets(1,
 						&m_pBackbufferRenderTargetView, m_pDepthStencilView);
 					return true;
 				}
 			}
+
 			return false;
 		}
 		bool CContextD3D11::GetResourcesFromSwapchain() {
 			HRESULT hr;
 			if (m_pBackbufferTexture) m_pBackbufferTexture->Release();
-			hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&m_pBackbufferTexture));
+			hr = m_swapChain->GetBuffer(0, MY_IID_PPV_ARGS(&m_pBackbufferTexture));
 			if (FAILED(hr)) {
 				LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to get texture from swapchain."));
 				if (m_swapChain1) m_swapChain1->Release();

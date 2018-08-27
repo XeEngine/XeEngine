@@ -41,6 +41,7 @@ namespace Xe { namespace Graphics {
 			if (strcmp(currentDriverName, driverName) == 0)
 			{
 				renderingDriver = (Xe::Drivers::Rendering::IRenderingDriver*)*it;
+				break;
 			}
 		}
 

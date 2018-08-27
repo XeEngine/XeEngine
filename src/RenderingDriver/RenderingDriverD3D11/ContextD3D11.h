@@ -6,6 +6,7 @@
 #else
 #include <d3d11_x.h>
 #endif
+
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
@@ -170,18 +171,24 @@ namespace Xe {
 			CSurface *m_Surface[0x100];
 			CDepthStencilState *m_DepthStencilState;
 
-			// DXGI 1.0
-			IDXGIFactory *m_pFactory;
-			// DXGI 1.1
-			IDXGIFactory1 *m_pFactory1;
-			// DXGI 1.2
-			IDXGIFactory2 *m_pFactory2;
+			IDXGIDevice1* m_dxgiDevice1;
+			IDXGIAdapter* m_dxgiAdapter;
+			IDXGIFactory* m_pFactory; // DXGI 1.0
+			IDXGIFactory1* m_pFactory1; // DXGI 1.1
+			IDXGIFactory2* m_pFactory2; // DXGI 1.2
 
 			D3D11_VIEWPORT m_viewport;
 			D3D_FEATURE_LEVEL m_FeatureLevel;
-			// D3D11
+
+#if !_XBOX_ONE
 			ID3D11Device* p_d3dDevice;
 			ID3D11DeviceContext* m_d3dContext;
+#else
+			ID3D11DeviceX* p_d3dDevice;
+			ID3D11DeviceContextX* m_d3dContext;
+#endif
+
+			// D3D11
 			ID3D11InputLayout *m_inputLayout;
 			ID3D11Buffer *m_matrixBuffer;
 			ID3D11VertexShader* p_VShader;

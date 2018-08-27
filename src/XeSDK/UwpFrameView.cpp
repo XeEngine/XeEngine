@@ -264,6 +264,10 @@ HRESULT WINAPI UwpFrameView::Initialize(ICoreApplicationView * view)
 }
 HRESULT WINAPI UwpFrameView::SetWindow(ICoreWindow * window)
 {
+#if _XBOX_ONE
+	SetThreadAffinityMask(GetCurrentThread(), 0x1);
+#endif
+
 	EventRegistrationToken token;
 
 	m_Window = window;

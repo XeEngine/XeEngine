@@ -95,6 +95,7 @@ Global
 		src\GamePlatformDriver\GamePlatform.Steam\GamePlatform.Steam.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
 		src\XeGame\XeGame.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
 		src\ThirdParty\winsdk\winsdk.vcxitems*{4385b406-a2ea-4dd0-9f9b-cfdbc27fc12e}*SharedItemsImports = 9
+		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\ThirdParty\libpng\libpng.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4

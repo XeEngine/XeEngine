@@ -4,8 +4,12 @@
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/XeMemory.h>
 
+#if !_XBOX_ONE
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
+#else
+#pragma comment(lib, "d3d11_x.lib")
+#endif
 
 using namespace Xe::Debug;
 
@@ -39,9 +43,12 @@ namespace Xe { namespace Graphics {
 		p_d3dDevice1(nullptr),
 		m_d3dContext1(nullptr),
 
+		m_dxgiDevice1(nullptr),
+		m_dxgiAdapter(nullptr),
 		m_pFactory(nullptr),
 		m_pFactory1(nullptr),
 		m_pFactory2(nullptr),
+
 		m_swapChain(nullptr),
 		m_swapChain1(nullptr),
 		m_pBackbufferTexture(nullptr),
@@ -62,6 +69,9 @@ namespace Xe { namespace Graphics {
 		if (m_d3dContext) r = m_d3dContext->Release();
 		if (p_d3dDevice) r = p_d3dDevice->Release();
 
+		if (m_dxgiDevice1) r = m_dxgiDevice1->Release();
+		if (m_dxgiAdapter) r = m_dxgiAdapter->Release();
+
 		if (m_pFactory) {
 			m_pFactory->Release();
 			if (m_pFactory1) {
@@ -69,6 +79,7 @@ namespace Xe { namespace Graphics {
 				if (m_pFactory2) m_pFactory2->Release();
 			}
 		}
+
 		if (m_swapChain1) m_swapChain1->Release();
 		if (m_swapChain) {
 			m_swapChain->SetFullscreenState(false, NULL);
