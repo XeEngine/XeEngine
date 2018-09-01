@@ -7,7 +7,9 @@
 #endif
 
 namespace Xe { namespace Drivers { namespace Input {
-	void XInputLib::Initialize() {
+	void XInputLib::Initialize()
+	{
+#if SETTINGS_LOADLIBRARY == 1
 		static const Versions XINPUT_VER[] =
 		{
 			{ L"XINPUT1_4.DLL", 0x0104 },	// Windows 8
@@ -17,7 +19,6 @@ namespace Xe { namespace Drivers { namespace Input {
 			{ L"XINPUT1_1.DLL", 0x0101 },	// DXSDK April 2006
 		};
 
-#if SETTINGS_LOADLIBRARY == 1
 		// If using Win32 API, the engine can be run from Vista or later.
 		// In this case we should check what library is installed.
 		for (size_t i = 0; i < lengthof(XINPUT_VER); i++)

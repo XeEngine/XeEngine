@@ -90,7 +90,6 @@ namespace Xe { namespace Core {
 	{
 		ASSERT(pFrameHandler);
 
-		HR(RoInitialize(RO_INIT_MULTITHREADED));
 		auto CoreApplication = GetActivationFactory<ICoreApplication>(RuntimeClass_Windows_ApplicationModel_Core_CoreApplication);
 
 		auto frameworkViewSource = new CFrameworkViewSource(pFrameHandler);

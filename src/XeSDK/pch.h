@@ -10,6 +10,7 @@
 #endif
 
 #ifdef PLATFORM_WINDOWS
+#define HR(x) (ASSERT((x) == S_OK))
 
 #ifndef WIN32_LEAN_AND_MEAN
 //#define WIN32_LEAN_AND_MEAN
@@ -22,6 +23,9 @@
 #include "ShaderD3D11_FSDefault.h"
 
 #if WINAPI_FAMILY == WINAPI_FAMILY_APP || WINAPI_FAMILY == WINAPI_FAMILY_TV_TITLE
+#undef SETTINGS_LOADLIBRARY
+#define SETTINGS_LOADLIBRARY 0
+
 // Stuff from Windows Runtime API
 #include <wrl.h>
 #include <Windows.ApplicationModel.Core.h>

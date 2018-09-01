@@ -169,8 +169,17 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="XboxGamepad.cpp" />
     <ClCompile Include="XeCoreFrameView.cpp" />
     <ClCompile Include="XeCoreMain_Durango.cpp" />
+    <ClCompile Include="XeDriversInputXbox.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="XboxGamepad.h" />
+    <ClInclude Include="XeDriversInputXbox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

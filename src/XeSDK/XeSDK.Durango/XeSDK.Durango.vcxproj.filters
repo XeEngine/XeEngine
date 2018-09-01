@@ -7,10 +7,33 @@
     <ClCompile Include="XeCoreMain_Durango.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="XeDriversInputXbox.cpp">
+      <Filter>Drivers\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="XboxGamepad.cpp">
+      <Filter>Drivers\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
       <UniqueIdentifier>{83a67588-d83f-422d-9fb3-b48931dba2f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Drivers">
+      <UniqueIdentifier>{481686d3-6d69-40f6-af25-94db33c14e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drivers\Input">
+      <UniqueIdentifier>{9482852d-f07f-4dd8-9f20-aabae0b09ee1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="XeDriversInputXbox.h">
+      <Filter>Drivers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxGamepad.h">
+      <Filter>Drivers\Input</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

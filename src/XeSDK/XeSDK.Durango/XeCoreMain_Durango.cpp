@@ -10,7 +10,7 @@
 //#include "XeDriversSoundWasapiDriver.h"
 //#include "XeDriversSoundXAudioDriver.h"
 //#include "XeDriverInputWindowsCustom.h"
-//#include "XeDriverInputXInput.h"
+#include "XeDriversInputXbox.h"
 
 namespace Xe {
 
@@ -21,7 +21,7 @@ namespace Xe {
 	//Xe::Drivers::Sound::WasapiDriver g_DriverSoundWasapi;
 	//Xe::Drivers::Sound::XAudioDriver g_DriverSoundXAudio2;
 	//Xe::Drivers::Input::WindowsCustom g_DriverInputCustom;
-	//Xe::Drivers::Input::XInput g_DriverInputXInput;
+	Xe::Drivers::Input::XboxInput g_DriverInputXbox;
 
 	void RegisterRenderingDrivers()
 	{
@@ -40,13 +40,16 @@ namespace Xe {
 	void RegisterInputDrivers()
 	{
 		//Xe::Drivers::RegisterDriver(&g_DriverInputCustom);
-		//Xe::Drivers::RegisterDriver(&g_DriverInputXInput);
+		Xe::Drivers::RegisterDriver(&g_DriverInputXbox);
 	}
 
 	namespace Core
 	{
 		void Initialize()
 		{
+			HRESULT hr = RoInitialize(RO_INIT_MULTITHREADED);
+			hr = hr;
+
 			RegisterRenderingDrivers();
 			RegisterAudioDrivers();
 			RegisterInputDrivers();

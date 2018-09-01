@@ -1,9 +1,7 @@
 #pragma once
 
-#define HR(x) (ASSERT((x) == S_OK))
-
 template <typename T, unsigned Count>
-auto GetActivationFactory(WCHAR const (&classId)[Count]) -> ComPtr<T>
+auto GetActivationFactory(WCHAR const (&classId)[Count]) -> Microsoft::WRL::ComPtr<T>
 {
 	HSTRING_HEADER header;
 	HSTRING string;
@@ -11,7 +9,7 @@ auto GetActivationFactory(WCHAR const (&classId)[Count]) -> ComPtr<T>
 		Count - 1,
 		&header,
 		&string));
-	ComPtr<T> result;
+	Microsoft::WRL::ComPtr<T> result;
 	HR(RoGetActivationFactory(string,
 		__uuidof(T),
 		reinterpret_cast<void **>(result.GetAddressOf())));

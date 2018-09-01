@@ -259,6 +259,7 @@ HRESULT WINAPI UwpFrameView::Initialize(ICoreApplicationView * view)
 	auto CoreApplication = GetActivationFactory<ICoreApplication>(RuntimeClass_Windows_ApplicationModel_Core_CoreApplication);
 	CoreApplication->add_Suspending(Callback<SuspendingEvent>(this, &UwpFrameView::OnSuspending).Get(), &token);
 	CoreApplication->add_Resuming(Callback<ResumingEvent>(this, &UwpFrameView::OnResuming).Get(), &token);
+	auto asd = Callback<SuspendingEvent>(this, &UwpFrameView::OnSuspending);
 
 	return S_OK;
 }
@@ -269,7 +270,6 @@ HRESULT WINAPI UwpFrameView::SetWindow(ICoreWindow * window)
 #endif
 
 	EventRegistrationToken token;
-
 	m_Window = window;
 	m_Window->add_Closed(Callback<ClosedEvent>(this, &UwpFrameView::OnClosed).Get(), &token);
 	m_Window->add_SizeChanged(Callback<SizeChangedEvent>(this, &UwpFrameView::OnSizeChanged).Get(), &token);
