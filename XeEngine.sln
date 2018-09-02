@@ -98,6 +98,7 @@ Global
 		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverNull\RenderingDriverNull.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\SoundDriver\SoundDriverNull\SoundDriverNull.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
+		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\ThirdParty\libpng\libpng.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\ThirdParty\tinyxml\tinyxml.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4
 		src\ThirdParty\zlib\zlib.vcxitems*{44a7d243-08b1-4dfb-9fba-3d470e121a53}*SharedItemsImports = 4

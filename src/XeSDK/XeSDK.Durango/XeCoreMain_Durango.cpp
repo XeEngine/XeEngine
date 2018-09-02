@@ -8,7 +8,7 @@
 //#include "XeDriversRenderingOpenGlDriver.h"
 #include "XeDriversSoundNullDriver.h"
 //#include "XeDriversSoundWasapiDriver.h"
-//#include "XeDriversSoundXAudioDriver.h"
+#include "XeDriversSoundXAudioDriver.h"
 //#include "XeDriverInputWindowsCustom.h"
 #include "XeDriversInputXbox.h"
 
@@ -19,7 +19,7 @@ namespace Xe {
 	//Xe::Drivers::Rendering::OpenGlDriver g_DriverRenderingOpenGl;
 	Xe::Drivers::Sound::NullDriver g_DriverSoundNull;
 	//Xe::Drivers::Sound::WasapiDriver g_DriverSoundWasapi;
-	//Xe::Drivers::Sound::XAudioDriver g_DriverSoundXAudio2;
+	Xe::Drivers::Sound::XAudioDriver g_DriverSoundXAudio2;
 	//Xe::Drivers::Input::WindowsCustom g_DriverInputCustom;
 	Xe::Drivers::Input::XboxInput g_DriverInputXbox;
 
@@ -34,7 +34,7 @@ namespace Xe {
 	{
 		Xe::Drivers::RegisterDriver(&g_DriverSoundNull);
 		//Xe::Drivers::RegisterDriver(&g_DriverSoundWasapi);
-		//Xe::Drivers::RegisterDriver(&g_DriverSoundXAudio2);
+		Xe::Drivers::RegisterDriver(&g_DriverSoundXAudio2);
 	}
 
 	void RegisterInputDrivers()

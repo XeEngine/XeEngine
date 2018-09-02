@@ -1,11 +1,4 @@
 #pragma once
-
-#if defined(PLATFORM_WIN32) || defined(PLATFORM_UWP)
-#define AUDIO_XAUDIO2
-#endif
-
-#ifdef AUDIO_XAUDIO2
-
 #include <xaudio2.h>
 #include <basetyps.h>
 
@@ -67,5 +60,3 @@ typedef struct XAUDIO2_DEVICE_DETAILS
 	XAUDIO2_DEVICE_ROLE Role;           // Roles that the device should be used for.
 	WAVEFORMATEXTENSIBLE OutputFormat;  // The device's native PCM audio output format.
 } XAUDIO2_DEVICE_DETAILS;
-
-#endif
