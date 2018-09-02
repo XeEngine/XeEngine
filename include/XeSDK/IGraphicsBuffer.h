@@ -18,9 +18,6 @@ namespace Xe {
 		protected:
 			BufferType m_type;
 		public:
-			//! \brief interface id
-			static const UID ID = 0x05321b53c6f84fc3L;
-
 			IBuffer(IContext* pContext, UsageType usage, svar length, BufferType type);
 			virtual ~IBuffer();
 

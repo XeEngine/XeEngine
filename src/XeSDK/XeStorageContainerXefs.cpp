@@ -50,23 +50,6 @@ namespace Xe {
 
                     s64 m_pos;
 
-                    bool Query(IObject **obj, UID id) {
-                        switch (id) {
-                            case IO::IFileStream::ID:
-                            case IObject::ID:
-                                this->AddRef();
-                                *obj = this;
-                                return true;
-                            case Storage::Container::Xefs::ID:
-                            case Storage::IStorage::ID:
-                                m_stream->AddRef();
-                                *obj = m_stream;
-                                break;
-                        }
-                        *obj = (IObject*)nullptr;
-                        return false;
-                    }
-
                     void Flush() {
                         m_stream->Flush();
                     }
@@ -147,19 +130,6 @@ namespace Xe {
                         m_stream->Release();
                     }
                 };
-
-                bool Query(IObject **obj, UID id) {
-                    switch (id) {
-                        case Storage::Container::Xefs::ID:
-                        case Storage::IStorage::ID:
-                        case IObject::ID:
-                            this->AddRef();
-                            *obj = this;
-                            return true;
-                    }
-                    *obj = (IObject*)nullptr;
-                    return false;
-                }
 
                 svar HashSearchLinear(u64 hash) const {
                     for (svar i = 0; i < m_count; i++) {

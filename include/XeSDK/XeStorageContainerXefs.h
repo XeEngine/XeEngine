@@ -12,8 +12,6 @@ namespace Xe
 			{
 				class XfsPrivate *xfs;
 			public:
-				static const UID ID = 0x3355c4cc25f549d1ULL;
-
 				static bool Open(Xefs **xfs, IO::IStream *stream);
 			};
 		}

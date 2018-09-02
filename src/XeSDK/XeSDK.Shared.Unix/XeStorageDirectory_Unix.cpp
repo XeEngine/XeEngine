@@ -26,17 +26,6 @@ namespace Xe {
 			tchar *m_pathbuf;
 			svar m_pathlen;
 
-			bool Query(IObject **obj, Xe::UID id) {
-				switch (id) {
-				case IDirectory::ID:
-				case IObject::ID:
-					this->AddRef();
-					*obj = this;
-					return true;
-				}
-				*obj = (IObject*)nullptr;
-				return false;
-			}
 		public:
 			CDirectory(DIR *h, ctstring path) : m_dir(h) {
 				m_pathlen = Xe::String::GetLength(path);

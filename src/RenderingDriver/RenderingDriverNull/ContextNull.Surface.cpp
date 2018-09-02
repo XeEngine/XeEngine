@@ -13,7 +13,7 @@ namespace Xe {
 			if (index >= 0 && index < lengthof(m_Surface) && m_Surface[index] != surface) {
 				if (surface != nullptr) {
 					CSurface *p;
-					if (surface->Query((IObject**)&p, CSurface::ID)) {
+					if (p = static_cast<CSurface*>(surface)) {
 						if (p->m_context == this) {
 							m_Drawing->Flush();
 							if (m_Surface[index]) m_Surface[index]->Release();
@@ -21,7 +21,6 @@ namespace Xe {
 							m_Surface[index]->AddRef();
 							// TODO set state
 						}
-						p->Release();
 					}
 					// If the object does not belong to current context, then ignore it.
 				}
@@ -33,18 +32,6 @@ namespace Xe {
 			}
 		}
 
-		bool CContextNull::CSurface::Query(IObject **obj, UID id) {
-			switch (id) {
-			case CSurface::ID:
-			case ISurface::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextNull::CSurface::CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format) :
 			ISurface(context, type, size, format),
 			m_context(context) {

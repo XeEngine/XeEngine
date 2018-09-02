@@ -20,12 +20,10 @@ namespace Xe {
 		class CContextD3D11 : public IContext {
 			class CSurface : public ISurface {
 			public:
-				static const UID ID = 0x74d30401d65e4d72ULL;
 				ID3D11Resource *m_pResource;
 				ID3D11ShaderResourceView *m_pResourceView;
 				ID3D11RenderTargetView *m_pTargetView;
 
-				bool Query(IObject **obj, UID id);
 				CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format,
 					ID3D11Resource *resource, ID3D11ShaderResourceView *resourceView, ID3D11RenderTargetView *targetView);
 				~CSurface();
@@ -42,10 +40,8 @@ namespace Xe {
 
 			class CDepthStencilState : public IDepthStencilState {
 			public:
-				static const UID ID = 0x233162049b0c40f5ULL;
 				IContext *m_context;
 
-				bool Query(IObject **obj, UID id);
 				CDepthStencilState(IContext *context, const DepthStencilStateDesc& desc);
 				~CDepthStencilState();
 			};
@@ -90,7 +86,6 @@ namespace Xe {
 				}
 
 			public:
-				bool Query(IObject **obj, UID id);
 				CDrawing(CContextD3D11 *context);
 				~CDrawing();
 
@@ -156,7 +151,6 @@ namespace Xe {
 				void DrawFlip() const;
 
 			public:
-				bool Query(IObject **obj, UID id);
 				CTilemap(IContext* context);
 				~CTilemap();
 			};
@@ -218,7 +212,6 @@ namespace Xe {
 			bool IsSdkLayersAvailable();
 
 		public:
-			bool Query(IObject **obj, UID id);
 			CContextD3D11();
 			~CContextD3D11();
 

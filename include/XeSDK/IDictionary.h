@@ -12,9 +12,6 @@ namespace Xe { namespace Collections {
 	template <class T, class K>
 	interface IDictionary : public ICollection<T>
 	{
-		//! \brief interface id
-		static const UID ID = 0x562c6725d6814c43L;
-
 		//! \brief add an item
 		//! \param[in] key of the value
 		//! \param[in] value to add

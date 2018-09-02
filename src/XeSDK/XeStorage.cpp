@@ -8,18 +8,6 @@ namespace Xe {
         bool GetStorage(IStorage **pStorage, StorageType type) {
             class CStorage : public IStorage {
             public:
-                bool Query(IObject **obj, UID id) {
-                    switch (id) {
-                        case IStorage::ID:
-                        case IObject::ID:
-                            *obj = this;
-                            AddRef();
-                            return true;
-                    }
-                    *obj = nullptr;
-                    return false;
-                }
-
                 Access GetAccess() const {
                     return Access_ReadWrite;
                 }

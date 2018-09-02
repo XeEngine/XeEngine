@@ -52,8 +52,6 @@ namespace Xe
 		interface IStorage : public IObject
 		{
 		public:
-			static const UID ID = 0x3e2a04d5874b4483ULL;
-
 			//! \brief Get the access permission of current storage item.
 			virtual Access GetAccess() const = 0;
 

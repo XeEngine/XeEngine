@@ -49,21 +49,6 @@ namespace Xe {
 
 		///////////////////////////////////////////////////////////////////////
 		// IDrawing2d implementation
-		bool CContextGL::CDrawing::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IDrawing2d::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			case IContext::ID:
-				m_pContext->AddRef();
-				*obj = m_pContext;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextGL::CDrawing::CDrawing(CContextGL *context) :
 			m_pContext(context),
 			m_curQuadsCount(0),

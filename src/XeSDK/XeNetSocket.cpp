@@ -54,16 +54,6 @@ namespace Xe {
 
             SOCKET m_Socket;
 
-            bool Query(IObject **obj, UID id) {
-                switch (id) {
-                    case Socket::ID:
-                    case IObject::ID:
-                        *obj = this;
-                        return true;
-                }
-                *obj = nullptr;
-                return false;
-            }
             CSocket(SOCKET fd, const CSocket& socket) :
                     m_Socket(fd), Socket(socket)
             {}

@@ -20,9 +20,6 @@ namespace Xe { namespace IO {
 	//! \brief manage generic input / output streams
 	interface IStream : public IObject
 	{
-		//! \brief interface id
-		static const UID ID = 0xa68eb1d3541549dbULL;
-
 		//! \brief commit changes if a stream was opened for writing
 		/** \details when a stream is opened for writing, not all written data
 		* is directly written to the file, but it's stored in a buffer to

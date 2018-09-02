@@ -5,9 +5,6 @@ namespace Xe { namespace Storage {
 	// \brief directory enumeration
 	interface IDirectory : public IObject
 	{
-		//! \brief interface id
-		static const UID ID = 0xb77760357c0c4b63ULL;
-
 		//! \brief Get the path of current IDirectory
 		//! \return A path; this should never return nullptr
 		/** \details This is a value that will never change upon the

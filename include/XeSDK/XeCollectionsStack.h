@@ -26,23 +26,6 @@ namespace Xe
 				m_capacity = capacity;
 			}
 		public:
-			//! \brief interface id
-			static const UID ID = 0x3390be71d9fc4209L;
-
-			bool Query(IObject **obj, UID id)
-			{
-				switch (id)
-				{
-				case Stack::ID:
-				case IStack<T>::ID:
-				case ICollection<T>::ID:
-				case IObject::ID:
-					*obj = this;
-					return true;
-				}
-				return false;
-			}
-
 			Stack(const ICollection<T>* collecton)
 			{
 				_SetCapacity(collecton->Count());

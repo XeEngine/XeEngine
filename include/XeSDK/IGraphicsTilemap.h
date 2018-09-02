@@ -38,9 +38,6 @@ namespace Xe { namespace Graphics {
 			Draw_Color = 8,
 		};
 
-		//! \brief interface id
-		static const UID ID = 0xdb60c0912f4344a0ULL;
-
 		virtual ~ITilemap() {};
 
 		virtual void SetTileset(const TilesetProperties& tileset) = 0;

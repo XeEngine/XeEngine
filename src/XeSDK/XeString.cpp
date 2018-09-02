@@ -15,20 +15,6 @@
 
 #define CAPACITY_MULTIPLIER	0x10
 
-bool Xe::String::Query(IObject **obj, UID id)
-{
-	switch (id)
-	{
-	case String::ID:;
-	case IObject::ID:
-		this->AddRef();
-		*obj = this;
-		return true;
-	}
-	*obj = (IObject*)nullptr;
-	return false;
-}
-
 Xe::String::String() : String(CAPACITY_MULTIPLIER) {}
 Xe::String::String(const String& string) {
 	m_capacity = string.m_capacity;

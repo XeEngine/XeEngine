@@ -13,7 +13,6 @@ namespace Xe {
 		class CContextGL : public CContextGLCommon {
 			class CDrawing : public IDrawing2d {
 			public:
-				bool Query(IObject **obj, UID id);
 				CDrawing(CContextGL *context);
 				~CDrawing();
 
@@ -95,7 +94,6 @@ namespace Xe {
 				void DrawFlip() const;
 
 			public:
-				bool Query(IObject **obj, UID id);
 				CTilemap(IContext* context);
 				~CTilemap();
 			};
@@ -105,7 +103,6 @@ namespace Xe {
 			virtual void SwapBuffersSub(VBlankSync sync) = 0;
 
 		public:
-			bool Query(IObject **obj, UID id);
 			CContextGL(Core::IView* pView);
 			~CContextGL();
 

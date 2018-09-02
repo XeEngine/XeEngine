@@ -62,8 +62,6 @@ namespace Xe { namespace Sound {
 			}
 		};
 		
-		bool Query(IObject **obj, UID id);
-		
 		XAudioBuffer(XAudioEngine *pAudio, const WaveFormat &format, ICallback *pCallback);
 		
 		~XAudioBuffer();

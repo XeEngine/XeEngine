@@ -13,9 +13,6 @@ namespace Xe { namespace Collections {
 	template <class T>
 	interface IQueue : public ICollection<T>
 	{
-		//! \brief interface id
-		static const UID ID = 0x6eaa6fc5c7384208L;
-
 		//! \brief remove all items
 		virtual void Clear() = 0;
 

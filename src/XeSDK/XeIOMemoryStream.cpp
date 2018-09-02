@@ -14,19 +14,6 @@ namespace Xe {
             bool m_writable;
 
         public:
-            bool Query(IObject **obj, UID id) {
-                switch (id) {
-                    case IMemoryStream::ID:
-                    case IStream::ID:
-                    case IObject::ID:
-                        this->AddRef();
-                        *obj = this;
-                        return true;
-                }
-                *obj = (IObject*)nullptr;
-                return false;
-            }
-
             CMemoryStream() {
                 m_start = (u8*)nullptr;
                 m_end = (u8*)nullptr;

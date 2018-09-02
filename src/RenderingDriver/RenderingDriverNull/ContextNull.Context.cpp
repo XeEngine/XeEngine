@@ -8,21 +8,6 @@ using namespace Xe::Debug;
 
 namespace Xe {
 	namespace Graphics {
-		bool CContextNull::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IContext::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			case IDrawing2d::ID:
-				m_Drawing->AddRef();
-				*obj = m_Drawing;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextNull::CContextNull() :
 			m_Drawing(nullptr),
 			m_Size(800, 480),

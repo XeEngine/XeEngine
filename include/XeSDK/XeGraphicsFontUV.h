@@ -8,14 +8,10 @@ namespace Xe {
 			//! \brief Font ready to be used as a graphic's surface
 			class FontUV : public IObject {
 			public:
-				static const UID ID = 0xca6326cae4994187ULL;
-
 				struct FontFrame {
 					Size size;
 					Math::Vector2f uv[4];
 				};
-
-				bool Query(IObject **obj, UID id);
 
 				//! \brief Create the UV from an already opened font
 				//! \param[in] font correctly opened

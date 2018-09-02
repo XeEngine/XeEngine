@@ -9,8 +9,6 @@ namespace Xe {
 			uint key;
 		};
 
-		static const UID ID = 0xBEA10E82CA4C44B7ULL;
-
 		virtual ~IApplication() {}
 
 		virtual bool OnInitialize() = 0;

@@ -9,8 +9,6 @@ namespace Xe {
 		interface IEffect;
 		class IAudioSource: public IObject {
 		public:
-			static const UID ID = 0x1acb3ad5ce004dd2ULL;
-
 			IAudioSource();
 
 			const WaveFormat &GetFormat() const;

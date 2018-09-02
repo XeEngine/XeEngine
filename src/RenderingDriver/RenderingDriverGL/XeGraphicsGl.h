@@ -143,7 +143,6 @@ namespace Xe {
 				GLenum m_stencilFrontFaceComp;
 				GLenum m_stencilBackFaceComp;
 
-				bool Query(IObject **obj, UID id);
 				DepthStencilState(IContext *context, const DepthStencilStateDesc& desc);
 				~DepthStencilState();
 			};

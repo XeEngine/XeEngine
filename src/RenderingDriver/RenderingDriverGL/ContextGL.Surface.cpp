@@ -77,18 +77,6 @@ namespace Xe {
 			}
 		}
 
-		bool CContextGLCommon::CSurface::Query(IObject **obj, UID id) {
-			switch (id) {
-			case CSurface::ID:
-			case ISurface::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextGLCommon::CSurface::CSurface(IContext *context, GLuint id, SurfaceType type, const Size &size, Color::Format format) :
 			ISurface(context, type, size, format),
 			m_context(context),

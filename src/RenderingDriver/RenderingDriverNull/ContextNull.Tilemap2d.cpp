@@ -5,17 +5,6 @@ namespace Xe {
 	namespace Graphics {
 		///////////////////////////////////////////////////////////////////////
 		// Tilemap2d implementation
-		bool CContextNull::CTilemap::Query(IObject **obj, UID id) {
-			switch (id) {
-			case ITilemap::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextNull::CTilemap::CTilemap(IContext *pContext) :
 			m_pContext(pContext)
 		{

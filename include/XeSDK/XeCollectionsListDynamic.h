@@ -29,24 +29,6 @@ namespace Xe
 		public:
 			typedef typename IList<T>::Position Position;
 
-			//! \brief interface id
-			static const UID ID = 0x9935ccc67c5d4013L;
-
-			bool Query(IObject **obj, UID id)
-			{
-				switch (id)
-				{
-				case ListDynamic::ID:
-				case IList<T>::ID:
-				case IEnumerable<T, Position>::ID:
-				case ICollection<T>::ID:
-				case IObject::ID:
-					*obj = this;
-					return true;
-				}
-				return false;
-			}
-
 			ListDynamic()
 			{
 				m_mainNode = new Node;

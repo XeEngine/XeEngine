@@ -80,8 +80,6 @@ namespace Xe {
 	class Application : public IApplication {
 		bool m_Invalidated;
 	public:
-		static const UID ID = 0xDEF439D445A04B6AULL;
-
 		Xe::Graphics::IContext *m_pContext;
 
 		Application();
@@ -114,8 +112,6 @@ namespace Xe {
 	};
 	class AppLoop : public IObject {
 	public:
-		static const UID ID = 0x1f59cc4d0f114a84ULL;
-
 		static bool Create(AppLoop **, Application* app, const AppProperties& properties = AppProperties());
 		virtual bool Process(const AppProperties &properties) = 0;
 	};

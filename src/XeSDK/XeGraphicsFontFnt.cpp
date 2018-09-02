@@ -103,17 +103,6 @@ namespace Xe {
                 svar m_chByteLength;
                 uint *m_charTable;
             public:
-                bool Query(IObject **obj, UID id) {
-                    switch (id) {
-                        case IFont::ID:
-                        case IObject::ID:
-                            this->AddRef();
-                            *obj = this;
-                            return true;
-                    }
-                    *obj = (IObject*)nullptr;
-                    return false;
-                }
                 Fnt(IO::IMemoryStream *stream) :
                         m_stream(stream) {
                     m_stream->AddRef();

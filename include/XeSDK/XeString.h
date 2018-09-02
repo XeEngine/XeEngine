@@ -16,9 +16,6 @@ namespace Xe
 		void SetCapacity(svar);
 		void SetCapacityZero(svar);
 	public:
-		//! \brief interface id
-		static const UID ID = 0x05554d6506c14dbdULL;
-
 		enum CompareOptions
 		{
 			Compare_None = 0,
@@ -129,10 +126,6 @@ namespace Xe
 		//! \param[in] start first character to take
 		//! \param[in] length number of characters to extract
 		String Substring(svar start, svar length) const;
-
-		//////////////////////////////////////////////////////////////////////////
-		// IObject
-		bool Query(IObject **obj, UID id);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Operators

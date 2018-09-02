@@ -11,9 +11,6 @@
 namespace Xe { namespace Collections {
 	interface IHashable : public IObject
 	{
-		//! \brief interface id
-		static const UID ID = 0x24e4ff4946a0464fL;
-
 		//! \brief get the hash from current object
 		//! \return hash code
 		virtual u64 GetHash() const = 0;

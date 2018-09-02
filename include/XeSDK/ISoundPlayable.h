@@ -12,8 +12,6 @@ namespace Xe {
 
 		interface IPlayable : public IObject {
 		public:
-			static const UID ID = 0xae945bd9671a4758ULL;
-
 			IPlayable();
 
 			PlayState GetPlayState() const;

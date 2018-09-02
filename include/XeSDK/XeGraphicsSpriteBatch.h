@@ -21,8 +21,6 @@ namespace Xe {
 
 			IContext* m_pContext;
 		public:
-			static const UID ID = 0xb7809c8ae3c34576ULL;
-
 			//! \brief Define how sprite are orderdetr
 			enum SortMode {
 				//! \brief Draw sprite in the same order of Draw calls.
@@ -42,8 +40,6 @@ namespace Xe {
 
 				static const Properties Default;
 			};
-
-			bool Query(IObject** obj, UID id);
 
 			//! \param[in] pContext a valid context that will be used to draw graphics.
 			SpriteBatch(IContext* pContext);

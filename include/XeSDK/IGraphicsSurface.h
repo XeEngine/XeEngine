@@ -47,8 +47,6 @@ namespace Xe {
 		//! \brief Surface used as texture or render target
 		class ISurface : public IResource {
 		public:
-			static const UID ID = 0xffc01cf158aa4b71ULL;
-
 			ISurface(IContext* context, SurfaceType type, const Size& size, Color::Format format) :
 				m_type(type), m_size(size), m_colorformat(format),
 				IResource(context, Usage_Standard)

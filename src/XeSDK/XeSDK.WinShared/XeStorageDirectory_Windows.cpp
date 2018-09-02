@@ -16,17 +16,6 @@ namespace Xe {
 			s64 m_length;
 			bool m_isDir;
 
-			bool Query(IObject **obj, Xe::UID id) {
-				switch (id) {
-				case Xe::Storage::IDirectory::ID:
-				case IObject::ID:
-					this->AddRef();
-					*obj = this;
-					return true;
-				}
-				*obj = (IObject*)nullptr;
-				return false;
-			}
 		public:
 			CDirectory(HANDLE h, WIN32_FIND_DATAA &findData, ctstring path) :
 				m_handle(h), m_findData(findData) {

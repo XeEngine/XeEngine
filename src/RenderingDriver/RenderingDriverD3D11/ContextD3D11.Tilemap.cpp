@@ -3,17 +3,6 @@
 #include <XeSDK/XeMemory.h>
 
 namespace Xe { namespace Graphics {
-	bool CContextD3D11::CTilemap::Query(IObject **obj, UID id) {
-		switch (id) {
-		case ITilemap::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = this;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
 	CContextD3D11::CTilemap::CTilemap(IContext* pContext) :
 		m_pContext(pContext)
 	{

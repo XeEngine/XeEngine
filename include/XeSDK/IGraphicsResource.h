@@ -54,9 +54,6 @@ namespace Xe {
 			virtual bool SubLock(DataDesc& map, LockType type) = 0;
 			virtual void SubUnlock() = 0;
 		public:
-			//! \brief interface id
-			static const UID ID = 0xc7443aa59aff4ea2ULL;
-
 			//! \brief set basic resource attributes
 			//! \param[in] video resource that creates this resource
 			IResource(IContext* pContext, UsageType usage);

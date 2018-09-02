@@ -23,17 +23,6 @@ namespace Xe {
                     }
                 }
 
-                bool Query(IObject **obj, UID id) {
-                    switch (id) {
-                        case IObject::ID:
-                        case IImage::ID:
-                            AddRef();
-                            *obj = this;
-                            return true;
-                    }
-                    *obj = nullptr;
-                    return false;
-                }
                 Png(const Size& size, Color::Format format, uvar colorsCount, uvar stride, IO::IStream *stream,
                     png_structp pPngStruct, png_infop pPngInfo) :
                         IImage(size, format, colorsCount, stride), m_stream(stream),

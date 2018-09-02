@@ -43,18 +43,6 @@ namespace Xe {
 				u16 cbSize;
 			};
 
-			bool Query(IObject **obj, UID id) {
-				switch (id) {
-				case IAudioSource::ID:
-				case IObject::ID:
-					AddRef();
-					*obj = this;
-					return true;
-				}
-				*obj = nullptr;
-				return false;
-			}
-
 			void SetPositionCurrentSub(SampleOffset position) {
 				m_pStream->SetPosition(m_pcmPosition + GetPositionCurrent() * m_internalSampleBlock);
 			}
