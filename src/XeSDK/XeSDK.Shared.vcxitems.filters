@@ -317,6 +317,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStreamLogHandler.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundSoundFormatFactory.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISoundSoundFormatFactory.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -453,6 +459,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeLogger.cpp">
       <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSoundFormatFactory.cpp">
+      <Filter>Sound\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMultipleLogHandler.cpp">
       <Filter>Private</Filter>

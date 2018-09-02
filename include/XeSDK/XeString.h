@@ -96,6 +96,8 @@ namespace Xe
 		//! \return < 0 if the current string is smaller, > 0 if it's greater, == 0 if it's equal
 		svar Compare(const String& str, svar length = -1, svar pos = 0, CompareOptions options = Compare_None) const;
 
+		static svar CompareInsensitive(ctstring stra, ctstring strb);
+
 		//! \brief insert at the end of current string, another specified string
 		//! \param[in] str the string that will be concatenated
 		//! \param[in] pos initial position of source string
