@@ -62,7 +62,7 @@ namespace Xe { namespace Sound {
 		if (sampleRate % 100)
 			return false;
 
-		m_sampleRate = sampleRate;
+		m_SampleRate = sampleRate;
 		return true;
 	}
 

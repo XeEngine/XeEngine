@@ -13,7 +13,7 @@ namespace Xe { namespace Drivers { namespace Sound {
 		return DriverType_Sound;
 	}
 
-	bool NullDriver::Factory(Xe::Sound::IAudio** pContext)
+	bool NullDriver::Factory(Xe::Sound::IAudio** pContext, const Xe::Sound::AudioInitDesc& desc)
 	{
 		ASSERT(pContext != nullptr);
 		*pContext = new Xe::Sound::AudioNull;

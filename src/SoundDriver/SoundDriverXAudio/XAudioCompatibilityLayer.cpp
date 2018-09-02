@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "XAudioCompatibilityLayer.h"
 
-#ifdef AUDIO_XAUDIO2
-
 CXAudioPre28::CXAudioPre28(IXAudio2_Pre28 *pAudio) :
 	m_pAudio(pAudio) {
 	m_pAudio->AddRef();
@@ -93,5 +91,3 @@ void CXAudioPre28::SetDebugConfiguration(const XAUDIO2_DEBUG_CONFIGURATION* pDeb
 	void* pReserved) {
 	m_pAudio->SetDebugConfiguration(pDebugConfiguration);
 }
-
-#endif

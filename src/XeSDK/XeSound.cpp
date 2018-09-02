@@ -60,10 +60,10 @@ namespace Xe {
 		}
 
 		IAudio::IAudio() :
-			m_sampleRate(0) {
+			m_SampleRate(0) {
 		}
 		svar IAudio::GetSampleRate() const {
-			return m_sampleRate;
+			return m_SampleRate;
 		}
 		IAudioBuffer::IAudioBuffer(const WaveFormat &format, ICallback *pCallback) :
 			m_format(format),
@@ -107,7 +107,9 @@ namespace Xe {
 			if (soundDriver != nullptr)
 			{
 				LOG(Log::Priority_Info, Log::Type_Graphics, _T("Sound driver %s found!"), driverName);
-				if (soundDriver->Factory(audio))
+				Xe::Sound::AudioInitDesc desc{ 0 };
+				desc.SampleRate = 48000;
+				if (soundDriver->Factory(audio, desc))
 				{
 					LOG(Log::Priority_Info, Log::Type_Graphics, _T("Sound driver %s initialized with success!"), driverName);
 					return true;

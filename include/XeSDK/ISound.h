@@ -89,7 +89,7 @@ namespace Xe {
 			virtual bool CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback) = 0;
 
 		protected:
-			svar m_sampleRate;
+			svar m_SampleRate;
 		};
 	}
 }

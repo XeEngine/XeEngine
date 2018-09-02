@@ -1,7 +1,6 @@
 #pragma once
 #include "XAudioDefinitions.h"
 
-#ifdef AUDIO_XAUDIO2
 // COMPATIBILITY LAYER BETWEEN <2.8 AND >=2.8
 
 #undef INTERFACE
@@ -101,6 +100,3 @@ public:
 
 	#pragma endregion
 };
-
-
-#endif

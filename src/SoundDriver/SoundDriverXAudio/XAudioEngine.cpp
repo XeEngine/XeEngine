@@ -3,21 +3,32 @@
 #include "XAudioBuffer.h"
 #include "XAudioCompatibilityLayer.h"
 
+#define LOGX(hr) (Log((hr), __func__, __FILE__, __LINE__))
+
 using namespace Xe::Debug;
 
 namespace Xe { namespace Sound {
 
-	void XAudioEngine::LogHresult(HRESULT hr) {
-		switch (hr) {
-		case S_OK:
-			break;
-		case 0x8889000A:
-			LOG(Log::Priority_Warning, Log::Type_Sound, _T("Sound device already in use."));
-			break;
-		default:
-			LOG(Log::Priority_Warning, Log::Type_Sound, _T("Generic error."));
-			break;
+	HRESULT XAudioEngine::Log(HRESULT hr, ctstring func, ctstring source, int line)
+	{
+		ctstring msg = nullptr;
+
+		if (FAILED(hr))
+		{
+			switch (hr)
+			{
+			case 0x8889000A:
+				msg = "Sound device already in use.";
+				break;
+			default:
+				msg = "Unknown error";
+				break;
+			}
+
+			Xe::Logger::DebugError("%s:%i %s: %s (%08X)", source, line, func, msg, hr);
 		}
+
+		return hr;
 	}
 
 	bool XAudioEngine::Query(IObject **obj, UID id) {
@@ -37,10 +48,13 @@ namespace Xe { namespace Sound {
 		m_pAudio(nullptr),
 		m_pMasterVoice(nullptr)
 	{
-
+		HRESULT hr;
+		LOGX(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED));
+		HR(hr);
 	}
 	
-	XAudioEngine::~XAudioEngine() {
+	XAudioEngine::~XAudioEngine()
+	{
 		if (m_pMasterVoice)
 			m_pMasterVoice->DestroyVoice();
 		if (m_pAudio)
@@ -50,7 +64,12 @@ namespace Xe { namespace Sound {
 		CoUninitialize();
 	}
 
-	bool XAudioEngine::Initialize() {
+	bool XAudioEngine::Initialize(const Xe::Sound::AudioInitDesc& desc)
+	{
+		static const UINT32 FLAGS = 0;
+		static const XAUDIO2_PROCESSOR PROCESSOR = XAUDIO2_DEFAULT_PROCESSOR;
+
+#if SETTINGS_LOADLIBRARY == 1
 		struct Version {
 			ctstring strDllName;
 			svar version;
@@ -67,14 +86,11 @@ namespace Xe { namespace Sound {
 			{ _T("XAudio2_1.dll"), 1 },
 			{ _T("XAudio2_0.dll"), 0 },*/
 		};
-		static const UINT32 FLAGS = 0;
-		static const XAUDIO2_PROCESSOR PROCESSOR = XAUDIO2_DEFAULT_PROCESSOR;
-
-#ifdef PLATFORM_WIN32
+		
 		for (svar i = 0; i < lengthof(XAudio2Vers); i++) {
 			m_hDllAudio = LoadLibraryEx(XAudio2Vers[i].strDllName, NULL, 0);
 			if (m_hDllAudio != 0) {
-				m_minVersion = XAudio2Vers[i].version;
+				m_MinVersion = XAudio2Vers[i].version;
 				break;
 			}
 		}
@@ -82,22 +98,22 @@ namespace Xe { namespace Sound {
 			LOG(Log::Priority_Error, Log::Type_Sound, _T("Unable to find an XAudio2 DLL."));
 			return false;
 		}
-#elif defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE)
-		m_minVersion = 8;
-#elif defined(PLATFORM_WINUNIVERSAL)
-		m_minVersion = 9;
+#else
+		m_MinVersion = 9;
 #endif
-		LOG(Log::Priority_Info, Log::Type_Sound, _T("XAudio 2.%i found."), m_minVersion);
+		LOG(Log::Priority_Info, Log::Type_Sound, _T("XAudio 2.%i found."), m_MinVersion);
 
 		HRESULT hr;
-#ifdef PLATFORM_WIN32
-		hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
-		if (m_minVersion >= 8) {
+#if SETTINGS_LOADLIBRARY == 1
+		if (m_MinVersion >= 8)
+		{
 			pfnXAudio2Create = (PFNXAUDIO2CREATE)GetProcAddress(m_hDllAudio, _T("XAudio2Create"));
 			hr = pfnXAudio2Create(&m_pAudio, FLAGS, PROCESSOR);
 		}
-		else {
-			static const IID XAUDIO_ID[] = {
+		else
+		{
+			static const IID XAUDIO_ID[] =
+			{
 				__uuidof(XAudio2_20), // NOT SUPPORTED
 				__uuidof(XAudio2_21), // NOT SUPPORTED
 				__uuidof(XAudio2_22), // NOT SUPPORTED
@@ -107,8 +123,9 @@ namespace Xe { namespace Sound {
 				__uuidof(XAudio2_26),
 				__uuidof(XAudio2_27),
 			};
+
 			IXAudio2_Pre28 *pAudioPre28;
-			hr = CoCreateInstance(XAUDIO_ID[m_minVersion], NULL,
+			hr = CoCreateInstance(XAUDIO_ID[m_MinVersion], NULL,
 				CLSCTX_INPROC_SERVER, __uuidof(IXAudio2_Pre28), (void**)&pAudioPre28);
 			if (SUCCEEDED(hr))
 			{
@@ -121,49 +138,74 @@ namespace Xe { namespace Sound {
 				m_pAudio = new CXAudioPre28(pAudioPre28);
 				pAudioPre28->Release();
 			}
-			else {
-				LOG(Log::Priority_Error, Log::Type_Sound, _T("CoCreateInstance failed.."), m_minVersion);
+			else
+			{
+				Logger::DebugError("CoCreateInstance failed..");
 				return false;
 			}
 		}
 #else
 		if (FAILED(hr = XAudio2Create(&m_pAudio, FLAGS, PROCESSOR)))
+		{
+			HR(hr);
 			return false;
+		}
 #endif
-		SetSampleRate(44100);
-		m_pAudio->StartEngine();
+		
+		SetSampleRate(desc.SampleRate);
+
+		if (FAILED(hr = m_pAudio->StartEngine()))
+		{
+			HR(hr);
+			return false;
+		}
 		return true;
 	}
 
-	bool XAudioEngine::SetSampleRate(svar sampleRate) {
-		LOG(Log::Priority_Diagnostics, Log::Type_Sound, _T("Setting sample rate to %i..."), sampleRate);
-		if ((sampleRate % 100)) {
-			LOG(Log::Priority_Warning, Log::Type_Sound, _T("Sample rate %i is invalid."), sampleRate);
+	bool XAudioEngine::SetSampleRate(svar sampleRate)
+	{
+		if (sampleRate == 0)
+		{
+			sampleRate = XAUDIO2_DEFAULT_SAMPLERATE;
+		}
+
+		Logger::Info("Setting sample rate to %i...", sampleRate);
+		if (sampleRate <= 0 || (sampleRate % 100) != 0)
+		{
+			Logger::DebugWarning("Sample rate %i is invalid.", sampleRate);
 			return false;
 		}
 
-		if (m_pMasterVoice != nullptr) {
-			LOG(Log::Priority_Diagnostics, Log::Type_Sound, _T("Destroying previous voice..."));
+		if (m_pMasterVoice != nullptr)
+		{
+			Logger::Info("Destroying previous voice...");
 			m_pMasterVoice->DestroyVoice();
 		}
 
-		HRESULT hr = m_pAudio->CreateMasteringVoice(&m_pMasterVoice, XAUDIO2_DEFAULT_CHANNELS, sampleRate);
-		if (SUCCEEDED(hr)) {
-			m_sampleRate = sampleRate;
-			LOG(Log::Priority_Info, Log::Type_Sound, _T("Sample rate %i set with success."), sampleRate);
+		UINT32 inputChannels = XAUDIO2_DEFAULT_CHANNELS;
+		UINT32 flags = 0;
+		LPCWSTR szDeviceId = NULL;
+
+		HRESULT hr = LOGX(m_pAudio->CreateMasteringVoice(&m_pMasterVoice, inputChannels, sampleRate, flags, szDeviceId));
+		if (SUCCEEDED(hr))
+		{
+			m_SampleRate = sampleRate;
+			Logger::Info("Sample rate %i set with success.", sampleRate);
 			return true;
 		}
 
-		LogHresult(hr);
 		return false;
 	}
 
-	bool XAudioEngine::CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback) {
+	bool XAudioEngine::CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback)
+	{
 		XAudioBuffer *cBuffer = new XAudioBuffer(this, format, pCallback);
-		if (cBuffer->Initialize()) {
+		if (cBuffer->Initialize())
+		{
 			*buffer = cBuffer;
 			return true;
 		}
+
 		cBuffer->Release();
 		*buffer = nullptr;
 		return false;
