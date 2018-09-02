@@ -194,6 +194,18 @@ svar Xe::String::Compare(const String& str, svar length, svar pos, CompareOption
 		length += overflow;
 	return Compare(str.GetData(), length, pos, options);
 }
+
+svar Xe::String::CompareInsensitive(ctstring stra, ctstring strb)
+{
+	int r = 0;
+	while (*stra && *strb && r == 0)
+	{
+		r = ToUpper(*stra++) - ToUpper(*strb++);
+	}
+
+	return r;
+}
+
 void Xe::String::Append(ctstring str, svar pos, svar length)
 {
 	svar strLen = GetLength(str);
