@@ -14,22 +14,6 @@ namespace Xe {
             bool m_Initialized;
 
         public:
-            bool Query(IObject **obj, UID id) {
-                switch (id) {
-                    case AppLoop::ID:
-                    case IObject::ID:
-                        AddRef();
-                        *obj = this;
-                        return true;
-                    case Application::ID:
-                    case IApplication::ID:
-                        m_App->AddRef();
-                        *obj = m_App;
-                        return true;
-                }
-                *obj = nullptr;
-                return false;
-            }
             CAppLife(Application* app, const AppProperties& properties) :
                     m_App(app),
                     m_Properties(properties),

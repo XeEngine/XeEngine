@@ -46,26 +46,6 @@ namespace Xe {
 			IAudioSource *m_audioSource;
 			CCallback *m_callback;
 
-			bool Query(IObject **obj, UID id) {
-				switch (id) {
-				case IPlayable::ID:
-				case IObject::ID:
-					AddRef();
-					*obj = this;
-					return true;
-				case IAudioBuffer::ID:
-					m_soundBuffer->AddRef();
-					*obj = m_soundBuffer;
-					return true;
-				case IAudioSource::ID:
-					m_audioSource->AddRef();
-					*obj = m_audioSource;
-					return true;
-				}
-				*obj = nullptr;
-				return false;
-			}
-
 			void Play() {
 				m_playState = State_Playing;
 				m_soundBuffer->Play();

@@ -7,8 +7,6 @@ namespace Xe { namespace Sound {
 		class NullBuffer : public IAudioBuffer
 		{
 		public:
-			bool Query(IObject **obj, UID id);
-
 			NullBuffer(const WaveFormat &format, ICallback *pCallback);
 
 			void Submit(const float *data, svar length);
@@ -19,8 +17,6 @@ namespace Xe { namespace Sound {
 			void GetChannelVolumes(int channels, float* volumes);
 			void SetChannelVolumes(int channels, const float* volumes);
 		};
-
-		bool Query(IObject **obj, UID id);
 
 		AudioNull();
 

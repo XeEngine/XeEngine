@@ -21,9 +21,3 @@ uvar Xe::IObject::Release()
 	}
 	return i_count;
 }
-
-bool Xe::IObject::Query(IObject **obj, UID id)
-{
-	*obj = nullptr;
-	return false;
-}

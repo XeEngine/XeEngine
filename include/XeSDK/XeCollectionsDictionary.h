@@ -48,23 +48,6 @@ namespace Xe
 				return -1;
 			}
 		public:
-			//! \brief interface id
-			static const UID ID = 0xa5a3a058497b4a17L;
-
-			bool Query(IObject **obj, UID id)
-			{
-				switch (id)
-				{
-				case Dictionary::ID:
-				case IDictionary<T, K>::ID:
-				case ICollection<T>::ID:
-				case IObject::ID:
-					*obj = this;
-					return true;
-				}
-				return false;
-			}
-
 			//! \brief capacity of fixed-length dictionary
 			//! \param[in] capacity number of max items that this dictionary can contain
 			Dictionary(svar capacity)

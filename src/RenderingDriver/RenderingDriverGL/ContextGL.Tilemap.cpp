@@ -8,17 +8,6 @@
 using namespace Xe::Debug;
 
 namespace Xe { namespace Graphics {
-	bool CContextGL::CTilemap::Query(IObject **obj, UID id) {
-		switch (id) {
-		case ITilemap::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = this;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
 	CContextGL::CTilemap::CTilemap(IContext* pContext) :
 		m_pContext(pContext)
 	{

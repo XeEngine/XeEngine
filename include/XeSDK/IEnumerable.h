@@ -15,9 +15,6 @@ namespace Xe { namespace Collections {
 		//! \brief used as position
 		typedef P Position;
 
-		//! \brief interface id
-		static const UID ID = 0xc5e36b59cc704eadL;
-
 		//! \brief check if the current position is the first
 		//! \return true if it is
 		virtual bool IsFirst(const Position) const = 0;

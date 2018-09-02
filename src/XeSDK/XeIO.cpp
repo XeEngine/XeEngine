@@ -19,14 +19,16 @@ namespace Xe {
             u8 buffer[BufferSize];
 
             IO::IMemoryStream *mem1, *mem2;
-            if (src->Query((IObject**)&mem1, IO::IMemoryStream::ID) &&
-                dst->Query((IObject**)&mem2, IO::IMemoryStream::ID)) {
-
+			mem1 = static_cast<Xe::IO::IMemoryStream*>(src);
+			mem2 = static_cast<Xe::IO::IMemoryStream*>(dst);
+            if (mem1 && mem2)
+			{
                 void* pIn = (u8*)((IMemoryStream*)src)->GetMemory() + src->GetPosition();
                 void* pOut = (u8*)((IMemoryStream*)dst)->GetMemory() + dst->GetPosition();
 
                 s64 remainsOut = dst->GetLength() - dst->GetPosition() - length;
-                if (remainsOut < 0) {
+                if (remainsOut < 0)
+				{
                     if (dst->SetLength(dst->GetLength() - remainsOut))
                         pOut = (u8*)((IMemoryStream*)src)->GetMemory();
                     else
@@ -37,8 +39,10 @@ namespace Xe {
                 src->SetPosition(length, Seek_Cur);
                 dst->SetPosition(length, Seek_Cur);
             }
-            else {
-                while (length > 0) {
+            else
+			{
+                while (length > 0)
+				{
                     s32 toCopy = (s32)(length > BufferSize ? BufferSize : length);
                     src->Read(buffer, 0, toCopy);
                     dst->Write(buffer, 0, toCopy);

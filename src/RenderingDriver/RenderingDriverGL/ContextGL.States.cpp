@@ -33,18 +33,6 @@ namespace Xe {
 			}
 		}
 
-		bool CContextGLCommon::CDepthStencilState::Query(IObject **obj, UID id) {
-			switch (id) {
-			case CDepthStencilState::ID:
-			case IDepthStencilState::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextGLCommon::CDepthStencilState::CDepthStencilState(IContext *context, const DepthStencilStateDesc& desc) :
 			m_context(context) {
 			m_context->AddRef();

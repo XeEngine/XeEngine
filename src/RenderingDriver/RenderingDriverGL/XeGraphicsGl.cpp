@@ -189,21 +189,6 @@ namespace Xe {
 
 		///////////////////////////////////////////////////////////////////
 		// CLASS PROPERTIES
-		bool Gl::DepthStencilState::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IDepthStencilState::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			case IContext::ID:
-				context->AddRef();
-				*obj = context;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		Gl::DepthStencilState::DepthStencilState(IContext *context, const DepthStencilStateDesc& desc) :
 			context(context),
 			m_zwriteenable((GLboolean)desc.depthTestEnabled),

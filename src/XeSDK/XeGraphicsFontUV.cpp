@@ -6,21 +6,6 @@
 namespace Xe {
     namespace Graphics {
         namespace Font {
-            bool FontUV::Query(IObject **obj, UID id) {
-                switch (id) {
-                    case IFont::ID:
-                        *obj = m_font;
-                        m_font->AddRef();
-                        return true;
-                    case FontUV::ID:
-                    case IObject::ID:
-                        *obj = this;
-                        AddRef();
-                        return true;
-                }
-                *obj = nullptr;
-                return false;
-            }
             FontUV::FontUV(IFont *font, Graphics::IContext *context, Graphics::Color::Format format) :
                     m_font(font),
                     m_context(context),

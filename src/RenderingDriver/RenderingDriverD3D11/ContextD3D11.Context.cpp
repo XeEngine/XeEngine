@@ -14,21 +14,6 @@
 using namespace Xe::Debug;
 
 namespace Xe { namespace Graphics {
-	bool CContextD3D11::Query(IObject **obj, UID id) {
-		switch (id) {
-		case IContext::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = this;
-			return true;
-		case IDrawing2d::ID:
-			m_Drawing->AddRef();
-			*obj = m_Drawing;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
 	CContextD3D11::CContextD3D11() :
 		m_pFrameView(nullptr),
 		m_Drawing(nullptr),

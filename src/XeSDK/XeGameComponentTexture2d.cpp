@@ -1,17 +1,6 @@
 #include "pch.h"
 #include <XeSDK/XeGameComponentTexture2d.h>
 
-bool Xe::Game::Component::Texture2d::Query(IObject **obj, UID id) {
-	switch (id) {
-	case IObject::ID:
-	case IComponent::ID:
-	case Texture2d::ID:
-		this->AddRef();
-		*obj = this;
-		return true;
-	}
-	return false;
-}
 Xe::Game::Component::Texture2d::Texture2d() :
 	m_pSurface(0)
 {

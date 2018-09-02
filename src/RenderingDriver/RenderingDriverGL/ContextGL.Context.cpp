@@ -9,21 +9,6 @@ using namespace Xe::Debug;
 
 namespace Xe {
 	namespace Graphics {
-		bool CContextGL::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IContext::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			case IDrawing2d::ID:
-				m_Drawing->AddRef();
-				*obj = m_Drawing;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextGL::CContextGL(Core::IView *pView) :
 			CContextGLCommon(pView),
 			m_Size(800, 480) {

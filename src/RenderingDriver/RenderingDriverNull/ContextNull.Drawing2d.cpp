@@ -5,21 +5,6 @@ namespace Xe {
 	namespace Graphics {
 		///////////////////////////////////////////////////////////////////////
 		// IDrawing2d implementation
-		bool CContextNull::CDrawing::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IDrawing2d::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			case IContext::ID:
-				m_context->AddRef();
-				*obj = m_context;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextNull::CDrawing::CDrawing(CContextNull *context) :
 			m_context(context) {
 		}

@@ -31,18 +31,6 @@ namespace Xe { namespace Sound {
 		return hr;
 	}
 
-	bool XAudioEngine::Query(IObject **obj, UID id) {
-		switch (id) {
-		case IAudio::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = this;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
-	
 	XAudioEngine::XAudioEngine() :
 		m_hDllAudio(nullptr),
 		m_pAudio(nullptr),

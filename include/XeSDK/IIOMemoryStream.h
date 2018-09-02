@@ -9,9 +9,6 @@ namespace Xe
 		interface IMemoryStream : public IStream
 		{
 		public:
-			//! \brief interface id
-			static const UID ID = 0x4b47a96877c34f1fULL;
-
 			//! \brief open a pre-existed and not-writable portion of memory
 			//! \param[in] memory pointer where the data to open is contained
 			//! \param[in] length size in bytes of portion of memory

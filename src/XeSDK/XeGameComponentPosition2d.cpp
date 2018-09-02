@@ -1,17 +1,6 @@
 #include "pch.h"
 #include <XeSDK/XeGameComponentPosition2d.h>
 
-bool Xe::Game::Component::Position2d::Query(IObject **obj, UID id) {
-	switch (id) {
-	case IObject::ID:
-	case IComponent::ID:
-	case Position2d::ID:
-		this->AddRef();
-		*obj = this;
-		return true;
-	}
-	return false;
-}
 Xe::Game::Component::Position2d::Position2d() :
 	m_translation(Math::Vector3f(0, 0, 0)),
 	m_rotation(Math::Vector3f(0, 0, 0)),

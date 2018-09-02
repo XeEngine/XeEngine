@@ -24,24 +24,6 @@ namespace Xe
 		public:
 			typedef typename IList<T>::Position Position;
 
-			//! \brief interface id
-			static const UID ID = 0x55796a97e0524408L;
-
-			bool Query(IObject **obj, UID id)
-			{
-				switch (id)
-				{
-				case ListFixed::ID:
-				case IList<T>::ID:
-				case IEnumerable<T, Position>::ID:
-				case ICollection<T>::ID:
-				case IObject::ID:
-					*obj = this;
-					return true;
-				}
-				return false;
-			}
-
 			ListFixed(svar length)
 			{
 				if (length > 0)

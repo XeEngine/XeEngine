@@ -12,8 +12,6 @@ namespace Xe { namespace Sound {
 	public:
 		static HRESULT Log(HRESULT hr, ctstring func, ctstring source, int line);
 
-		bool Query(IObject **obj, UID id);
-
 		XAudioEngine();
 		~XAudioEngine();
 

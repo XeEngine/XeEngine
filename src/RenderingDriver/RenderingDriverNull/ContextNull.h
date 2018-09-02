@@ -11,10 +11,8 @@ namespace Xe {
 		class CContextNull : public IContext {
 			class CSurface : public ISurface {
 			public:
-				static const UID ID = 0x46a41097544f409fULL;
 				IContext *m_context;
 
-				bool Query(IObject **obj, UID id);
 				CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format);
 				~CSurface();
 
@@ -24,17 +22,14 @@ namespace Xe {
 			};
 			class CDepthStencilState : public IDepthStencilState {
 			public:
-				static const UID ID = 0xd2ea060ada7b4016ULL;
 				IContext *m_context;
 
-				bool Query(IObject **obj, UID id);
 				CDepthStencilState(IContext *context, const DepthStencilStateDesc& desc);
 				~CDepthStencilState();
 			};
 			class CDrawing : public IDrawing2d {
 				CContextNull* m_context;
 			public:
-				bool Query(IObject **obj, UID id);
 				CDrawing(CContextNull *context);
 				~CDrawing();
 
@@ -78,7 +73,6 @@ namespace Xe {
 
 				void Draw(int flags);
 			public:
-				bool Query(IObject **obj, UID id);
 				CTilemap(IContext *context);
 				~CTilemap();
 			};
@@ -92,7 +86,6 @@ namespace Xe {
 			CDepthStencilState *m_DepthStencilState;
 
 		public:
-			bool Query(IObject **obj, UID id);
 			CContextNull();
 			~CContextNull();
 

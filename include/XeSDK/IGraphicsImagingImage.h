@@ -14,9 +14,6 @@ namespace Xe {
 				uvar m_stride;
 
 			public:
-				//! \brief interface id
-				static const UID ID = 0x060b75906c5c4158ULL;
-
 				IImage(const Size& size, Color::Format format, uvar colorsCount, uvar stride) :
 					m_size(size), m_format(format), m_stride(stride) {}
 

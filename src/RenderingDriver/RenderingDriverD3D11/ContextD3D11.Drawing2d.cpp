@@ -11,21 +11,6 @@ namespace Xe {
 	namespace Graphics {
 		///////////////////////////////////////////////////////////////////////
 		// IDrawing2d implementation
-		bool CContextD3D11::CDrawing::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IDrawing2d::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			case IContext::ID:
-				m_context->AddRef();
-				*obj = m_context;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextD3D11::CDrawing::CDrawing(CContextD3D11 *context) :
 			m_context(context),
 			m_pInputLayout(nullptr),

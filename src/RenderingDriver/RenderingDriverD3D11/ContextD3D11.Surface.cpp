@@ -130,13 +130,13 @@ namespace Xe {
 			if (index >= 0 && index < lengthof(m_Surface) && m_Surface[index] != surface) {
 				if (surface != nullptr) {
 					CSurface *p;
-					if (surface->Query((IObject**)&p, CSurface::ID)) {
+					if (p = static_cast<CSurface*>(surface))
+					{
 						m_Drawing->Flush();
 						if (m_Surface[index]) m_Surface[index]->Release();
 						m_Surface[index] = p;
 						m_Surface[index]->AddRef();
 						m_d3dContext->PSSetShaderResources((UINT)index, 1, &p->m_pResourceView);
-						p->Release();
 					}
 					// If the object does not belong to current context, then ignore it.
 				}
@@ -148,18 +148,6 @@ namespace Xe {
 			}
 		}
 
-		bool CContextD3D11::CSurface::Query(IObject **obj, UID id) {
-			switch (id) {
-			case CSurface::ID:
-			case ISurface::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextD3D11::CSurface::CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format,
 			ID3D11Resource *resource, ID3D11ShaderResourceView *resourceView, ID3D11RenderTargetView *targetView) :
 			ISurface(context, type, size, format),

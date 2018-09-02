@@ -53,11 +53,9 @@ namespace Xe {
 			// Surface management
 			class CSurface : public ISurface {
 			public:
-				static const UID ID = 0x44788e8f2019499cULL;
 				IContext *m_context;
 				GLuint m_GlId;
 
-				bool Query(IObject **obj, UID id);
 				CSurface(IContext *context, GLuint id, SurfaceType type, const Size &size, Color::Format format);
 				~CSurface();
 
@@ -77,8 +75,6 @@ namespace Xe {
 			// States management
 			class CDepthStencilState : public IDepthStencilState {
 			public:
-				static const UID ID = 0xf66abe80e3fd46adULL;
-
 				IContext *m_context;
 
 				GLboolean m_zwriteenable;
@@ -89,7 +85,6 @@ namespace Xe {
 				GLenum m_stencilFrontFaceComp;
 				GLenum m_stencilBackFaceComp;
 
-				bool Query(IObject **obj, UID id);
 				CDepthStencilState(IContext *context, const DepthStencilStateDesc& desc);
 				~CDepthStencilState();
 			};

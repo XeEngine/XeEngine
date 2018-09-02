@@ -102,21 +102,6 @@ namespace Xe {
 				ISurface *m_pSrcSurface;
 				ISurface *m_pDstSurface;
 
-				bool Query(IObject **obj, UID id) {
-					switch (id) {
-					case IDrawing2d::ID:
-					case IObject::ID:
-						this->AddRef();
-						*obj = this;
-						return true;
-					case IContext::ID:
-						m_pContext->AddRef();
-						*obj = m_pContext;
-						return true;
-					}
-					*obj = nullptr;
-					return false;
-				}
 				inline Vertex *Get() {
 					if (m_curQuadsCount < MaximumQuadsCount)
 						return m_pVertex + m_curQuadsCount++ * 4;
@@ -146,16 +131,6 @@ namespace Xe {
 			class GLSurface : public ISurface {
 				GLuint m_id;
 			public:
-				bool Query(IObject **obj, UID id) {
-					switch (id) {
-					case IObject::ID:
-						AddRef();
-						*obj = this;
-						return true;
-					}
-					*obj = nullptr;
-					return false;
-				}
 				GLSurface(GLuint id, Type type, const Size &size, Color::Format format) :
 					ISurface(type, size, format), m_id(id) { }
 				~GLSurface() {
@@ -183,7 +158,6 @@ namespace Xe {
 			static bool CheckError(svar line);
 			static ctstring GetMessageError(GLenum error);
 		public:
-			bool Query(IObject **obj, UID id);
 			ContextGLES();
 			~ContextGLES();
 			bool Initialize();
@@ -396,17 +370,6 @@ namespace Xe {
 			return false;
 		}
 
-		bool ContextGLES::Query(IObject **obj, UID id) {
-			switch (id) {
-			case IContext::ID:
-			case IObject::ID:
-				this->AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		ContextGLES::ContextGLES() :
 			m_pDrawing(nullptr),
 			m_pDisplay(EGL_NO_DISPLAY),

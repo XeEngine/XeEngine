@@ -20,9 +20,6 @@ namespace Xe {
 		//! \brief Get the associated object
 		T* Get() const { return m_obj; }
 
-		//! \brief Get the ID of current ObjPtr
-		UID Id() const { T::ID; }
-
 		//! \brief Get the object as U
 		//! \param[out] objptr that will hold the specified IObject
 		//! \return true if the operation was successed, else false.

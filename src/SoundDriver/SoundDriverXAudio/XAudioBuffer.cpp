@@ -3,19 +3,6 @@
 #include "XAudioEngine.h"
 
 namespace Xe { namespace Sound {
-
-	bool XAudioBuffer::Query(IObject **obj, UID id) {
-		switch (id) {
-		case IAudioBuffer::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = nullptr;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
-
 	XAudioBuffer::XAudioBuffer(XAudioEngine *pAudio, const WaveFormat &format, ICallback *pCallback) :
 		IAudioBuffer(format, pCallback),
 		m_pAudio(pAudio),

@@ -36,8 +36,6 @@ namespace Xe {
 				virtual void OnBufferProcessed() = 0;
 			};
 
-			static const UID ID = 0x38e46cb0fe6d4ed3ULL;
-
 			//! \brief specify wave format and callback function
 			IAudioBuffer(const WaveFormat &properties, ICallback *pCallback);
 
@@ -70,8 +68,6 @@ namespace Xe {
 		};
 		interface IAudio : public IObject {
 		public:
-			static const UID ID = 0x93b3a075c0ee4125ULL;
-
 			IAudio();
 
 			//! \brief Get the current sample rate

@@ -75,8 +75,6 @@ namespace Xe {
 
 		class Socket : public IObject {
 		public:
-			static const UID ID = 0xa99960ffd4b14ce5ULL;
-
 			static RESULT Create(Socket** ppSocket, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 
 			const AddressFamily m_AddressFamily;

@@ -11,9 +11,6 @@
 namespace Xe { namespace Collections {
 	interface IComparable : public IObject
 	{
-		//! \brief interface id
-		static const UID ID = 0xa614539dd682482fL;
-
 		//! \brief compare the current object with another one
 		//! \param[in] obj the object to compare
 		/** \return less than zero if the current object precedes obj

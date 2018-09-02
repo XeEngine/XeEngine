@@ -12,9 +12,6 @@ namespace Xe { namespace Collections {
 	template <class T>
 	interface ICollection : public IObject
 	{
-		//! \brief interface id
-		static const UID ID = 0x827bf93f1ba0481dL;
-
 		//! \brief check if the content is empty or not
 		//! \return true if it's empty
 		virtual bool Empty() const = 0;

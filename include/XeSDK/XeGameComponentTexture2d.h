@@ -9,9 +9,6 @@ namespace Xe {
 		namespace Component {
 			class Texture2d : public IComponent {
 			public:
-				static const UID ID = 0x829c07b10977492fULL;
-				bool Query(IObject **obj, UID id);
-
 				Texture2d();
 				~Texture2d();
 

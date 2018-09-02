@@ -9,9 +9,6 @@ namespace Xe {
 		namespace Component {
 			class Position2d : public IComponent {
 			public:
-				static const UID ID = 0x0954c68e97eb4796ULL;
-				bool Query(IObject **obj, UID id);
-
 				Position2d();
 				~Position2d();
 

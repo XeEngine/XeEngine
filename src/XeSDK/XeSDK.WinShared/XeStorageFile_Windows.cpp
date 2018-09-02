@@ -10,18 +10,6 @@ namespace Xe {
 			Access m_access;
 			tstring m_filename;
 
-			bool Query(IObject **obj, UID id) {
-				switch (id) {
-				case IO::IFileStream::ID:
-				case IObject::ID:
-					this->AddRef();
-					*obj = this;
-					return true;
-				}
-				*obj = (IObject*)nullptr;
-				return false;
-			}
-
 			void Flush() {
 				FlushFileBuffers(m_handle);
 			}

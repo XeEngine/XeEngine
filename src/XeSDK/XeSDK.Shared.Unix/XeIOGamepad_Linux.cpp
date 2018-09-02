@@ -131,11 +131,6 @@ namespace Xe {
         struct CGamepad : public Gamepad {
             int m_fd;
 
-            bool Query(Xe::IObject** obj, Xe::UID id) {
-                *obj = nullptr;
-                return false;
-            }
-
             CGamepad(const GamepadEntry& entry)
             {
                 PressedButtons.Data = 0;

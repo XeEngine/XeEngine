@@ -12,7 +12,7 @@ namespace Xe {
 		void CContextD3D11::SelectDepthStencilState(IDepthStencilState *depthStencilState) {
 			if (depthStencilState != nullptr) {
 				CDepthStencilState *p;
-				if (depthStencilState->Query((IObject**)&p, CDepthStencilState::ID)) {
+				if (p = static_cast<CDepthStencilState*>(depthStencilState)) {
 					if (p->m_context == this) {
 						m_Drawing->Flush();
 						if (m_DepthStencilState) m_DepthStencilState->Release();
@@ -31,18 +31,6 @@ namespace Xe {
 			}
 		}
 
-		bool CContextD3D11::CDepthStencilState::Query(IObject **obj, UID id) {
-			switch (id) {
-			case CDepthStencilState::ID:
-			case IDepthStencilState::ID:
-			case IObject::ID:
-				AddRef();
-				*obj = this;
-				return true;
-			}
-			*obj = nullptr;
-			return false;
-		}
 		CContextD3D11::CDepthStencilState::CDepthStencilState(IContext *context, const DepthStencilStateDesc& desc) :
 			m_context(context) {
 			m_context->AddRef();

@@ -16,8 +16,6 @@ namespace Xe {
 		interface IDrawing2d : public IObject {
 			Math::Matrix4 m_matrix;
 		public:
-			static const UID ID = 0xfd85e7e3c24f4b83ULL;
-
 			static const float MODE_PALETTIZED;
 			static const float MODE_TEXTURED;
 			static const float MODE_SOLIDCOLOR;

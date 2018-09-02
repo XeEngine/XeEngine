@@ -16,9 +16,6 @@ namespace Xe { namespace Collections {
 		//! \brief used as position
 		typedef typename IEnumerable<T, void*>::Position Position;
 
-		//! \brief interface id
-		static const UID ID = 0x96c86c98cc214162L;
-
 		//! \brief remove all items
 		virtual void Clear() = 0;
 

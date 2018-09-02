@@ -2,18 +2,6 @@
 #include "XeSoundNull.h"
 
 namespace Xe { namespace Sound {
-	bool AudioNull::NullBuffer::Query(IObject **obj, UID id)
-	{
-		switch (id) {
-		case IAudioBuffer::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = nullptr;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
 	AudioNull::NullBuffer::NullBuffer(const WaveFormat &format, ICallback *pCallback) :
 		IAudioBuffer(format, pCallback)
 	{ }
@@ -40,19 +28,6 @@ namespace Xe { namespace Sound {
 
 	void AudioNull::NullBuffer::SetChannelVolumes(int channels, const float* volumes)
 	{ }
-
-	bool AudioNull::Query(IObject **obj, UID id)
-	{
-		switch (id) {
-		case IAudio::ID:
-		case IObject::ID:
-			AddRef();
-			*obj = this;
-			return true;
-		}
-		*obj = nullptr;
-		return false;
-	}
 
 	AudioNull::AudioNull()
 	{ }

@@ -9,8 +9,6 @@ namespace Xe {
 		namespace Font {
 			class IFont : public IObject {
 			public:
-				static const UID ID = 0x151c8b12d76f4db4ULL;
-				
 				//! \brief Used to describe a single character
 				struct CharacterDesc {
 					//! \brief width in pixel of character 

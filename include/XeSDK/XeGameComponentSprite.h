@@ -7,9 +7,6 @@ namespace Xe {
 		namespace Component {
 			class Sprite : public Texture2d {
 			public:
-				static const UID ID = 0x3933a7f8d3804fdaULL;
-				bool Query(IObject **obj, UID id);
-
 				Sprite();
 				~Sprite();
 
