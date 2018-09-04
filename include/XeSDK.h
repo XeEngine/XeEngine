@@ -17,6 +17,7 @@
 #include <XeSDK/IIOMemoryStream.h>
 #include <XeSDK/INetSocket.h>
 #include <XeSDK/ISoundAudioEffect.h>
+#include <XeSDK/ISoundSoundFormatFactory.h>
 
 #include <XeSDK/XeApplication.h>
 #include <XeSDK/XeCollections.h>
@@ -47,6 +48,7 @@
 #include <XeSDK/XeSound.h>
 #include <XeSDK/XeSoundAudioSource.h>
 #include <XeSDK/XeSoundPlayable.h>
+#include <XeSDK/XeSoundWavSoundFormatFactory.h>
 #include <XeSDK/XeStorage.h>
 #include <XeSDK/XeStorageContainerXefs.h>
 #include <XeSDK/XeString.h>

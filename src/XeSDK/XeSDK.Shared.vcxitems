@@ -100,6 +100,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundPlayable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundSoundFormatFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundWavSoundFormatFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStorageContainerXefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStoragePath.h" />
@@ -117,6 +118,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeError.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h" />
@@ -125,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeConsoleLogHandler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp" />
@@ -166,6 +169,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSoundFormatFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundWavSoundFormatFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageContainerXefs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp" />

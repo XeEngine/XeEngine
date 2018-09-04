@@ -323,6 +323,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISoundSoundFormatFactory.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundWavSoundFormatFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -472,6 +474,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStreamLogHandler.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundWavSoundFormatFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
