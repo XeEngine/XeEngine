@@ -54,7 +54,7 @@ namespace Xe { namespace Drivers {
 		std::list<IDriver*> drivers;
 		for (auto it = g_Drivers.begin(); it != g_Drivers.end(); ++it)
 		{
-			if ((1 << (*it)->GetDriverType()) | filter)
+			if ((1 << (*it)->GetDriverType()) & filter)
 			{
 				drivers.push_back(*it);
 			}

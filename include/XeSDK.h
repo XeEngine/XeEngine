@@ -1,6 +1,9 @@
 #pragma once
 
 #include <XeSDK/IApplication.h>
+#include <XeSDK/IDriversRenderingDriver.h>
+#include <XeSDK/IDriversSoundDriver.h>
+#include <XeSDK/IDriversGamepadDriver.h>
 #include <XeSDK/ICollection.h>
 #include <XeSDK/IComparable.h>
 #include <XeSDK/IFrameView.h>
@@ -21,6 +24,7 @@
 #include <XeSDK/XeCoreFrameView.h>
 #include <XeSDK/XeCryptoCrc32.h>
 #include <XeSDK/XeCryptoCrc64.h>
+#include <XeSDK/XeDrivers.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeGraphicsImaging.h>
 #include <XeSDK/XeGraphicsImagingPng.h>
