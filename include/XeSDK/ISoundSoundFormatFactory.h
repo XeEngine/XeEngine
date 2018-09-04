@@ -1,3 +1,4 @@
+#pragma once
 #include <XeSDK/IObject.h>
 
 namespace Xe { namespace IO {
@@ -16,6 +17,6 @@ namespace Xe { namespace Sound {
 		virtual ctstring GetExtension() const = 0;
 		
 		//! \brief Open and load the format from the specified stream.
-		virtual bool Open(IAudioSource*& ppAudioSource, Xe::IO::IStream* pStream) = 0;
+		virtual bool Open(IAudioSource*& ppAudioSource, Xe::IO::IStream& pStream) = 0;
 	};
 } }
