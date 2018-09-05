@@ -13,8 +13,6 @@
 namespace Xe { namespace Debug {
     class Log {
     public:
-        typedef Xe::Logger::LogLevel Level;
-
         enum Priority {
             Priority_Diagnostics,
             Priority_Info,

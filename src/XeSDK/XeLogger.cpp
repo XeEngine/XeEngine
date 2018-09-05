@@ -1,15 +1,11 @@
 #include "pch.h"
 #include <XeSDK/XeLogger.h>
 #include <XeSDK/XeMemory.h>
+#include <XeSDK/XeTimer.h>
+#include <XeSDK/XeConsoleLogHandler.h>
 #include <cstdarg>
 
 namespace Xe {
-    static const ctstring STRLOGLEVEL[] = {
-            "CRIT", "ERRR", "WARN", "INFO", "DEBG"
-    };
-    static const ctstring STRLOGLEVEL_SHORT[] = {
-            "CRT", "ERR", "WRN", "INF", "DBG"
-    };
     Logger Logger::Instance;
 
     int Xe_vsnprintf(tchar* str, int maxlen, const tchar *fmt, va_list args) {
@@ -21,30 +17,36 @@ namespace Xe {
     }
 
     Logger::Logger()
-        : m_LogLevel(LogLevel_Debug),
-          m_HeaderInfo(HeaderInfo_Level | HeaderInfo_Timealive)
-    { }
+        : m_LogLevel(LogLevel_Debug)
+    {
+		m_pLogHandler = new ConsoleLogHandler;
+	}
     Logger::~Logger()
-    { }
+    {
+		m_pLogHandler->Release();
+	}
 
-    Logger::LogLevel Logger::GetLogLevel() const {
+    LogLevel Logger::GetLogLevel() const
+	{
         return m_LogLevel;
     }
-    void Logger::SetLogLevel(LogLevel logLevel) {
+
+    void Logger::SetLogLevel(LogLevel logLevel)
+	{
         m_LogLevel = logLevel;
     }
-    bool Logger::IsHeaderInfoEnabled(HeaderInfo headerInfo) const {
-        return !!(m_HeaderInfo & (1 << headerInfo));
-    }
-    void Logger::SetHeaderInfoEnabled(HeaderInfo headerInfo, bool isEnabled) {
-        if (isEnabled)
-            m_HeaderInfo |= (1 << headerInfo);
-        else
-            m_HeaderInfo &= ~(1 << headerInfo);
-    }
 
-    void Logger::Log(int level, ctstring str, ...) {
-        if (level <= m_LogLevel) {
+	void Logger::SetLogHandler(ILogHandler& logHandler)
+	{
+		m_pLogHandler->Release();
+		m_pLogHandler = &logHandler;
+		m_pLogHandler->AddRef();
+	}
+
+    void Logger::Log(int level, ctstring str, ...)
+	{
+        if (level <= m_LogLevel)
+		{
             va_list args;
             va_start(args, str);
             LogArgs(level, str, args);
@@ -52,65 +54,43 @@ namespace Xe {
         }
     }
 
-    void Logger::LogArgs(int level, ctstring str, va_list args) {
-        va_list argsTest;
-        va_copy(argsTest, args);
+	void Logger::LogArgs(int level, ctstring str, va_list args)
+	{
+		LogArgs(level, nullptr, 0, nullptr, str, args);
+	}
 
-        tchar buf[0x100];
-        int len = Xe_vsnprintf(nullptr, 0, str, argsTest);
-        va_end(argsTest);
-        if (len >= lengthof(buf)) {
-            tchar *heapbuf = (tchar*)Memory::Alloc((len + 1) * sizeof(tchar));
-            Xe_vsnprintf(heapbuf, len + 1, str, args);
-            LowLevelLog((LogLevel)level, heapbuf);
-            Memory::Free(heapbuf);
-        }
-        else {
-            Xe_vsnprintf(buf, lengthof(buf), str, args);
-            LowLevelLog((LogLevel)level, buf);
-        }
-    }
+	void Logger::LogArgs(int level, ctstring fileName, int line, ctstring function, ctstring str, va_list args)
+	{
+		if (level <= Instance.m_LogLevel)
+		{
+			double timer = Timer::Current().AsDouble();
 
-    void Logger::LowLevelLog(LogLevel level, ctstring str) {
-        bool isError = level <= LogLevel_Warning;
-#ifdef PLATFORM_WINDOWS
-		static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+			va_list argsTest;
+			va_copy(argsTest, args);
 
-        OutputDebugStringA(str);
+			tchar buf[0x100];
+			int len = Xe_vsnprintf(nullptr, 0, str, argsTest);
+			va_end(argsTest);
 
-		WORD attributes;
-		switch (level) {
-		case LogLevel_Critical:
-			attributes = FOREGROUND_BLUE | FOREGROUND_RED | BACKGROUND_INTENSITY;
-			break;
-		case LogLevel_Error:
-			attributes = FOREGROUND_RED | BACKGROUND_INTENSITY;
-			break;
-		case LogLevel_Warning:
-			attributes = FOREGROUND_GREEN | FOREGROUND_RED | BACKGROUND_INTENSITY;
-			break;
-		case LogLevel_Info:
-			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
-			break;
-		case LogLevel_Debug:
-			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
-			break;
-		case LogLevel_Trace:
-			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
-			break;
-		default:
-			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
-			break;
+			if (len >= lengthof(buf))
+			{
+				tchar *heapbuf = (tchar*)Memory::Alloc((len + 1) * sizeof(tchar));
+				Xe_vsnprintf(heapbuf, len + 1, str, args);
+				LowLevelLog((LogLevel)level, timer, fileName, line, function, heapbuf);
+				Memory::Free(heapbuf);
+			}
+			else
+			{
+				Xe_vsnprintf(buf, lengthof(buf), str, args);
+				LowLevelLog((LogLevel)level, timer, fileName, line, function, buf);
+			}
 		}
+	}
 
-#ifndef PLATFORM_DURANGO
-		SetConsoleTextAttribute(hConsole, attributes);
-#endif
-
-#endif
-
-        fputs(str, isError ? stderr : stdout);
-    }
+    void Logger::LowLevelLog(LogLevel level, double timer, ctstring fileName, int line, ctstring function, ctstring str)
+	{
+		m_pLogHandler->OnLog(level, timer, fileName, line, function, str);
+	}
 
     void Logger::Fatal(ctstring str, ...) {
         if (LogLevel_Critical <= Instance.m_LogLevel) {
@@ -180,4 +160,53 @@ namespace Xe {
 			va_end(args);
 		}
 	}
+
+	void Logger::FatalEx(ctstring fileName, int line, ctstring function, ctstring str, ...)
+	{
+		va_list args;
+		va_start(args, str);
+		Instance.LogArgs(LogLevel_Critical, fileName, line, function, str, args);
+		va_end(args);
+	}
+
+	void Logger::ErrorEx(ctstring fileName, int line, ctstring function, ctstring str, ...)
+	{
+		va_list args;
+		va_start(args, str);
+		Instance.LogArgs(LogLevel_Error, fileName, line, function, str, args);
+		va_end(args);
+	}
+
+	void Logger::WarningEx(ctstring fileName, int line, ctstring function, ctstring str, ...)
+	{
+		va_list args;
+		va_start(args, str);
+		Instance.LogArgs(LogLevel_Warning, fileName, line, function, str, args);
+		va_end(args);
+	}
+
+	void Logger::InfoEx(ctstring fileName, int line, ctstring function, ctstring str, ...)
+	{
+		va_list args;
+		va_start(args, str);
+		Instance.LogArgs(LogLevel_Info, fileName, line, function, str, args);
+		va_end(args);
+	}
+
+	void Logger::DebugEx(ctstring fileName, int line, ctstring function, ctstring str, ...)
+	{
+		va_list args;
+		va_start(args, str);
+		Instance.LogArgs(LogLevel_Debug, fileName, line, function, str, args);
+		va_end(args);
+	}
+
+	void Logger::TraceEx(ctstring fileName, int line, ctstring function, ctstring str, ...)
+	{
+		va_list args;
+		va_start(args, str);
+		Instance.LogArgs(LogLevel_Trace, fileName, line, function, str, args);
+		va_end(args);
+	}
+
 }
