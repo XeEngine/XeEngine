@@ -63,7 +63,7 @@ namespace Xe { namespace Drivers { namespace Input
 					//	*ppGamepad = new GamepadDS4Wireless(gamePad);
 					//	return true;
 					default:
-						Logger::Error("Gamepad %s not supported.", gamepad.HidDevice.Path);
+						LOGE("Gamepad %s not supported.", gamepad.HidDevice.Path);
 						break;
 					}
 				}

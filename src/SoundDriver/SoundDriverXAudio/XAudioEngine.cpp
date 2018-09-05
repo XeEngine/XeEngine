@@ -3,10 +3,6 @@
 #include "XAudioBuffer.h"
 #include "XAudioCompatibilityLayer.h"
 
-#define LOGX(hr) (Log((hr), __func__, __FILE__, __LINE__))
-
-using namespace Xe::Debug;
-
 namespace Xe { namespace Sound {
 
 	HRESULT XAudioEngine::Log(HRESULT hr, ctstring func, ctstring source, int line)
@@ -25,7 +21,7 @@ namespace Xe { namespace Sound {
 				break;
 			}
 
-			Xe::Logger::DebugError("%s:%i %s: %s (%08X)", source, line, func, msg, hr);
+			LOGE("%s:%i %s: %s (%08X)", source, line, func, msg, hr);
 		}
 
 		return hr;
@@ -37,7 +33,7 @@ namespace Xe { namespace Sound {
 		m_pMasterVoice(nullptr)
 	{
 		HRESULT hr;
-		LOGX(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED));
+		LOGA(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED));
 		HR(hr);
 	}
 	
@@ -83,13 +79,13 @@ namespace Xe { namespace Sound {
 			}
 		}
 		if (m_hDllAudio == nullptr) {
-			LOG(Log::Priority_Error, Log::Type_Sound, _T("Unable to find an XAudio2 DLL."));
+			LOGE("Unable to find an XAudio2 DLL.");
 			return false;
 		}
 #else
 		m_MinVersion = 9;
 #endif
-		LOG(Log::Priority_Info, Log::Type_Sound, _T("XAudio 2.%i found."), m_MinVersion);
+		LOGI("XAudio 2.%i found.", m_MinVersion);
 
 		HRESULT hr;
 #if SETTINGS_LOADLIBRARY == 1
@@ -128,7 +124,7 @@ namespace Xe { namespace Sound {
 			}
 			else
 			{
-				Logger::DebugError("CoCreateInstance failed..");
+				LOGE("CoCreateInstance failed..");
 				return false;
 			}
 		}
@@ -157,16 +153,16 @@ namespace Xe { namespace Sound {
 			sampleRate = XAUDIO2_DEFAULT_SAMPLERATE;
 		}
 
-		Logger::Info("Setting sample rate to %i...", sampleRate);
+		LOGI("Setting sample rate to %i...", sampleRate);
 		if (sampleRate <= 0 || (sampleRate % 100) != 0)
 		{
-			Logger::DebugWarning("Sample rate %i is invalid.", sampleRate);
+			LOGW("Sample rate %i is invalid.", sampleRate);
 			return false;
 		}
 
 		if (m_pMasterVoice != nullptr)
 		{
-			Logger::Info("Destroying previous voice...");
+			LOGI("Destroying previous voice...");
 			m_pMasterVoice->DestroyVoice();
 		}
 
@@ -174,12 +170,16 @@ namespace Xe { namespace Sound {
 		UINT32 flags = 0;
 		LPCWSTR szDeviceId = NULL;
 
-		HRESULT hr = LOGX(m_pAudio->CreateMasteringVoice(&m_pMasterVoice, inputChannels, sampleRate, flags, szDeviceId));
+		HRESULT hr = m_pAudio->CreateMasteringVoice(&m_pMasterVoice, inputChannels, sampleRate, flags, szDeviceId);
 		if (SUCCEEDED(hr))
 		{
 			m_SampleRate = sampleRate;
-			Logger::Info("Sample rate %i set with success.", sampleRate);
+			LOGI("Sample rate %i set with success.", sampleRate);
 			return true;
+		}
+		else
+		{
+			LOGE("Unable to set %i as sample rate.", sampleRate);
 		}
 
 		return false;

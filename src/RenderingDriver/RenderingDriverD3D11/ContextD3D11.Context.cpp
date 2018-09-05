@@ -11,8 +11,6 @@
 #pragma comment(lib, "d3d11_x.lib")
 #endif
 
-using namespace Xe::Debug;
-
 namespace Xe { namespace Graphics {
 	CContextD3D11::CContextD3D11() :
 		m_pFrameView(nullptr),
@@ -121,7 +119,7 @@ namespace Xe { namespace Graphics {
 
 		HRESULT hr = m_swapChain->ResizeBuffers(0, size.x, size.y, DXGI_FORMAT_UNKNOWN, 0);
 		if (FAILED(hr)) {
-			LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to resize the swapchain."));
+			LOGF("Unable to resize the swapchain.");
 		}
 		else {
 			CreateResourcesForSwapchain();

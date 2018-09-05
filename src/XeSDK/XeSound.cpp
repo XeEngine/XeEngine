@@ -9,8 +9,6 @@
 #define DRIVER_WASAPI "Wasapi"
 #define DRIVER_XAUDIO "XAudio2"
 
-using namespace Xe::Debug;
-
 namespace Xe {
 	namespace Sound {
 		inline float ConvertS8(s8 *n, int i) { return (float)n[i] / 128.0f; }
@@ -91,7 +89,7 @@ namespace Xe {
 
 		bool Create(IAudio **audio, ctstring driverName)
 		{
-			LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking for '%s' sound driver..."), driverName);
+			LOGD("Checking for '%s' sound driver...", driverName);
 
 			Xe::Drivers::Sound::ISoundDriver* soundDriver = nullptr;
 			auto drivers = Xe::Drivers::GetDrivers(Xe::Drivers::DriverTypeFilter_Sound);
@@ -106,22 +104,22 @@ namespace Xe {
 
 			if (soundDriver != nullptr)
 			{
-				LOG(Log::Priority_Info, Log::Type_Graphics, _T("Sound driver %s found!"), driverName);
+				LOGI("Sound driver %s found!", driverName);
 				Xe::Sound::AudioInitDesc desc{ 0 };
 				desc.SampleRate = 48000;
 				if (soundDriver->Factory(audio, desc))
 				{
-					LOG(Log::Priority_Info, Log::Type_Graphics, _T("Sound driver %s initialized with success!"), driverName);
+					LOGI("Sound driver %s initialized with success!", driverName);
 					return true;
 				}
 				else
 				{
-					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to initialize the sound driver %s."), driverName);
+					LOGE("Unable to initialize the sound driver %s.", driverName);
 				}
 			}
 			else
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Sound driver %s not found."), driverName);
+				LOGE("Sound driver %s not found.", driverName);
 			}
 
 			*audio = nullptr;

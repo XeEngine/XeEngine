@@ -40,9 +40,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h">
       <Filter>Graphics\Private\Common</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugLog.h">
-      <Filter>Debug\Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIO.h">
       <Filter>IO\Public</Filter>
     </ClInclude>
@@ -439,9 +436,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp">
       <Filter>Graphics\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp">
-      <Filter>Debug\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIODevices.cpp">
       <Filter>IO\Private</Filter>
     </ClCompile>
@@ -500,15 +494,6 @@
     </Filter>
     <Filter Include="Graphics\Private\Common">
       <UniqueIdentifier>{e7648014-55f0-491e-8845-38773b437975}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug">
-      <UniqueIdentifier>{da49246a-3aed-4268-a552-e50b369cc607}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Public">
-      <UniqueIdentifier>{5519b15b-069b-4243-9076-7f127b97c6ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Private">
-      <UniqueIdentifier>{f868280c-82c4-46a8-badd-ea97fb5bfe65}</UniqueIdentifier>
     </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{b70bb70f-793f-44d9-b70f-aa63c259175f}</UniqueIdentifier>

@@ -21,7 +21,7 @@ namespace Xe { namespace Game {
 		else
 		{
 			texId = TexInvalid;
-			Logger::DebugError("Unable to open texture %s.\n", path);
+			LOGE("Unable to open texture %s.\n", path);
 		}
 		return texId;
 	}
@@ -44,7 +44,7 @@ namespace Xe { namespace Game {
 		else
 		{
 			texId = TexInvalid;
-			Logger::DebugError("Texture %s is not a valid PNG.\n", name);
+			LOGE("Texture %s is not a valid PNG.\n", name);
 		}
 
 		return texId;

@@ -9,8 +9,6 @@
 #define WAVE_FORMAT_PCM 1 
 #define WAVE_FORMAT_IEEE_FLOAT 3
 
-using namespace Xe::Debug;
-
 namespace Xe {
 	namespace Sound {
 		// https://www.aelius.com/njh/wavemetatools/doc/riffmci.pdf
@@ -77,25 +75,25 @@ namespace Xe {
 				static const FOURCC CNKID_data = 0x61746164;
 
 				if (!pStream->CanRead()) {
-					LOG(Log::Priority_Error, Log::Type_Sound, _T("Specified stream %p does not support reading."), pStream);
+					LOGE("Specified stream %p does not support reading.", pStream);
 					return false;
 				}
 
 				Header header;
 				if (pStream->Read(&header, 0, 12) != 12) {
-					LOG(Log::Priority_Error, Log::Type_Sound, _T("Unable to read WAV header from stream %p."), pStream);
+					LOGE("Unable to read WAV header from stream %p.", pStream);
 					return false;
 				}
 				if (header.chunkId != ID_RIFF) {
-					LOG(Log::Priority_Error, Log::Type_Sound, _T("Invalid header for WAV file from stream %p."), pStream);
+					LOGE("Invalid header for WAV file from stream %p.", pStream);
 					return false;
 				}
 				if (header.chunkSize > pStream->GetLength() - pStream->GetPosition() + 4) {
-					LOG(Log::Priority_Error, Log::Type_Sound, _T("Invalid size for WAV file from stream %p."), pStream);
+					LOGE("Invalid size for WAV file from stream %p.", pStream);
 					return false;
 				}
 				if (header.fileFormat != ID_WAVE) {
-					LOG(Log::Priority_Error, Log::Type_Sound, _T("Unsupported CHID %c%c%c%c for WAV file from stream %p."),
+					LOGE("Unsupported CHID %c%c%c%c for WAV file from stream %p.",
 						((u8*)header.chunkId)[0], ((u8*)header.chunkId)[1], ((u8*)header.chunkId)[2], ((u8*)header.chunkId)[3], pStream);
 					return false;
 				}
@@ -128,7 +126,7 @@ namespace Xe {
 							break;
 						}
 						if (waveFormatEx.formatTag != WAVE_FORMAT_PCM) {
-							LOG(Log::Priority_Error, Log::Type_Sound, _T("Stream %p it's not a WAV PCM."), pStream);
+							LOGE("Stream %p it's not a WAV PCM.", pStream);
 							return false;
 						}
 						m_internalSampleBlock = waveFormatEx.nChannels * m_bps / 8;

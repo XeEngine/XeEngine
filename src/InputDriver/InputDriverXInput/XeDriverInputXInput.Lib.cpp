@@ -32,7 +32,7 @@ namespace Xe { namespace Drivers { namespace Input {
 		}
 
 		if (nXInputVersion == 0) {
-			Logger::Error("No XInput DLL found.");
+			LOGE("No XInput DLL found.");
 			return;
 		}
 

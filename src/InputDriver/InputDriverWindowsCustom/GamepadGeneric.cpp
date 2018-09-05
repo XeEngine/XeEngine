@@ -26,12 +26,12 @@ namespace Xe {
 		m_Closed(false),
 		m_IsInvalidated(false)
 	{
-		Logger::Info("Opening gamepad at %s\n", hidDevice.Path);
+		LOGI("Opening gamepad at %s\n", hidDevice.Path);
 		if (OpenDevice(hidDevice.Path, false)) {
-			Logger::Debug("Gamepad connected with success!\n");
+			LOGD("Gamepad connected with success!\n");
 		}
 		else {
-			Logger::Warning("Unable to connect to the gamepad %s.\n", hidDevice.Path);
+			LOGW("Unable to connect to the gamepad %s.\n", hidDevice.Path);
 		}
 
 		if (IsAvailable()) {
@@ -52,7 +52,7 @@ namespace Xe {
 		);
 
 		if (m_Thread == NULL) {
-			Logger::Warning("Unable to create a thread for asynchronous updating.\n", hidDevice.Path);
+			LOGW("Unable to create a thread for asynchronous updating.\n", hidDevice.Path);
 		}
 	}
 
@@ -171,19 +171,19 @@ namespace Xe {
 		DWORD error = GetLastError();
 		switch (error) {
 		case ERROR_INVALID_PARAMETER:
-			Logger::Info("Gamepad invalid parameter.\n");
+			LOGI("Gamepad invalid parameter.\n");
 			break;
 		case ERROR_OPERATION_ABORTED:
 		case ERROR_DEVICE_NOT_CONNECTED:
-			Logger::Info("Gamepad was disconnected.\n");
+			LOGI("Gamepad was disconnected.\n");
 			Terminate();
 			break;
 		case ERROR_INVALID_USER_BUFFER:
-			Logger::Info("Gamepad invalid user buffer.\n");
+			LOGI("Gamepad invalid user buffer.\n");
 			Terminate();
 			break;
 		default:
-			Logger::Warning("Uncaught Gamepad error: %08X\n", error);
+			LOGW("Uncaught Gamepad error: %08X\n", error);
 			Terminate();
 			break;
 		}

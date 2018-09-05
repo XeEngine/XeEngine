@@ -65,7 +65,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoFnv1a.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDebugLog.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDrivers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDriversDefinition.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGameComponentPosition2d.h" />
@@ -128,7 +127,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeDebugLog.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDrivers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameComponentPosition2d.cpp" />

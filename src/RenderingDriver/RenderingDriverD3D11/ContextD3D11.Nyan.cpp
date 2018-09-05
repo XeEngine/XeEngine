@@ -13,8 +13,6 @@
 
 #endif
 
-using namespace Xe::Debug;
-
 namespace Xe {
 	namespace Graphics {
 		bool CContextD3D11::CreateFactory()
@@ -26,13 +24,13 @@ namespace Xe {
 				hr = CreateDXGIFactory1(IID_PPV_ARGS(&m_pFactory2));
 				if (FAILED(hr))
 				{
-					LOG(Log::Priority_Info, Log::Type_Graphics, _T("DXGI 1.2 not supported."));
+					LOGI("DXGI 1.2 not supported.");
 					hr = CreateDXGIFactory1(IID_PPV_ARGS(&m_pFactory1));
 
 #if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 					// Windows Store apps does not support CreateDXGIFactory
 					if (FAILED(hr)) {
-						LOG(Log::Priority_Info, Log::Type_Graphics, _T("DXGI 1.1 not supported."));
+						LOGI("DXGI 1.1 not supported.");
 						hr = CreateDXGIFactory(IID_PPV_ARGS(&m_pFactory));
 					}
 					else
@@ -40,7 +38,7 @@ namespace Xe {
 #endif
 
 					if (FAILED(hr)) {
-						LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to create DXGI Factory."));
+						LOGF("Unable to create DXGI Factory.");
 						return false;
 					}
 
@@ -160,13 +158,13 @@ namespace Xe {
 			hr = m_pFactory->EnumAdapters((UINT)properties.VideoCardIndex, &pAdapter);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Warning, Log::Type_Graphics, _T("Specified videocard %i not found."), properties.VideoCardIndex);
+				LOGW("Specified videocard %i not found.", properties.VideoCardIndex);
 				hr = m_pFactory->EnumAdapters(0, &pAdapter);
 				if (FAILED(hr))
-					LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to open a videocard."));
+					LOGF("Unable to open a videocard.");
 			}
 			else
-				LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Getting info from videocard %i..."), properties.VideoCardIndex);
+				LOGD("Getting info from videocard %i...", properties.VideoCardIndex);
 			if (FAILED(hr))
 				return false;
 #else
@@ -178,8 +176,7 @@ namespace Xe {
 #ifdef DEBUGLOG
 			DXGI_ADAPTER_DESC adapterDesc;
 			pAdapter->GetDesc(&adapterDesc);
-			LOG(Log::Priority_Info, Log::Type_Graphics,
-				_T("Videocard %i VEN=%04X DEV=%04X SUB=%08X REV=%02X\n%s\nVideo Memory: %iMB\nSystem Memory: %iMB\nShared Memory: %iMB\n"),
+			LOGI("Videocard %i VEN=%04X DEV=%04X SUB=%08X REV=%02X\n%s\nVideo Memory: %iMB\nSystem Memory: %iMB\nShared Memory: %iMB\n",
 				properties.VideoCardIndex,
 				adapterDesc.VendorId, adapterDesc.DeviceId, adapterDesc.SubSysId, adapterDesc.Revision,
 				String(adapterDesc.Description).GetData(),
@@ -188,19 +185,19 @@ namespace Xe {
 				adapterDesc.SharedSystemMemory / 1048576);
 #endif
 #ifdef DEBUGLOG
-			LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking for D3D11 SDK layer..."));
+			LOGD("Checking for D3D11 SDK layer...");
 			if (IsSdkLayersAvailable())
 			{
 				// Se il progetto si trova in una compilazione di debug, abilita il debug tramite i livelli SDK utilizzando questo flag.
 				//creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
-				LOG(Log::Priority_Info, Log::Type_Graphics, _T("D3D11_CREATE_DEVICE_DEBUG set"));
+				LOGI("D3D11_CREATE_DEVICE_DEBUG set");
 			}
 			else
-				LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("No debugging features found."));
+				LOGD("No debugging features found.");
 #endif
 			ID3D11Device* device;
 			ID3D11DeviceContext* context;
-			LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Creating D3D11 device..."));
+			LOGD("Creating D3D11 device...");
 
 			hr = D3D11CreateDevice(pAdapter, D3D_DRIVER_TYPE_UNKNOWN, nullptr,
 				creationFlags, featureLevels, ARRAYSIZE(featureLevels), D3D11_SDK_VERSION,
@@ -210,14 +207,14 @@ namespace Xe {
 				// Se l'inizializzazione non riesce, eseguire il fallback al dispositivo WARP.
 				// Per ulteriori informazioni su WARP, vedere:
 				// http://go.microsoft.com/fwlink/?LinkId=286690
-				LOG(Log::Priority_Warning, Log::Type_Graphics, _T("D3D11 Hardware not available. Creating WRAP with default device..."));
+				LOGW("D3D11 Hardware not available. Creating WRAP with default device...");
 
 				hr = D3D11CreateDevice(pAdapter, D3D_DRIVER_TYPE_WARP, nullptr,
 					creationFlags, featureLevels, ARRAYSIZE(featureLevels), D3D11_SDK_VERSION,
 					&device, &m_FeatureLevel, &context);
 
 				if (FAILED(hr))
-					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create a D3D11 device."));
+					LOGE("Unable to create a D3D11 device.");
 			}
 
 			if (pAdapter)
@@ -225,7 +222,8 @@ namespace Xe {
 
 			if (FAILED(hr))
 				return false;
-			LOG(Log::Priority_Info, Log::Type_Graphics, _T("D3D11 device created with success. Feature level: %04X"), m_FeatureLevel);
+
+			LOGI("D3D11 device created with success. Feature level: %04X", m_FeatureLevel);
 			p_d3dDevice = device;
 			m_d3dContext = context;
 			device->QueryInterface(MY_IID_PPV_ARGS(&p_d3dDevice1));
@@ -238,10 +236,10 @@ namespace Xe {
 				// di accertarsi che l'applicazione esegua il rendering dopo ogni VSync, in modo da ridurre al minimo il consumo di energia.
 				dxgiDevice->SetMaximumFrameLatency(1);
 				dxgiDevice->Release();
-				LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("SetMaximumFrameLatency set to 1."));
+				LOGD("SetMaximumFrameLatency set to 1.");
 			}
 			else
-				LOG(Log::Priority_Warning, Log::Type_Graphics, _T("Unable to set SetMaximumFrameLatency: current device does not support DXGI 1.1."));
+				LOGW("Unable to set SetMaximumFrameLatency: current device does not support DXGI 1.1.");
 			return true;
 		}
 #else
@@ -273,18 +271,18 @@ namespace Xe {
 				p_d3dDevice->GetGpuHardwareConfiguration(&hwConfig);
 				if (hwConfig.HardwareVersion >= D3D11X_HARDWARE_VERSION_XBOX_ONE_X)
 				{
-					Xe::Logger::Info("Xbox One X hardware found.");
+					LOGI("Xbox One X hardware found.");
 					//m_outputSize = { 0, 0, 3840, 2160 };
 				}
 				else
 				{
 					if (hwConfig.HardwareVersion >= D3D11X_HARDWARE_VERSION_XBOX_ONE_S)
 					{
-						Xe::Logger::Info("Xbox One S hardware found.");
+						LOGI("Xbox One S hardware found.");
 					}
 					else
 					{
-						Xe::Logger::Info("Xbox One hardware found.");
+						LOGI("Xbox One hardware found.");
 					}
 
 					//m_outputSize = { 0, 0, 1920, 1080 };
@@ -333,9 +331,7 @@ namespace Xe {
 				pDepthStencilState->Release();
 			}
 			else
-				LOG(Xe::Debug::Log::Priority_Error,
-					Xe::Debug::Log::Type_Generic,
-					_T("Unable to create depth/stencil state."));
+				LOGE("Unable to create depth/stencil state.");
 
 			D3D11_RASTERIZER_DESC rasterizerDesc;
 			Memory::Fill(&rasterizerDesc, 0, sizeof(rasterizerDesc));
@@ -352,9 +348,7 @@ namespace Xe {
 				rasterizerState->Release();
 			}
 			else
-				LOG(Xe::Debug::Log::Priority_Error,
-					Xe::Debug::Log::Type_Generic,
-					_T("Unable to create rasterizer state."));
+				LOGE("Unable to create rasterizer state.");
 
 			D3D11_BLEND_DESC blendStateDesc;
 			Memory::Fill(&blendStateDesc, 0, sizeof(blendStateDesc));
@@ -376,9 +370,7 @@ namespace Xe {
 				pBlendState->Release();
 			}
 			else
-				LOG(Xe::Debug::Log::Priority_Error,
-					Xe::Debug::Log::Type_Generic,
-					_T("Unable to create blend state."));
+				LOGE("Unable to create blend state.");
 			return true;
 		}
 		bool CContextD3D11::CreateWindowSizeDependentResources() {
@@ -491,7 +483,7 @@ namespace Xe {
 
 					if (FAILED(hr))
 					{
-						LOG(Log::Priority_Info, Log::Type_Graphics, _T("Unable to create swapchain with format %i."), Format);
+						LOGI("Unable to create swapchain with format %i.", Format);
 					}
 					else
 					{
@@ -506,7 +498,7 @@ namespace Xe {
 					m_swapChainDesc.BufferDesc.Format = Format;
 					hr = m_pFactory->CreateSwapChain(p_d3dDevice, &m_swapChainDesc, &m_swapChain);
 					if (FAILED(hr)) {
-						LOG(Log::Priority_Info, Log::Type_Graphics, _T("Unable to create swapchain with format %i."), Format);
+						LOGI("Unable to create swapchain with format %i.", Format);
 					}
 					else
 						break;
@@ -516,7 +508,7 @@ namespace Xe {
 
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to create swapchain in any specified format."));
+				LOGF("Unable to create swapchain in any specified format.");
 				return false;
 			}
 
@@ -544,7 +536,7 @@ namespace Xe {
 			if (m_pBackbufferTexture) m_pBackbufferTexture->Release();
 			hr = m_swapChain->GetBuffer(0, MY_IID_PPV_ARGS(&m_pBackbufferTexture));
 			if (FAILED(hr)) {
-				LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to get texture from swapchain."));
+				LOGF("Unable to get texture from swapchain.");
 				if (m_swapChain1) m_swapChain1->Release();
 				m_swapChain->Release();
 				return false;
@@ -552,7 +544,7 @@ namespace Xe {
 			if (m_pBackbufferRenderTargetView) m_pBackbufferRenderTargetView->Release();
 			hr = p_d3dDevice->CreateRenderTargetView(m_pBackbufferTexture, nullptr, &m_pBackbufferRenderTargetView);
 			if (FAILED(hr)) {
-				LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to create a render target view from swapchain's texture."));
+				LOGF("Unable to create a render target view from swapchain's texture.");
 				m_pBackbufferRenderTargetView->Release();
 				if (m_swapChain1) m_swapChain1->Release();
 				m_swapChain->Release();
@@ -580,18 +572,14 @@ namespace Xe {
 			}
 			HRESULT hr = p_d3dDevice->CreateTexture2D(&desc, nullptr, &m_pBackbufferDepthStencil);
 			if (FAILED(hr)) {
-				LOG(Xe::Debug::Log::Priority_Error,
-					Xe::Debug::Log::Type_Generic,
-					_T("Unable to create depth/stencil buffer."));
+				LOGE("Unable to create depth/stencil buffer.");
 				return false;
 			}
 			hr = p_d3dDevice->CreateDepthStencilView(m_pBackbufferDepthStencil, nullptr, &m_pDepthStencilView);
 			if (FAILED(hr)) {
 				m_pBackbufferDepthStencil->Release();
 				m_pBackbufferDepthStencil = nullptr;
-				LOG(Xe::Debug::Log::Priority_Error,
-					Xe::Debug::Log::Type_Generic,
-					_T("Unable to create depth/stencil buffer."));
+				LOGE("Unable to create depth/stencil buffer.");
 				return false;
 			}
 			return true;

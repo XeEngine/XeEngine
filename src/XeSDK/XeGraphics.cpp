@@ -3,8 +3,6 @@
 #include <XeSDK/XeDrivers.h>
 #include <XeSDK/IDriversRenderingDriver.h>
 
-using namespace Xe::Debug;
-
 #define DRIVER_NULL "Null render"
 #define DRIVER_D3D9 "Direct3D 9"
 #define DRIVER_D3D10 "Direct3D 10"
@@ -31,7 +29,7 @@ namespace Xe { namespace Graphics {
 
     bool Create(IContext **context, ctstring driverName, const ContextInitDesc& properties)
 	{
-		LOG(Log::Priority_Diagnostics, Log::Type_Graphics, _T("Checking for '%s' rendering driver..."), driverName);
+		LOGD("Checking for '%s' rendering driver...", driverName);
 
 		Xe::Drivers::Rendering::IRenderingDriver* renderingDriver = nullptr;
 		auto drivers = Xe::Drivers::GetDrivers(Xe::Drivers::DriverTypeFilter_Rendering);
@@ -47,20 +45,20 @@ namespace Xe { namespace Graphics {
 
 		if (renderingDriver != nullptr)
 		{
-			LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render driver %s found!"), driverName);
+			LOGI("Render driver %s found!", driverName);
 			if (renderingDriver->Factory(context, properties))
 			{
-				LOG(Log::Priority_Info, Log::Type_Graphics, _T("Render driver %s initialized with success!"), driverName);
+				LOGI("Render driver %s initialized with success!", driverName);
 				return true;
 			}
 			else
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to initialize the rendering driver %s."), driverName);
+				LOGE("Unable to initialize the rendering driver %s.", driverName);
 			}
 		}
 		else
 		{
-			LOG(Log::Priority_Error, Log::Type_Graphics, _T("Render driver %s not found."), driverName);
+			LOGE("Render driver %s not found.", driverName);
 		}
 
 		*context = nullptr;

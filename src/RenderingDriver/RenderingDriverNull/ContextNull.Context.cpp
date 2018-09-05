@@ -4,8 +4,6 @@
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/XeMemory.h>
 
-using namespace Xe::Debug;
-
 namespace Xe {
 	namespace Graphics {
 		CContextNull::CContextNull() :

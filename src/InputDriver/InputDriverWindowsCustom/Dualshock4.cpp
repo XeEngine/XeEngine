@@ -6,7 +6,7 @@ namespace Xe {
 	GamepadDS4::GamepadDS4(const Xe::IO::HidDevice& hidDevice) :
 		Base(hidDevice)
 	{
-		Logger::Info("Found DualShock 4.\n");
+		LOGI("Found DualShock 4.\n");
 
 		ReCreateBuffer(0x40, 0x20);
 

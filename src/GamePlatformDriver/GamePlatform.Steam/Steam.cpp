@@ -37,7 +37,7 @@ namespace Xe {
 			{
 				if (init.Callback == nullptr)
 				{
-					Xe::Logger::DebugError("IGamePlatformCallback cannot be null.");
+					LOGE("IGamePlatformCallback cannot be null.");
 					return false;
 				}
 
@@ -51,12 +51,12 @@ namespace Xe {
 				}
 				if (SteamAPI_Init())
 				{
-					Xe::Logger::Debug("SteamAPI_Init was called with success.");
+					LOGD("SteamAPI_Init was called with success.");
 					return true;
 				}
 				else
 				{
-					Xe::Logger::DebugError("SteamAPI_Init failed.");
+					LOGE("SteamAPI_Init failed.");
 					return false;
 				}
 			}
