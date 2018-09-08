@@ -11,7 +11,7 @@ namespace Xe {
 		public:
 			IAudioSource();
 
-			const WaveFormat &GetFormat() const;
+			const WaveDesc &GetFormat() const;
 			SampleOffset GetPositionEnd() const;
 			SampleOffset GetPositionCurrent() const;
 			void SetPositionCurrent(SampleOffset position);
@@ -25,7 +25,7 @@ namespace Xe {
 			u64 m_posEnd;
 			u64 m_posCur;
 			u64 m_posLoop;
-			WaveFormat m_format;
+			WaveDesc m_format;
 			IEffect *m_pEffect;
 
 			virtual void SetPositionCurrentSub(SampleOffset position) = 0;

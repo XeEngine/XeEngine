@@ -148,31 +148,57 @@ namespace Xe { namespace Sound {
 		void* fmt = Xe::Memory::Alloc(size);
 		ASSERT(pStream->Read(fmt, 0, size) == size);
 
-		WAVEFORMAT* wf = (WAVEFORMAT*)fmt;
+		WAVEFORMATEX* wf = (WAVEFORMATEX*)fmt;
 
 		m_ChannelsCount = wf->nChannels;
 		m_SamplesPerSecond = wf->nSamplesPerSec;
 		m_BitFormat = BitFormat_Unspecified;
 
+		switch (wf->wBitsPerSample)
+		{
+		case 8:
+			m_BitFormat = BitFormat_S8;
+			break;
+		case 16:
+			m_BitFormat = BitFormat_S16L;
+			break;
+		case 24:
+			m_BitFormat = BitFormat_S24L;
+			break;
+		case 32:
+			m_BitFormat = BitFormat_S32L;
+			break;
+		default:
+			m_BitFormat = BitFormat_Unspecified;
+			break;
+		}
+
 		switch (wf->wFormatTag)
 		{
 		case WAVE_FORMAT_PCM:
+			m_format.WaveFormat = WaveType_Pcm;
 			ASSERT(r = FormatPcm(*(PCMWAVEFORMAT*)fmt));
 			break;
 		case WAVE_FORMAT_ADPCM:
+			m_format.WaveFormat = WaveType_Adpcm;
 			ASSERT(r = FormatAdpcm(*(WAVEFORMATEX*)fmt));
 			break;
 		case WAVE_FORMAT_IEEE_FLOAT:
+			m_format.WaveFormat = WaveType_Pcm;
+			m_format.BitDepth = BitFormat_F32;
 			ASSERT(r = FormatIeeeFloat(*(WAVEFORMAT*)fmt));
 			break;
 		case WAVE_FORMAT_WMAUDIO2:
+			m_format.WaveFormat = WaveType_Wma2;
 			ASSERT(r = FormatWmaAudio2(*(WAVEFORMATEX*)fmt));
 			break;
 		case WAVE_FORMAT_WMAUDIO3:
+			m_format.WaveFormat = WaveType_Wma3;
 			ASSERT(r = FormatWmaAudio3(*(WAVEFORMATEX*)fmt));
 			break;
 #if _XBOX_ONE
 		case WAVE_FORMAT_XMA2:
+			m_format.WaveFormat = WaveType_Xma2;
 			ASSERT(r = FormatXma2(*(XMA2WAVEFORMATEX*)fmt));
 			break;
 #endif
@@ -190,9 +216,10 @@ namespace Xe { namespace Sound {
 			return false;
 		}
 
+		m_format.BitDepth = m_BitFormat;
 		m_format.NumberOfChannels = m_ChannelsCount;
 		m_format.SampleRate = m_SamplesPerSecond;
-		m_format.SampleLength = m_ChannelsCount * sizeof(float);
+		m_format.SampleLength = m_ChannelsCount * GetBitsPerSample(m_format.BitDepth) / 8;
 
 		Xe::Memory::Free(fmt);
 		return true;
@@ -390,16 +417,16 @@ namespace Xe { namespace Sound {
 		uint32_t bps = GetBitsPerSample(m_BitFormat);
 		m_pStream->SetPosition(m_DataPosition + m_posCur * m_ChannelsCount * bps / 8);
 
-		if (m_BitFormat != BitFormat_F32)
-		{
-			svar len = (svar)count * m_format.NumberOfChannels * bps / 8;
-			void *buf = Memory::Alloc(len);
-			svar read = m_pStream->Read(buf, 0, len);
-			svar samplesRead = read * 8 / bps;
-			Convert(data + offset, buf, m_BitFormat, samplesRead);
-			Memory::Free(buf);
-			return samplesRead * 4;
-		}
+		//if (m_BitFormat != BitFormat_F32)
+		//{
+		//	svar len = (svar)count * m_format.NumberOfChannels * bps / 8;
+		//	void *buf = Memory::Alloc(len);
+		//	svar read = m_pStream->Read(buf, 0, len);
+		//	svar samplesRead = read * 8 / bps;
+		//	Convert(data + offset, buf, m_BitFormat, samplesRead);
+		//	Memory::Free(buf);
+		//	return samplesRead * 4;
+		//}
 
 		return m_pStream->Read(data, offset, m_format.SampleLength * (s32)count);
 	}

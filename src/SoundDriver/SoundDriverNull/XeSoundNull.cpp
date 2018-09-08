@@ -2,11 +2,11 @@
 #include "XeSoundNull.h"
 
 namespace Xe { namespace Sound {
-	AudioNull::NullBuffer::NullBuffer(const WaveFormat &format, ICallback *pCallback) :
+	AudioNull::NullBuffer::NullBuffer(const WaveDesc &format, ICallback *pCallback) :
 		IAudioBuffer(format, pCallback)
 	{ }
 
-	void AudioNull::NullBuffer::Submit(const float *data, svar length)
+	void AudioNull::NullBuffer::Submit(void *data, svar length)
 	{ }
 
 	void AudioNull::NullBuffer::Play()
@@ -41,7 +41,7 @@ namespace Xe { namespace Sound {
 		return true;
 	}
 
-	bool AudioNull::CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback)
+	bool AudioNull::CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format, IAudioBuffer::ICallback *pCallback)
 	{
 		*buffer = new NullBuffer(format, pCallback);
 		return true;

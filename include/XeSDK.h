@@ -46,7 +46,6 @@
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeObjPtr.h>
 #include <XeSDK/XeSound.h>
-#include <XeSDK/XeSoundAudioSource.h>
 #include <XeSDK/XeSoundPlayable.h>
 #include <XeSDK/XeSoundWavSoundFormatFactory.h>
 #include <XeSDK/XeStorage.h>

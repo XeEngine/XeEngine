@@ -97,7 +97,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMultipleLogHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeObjPtr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSound.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundPlayable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundSoundFormatFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundWavSoundFormatFactory.h" />
@@ -168,7 +167,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSoundFormatFactory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundWavSoundFormatFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorageContainerXefs.cpp" />

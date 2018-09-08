@@ -82,9 +82,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSound.h">
       <Filter>Sound\Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundAudioSource.h">
-      <Filter>Sound\Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathVector4.h">
       <Filter>Math\Public</Filter>
     </ClInclude>
@@ -323,8 +320,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ISoundSoundFormatFactory.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundWavSoundFormatFactory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundWavSoundFormatFactory.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h">
+      <Filter>Sound\Private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -365,9 +366,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStorage.cpp">
       <Filter>Storage\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSourceStream_Wav.cpp">
-      <Filter>Sound\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp">
       <Filter>Sound\Private</Filter>
@@ -474,8 +472,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStreamLogHandler.cpp">
       <Filter>Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundWavSoundFormatFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundWavSoundFormatFactory.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
