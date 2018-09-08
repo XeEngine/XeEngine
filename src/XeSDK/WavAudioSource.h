@@ -6,6 +6,8 @@
 #include <xma2defs.h>
 #endif
 
+#pragma region WAV format definitions
+
 const unsigned int FOURCC_RIFF_TAG = MAKEFOURCC('R', 'I', 'F', 'F');
 const unsigned int FOURCC_FORMAT_TAG = MAKEFOURCC('f', 'm', 't', ' ');
 const unsigned int FOURCC_DATA_TAG = MAKEFOURCC('d', 'a', 't', 'a');
@@ -418,6 +420,8 @@ struct RIFFMIDISample
 	uint32_t        samplerData;
 };
 #pragma pack(pop)
+
+#pragma endregion
 
 namespace Xe { namespace Sound {
 	class WavAudioSource : public IAudioSource

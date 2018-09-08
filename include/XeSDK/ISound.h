@@ -3,7 +3,8 @@
 
 namespace Xe {
 	namespace Sound {
-		enum BitFormat {
+		enum BitFormat
+		{
 			BitFormat_Unspecified = 0,
 			BitFormat_S8 = 8,
 			BitFormat_U8 = 9,
@@ -22,30 +23,55 @@ namespace Xe {
 			BitFormat_F32 = 36,
 			BitFormat_F64 = 70,
 		};
-		struct WaveFormat {
-			uvar SampleLength;
-			uvar SampleRate;
-			uvar NumberOfChannels;
+
+		enum WaveFormat
+		{
+			WaveType_Unknown,
+
+			// Most supported format
+			WaveType_Pcm,
+
+			// Compressed PCM in 4-bit
+			WaveType_Adpcm,
+
+			// Xbox specific format
+			WaveType_Wma2,
+
+			// Xbox specific format
+			WaveType_Wma3,
+
+			// Xbox specific format
+			WaveType_Xma2
+		};
+
+		struct WaveDesc
+		{
+			WaveFormat WaveFormat;
+			BitFormat BitDepth;
+			u32 SampleRate;
+			u16 SampleLength;
+			u16 NumberOfChannels;
 		};
 
 		//! \brief where to write audio data to send it to audio card
 		class IAudioBuffer : public IObject {
 		public:
-			interface ICallback {
+			interface ICallback
+			{
 				virtual void OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired) = 0;
 				virtual void OnBufferProcessed() = 0;
 			};
 
 			//! \brief specify wave format and callback function
-			IAudioBuffer(const WaveFormat &properties, ICallback *pCallback);
+			IAudioBuffer(const WaveDesc &properties, ICallback *pCallback);
 
 			//! \brief wave format specified from the beginning
-			const WaveFormat &GetFormat() const;
+			const WaveDesc &GetFormat() const;
 
 			//! \brief send audio data through the buffer
 			//! \param[in] data that contains the information to send
 			//! \param[in] length in bytes of data to send
-			virtual void Submit(const float *data, svar length) = 0;
+			virtual void Submit(void *data, svar length) = 0;
 
 			//! \brief start to process the buffer
 			//! \details revert with Stop
@@ -63,7 +89,7 @@ namespace Xe {
 			virtual void SetChannelVolumes(int channels, const float* volumes) = 0;
 
 		protected:
-			const WaveFormat m_format;
+			const WaveDesc m_format;
 			const ICallback *m_pCallback;
 		};
 		interface IAudio : public IObject {
@@ -82,7 +108,7 @@ namespace Xe {
 			 */
 			virtual bool SetSampleRate(svar sampleRate) = 0;
 
-			virtual bool CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format, IAudioBuffer::ICallback *pCallback) = 0;
+			virtual bool CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format, IAudioBuffer::ICallback *pCallback) = 0;
 
 		protected:
 			svar m_SampleRate;

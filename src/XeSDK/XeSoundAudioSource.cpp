@@ -10,7 +10,7 @@ namespace Xe {
 			m_posLoop((u64)-1)
 		{ }
 
-		const WaveFormat &IAudioSource::GetFormat() const {
+		const WaveDesc &IAudioSource::GetFormat() const {
 			return m_format;
 		}
 

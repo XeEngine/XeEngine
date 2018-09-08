@@ -3,10 +3,10 @@
 
 namespace Xe {
 	namespace Sound {
-		struct WaveFormat;
+		struct WaveDesc;
 		interface IEffect : public IObject {
-			virtual svar CalculateInputLength(svar bytes, const WaveFormat &waveFormat) = 0;
-			virtual svar Process(float *pWaveOut, svar nLengthOut, float *pWaveIn, svar nLengthIn, const WaveFormat &waveFormat) = 0;
+			virtual svar CalculateInputLength(svar bytes, const WaveDesc &waveFormat) = 0;
+			virtual svar Process(float *pWaveOut, svar nLengthOut, float *pWaveIn, svar nLengthIn, const WaveDesc &waveFormat) = 0;
 		};
 	}
 }

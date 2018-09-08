@@ -18,7 +18,7 @@ namespace Xe { namespace Sound {
 		bool Initialize(const Xe::Sound::AudioInitDesc& desc);
 		bool SetSampleRate(svar sampleRate);
 
-		bool CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format,
+		bool CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format,
 			IAudioBuffer::ICallback *pCallback);
 
 		HMODULE m_hDllAudio;

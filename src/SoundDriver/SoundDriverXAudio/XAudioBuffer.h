@@ -62,7 +62,7 @@ namespace Xe { namespace Sound {
 			}
 		};
 		
-		XAudioBuffer(XAudioEngine *pAudio, const WaveFormat &format, ICallback *pCallback);
+		XAudioBuffer(XAudioEngine *pAudio, const WaveDesc &format, ICallback *pCallback);
 		
 		~XAudioBuffer();
 		
@@ -73,7 +73,7 @@ namespace Xe { namespace Sound {
 		
 		void Stop();
 		
-		void Submit(const float *data, svar length);
+		void Submit(void *data, svar length);
 
 		float GetVolume();
 		void SetVolume(float volume);
