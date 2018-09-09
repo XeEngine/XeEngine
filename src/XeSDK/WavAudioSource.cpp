@@ -412,7 +412,7 @@ namespace Xe { namespace Sound {
 		m_pStream->SetPosition(m_DataPosition + GetPositionCurrent() * m_SampleSize);
 	}
 
-	svar WavAudioSource::ReadSub(float *data, svar offset, SampleOffset count)
+	svar WavAudioSource::ReadSub(void *data, svar offset, SampleOffset count)
 	{
 		uint32_t bps = GetBitsPerSample(m_BitFormat);
 		m_pStream->SetPosition(m_DataPosition + m_posCur * m_ChannelsCount * bps / 8);

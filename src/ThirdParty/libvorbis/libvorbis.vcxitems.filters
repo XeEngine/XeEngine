@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{cbb87b90-102a-43d3-b862-3338b7c695d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libogg">
+      <UniqueIdentifier>{3c6ab140-a7e1-417a-8135-e368e601ea31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libvorbis">
+      <UniqueIdentifier>{b2f69994-f84a-469f-b665-5c3d1e7f9cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libvorbis\books">
+      <UniqueIdentifier>{bf28b191-c4f3-4f25-8f08-d3cf86ef0382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libvorbis\modes">
+      <UniqueIdentifier>{a56c812a-1249-4150-bd1d-ccda1159c51b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libvorbis\books\coupled">
+      <UniqueIdentifier>{2dc25f16-f027-4d65-aeba-f8fca961b5f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libvorbis\books\floor">
+      <UniqueIdentifier>{f7a5a844-acdf-4bf0-a69b-65a301c74a5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src-libvorbis\books\uncopuled">
+      <UniqueIdentifier>{d23906a8-45cb-4633-8459-fe646e105863}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\vorbis\vorbisenc.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\vorbis\vorbisfile.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\vorbis\codec.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\psy.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\registry.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\scales.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\smallft.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\window.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\backends.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\bitrate.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\codebook.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\codec_internal.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\envelope.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\highlevel.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lookup.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lookup_data.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lpc.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lsp.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\masking.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\mdct.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\misc.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\os.h">
+      <Filter>src-libvorbis</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_44.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_8.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_16.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_44.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_44p51.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_44u.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_8.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_11.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_16.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_22.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_32.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_44.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_44p51.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_44u.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_X.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\floor_all.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_8.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_11.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_16.h">
+      <Filter>src-libvorbis\modes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\uncoupled\res_books_uncoupled.h">
+      <Filter>src-libvorbis\books\uncopuled</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\floor\floor_books.h">
+      <Filter>src-libvorbis\books\floor</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\coupled\res_books_stereo.h">
+      <Filter>src-libvorbis\books\coupled</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\coupled\res_books_51.h">
+      <Filter>src-libvorbis\books\coupled</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\psy.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\registry.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\res0.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\smallft.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\synthesis.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\vorbisenc.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\vorbisfile.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\window.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\analysis.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\bitrate.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\block.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\codebook.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\envelope.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\floor0.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\floor1.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\info.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\lookup.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\lpc.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\lsp.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\mapping0.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\mdct.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libogg\bitwise.c">
+      <Filter>src-libogg</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libogg\framing.c">
+      <Filter>src-libogg</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\sharedbook.c">
+      <Filter>src-libvorbis</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

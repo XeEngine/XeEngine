@@ -97,6 +97,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMultipleLogHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeObjPtr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSound.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundOggSoundFormatFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundPlayable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundSoundFormatFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundWavSoundFormatFactory.h" />
@@ -114,6 +115,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyFrameHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OggAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeError.h" />
@@ -125,6 +127,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XeStorageFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)OggAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeConsoleLogHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
@@ -165,6 +168,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundOggSoundFormatFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSoundFormatFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundWavSoundFormatFactory.cpp" />

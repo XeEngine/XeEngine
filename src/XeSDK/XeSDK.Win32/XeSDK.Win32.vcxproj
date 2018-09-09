@@ -99,6 +99,7 @@
     <Import Project="..\..\ThirdParty\zlib\zlib.vcxitems" Label="Shared" />
     <Import Project="..\..\ThirdParty\libpng\libpng.vcxitems" Label="Shared" />
     <Import Project="..\..\ThirdParty\tinyxml\tinyxml.vcxitems" Label="Shared" />
+    <Import Project="..\..\ThirdParty\libvorbis\libvorbis.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\XeSDK.WinShared.vcxitems" Label="Shared" />
@@ -157,7 +158,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -175,7 +176,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -195,7 +196,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -217,7 +218,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -239,7 +240,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -261,7 +262,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>

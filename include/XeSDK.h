@@ -47,9 +47,12 @@
 #include <XeSDK/XeObjPtr.h>
 #include <XeSDK/XeSound.h>
 #include <XeSDK/XeSoundPlayable.h>
+#include <XeSDK/XeSoundSoundFormatFactory.h>
+#include <XeSDK/XeSoundOggSoundFormatFactory.h>
 #include <XeSDK/XeSoundWavSoundFormatFactory.h>
 #include <XeSDK/XeStorage.h>
 #include <XeSDK/XeStorageContainerXefs.h>
+#include <XeSDK/XeStoragePath.h>
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeTimer.h>
 

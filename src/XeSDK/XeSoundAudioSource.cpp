@@ -42,7 +42,7 @@ namespace Xe {
 			m_pEffect->AddRef();
 		}
 
-		svar IAudioSource::Read(float *data, svar offset, svar bytescount) {
+		svar IAudioSource::Read(void *data, svar offset, svar bytescount) {
 			SampleOffset samplesRequired = bytescount / m_format.SampleLength;
 			SampleOffset len = 0;
 			while (len < samplesRequired) {
