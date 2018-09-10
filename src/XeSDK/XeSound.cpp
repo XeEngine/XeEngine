@@ -63,9 +63,9 @@ namespace Xe { namespace Sound {
 	svar IAudio::GetSampleRate() const {
 		return m_SampleRate;
 	}
-	IAudioBuffer::IAudioBuffer(const WaveDesc &format, ICallback *pCallback) :
-		m_format(format),
-		m_pCallback(pCallback) {
+	IAudioBuffer::IAudioBuffer(const WaveDesc &format) :
+		m_format(format)
+	{
 	}
 	const WaveDesc &IAudioBuffer::GetFormat() const {
 		return m_format;

@@ -185,9 +185,9 @@ namespace Xe { namespace Sound {
 		return false;
 	}
 
-	bool XAudioEngine::CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format, IAudioBuffer::ICallback *pCallback)
+	bool XAudioEngine::CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format)
 	{
-		XAudioBuffer *cBuffer = new XAudioBuffer(this, format, pCallback);
+		XAudioBuffer *cBuffer = new XAudioBuffer(this, format);
 		if (cBuffer->Initialize())
 		{
 			*buffer = cBuffer;

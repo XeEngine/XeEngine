@@ -1,5 +1,6 @@
 #pragma once
 #include "XAudioDefinitions.h"
+#include "DummyAudioBufferCallback.h"
 #include <XeSDK/ISound.h>
 
 namespace Xe { namespace Sound {
@@ -11,11 +12,24 @@ namespace Xe { namespace Sound {
 		struct CXAudio2VoiceCallback : public IXAudio2VoiceCallback {
 			static const svar MaxBuffersCount = 2;
 			IAudioBuffer *pBuffer;
-			ICallback *m_pCallback;
+			IAudioBufferCallback *m_pCallback;
 
-			CXAudio2VoiceCallback(XAudioBuffer *cBuffer, ICallback *pCallback) :
+			CXAudio2VoiceCallback(XAudioBuffer *cBuffer) :
 				pBuffer(cBuffer),
-				m_pCallback(pCallback) {
+				m_pCallback(new DummyAudioBufferCallback)
+			{
+			}
+
+			~CXAudio2VoiceCallback()
+			{
+				m_pCallback->Release();
+			}
+
+			void SetCallback(IAudioBufferCallback& callback)
+			{
+				m_pCallback->Release();
+				m_pCallback = &callback;
+				m_pCallback->AddRef();
 			}
 
 			// Called just before this voice's processing pass begins.
@@ -62,12 +76,16 @@ namespace Xe { namespace Sound {
 			}
 		};
 		
-		XAudioBuffer(XAudioEngine *pAudio, const WaveDesc &format, ICallback *pCallback);
+		XAudioBuffer(XAudioEngine *pAudio, const WaveDesc &format);
 		
 		~XAudioBuffer();
 		
 		
 		bool Initialize();
+
+		void SetCallback(IAudioBufferCallback& callback);
+
+		bool IsPlaying() const;
 		
 		void Play();
 		
@@ -85,6 +103,7 @@ namespace Xe { namespace Sound {
 		CXAudio2VoiceCallback m_voiceCallback;
 		IXAudio2SourceVoice *m_pSourceVoice;
 		XAUDIO2_BUFFER m_xabuffer;
+		bool m_IsPlaying;
 	};
 
 } }

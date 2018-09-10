@@ -176,29 +176,29 @@ namespace Xe { namespace Sound {
 		switch (wf->wFormatTag)
 		{
 		case WAVE_FORMAT_PCM:
-			m_format.WaveFormat = WaveType_Pcm;
+			m_WaveDesc.WaveFormat = WaveType_Pcm;
 			ASSERT(r = FormatPcm(*(PCMWAVEFORMAT*)fmt));
 			break;
 		case WAVE_FORMAT_ADPCM:
-			m_format.WaveFormat = WaveType_Adpcm;
+			m_WaveDesc.WaveFormat = WaveType_Adpcm;
 			ASSERT(r = FormatAdpcm(*(WAVEFORMATEX*)fmt));
 			break;
 		case WAVE_FORMAT_IEEE_FLOAT:
-			m_format.WaveFormat = WaveType_Pcm;
-			m_format.BitDepth = BitFormat_F32;
+			m_WaveDesc.WaveFormat = WaveType_Pcm;
+			m_WaveDesc.BitDepth = BitFormat_F32;
 			ASSERT(r = FormatIeeeFloat(*(WAVEFORMAT*)fmt));
 			break;
 		case WAVE_FORMAT_WMAUDIO2:
-			m_format.WaveFormat = WaveType_Wma2;
+			m_WaveDesc.WaveFormat = WaveType_Wma2;
 			ASSERT(r = FormatWmaAudio2(*(WAVEFORMATEX*)fmt));
 			break;
 		case WAVE_FORMAT_WMAUDIO3:
-			m_format.WaveFormat = WaveType_Wma3;
+			m_WaveDesc.WaveFormat = WaveType_Wma3;
 			ASSERT(r = FormatWmaAudio3(*(WAVEFORMATEX*)fmt));
 			break;
 #if _XBOX_ONE
 		case WAVE_FORMAT_XMA2:
-			m_format.WaveFormat = WaveType_Xma2;
+			m_WaveDesc.WaveFormat = WaveType_Xma2;
 			ASSERT(r = FormatXma2(*(XMA2WAVEFORMATEX*)fmt));
 			break;
 #endif
@@ -216,10 +216,10 @@ namespace Xe { namespace Sound {
 			return false;
 		}
 
-		m_format.BitDepth = m_BitFormat;
-		m_format.NumberOfChannels = m_ChannelsCount;
-		m_format.SampleRate = m_SamplesPerSecond;
-		m_format.SampleLength = m_ChannelsCount * GetBitsPerSample(m_format.BitDepth) / 8;
+		m_WaveDesc.BitDepth = m_BitFormat;
+		m_WaveDesc.NumberOfChannels = m_ChannelsCount;
+		m_WaveDesc.SampleRate = m_SamplesPerSecond;
+		m_WaveDesc.SampleLength = m_ChannelsCount * GetBitsPerSample(m_WaveDesc.BitDepth) / 8;
 
 		Xe::Memory::Free(fmt);
 		return true;
@@ -236,7 +236,9 @@ namespace Xe { namespace Sound {
 		uint32_t bps = GetBitsPerSample(m_BitFormat);
 		m_DataPosition = pStream->GetPosition();
 		m_DataLength = size;
-		m_posEnd = size / (m_ChannelsCount * bps / 8);
+		m_SamplesCount = size / (m_ChannelsCount * bps / 8);
+		m_LoopStart = m_SamplesCount;
+		m_LoopEnd = m_SamplesCount;
 
 		pStream->SetPosition(size, IO::Seek_Cur);
 		return true;
@@ -402,33 +404,24 @@ namespace Xe { namespace Sound {
 		case WAVE_FORMAT_WMAUDIO3:
 			r = FormatWmaAudio3(*(WAVEFORMATEX*)&fmt);
 			break;
+		default:
+			r = false;
+			break;
 		}
 
 		return r;
 	}
 
-	void WavAudioSource::SetPositionCurrentSub(SampleOffset position)
+	void WavAudioSource::SetPositionSub(SampleOffset position)
 	{
-		m_pStream->SetPosition(m_DataPosition + GetPositionCurrent() * m_SampleSize);
+		m_pStream->SetPosition(m_DataPosition + position * m_SampleSize);
 	}
 
-	svar WavAudioSource::ReadSub(void *data, svar offset, SampleOffset count)
+	int WavAudioSource::ReadSub(void *data, int offset, int length)
 	{
-		uint32_t bps = GetBitsPerSample(m_BitFormat);
-		m_pStream->SetPosition(m_DataPosition + m_posCur * m_ChannelsCount * bps / 8);
-
-		//if (m_BitFormat != BitFormat_F32)
-		//{
-		//	svar len = (svar)count * m_format.NumberOfChannels * bps / 8;
-		//	void *buf = Memory::Alloc(len);
-		//	svar read = m_pStream->Read(buf, 0, len);
-		//	svar samplesRead = read * 8 / bps;
-		//	Convert(data + offset, buf, m_BitFormat, samplesRead);
-		//	Memory::Free(buf);
-		//	return samplesRead * 4;
-		//}
-
-		return m_pStream->Read(data, offset, m_format.SampleLength * (s32)count);
+		// TODO does not work for formats different than PCM
+		SetPositionSub(m_Position);
+		return m_pStream->Read(data, offset, length);
 	}
 
 } }

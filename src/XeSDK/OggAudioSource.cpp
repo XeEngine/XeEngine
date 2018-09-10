@@ -62,11 +62,11 @@ namespace Xe { namespace Sound {
 		}
 
 		const vorbis_info& info = *ov_info(&m_Vorbis, -1);
-		m_format.WaveFormat = WaveType_Pcm;
-		m_format.BitDepth = BitFormat_S16L;
-		m_format.SampleRate = info.rate;
-		m_format.SampleLength = info.channels * GetBitsPerSample(m_format.BitDepth) / 8;
-		m_format.NumberOfChannels = info.channels;
+		m_WaveDesc.WaveFormat = WaveType_Pcm;
+		m_WaveDesc.BitDepth = BitFormat_S16L;
+		m_WaveDesc.SampleRate = info.rate;
+		m_WaveDesc.SampleLength = info.channels * GetBitsPerSample(m_WaveDesc.BitDepth) / 8;
+		m_WaveDesc.NumberOfChannels = info.channels;
 
 		ogg_int64_t samplesCount = ov_pcm_total(&m_Vorbis, -1);
 		if (samplesCount == OV_EINVAL)
@@ -75,23 +75,25 @@ namespace Xe { namespace Sound {
 			samplesCount = 0;
 		}
 
-		m_posEnd = samplesCount;
+		m_SamplesCount = samplesCount;
+		m_LoopStart = m_SamplesCount;
+		m_LoopEnd = m_SamplesCount;
 
 		return true;
 	}
 
 
-	void OggAudioSource::SetPositionCurrentSub(SampleOffset position)
+	void OggAudioSource::SetPositionSub(SampleOffset position)
 	{
 		ov_pcm_seek(&m_Vorbis, position);
 	}
 
-	svar OggAudioSource::ReadSub(void *data, svar offset, SampleOffset count)
+	int OggAudioSource::ReadSub(void *data, int offset, int length)
 	{
 		long read = 0;
 		if (!m_Eof)
 		{
-			read = ov_read(&m_Vorbis, (char*)data + offset, count * m_format.SampleLength, 0, 2, 1, &m_CurrentSection);
+			read = ov_read(&m_Vorbis, (char*)data + offset, length, 0, 2, 1, &m_CurrentSection);
 			if (read > 0)
 			{
 				// Ok!

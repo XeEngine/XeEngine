@@ -97,6 +97,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMultipleLogHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeObjPtr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSound.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundGenericAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundOggSoundFormatFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundPlayable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundSoundFormatFactory.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DefaultGamepadEventHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyApplicationHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyAudioBufferCallback.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyFrameHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h" />
@@ -167,7 +169,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundGenericAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundOggSoundFormatFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSoundFormatFactory.cpp" />

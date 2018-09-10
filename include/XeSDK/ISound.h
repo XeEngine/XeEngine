@@ -53,17 +53,24 @@ namespace Xe {
 			u16 NumberOfChannels;
 		};
 
+		class IAudioBuffer;
+		interface IAudioBufferCallback : public IObject
+		{
+			virtual ~IAudioBufferCallback() {};
+
+			virtual void OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired) = 0;
+			virtual void OnBufferProcessed() = 0;
+		};
+
 		//! \brief where to write audio data to send it to audio card
 		class IAudioBuffer : public IObject {
 		public:
-			interface ICallback
-			{
-				virtual void OnBufferRequred(IAudioBuffer *pBuffer, svar bytesRequired) = 0;
-				virtual void OnBufferProcessed() = 0;
-			};
 
 			//! \brief specify wave format and callback function
-			IAudioBuffer(const WaveDesc &properties, ICallback *pCallback);
+			IAudioBuffer(const WaveDesc &properties);
+			virtual ~IAudioBuffer() = 0 { }
+
+			virtual void SetCallback(IAudioBufferCallback& callback) = 0;
 
 			//! \brief wave format specified from the beginning
 			const WaveDesc &GetFormat() const;
@@ -72,6 +79,8 @@ namespace Xe {
 			//! \param[in] data that contains the information to send
 			//! \param[in] length in bytes of data to send
 			virtual void Submit(void *data, svar length) = 0;
+
+			virtual bool IsPlaying() const = 0;
 
 			//! \brief start to process the buffer
 			//! \details revert with Stop
@@ -90,8 +99,8 @@ namespace Xe {
 
 		protected:
 			const WaveDesc m_format;
-			const ICallback *m_pCallback;
 		};
+
 		interface IAudio : public IObject {
 		public:
 			IAudio();
@@ -108,7 +117,7 @@ namespace Xe {
 			 */
 			virtual bool SetSampleRate(svar sampleRate) = 0;
 
-			virtual bool CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format, IAudioBuffer::ICallback *pCallback) = 0;
+			virtual bool CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format) = 0;
 
 		protected:
 			svar m_SampleRate;

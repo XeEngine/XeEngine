@@ -11,7 +11,7 @@ namespace Xe {
 		}
 
 		class CPlayable;
-		struct CCallback : public IAudioBuffer::ICallback {
+		struct CCallback : public IAudioBufferCallback {
 			static const svar BUFFERSCOUNT = 2;
 			CPlayable *Playable;
 			svar BuffersUsed;
@@ -57,7 +57,7 @@ namespace Xe {
 			void Stop() {
 				m_playState = State_Stopped;
 				m_soundBuffer->Stop();
-				m_audioSource->SetPositionCurrent(0);
+				m_audioSource->SetPosition(0);
 			}
 			void End() {
 				m_playState = State_End;
@@ -105,19 +105,29 @@ namespace Xe {
 			IsRunning = true;
 			if (BuffersUsed < BUFFERSCOUNT) {
 				if (BufferLen[BufferIndex] < bytesRequired) {
-					BufferLen[BufferIndex] = bytesRequired * Playable->m_audioSource->GetFormat().SampleLength;
+					BufferLen[BufferIndex] = bytesRequired * Playable->m_audioSource->GetDesc().SampleLength;
 					if (BufferData[BufferIndex] != nullptr)
 						Memory::Free(BufferData[BufferIndex]);
 					BufferData[BufferIndex] = (float*)Memory::Alloc(BufferLen[BufferIndex]);
 				}
-				svar len = Playable->m_audioSource->Read(BufferData[BufferIndex], 0, bytesRequired);
-				if (len > 0) {
-					pBuffer->Submit(BufferData[BufferIndex], len);
+
+				svar len = 0;
+				svar written = 0;
+				do
+				{
+					len = Playable->m_audioSource->Read(BufferData[BufferIndex], written, bytesRequired - written);
+					written += len;
+				} while (written < bytesRequired > 0 && len > 0);
+
+				if (len > 0)
+				{
+					pBuffer->Submit(BufferData[BufferIndex], written);
 					BuffersUsed++;
 				}
 				else
 					Playable->End();
 			}
+
 			IsRunning = false;
 		}
 
@@ -132,8 +142,9 @@ namespace Xe {
 			}
 
 			IAudioBuffer *dst;
-			CCallback *callback = new CCallback;
-			if (audio->CreateBuffer(&dst, src->GetFormat(), callback)) {
+			if (audio->CreateBuffer(&dst, src->GetDesc())) {
+				CCallback* callback = new CCallback;
+				dst->SetCallback(*callback);
 				*pPlayable = new CPlayable(dst, src, callback);
 				dst->Release();
 				callback->SetPlayable((CPlayable*)*pPlayable);
@@ -141,7 +152,6 @@ namespace Xe {
 			}
 			else {
 				audio->Release();
-				delete callback;
 				return false;
 			}
 			return true;
