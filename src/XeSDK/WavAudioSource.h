@@ -1,5 +1,5 @@
 #pragma once
-#include <XeSDK/ISoundAudioSource.h>
+#include <XeSDK/XeSoundGenericAudioSource.h>
 #include <list>
 
 #if _XBOX_ONE
@@ -424,7 +424,7 @@ struct RIFFMIDISample
 #pragma endregion
 
 namespace Xe { namespace Sound {
-	class WavAudioSource : public IAudioSource
+	class WavAudioSource : public GenericAudioSource
 	{
 		struct Loop
 		{
@@ -458,8 +458,8 @@ namespace Xe { namespace Sound {
 #endif
 		bool FormatExtendible(WAVEFORMATEXTENSIBLE& fmt);
 
-		void SetPositionCurrentSub(SampleOffset position);
-		svar ReadSub(void *data, svar offset, SampleOffset count);
+		void SetPositionSub(SampleOffset position);
+		int ReadSub(void *data, int offset, int length);
 	public:
 		WavAudioSource();
 		~WavAudioSource();

@@ -253,7 +253,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc64.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoFnv1a.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -332,6 +331,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundOggSoundFormatFactory.h">
       <Filter>Sound\Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundGenericAudioSource.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyAudioBufferCallback.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -374,9 +382,6 @@
       <Filter>Storage\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSound.cpp">
-      <Filter>Sound\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundAudioSource.cpp">
       <Filter>Sound\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundPlayable.cpp">
@@ -489,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundOggSoundFormatFactory.cpp">
       <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundGenericAudioSource.cpp">
+      <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

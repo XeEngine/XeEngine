@@ -2,6 +2,7 @@
 #include <XeSDK/XeSound.h>
 #include "XAudioBuffer.h"
 #include "XAudioEngine.h"
+#include "DummyAudioBufferCallback.h"
 
 #ifndef WAVE_FORMAT_XMA2
 #define WAVE_FORMAT_XMA2 0x166
@@ -20,16 +21,20 @@ namespace Xe { namespace Sound {
 	};
 
 
-	XAudioBuffer::XAudioBuffer(XAudioEngine *pAudio, const WaveDesc &format, ICallback *pCallback) :
-		IAudioBuffer(format, pCallback),
+	XAudioBuffer::XAudioBuffer(XAudioEngine *pAudio, const WaveDesc &format) :
+		IAudioBuffer(format),
 		m_pAudio(pAudio),
-		m_voiceCallback(this, pCallback),
-		m_xabuffer({ 0 }) {
+		m_voiceCallback(this),
+		m_pSourceVoice(nullptr),
+		m_xabuffer({ 0 }),
+		m_IsPlaying(false)
+	{
 		m_pAudio->AddRef();
 	}
 
 	XAudioBuffer::~XAudioBuffer() {
-		if (m_pSourceVoice) {
+		if (m_pSourceVoice)
+		{
 			m_pSourceVoice->FlushSourceBuffers();
 			m_pSourceVoice->DestroyVoice();
 		}
@@ -63,7 +68,7 @@ namespace Xe { namespace Sound {
 		};
 
 		HRESULT hr = m_pAudio->m_pAudio->CreateSourceVoice(&m_pSourceVoice, &wf,
-			0, XAUDIO2_DEFAULT_FREQ_RATIO, m_pCallback ? &m_voiceCallback : nullptr);
+			0, XAUDIO2_DEFAULT_FREQ_RATIO, &m_voiceCallback);
 		if (FAILED(hr))
 		{
 			switch (hr)
@@ -84,11 +89,25 @@ namespace Xe { namespace Sound {
 		return true;
 	}
 
-	void XAudioBuffer::Play() {
+	void XAudioBuffer::SetCallback(IAudioBufferCallback& callback)
+	{
+		m_voiceCallback.SetCallback(callback);
+	}
+
+	bool XAudioBuffer::IsPlaying() const
+	{
+		return m_IsPlaying;
+	}
+
+	void XAudioBuffer::Play()
+	{
+		m_IsPlaying = true;
 		m_pSourceVoice->Start();
 	}
 
-	void XAudioBuffer::Stop() {
+	void XAudioBuffer::Stop()
+	{
+		m_IsPlaying = false;
 		m_pSourceVoice->Stop();
 	}
 

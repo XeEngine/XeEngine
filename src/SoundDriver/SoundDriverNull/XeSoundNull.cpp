@@ -1,19 +1,43 @@
 #include "pch.h"
 #include "XeSoundNull.h"
+#include "DummyAudioBufferCallback.h"
 
 namespace Xe { namespace Sound {
-	AudioNull::NullBuffer::NullBuffer(const WaveDesc &format, ICallback *pCallback) :
-		IAudioBuffer(format, pCallback)
+	AudioNull::NullBuffer::NullBuffer(const WaveDesc &format) :
+		IAudioBuffer(format),
+		m_pCallback(new DummyAudioBufferCallback),
+		m_IsPlaying(false)
 	{ }
+
+	AudioNull::NullBuffer::~NullBuffer()
+	{
+		m_pCallback->Release();
+	}
+
+	void AudioNull::NullBuffer::SetCallback(IAudioBufferCallback& pCallback)
+	{
+		m_pCallback->Release();
+		m_pCallback = &pCallback;
+		m_pCallback->AddRef();
+	}
 
 	void AudioNull::NullBuffer::Submit(void *data, svar length)
 	{ }
 
+	bool AudioNull::NullBuffer::IsPlaying() const
+	{
+		return m_IsPlaying;
+	}
+
 	void AudioNull::NullBuffer::Play()
-	{ }
+	{
+		m_IsPlaying = true;
+	}
 
 	void AudioNull::NullBuffer::Stop()
-	{ }
+	{
+		m_IsPlaying = false;
+	}
 
 	float AudioNull::NullBuffer::GetVolume()
 	{
@@ -41,9 +65,9 @@ namespace Xe { namespace Sound {
 		return true;
 	}
 
-	bool AudioNull::CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format, IAudioBuffer::ICallback *pCallback)
+	bool AudioNull::CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format)
 	{
-		*buffer = new NullBuffer(format, pCallback);
+		*buffer = new NullBuffer(format);
 		return true;
 	}
 } }

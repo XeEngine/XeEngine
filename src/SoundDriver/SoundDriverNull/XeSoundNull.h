@@ -6,10 +6,15 @@ namespace Xe { namespace Sound {
 	public:
 		class NullBuffer : public IAudioBuffer
 		{
+			IAudioBufferCallback* m_pCallback;
+			bool m_IsPlaying;
 		public:
-			NullBuffer(const WaveDesc &format, ICallback *pCallback);
+			NullBuffer(const WaveDesc &format);
+			~NullBuffer();
 
+			void SetCallback(IAudioBufferCallback& pCallback);
 			void Submit(void *data, svar length);
+			bool IsPlaying() const;
 			void Play();
 			void Stop();
 			float GetVolume();
@@ -21,6 +26,6 @@ namespace Xe { namespace Sound {
 		AudioNull();
 
 		bool SetSampleRate(svar sampleRate);
-		bool CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format, IAudioBuffer::ICallback *pCallback);
+		bool CreateBuffer(IAudioBuffer **buffer, const WaveDesc &format);
 	};
 } }
