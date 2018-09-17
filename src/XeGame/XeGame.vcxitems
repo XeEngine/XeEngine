@@ -14,12 +14,17 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundCallback.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp" />
   </ItemGroup>
@@ -31,8 +36,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAchievement.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatformCallback.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundBgmEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundSfxEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundCallback.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlatformConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h" />
