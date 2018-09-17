@@ -1,5 +1,66 @@
 # Changelog
 
+## [0.9.0] - 2018-09-18
+
+### Added in XeSDK
+- Implemented the support for Universal Windows Applications.
+- Implemented the support for Durango (Xbox One and Xbox One X).
+- It is now possible to create and register Rendering, Audio and Gamepad drivers thorugh Xe::Drivers.
+- Xe::Core::Initialize will register all the drivers compatible with the running OS.
+- Implemented Xe::Core::GetHostInfo to get information about the OS/HW that is hosting the running app.
+- Added a XESDK_VER macro.
+- Added Xe::ILogHandler to create and use custom log implementations.
+- Added Xe::Graphics::IContext::GetCapabilities.
+- Added Xe::Graphics::IContext::SelectRenderingSurface.
+- Added a Null driver for IAudio.
+- An IAudio now needs AudioInitDesc to be created.
+- WaveFormat now includes bpp and wave type for hardware decoding.
+- IAudioSource now has loop-start and loop-end support.
+- Added GenericAudioSource to implement easily Audio Source drivers.
+- Implemented Ogg/Vorbis IAudioSource.
+- Implemented SoundFormatFactory to get automatically the correct IAudioSource from the file extension.
+- It is now possible to be notified when a controller has been connected or disconnected.
+
+### Changed in XeSDK
+- Xe::Core::GetEngineInfo now returns a value instead of using an output parameter.
+- Now every interface uses the keyword INTERFACE instead of struct or class.
+- It is now preferrable to use LOG* (LOGE, LOGW, LOGI, etc.) instead of Xe::Logger functions directly.
+- Xe::Graphics::IContext, IAudio and Gamepads can now be created only from driver's factories.
+- IView has been splitted in IApplicationHandler, IFrameHandler, IKeyboardHandler and IPointerHandler.
+- IFrameView should be used to handle the title, size, DPI, orientation and event dispatching.
+- IFrameView can now be created manually from Xe::Core::Factory.
+- Renamed Xe::Graphics::ContextProperties to Xe::Graphics::ContextInitDesc.
+- Moved Xe::Core::IView::InitProperties to Xe::Core::FrameViewInitDesc.
+- The default window's resolution has changed from 960x540 to 1280x720.
+- Xe::Graphics::Create has been replaced by IRenderingDriver::Factory.
+- Renamed WaveFormat into WaveDesc.
+- Renamed few fields on IAudioSource.
+- The Audio buffer now does not need to be decoded in a float anymore, following the BitFormat's WaveDesc.
+- Moved from IAudioBuffer::ICallback to IAudioBufferCallback.
+- Now IAudio::CreateBuffer does not accept anymore an ICallback as parameter.
+- IAudioBuffer::SetCallback can be specified to set a callback for the buffer.
+- Improvements on WAV audio decoder.
+- Updated zlib from 1.2.8 to 1.2.11.
+- Updated libpng from 1.6.25 to 1.6.35.
+
+### Fixed in XeSDK
+- Fixed an error on SimpleTextureManager's GetSurface when an invalid texture was specified.
+- Fixed a bug that results distorted sound when converting from BitFormat_S24L samples.
+
+### Removed from XeSDK
+- Disabled OpenGL rendering context.
+- Disabled the support for UTF16 (basically the use of _S and _T).
+- Removed IObject::Query
+- Removed Xe::Core::IView.
+- Removed Xe::Graphics::Create.
+
+### Added in XeGame
+ - Added ISoundManager to manage multiple BGMs and SFXs.
+
+### Fixed in XeGame
+- Fixed an error on SimpleTextureManager's GetProfile that was not returning the correct values on Dev.
+
+
 ## [0.8.1] - 2018-08-04
 
 ### Added in XeSDK
