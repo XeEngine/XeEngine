@@ -24,15 +24,15 @@ namespace Xe {
 
 	void RegisterRenderingDrivers()
 	{
-		Xe::Drivers::RegisterDriver(&g_DriverRenderingNull);
 		Xe::Drivers::RegisterDriver(&g_DriverRenderingD3D11);
+		Xe::Drivers::RegisterDriver(&g_DriverRenderingNull);
 	}
 
 	void RegisterAudioDrivers()
 	{
+		Xe::Drivers::RegisterDriver(&g_DriverSoundXAudio2);
 		Xe::Drivers::RegisterDriver(&g_DriverSoundNull);
 		//Xe::Drivers::RegisterDriver(&g_DriverSoundWasapi);
-		Xe::Drivers::RegisterDriver(&g_DriverSoundXAudio2);
 	}
 
 	void RegisterInputDrivers()
