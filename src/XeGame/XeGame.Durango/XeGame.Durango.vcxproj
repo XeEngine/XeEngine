@@ -163,6 +163,7 @@
       <PreprocessorDefinitions>_DEBUG;__WRL_NO_DEFAULT_LIB__;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>false</CompileAsWinRT>
       <AdditionalIncludeDirectories>$(XESDK_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

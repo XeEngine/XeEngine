@@ -152,7 +152,9 @@ namespace Xe {
 			m_pResource(resource),
 			m_pResourceView(resourceView),
 			m_pTargetView(targetView),
-			m_IsLocked(false)
+			m_LockBuffer(nullptr),
+			m_IsLocked(false),
+			m_DirectMode(false)
 		{
 			m_length = size.x * size.y * Xe::Graphics::Color::GetBitsPerPixel(format) / 8;
 

@@ -2255,7 +2255,7 @@ static void _ov_getlap(OggVorbis_File *vf,vorbis_info *vi,vorbis_dsp_state *vd,
 int ov_crosslap(OggVorbis_File *vf1, OggVorbis_File *vf2){
   vorbis_info *vi1,*vi2;
   float **lappcm;
-  float **pcm;
+  float **pcm = NULL;
   const float *w1,*w2;
   int n1,n2,i,ret,hs1,hs2;
 
@@ -2309,7 +2309,7 @@ static int _ov_64_seek_lap(OggVorbis_File *vf,ogg_int64_t pos,
                            int (*localseek)(OggVorbis_File *,ogg_int64_t)){
   vorbis_info *vi;
   float **lappcm;
-  float **pcm;
+  float **pcm = NULL;
   const float *w1,*w2;
   int n1,n2,ch1,ch2,hs;
   int i,ret;
@@ -2370,7 +2370,7 @@ static int _ov_d_seek_lap(OggVorbis_File *vf,double pos,
                            int (*localseek)(OggVorbis_File *,double)){
   vorbis_info *vi;
   float **lappcm;
-  float **pcm;
+  float **pcm = NULL;
   const float *w1,*w2;
   int n1,n2,ch1,ch2,hs;
   int i,ret;
