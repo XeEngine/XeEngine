@@ -623,6 +623,13 @@ namespace Xe { namespace Game {
 
 			return true;
 #else
+			profile.TexturesCount = 0;
+			profile.MaxTexturesCount = 0;
+			profile.ClutsCount = 0;
+			profile.MaxClutsCount = 0;
+			profile.TexturesReferencesCount = 0;
+			profile.MaxClutsCountPerTexture = 0;
+			profile.Textures = nullptr;
 			return false;
 #endif
 		}
