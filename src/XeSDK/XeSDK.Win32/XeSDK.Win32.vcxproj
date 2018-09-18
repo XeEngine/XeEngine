@@ -161,7 +161,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -179,7 +179,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -199,7 +199,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -221,7 +221,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -243,7 +243,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -265,7 +265,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

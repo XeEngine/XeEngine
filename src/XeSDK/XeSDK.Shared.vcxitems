@@ -122,6 +122,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeError.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h" />
