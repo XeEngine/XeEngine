@@ -6,6 +6,7 @@
 #include <XeSDK/IDriversGamepadDriver.h>
 #include <XeSDK/ICollection.h>
 #include <XeSDK/IComparable.h>
+#include <XeSDK/IDelegate.h>
 #include <XeSDK/IFrameView.h>
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IDictionary.h>
@@ -26,6 +27,7 @@
 #include <XeSDK/XeCryptoCrc32.h>
 #include <XeSDK/XeCryptoCrc64.h>
 #include <XeSDK/XeDrivers.h>
+#include <XeSDK/XeEvent.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeGraphicsImaging.h>
 #include <XeSDK/XeGraphicsImagingPng.h>
