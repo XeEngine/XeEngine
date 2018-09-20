@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.9.1] - 2018-09-??
+
+### Added in XeSDK
+- Xe::IDelegate and Xe::Event as oberver pattern implementation.
+- Added IApplicationHandler::OnDevice, triggered when gamepads or other devices are connected or disconnected.
+
+### Changed in XeSDK
+- IApplicationHandler now needs to implement OnDevice.
+- Dev builds are now optimized.
+
+### Added in XeGame
+- Added TimerComponent, which triggers an event based on the specified elapsed time.
+
+### Changed in XeGame
+- If a BGM with the same ID of the current playing one is pushed, a new music will be played.
+- Improved the performance of ISoundManager, recycling internally the IAudioBuffer.
+
+### Fixed in XeGame
+- Fixed a bug where ISoundManager::PushBgm sometimes was returning nullptr.
+- Fixed a bug where ISoundEntity::SetLoops was not setting the first loop correctly.
+
+
 ## [0.9.0] - 2018-09-18
 
 ### Added in XeSDK
