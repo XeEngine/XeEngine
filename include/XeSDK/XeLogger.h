@@ -45,12 +45,12 @@ constexpr const char* _LogGetFilenameWithoutPath(const char(&path)[length]) {
 #else
 #define LOGFA(expression) (expression)
 #define LOGA(expression) (expression)
-#define LOGF(fmt, ...) (((void)0)())
-#define LOGE(fmt, ...) (((void)0)())
-#define LOGW(fmt, ...) (((void)0)())
-#define LOGI(fmt, ...) (((void)0)())
-#define LOGD(fmt, ...) (((void)0)())
-#define LOGT(fmt, ...) (((void)0)())
+#define LOGF(fmt, ...) (NOOP())
+#define LOGE(fmt, ...) (NOOP())
+#define LOGW(fmt, ...) (NOOP())
+#define LOGI(fmt, ...) (NOOP())
+#define LOGD(fmt, ...) (NOOP())
+#define LOGT(fmt, ...) (NOOP())
 #endif
 
 namespace Xe {

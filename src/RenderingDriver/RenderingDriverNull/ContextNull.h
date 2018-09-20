@@ -59,6 +59,7 @@ namespace Xe {
 			};
 			class CTilemap : public ITilemap {
 				IContext *m_pContext;
+				Size m_Size;
 
 				void SetTileset(const TilesetProperties& tileset);
 
