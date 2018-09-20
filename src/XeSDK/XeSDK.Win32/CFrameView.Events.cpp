@@ -4,6 +4,7 @@
 
 #include <Windows.h>
 #include <windowsx.h>
+#include <dbt.h>
 
 using namespace Xe;
 using namespace Xe::IO;
@@ -12,8 +13,23 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 {
 	switch (uMsg)
 	{
+	case WM_CREATE:
+	{
+		DEV_BROADCAST_DEVICEINTERFACE NotificationFilter = { 0 };
+		NotificationFilter.dbcc_size = sizeof(DEV_BROADCAST_DEVICEINTERFACE);
+		NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
+		NotificationFilter.dbcc_classguid =
+		//{ 0x25dbce51, 0x6c8f, 0x4a72, 0x8a, 0x6d, 0xb5, 0x4c, 0x2b, 0x4f, 0xc8, 0x35 }; // USB
+		{ 0x4D1E55B2, 0xF16F, 0x11CF, 0x88, 0xCB, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30 }; // HID
+
+		m_DevNotify = RegisterDeviceNotification(
+			m_hWnd, &NotificationFilter,
+			DEVICE_NOTIFY_WINDOW_HANDLE
+		);
+	} break;
 	case WM_NCDESTROY:
 		m_isClosed = true;
+		UnregisterDeviceNotification(m_DevNotify);
 		break;
 	case WM_SIZE:
 		switch (wParam) {
@@ -82,6 +98,9 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 		break;
 	case WM_MOUSEHWHEEL:
 		OnMouseWheel(wParam, lParam, true);
+		break;
+	case WM_DEVICECHANGE:
+		OnDeviceChange(wParam, lParam);
 		break;
 	case WM_TOUCH:
 		OnTouch(hWnd, wParam, lParam);
@@ -268,5 +287,23 @@ void CFrameView::OnMouseButton(WPARAM wParam, LPARAM lParam, bool isReleased)
 	{
 		m_pointerEvent.CurrentPointer.Action = IO::PointerAction_Pressed;
 		m_pPointerHandler->OnPointerPressed(m_pointerEvent);
+	}
+}
+
+void CFrameView::OnDeviceChange(WPARAM wParam, LPARAM lParam)
+{
+	Xe::Core::DeviceArgs args;
+	switch (wParam)
+	{
+	case DBT_DEVNODES_CHANGED:
+		// A device has been added to or removed from the system.
+		m_pApplicationHandler->OnDevice(args);
+		break;
+	case DBT_DEVICEARRIVAL:
+		// Check whether a CD or DVD was inserted into a drive.
+		break;
+	case DBT_DEVICEREMOVECOMPLETE:
+		// Check whether a CD or DVD was removed from a drive.
+		break;
 	}
 }

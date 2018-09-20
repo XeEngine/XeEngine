@@ -3,6 +3,7 @@
 #include "WinRtUtilities.h"
 #include "DefaultGamepadEventHandler.h"
 #include "XboxGamepad.h"
+#include "UwpFrameView.h"
 
 #include <wrl/event.h>
 #include <Windows.Foundation.h>
@@ -21,7 +22,8 @@ using namespace ABI::Windows::Xbox::Input;
 
 namespace Xe { namespace Drivers { namespace Input {
 
-	XboxInput::XboxInput()
+	XboxInput::XboxInput(UwpFrameView& uwpFrameView) :
+		m_UwpFrameView(uwpFrameView)
 	{
 		HR(CoInitializeEx(NULL, COINIT_MULTITHREADED));
 
@@ -39,6 +41,16 @@ namespace Xe { namespace Drivers { namespace Input {
 		m_ControllerStatics->remove_ControllerRemoved(tokenControllerRemoved);
 		m_GamepadEventHandler->Release();
 		CoUninitialize();
+	}
+
+	int XboxInput::GetPadsCount() const
+	{
+		ComPtr<IVectorView<ABI::Windows::Xbox::Input::IGamepad*>> pads;
+		HR(m_GamepadStatics->get_Gamepads(pads.GetAddressOf()));
+
+		unsigned int size;
+		pads->get_Size(&size);
+		return size;
 	}
 
 	const char * XboxInput::GetDriverName() const
@@ -119,6 +131,17 @@ namespace Xe { namespace Drivers { namespace Input {
 		UINT64 id;
 		HR(controller->get_Id(&id));
 
+		// Tremendous hacky way to wait until the controller is connected.
+		int prevPadsCount = GetPadsCount();
+		int triesCount = 0;
+		do
+		{
+			SleepEx(10, true);
+			triesCount++;
+		} while (GetPadsCount() == prevPadsCount);
+		LOGI("GetPadsCount called %i times.", triesCount);
+
+		m_UwpFrameView.NotifyDevice();
 		m_GamepadEventHandler->OnGamepadAttached((Xe::IO::GamepadEntry)id);
 
 		return S_OK;
@@ -133,6 +156,7 @@ namespace Xe { namespace Drivers { namespace Input {
 		HR(controller->get_Id(&id));
 
 		auto entry = (Xe::IO::GamepadEntry)id;
+		m_UwpFrameView.NotifyDevice();
 		m_GamepadEventHandler->OnGamepadDeattached(entry);
 
 		return S_OK;

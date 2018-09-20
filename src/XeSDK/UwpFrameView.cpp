@@ -16,6 +16,12 @@
 using namespace Xe;
 using namespace Xe::Core;
 
+#ifdef _DURANGO
+#include <XeSDK/XeDrivers.h>
+#include "../XeSDK/XeSDK.Durango/XeDriversInputXbox.h"
+Xe::Drivers::Input::XboxInput* g_pXboxInputDriver = nullptr;
+#endif
+
 UwpFrameView::UwpFrameView(IFrameHandler* pFrameHandler) :
 	m_Orientation(Orientation_Unknown),
 	m_Scale(1.0f),
@@ -26,10 +32,17 @@ UwpFrameView::UwpFrameView(IFrameHandler* pFrameHandler) :
 	m_pKeyboardHandler(new DummyKeyboardHandler),
 	m_pPointerHandler(new DummyPointerHandler)
 {
+#ifdef _DURANGO
+	g_pXboxInputDriver = new Xe::Drivers::Input::XboxInput(*this);
+	Xe::Drivers::RegisterDriver(g_pXboxInputDriver);
+#endif
 	m_pFrameHandler->AddRef();
 }
 UwpFrameView::~UwpFrameView()
 {
+#ifdef _DURANGO
+	delete g_pXboxInputDriver;
+#endif
 	m_pFrameHandler->Release();
 	m_pApplicationHandler->Release();
 	m_pKeyboardHandler->Release();
@@ -42,6 +55,12 @@ bool UwpFrameView::Initialize(const Xe::Core::FrameViewInitDesc& frameInitDesc)
 	m_IsFullscreen = frameInitDesc.IsFullscreen;
 
 	return true;
+}
+
+void UwpFrameView::NotifyDevice()
+{
+	Xe::Core::DeviceArgs args;
+	m_pApplicationHandler->OnDevice(args);
 }
 
 #pragma region IFrameView

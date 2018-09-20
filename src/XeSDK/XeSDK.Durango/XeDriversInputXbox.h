@@ -9,10 +9,12 @@ using namespace ABI::Windows::Foundation::Collections;
 typedef IEventHandler<ABI::Windows::Xbox::Input::ControllerAddedEventArgs*> ControllerAddedEvent;
 typedef IEventHandler<ABI::Windows::Xbox::Input::ControllerRemovedEventArgs*> ControllerRemovedEvent;
 
+class UwpFrameView;
 namespace Xe { namespace Drivers { namespace Input {
 	class XboxInput :
 		public IGamepadDriver
 	{
+		UwpFrameView& m_UwpFrameView;
 		ComPtr<IGamepadStatics> m_GamepadStatics;
 		ComPtr<IControllerStatics> m_ControllerStatics;
 		IGamepadEventHandler* m_GamepadEventHandler;
@@ -32,7 +34,9 @@ namespace Xe { namespace Drivers { namespace Input {
 		HRESULT OnControllerRemoved(IInspectable*, IControllerRemovedEventArgs* args);
 
 	public:
-		XboxInput();
+		XboxInput(UwpFrameView& uwpFrameView);
 		~XboxInput();
+
+		int GetPadsCount() const;
 	};
 } } }

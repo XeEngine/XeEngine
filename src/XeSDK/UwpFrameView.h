@@ -140,6 +140,7 @@ public:
 	~UwpFrameView();
 
 	bool Initialize(const Xe::Core::FrameViewInitDesc& desc);
+	void NotifyDevice();
 };
 
 #endif

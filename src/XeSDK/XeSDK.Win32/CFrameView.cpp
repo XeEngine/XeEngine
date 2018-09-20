@@ -383,12 +383,13 @@ LRESULT CALLBACK CFrameView::_WndProc(HWND hWnd, UINT uMsg,
 	WPARAM wParam, LPARAM lParam)
 {
 	CFrameView* pWindow = (CFrameView*)GetWindowLongPtr(hWnd, 0);
-	if (uMsg == WM_CREATE)
+	if (uMsg == WM_NCCREATE)
 	{
 		CREATESTRUCT* cs = (CREATESTRUCT*)lParam;
 		SetWindowLongPtr(hWnd, 0, (LONG_PTR)cs->lpCreateParams);
+		CFrameView* pWindow = (CFrameView*)cs->lpCreateParams;
 	}
-	if (pWindow != nullptr)
-		return pWindow->WndProc(hWnd, uMsg, wParam, lParam);
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+
+	return pWindow ? pWindow->WndProc(hWnd, uMsg, wParam, lParam) :
+		DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
