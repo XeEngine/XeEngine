@@ -64,6 +64,9 @@ namespace Xe { namespace Game {
 		void Pause(float speed, EaseFuncf ease);
 		void Stop(float speed, EaseFuncf ease);
 
+		u64 GetSamplesPosition() const;
+		void SetSamplesPosition(u64 position);
+
 		void SetLoops(const SoundLoop* loops, int loopsCount);
 		int GetLoopsCount() const;
 		int GetLoopIndex() const;
