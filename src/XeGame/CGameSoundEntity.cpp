@@ -131,6 +131,15 @@ namespace Xe { namespace Game {
 		}
 	}
 
+	u64 CSoundEntity::GetSamplesPosition() const
+	{
+		return m_Source.GetPosition();
+	}
+	void CSoundEntity::SetSamplesPosition(u64 position)
+	{
+		m_Source.SetPosition(position);
+	}
+
 	void CSoundEntity::SetLoops(const SoundLoop* loops, int loopsCount)
 	{
 		m_LoopIndex = 0;

@@ -49,6 +49,12 @@ namespace Xe { namespace Game {
 		virtual void Stop(float speed = 0.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
+		//! \brief Get the current position of the playing's sound entity.
+		u64 GetSamplesPosition() const;
+
+		//! \brief Set the next position of the playing's sound entity while playing.
+		void SetSamplesPosition(u64 position);
+
 		//! \brief Specify a group of loops.
 		//! \param[in] loops Array of loops. Ignored if loopsCount is 0.
 		//! \param[in] loopsCount Number of loops in the array.
