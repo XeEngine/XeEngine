@@ -140,6 +140,18 @@ namespace Xe { namespace Game {
 		{
 			m_Loops[i] = loops[i];
 		}
+
+		if (loopsCount > 0)
+		{
+			m_Source.SetLoopStart(m_Loops[0].Start);
+			m_Source.SetLoopEnd(m_Loops[0].End);
+		}
+		else
+		{
+			auto samplesCount = m_Source.GetSamplesCount();
+			m_Source.SetLoopStart(samplesCount);
+			m_Source.SetLoopEnd(samplesCount);
+		}
 	}
 
 	int CSoundEntity::GetLoopsCount() const

@@ -250,9 +250,12 @@ namespace Xe { namespace Game {
 
 						pBgm = m_Bgms[m_BgmCount++] = bgm;
 					}
+					else
+					{
+						pBgm = nullptr;
+					}
 
 					pBuffer->Release();
-					pBgm = nullptr;
 				}
 				else
 				{
