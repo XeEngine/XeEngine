@@ -60,9 +60,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundCallback.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundCallback.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundManager.cpp">

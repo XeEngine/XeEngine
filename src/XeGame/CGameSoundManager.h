@@ -7,11 +7,14 @@ namespace Xe { namespace Sound {
 } }
 
 namespace Xe { namespace Game {
-	interface CSoundBgmEntity;
-	interface CSoundSfxEntity;
+	class CSoundBgmEntity;
+	class CSoundSfxEntity;
 	class CSoundManager : public ISoundManager
 	{
+	public:
 		Xe::Sound::IAudio& m_Audio;
+
+	private:
 		const int m_MaxBgmCount;
 		const int m_MaxSfxCount;
 		int m_BgmCount;

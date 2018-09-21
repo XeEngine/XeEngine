@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundCallback.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp" />
@@ -47,7 +46,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundCallback.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.h" />

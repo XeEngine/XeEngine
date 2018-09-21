@@ -23,10 +23,14 @@ namespace Xe { namespace Game {
 
 		s64 m_CreationTime;
 		CSoundManager& m_SoundManager;
-		Xe::Sound::IAudioBuffer& m_Buffer;
-		Xe::Sound::IAudioSource& m_Source;
+		Xe::Sound::IAudioBuffer* m_Buffer;
+		Xe::Sound::IAudioSource* m_Source;
 		std::vector<SoundLoop> m_Loops;
 		EaseFuncf m_EaseFunc;
+
+		Xe::Sound::IAudioBufferCallback* m_Callback;
+		void* m_DataBuffer;
+		int m_BufferLength;
 
 		double m_Volume;
 		double m_SrcVolume;
@@ -43,12 +47,10 @@ namespace Xe { namespace Game {
 		void InternalPause();
 		void InternalStop();
 	public:
-		CSoundEntity(
-			CSoundManager& soundManager,
-			Xe::Sound::IAudioBuffer& buffer,
-			Xe::Sound::IAudioSource& source);
+		CSoundEntity(CSoundManager& soundManager);
 		~CSoundEntity();
 
+		bool SetAudioSource(Xe::Sound::IAudioSource& source);
 		s64 GetCreationTime() const;
 
 		void Update(double deltaTime);
@@ -72,7 +74,10 @@ namespace Xe { namespace Game {
 		int GetLoopIndex() const;
 		void SetNextLoopIndex();
 
-
 		void UpdateVolume();
+
+		// IAudioBufferCallback
+		void OnBufferRequred(Xe::Sound::IAudioBuffer *pBuffer, svar bytesRequired);
+		void OnBufferProcessed();
 	};
 } }

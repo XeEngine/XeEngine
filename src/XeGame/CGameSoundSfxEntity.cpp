@@ -6,10 +6,8 @@
 namespace Xe { namespace Game {
 	CSoundSfxEntity::CSoundSfxEntity(
 		CSoundManager& soundManager,
-		Xe::Sound::IAudioBuffer& buffer,
-		Xe::Sound::IAudioSource& source,
 		int priority) :
-		CSoundEntity(soundManager, buffer, source),
+		CSoundEntity(soundManager),
 		m_Priority(priority)
 	{
 
