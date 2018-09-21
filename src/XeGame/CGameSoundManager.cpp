@@ -410,16 +410,45 @@ namespace Xe { namespace Game {
 	{
 		ISoundSfxEntity* pSfx;
 
+		// Search for a free slot
 		int sfxSlot = -1;
 		for (int i = 0; i < m_MaxSfxCount; i++)
 		{
-			if (IsSfxSlotGarbage(i) || m_Sfxs[i]->GetPriority() < priority)
+			if (IsSfxSlotGarbage(i) || !m_Sfxs[i]->IsPlaying())
 			{
 				sfxSlot = i;
 				break;
 			}
 		}
 
+		// If no slots are available, then replace the SFX with the lowest priority
+		// or with the oldest sound effect.
+		if (sfxSlot < 0)
+		{
+			int lowestPriority = 0x7FFFFFFF;
+			u64 lowestTimestamp = 0xFFFFFFFFFFFFFFFFULL;
+			for (int i = 0; i < m_MaxSfxCount; i++)
+			{
+				int sfxPriority = m_Sfxs[i]->GetPriority();
+				u64 creationTime = m_Sfxs[i]->GetCreationTime();
+				if (lowestPriority >= sfxPriority)
+				{
+					if (lowestPriority > sfxPriority)
+					{
+						lowestPriority = sfxPriority;
+						lowestTimestamp = creationTime;
+						sfxPriority = i;
+					}
+					else if (lowestTimestamp > creationTime)
+					{
+						lowestTimestamp = creationTime;
+						sfxPriority = i;
+					}
+				}
+			}
+		}
+
+		// If an empty slot has been found.
 		if (sfxSlot >= 0)
 		{
 			Xe::Sound::IAudioBuffer* pBuffer;
