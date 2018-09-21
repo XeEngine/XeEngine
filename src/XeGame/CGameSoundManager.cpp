@@ -3,7 +3,6 @@
 #include "CGameSoundManager.h"
 #include "CGameSoundBgmEntity.h"
 #include "CGameSoundSfxEntity.h"
-#include "CGameSoundCallback.h"
 
 namespace Xe { namespace Game {
 	CSoundManager::CSoundManager(
@@ -200,26 +199,14 @@ namespace Xe { namespace Game {
 		Xe::Sound::IAudioSource& source,
 		float speed, EaseFuncf ease)
 	{
-		ISoundBgmEntity* pBgm;
+		CSoundBgmEntity* pBgm = nullptr;
 
 		if (m_BgmCount < m_MaxBgmCount)
 		{
-			// check if a music with the same id is already playing
+			// pause the executing music
 			if (m_BgmCount > 0)
 			{
-				if (m_Bgms[m_BgmCount - 1]->GetBgmId() == bgmId)
-				{
-					pBgm = m_Bgms[m_BgmCount] = m_Bgms[m_BgmCount - 1];
-					m_Bgms[m_BgmCount]->AddRef();
-
-					m_BgmCount++;
-					return pBgm; // Return instead of executing the giant IF-ELSE logic.
-				}
-				else
-				{
-					// If not, pause the current playing music.
-					m_Bgms[m_BgmCount - 1]->Pause(speed, ease);
-				}
+				m_Bgms[m_BgmCount - 1]->Pause(speed, ease);
 			}
 
 			// Check if the same Bgm ID was previously pushed, so we can recycle it
@@ -230,39 +217,28 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Xe::Sound::IAudioBuffer* pBuffer;
-				auto callback = new CSoundCallback(source);
-				if (m_Audio.CreateBuffer(&pBuffer, source.GetDesc()))
+				if (!m_Bgms[m_BgmCount])
 				{
-					pBuffer->SetCallback(*callback);
+					m_Bgms[m_BgmCount] = new CSoundBgmEntity(*this, bgmId);
+				}
 
-					auto bgm = new CSoundBgmEntity(bgmId, *this, *pBuffer, source);
-					if (bgm)
+				pBgm = m_Bgms[m_BgmCount];
+				if (pBgm->SetAudioSource(source))
+				{
+					pBgm->Play(speed, ease);
+					m_BgmCount++;
+
+					// Pause the music above.
+					if (m_Bgms[m_BgmCount])
 					{
-						bgm->Play(speed, ease);
-
-						// Kill the music above.
-						if (m_Bgms[m_BgmCount])
-						{
-							m_Bgms[m_BgmCount]->Pause(0.0f, Xe::Game::Ease::Linear);
-							m_Bgms[m_BgmCount]->Release();
-						}
-
-						pBgm = m_Bgms[m_BgmCount++] = bgm;
+						m_Bgms[m_BgmCount]->Pause(0.0f, Xe::Game::Ease::Linear);
 					}
-					else
-					{
-						pBgm = nullptr;
-					}
-
-					pBuffer->Release();
 				}
 				else
 				{
+					delete pBgm;
 					pBgm = nullptr;
 				}
-
-				callback->Release();
 			}
 		}
 		else
@@ -336,10 +312,10 @@ namespace Xe { namespace Game {
 		if (m_BgmCount < m_MaxBgmCount)
 		{
 			// Check if a previous BGM was playing.
-			if (m_Bgms[m_BgmCount])
+			if (m_Bgms[m_BgmCount - 1])
 			{
-				// If they has the same bgmId, try to recycle it.
-				if (m_Bgms[m_BgmCount]->GetBgmId() == bgmId)
+				// If they has the same bgmId then recycle it.
+				if (m_Bgms[m_BgmCount - 1]->GetBgmId() == bgmId)
 				{
 					auto prevBgm = m_Bgms[m_BgmCount - 1];
 					prevBgm->Stop(speed, ease);
@@ -352,51 +328,45 @@ namespace Xe { namespace Game {
 				}
 				else
 				{
-					// If not, just delete it.
-					m_Bgms[m_BgmCount]->Stop(0.0f, Ease::Linear);
-					m_Bgms[m_BgmCount]->Release();
-					m_Bgms[m_BgmCount] = nullptr;
+					// If not, just stop it.
+					auto prevBgm = m_Bgms[m_BgmCount - 1];
+					if (!m_Bgms[m_BgmCount])
+					{
+						m_Bgms[m_BgmCount] = new CSoundBgmEntity(*this, bgmId);
+					}
+
+					// Use the above slot to stop the music.
+					prevBgm->Stop(speed, ease);
+					m_Bgms[m_BgmCount]->SetAudioSource(source);
+					m_Bgms[m_BgmCount]->Play(speed, ease);
+					m_Bgms[m_BgmCount - 1] = m_Bgms[m_BgmCount];
+					m_Bgms[m_BgmCount] = prevBgm;
 				}
 			}
-
-			// Use the above slot to stop the music.
-			m_Bgms[m_BgmCount] = m_Bgms[m_BgmCount - 1];
-			m_Bgms[m_BgmCount - 1]->Stop(speed, ease);
 		}
 		else
 		{
 			// It is not possible to use an above slot. Immediately stop the music.
 			m_Bgms[m_BgmCount - 1]->Stop(0.0f, Ease::Linear);
-			m_Bgms[m_BgmCount - 1]->Release();
-			m_Bgms[m_BgmCount - 1] = nullptr;
 		}
 
-		CSoundBgmEntity* pBgm;
-
-		Xe::Sound::IAudioBuffer* pBuffer;
-		auto callback = new CSoundCallback(source);
-		if (m_Audio.CreateBuffer(&pBuffer, source.GetDesc()))
+		if (!m_Bgms[m_BgmCount - 1])
 		{
-			pBuffer->SetCallback(*callback);
+			m_Bgms[m_BgmCount - 1] = new CSoundBgmEntity(*this, bgmId);
+		}
 
-			auto bgm = new CSoundBgmEntity(bgmId, *this, *pBuffer, source);
-			if (bgm)
-			{
-				bgm->Play(speed, ease);
-				pBgm = m_Bgms[m_BgmCount - 1] = bgm;
-			}
-
-			pBuffer->Release();
-			pBgm = nullptr;
+		auto bgm = m_Bgms[m_BgmCount - 1];
+		if (bgm->SetAudioSource(source))
+		{
+			bgm->Play(speed, ease);
 		}
 		else
 		{
-			pBgm = nullptr;
+			delete bgm;
+			bgm = nullptr;
 		}
 
-		callback->Release();
-
-		return pBgm;
+		return bgm;
 	}
 
 	//! \brief Get the playing BGM.
@@ -408,8 +378,6 @@ namespace Xe { namespace Game {
 
 	ISoundSfxEntity* CSoundManager::PlaySfx(Xe::Sound::IAudioSource& source, int priority)
 	{
-		ISoundSfxEntity* pSfx;
-
 		// Search for a free slot
 		int sfxSlot = -1;
 		for (int i = 0; i < m_MaxSfxCount; i++)
@@ -448,37 +416,34 @@ namespace Xe { namespace Game {
 			}
 		}
 
+		CSoundSfxEntity* sfx;
+
 		// If an empty slot has been found.
 		if (sfxSlot >= 0)
 		{
-			Xe::Sound::IAudioBuffer* pBuffer;
-			auto callback = new CSoundCallback(source);
-			if (m_Audio.CreateBuffer(&pBuffer, source.GetDesc()))
+			if (!m_Sfxs[sfxSlot])
 			{
-				pBuffer->SetCallback(*callback);
+				m_Sfxs[sfxSlot] = new CSoundSfxEntity(*this, priority);
+			}
 
-				if (!!m_Sfxs[sfxSlot])
-				{
-					delete m_Sfxs[sfxSlot];
-				}
-
-				pSfx = m_Sfxs[sfxSlot] = new CSoundSfxEntity(*this, *pBuffer, source, priority);
-				pSfx->Play();
-				pBuffer->Release();
+			sfx = m_Sfxs[sfxSlot];
+			if (sfx->SetAudioSource(source))
+			{
+				m_Sfxs[sfxSlot] = sfx;
+				sfx->Play(0.0f, Xe::Game::Ease::One);
 			}
 			else
 			{
-				pSfx = nullptr;
+				delete sfx;
+				sfx = nullptr;
 			}
-
-			callback->Release();
 		}
 		else
 		{
-			pSfx = nullptr;
+			sfx = nullptr;
 		}
 
-		return pSfx;
+		return sfx;
 	}
 	
 	void CSoundManager::StopAllSfxs(float speed, EaseFuncf ease)

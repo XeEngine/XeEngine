@@ -3,7 +3,9 @@
 #include "CGameSoundEntity.h"
 
 namespace Xe { namespace Game {
-	class CSoundSfxEntity : public CSoundEntity, public ISoundSfxEntity
+	class CSoundSfxEntity :
+		public virtual CSoundEntity,
+		public virtual ISoundSfxEntity
 	{
 		int m_Priority;
 
@@ -11,8 +13,6 @@ namespace Xe { namespace Game {
 	public:
 		CSoundSfxEntity(
 			CSoundManager& soundManager,
-			Xe::Sound::IAudioBuffer& buffer,
-			Xe::Sound::IAudioSource& source,
 			int priority);
 
 		int GetPriority() const;

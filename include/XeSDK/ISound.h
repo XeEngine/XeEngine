@@ -51,9 +51,22 @@ namespace Xe {
 			u32 SampleRate;
 			u16 SampleLength;
 			u16 NumberOfChannels;
+
+			bool operator==(const WaveDesc& desc) const
+			{
+				return WaveFormat == desc.WaveFormat &&
+					BitDepth == desc.BitDepth &&
+					SampleRate == desc.SampleRate &&
+					SampleLength == desc.SampleLength &&
+					NumberOfChannels == desc.NumberOfChannels;
+			}
+			bool operator!=(const WaveDesc& desc) const
+			{
+				return !(*this == desc);
+			}
 		};
 
-		class IAudioBuffer;
+		interface IAudioBuffer;
 		interface IAudioBufferCallback : public IObject
 		{
 			virtual ~IAudioBufferCallback() {};
@@ -63,7 +76,7 @@ namespace Xe {
 		};
 
 		//! \brief where to write audio data to send it to audio card
-		class IAudioBuffer : public IObject {
+		interface IAudioBuffer : public IObject {
 		public:
 
 			//! \brief specify wave format and callback function

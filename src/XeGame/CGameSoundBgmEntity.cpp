@@ -4,12 +4,8 @@
 #include "CGameSoundManager.h"
 
 namespace Xe { namespace Game {
-	CSoundBgmEntity::CSoundBgmEntity(
-		u64 bgmId,
-		CSoundManager& soundManager,
-		Xe::Sound::IAudioBuffer& buffer,
-		Xe::Sound::IAudioSource& source) :
-		CSoundEntity(soundManager, buffer, source),
+	CSoundBgmEntity::CSoundBgmEntity(CSoundManager& soundManager, u64 bgmId) :
+		CSoundEntity(soundManager),
 		m_BgmId(bgmId)
 	{
 
