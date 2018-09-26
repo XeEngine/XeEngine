@@ -39,6 +39,7 @@ namespace Xe { namespace Graphics {
 		m_pBackbufferRenderTargetView(nullptr),
 		m_pDepthStencilView(nullptr)
 	{
+		Memory::Fill(&m_State, 0, sizeof(m_State));
 		Memory::Fill(m_Surface, 0, sizeof(m_Surface));
 	}
 	CContextD3D11::~CContextD3D11() {
