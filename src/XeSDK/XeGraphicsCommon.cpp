@@ -65,8 +65,6 @@ namespace Xe {
                 case Usage_Static:
                     return false;
                 case Usage_Dynamic:
-                    if (type != Lock_Read)
-                        return false;
                     break;
                 case Usage_Full:
                     break;

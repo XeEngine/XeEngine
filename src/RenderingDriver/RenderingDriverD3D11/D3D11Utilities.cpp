@@ -25,6 +25,7 @@ namespace RenderingDriverD3D11
 
 	const D3D11_MAP LUT_MAPTYPE[]
 	{
+		(D3D11_MAP)0,
 		D3D11_MAP_READ, // Lock_Read
 		D3D11_MAP_WRITE_DISCARD, // Lock_Write
 		D3D11_MAP_READ_WRITE, // Lock_ReadWrite
