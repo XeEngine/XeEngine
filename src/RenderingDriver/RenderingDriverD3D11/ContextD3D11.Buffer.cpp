@@ -63,6 +63,8 @@ namespace Xe { namespace Graphics {
 
 	void CContextD3D11::SetVertexBuffer(IBuffer *pBuffer)
 	{
+		if (m_State.VertexBuffer == pBuffer) return;
+
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0U;
 		if (pBuffer != nullptr)
@@ -92,6 +94,8 @@ namespace Xe { namespace Graphics {
 
 	void CContextD3D11::SetIndexBuffer(IBuffer *pBuffer)
 	{
+		if (m_State.IndexBuffer == pBuffer) return;
+
 		if (pBuffer != nullptr)
 		{
 			ID3D11Buffer* d3d11Buffer = ((CBuffer*)pBuffer)->GetBuffer();

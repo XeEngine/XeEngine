@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ContextD3D11.h"
+#include "D3D11Buffer.h"
 #include <XeSDK/XeMemory.h>
 
 //#include "ShaderD3D11_VSDefault.h"
@@ -65,21 +66,15 @@ namespace Xe {
 				return;
 			}
 
-			// VERTICES BUFFER INITIALIZATION
-			D3D11_BUFFER_DESC desc;
-			desc.ByteWidth = (UINT)(MaximumQuadsCount * 4 * sizeof(Vertex));
-			desc.Usage = D3D11_USAGE_DYNAMIC;
-			desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-			desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-			desc.MiscFlags = 0;
-			desc.StructureByteStride = 0;
+			BufferDesc vertexBufferDesc;
+			vertexBufferDesc.Usage = Usage_Dynamic;
+			vertexBufferDesc.Length = MaximumQuadsCount * 4 * sizeof(Vertex);
+			vertexBufferDesc.Type = BufferType_Vertex;
 
-			Memory::Fill(m_pVertex, 0, desc.ByteWidth);
-			hr = context->p_d3dDevice->CreateBuffer(&desc, nullptr, &m_pVertexBuffer);
-			if (FAILED(hr))
+			Memory::Fill(m_pVertex, 0, vertexBufferDesc.Length);
+			if (!m_context->CreateBuffer(&m_pVertexBuffer, vertexBufferDesc, nullptr))
 			{
-				LOGE("Unable to create vertex buffer (%08X).", hr);
-				return;
+				LOGE("Unable to create default vertex buffer.");
 			}
 
 			// INDICES BUFFER INITIALIZATION
@@ -131,23 +126,25 @@ namespace Xe {
 				UINT stride = sizeof(Vertex), offsets = 0;
 
 				// Upload new vertex buffer's content
-				D3D11_MAPPED_SUBRESOURCE map;
-				HRESULT hr = m_context->m_d3dContext->Map(m_pVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &map);
-				if (SUCCEEDED(hr)) {
-					Memory::Copy(map.pData, m_pVertex, sizeof(Vertex) * m_curQuadsCount * 4);
-					m_context->m_d3dContext->Unmap(m_pVertexBuffer, 0);
+				DataDesc desc;
+				if (m_pVertexBuffer->Lock(desc, Lock_Write))
+				{
+					Memory::Copy((void*)desc.data, m_pVertex, sizeof(Vertex) * m_curQuadsCount * 4);
+					m_pVertexBuffer->Unlock();
 
 					m_context->m_d3dContext->VSSetShader(m_pVertexShader, nullptr, 0);
 					m_context->m_d3dContext->PSSetShader(m_pPixelShader, nullptr, 0);
 					m_context->m_d3dContext->PSSetSamplers(0, 1, &m_pSamplerState);
 					m_context->m_d3dContext->PSSetSamplers(1, 1, &m_pSamplerState);
-					m_context->m_d3dContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offsets);
-					m_context->SelectBuffer(m_pIndexBuffer);
+					m_context->SetVertexBuffer(m_pVertexBuffer);
+					m_context->SetIndexBuffer(m_pIndexBuffer);
 					m_context->m_d3dContext->IASetInputLayout(m_pInputLayout);
 					m_context->DrawIndexed(Primitive_TriangleList, m_curQuadsCount * 6, start);
 				}
 				else
+				{
 					LOGE("Unable to upload new buffer's content.");
+				}
 			}
 			m_curQuadsCount = 0;
 		}

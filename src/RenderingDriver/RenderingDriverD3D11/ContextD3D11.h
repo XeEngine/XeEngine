@@ -43,7 +43,7 @@ namespace Xe { namespace Graphics {
 			ID3D11VertexShader* m_pVertexShader;
 			ID3D11PixelShader* m_pPixelShader;
 			ID3D11SamplerState* m_pSamplerState;
-			ID3D11Buffer* m_pVertexBuffer;
+			IBuffer* m_pVertexBuffer;
 			IBuffer* m_pIndexBuffer;
 			Vertex* m_pVertex;
 			uvar m_curQuadsCount;
