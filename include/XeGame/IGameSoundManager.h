@@ -74,7 +74,7 @@ namespace Xe { namespace Game {
 		virtual ISoundBgmEntity* PushBgm(
 			u64 bgmId,
 			Xe::Sound::IAudioSource& source,
-			float speed = 1.0f,
+			float seconds = 1.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
 		//! \brief Pop from the BGM's stack the executing music.
@@ -91,7 +91,7 @@ namespace Xe { namespace Game {
 		 */
 		virtual ISoundBgmEntity* PopBgm(
 			bool pause = false,
-			float speed = 1.0f,
+			float seconds = 1.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 		virtual ISoundSfxEntity* PlaySfx(Xe::Sound::IAudioSource& source, int priority) = 0;
 
@@ -107,14 +107,14 @@ namespace Xe { namespace Game {
 		virtual ISoundBgmEntity* PlayBgm(
 			u64 bgmId,
 			Xe::Sound::IAudioSource& source,
-			float speed = 1.0f,
+			float seconds = 1.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
 		//! \brief Get the playing BGM.
 		//! \return The current BGM above the stack. Can be nullptr.
 		virtual ISoundBgmEntity* PeekBgm() const = 0;
 
-		virtual void StopAllSfxs(float speed = 0.0f, EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
+		virtual void StopAllSfxs(float seconds = 0.0f, EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
 		//virtual const Xe::Math::Vector3f& GetListenerPosition() const = 0;
 		//virtual void SetListenerPosition(const Xe::Math::Vector3f& position) = 0;

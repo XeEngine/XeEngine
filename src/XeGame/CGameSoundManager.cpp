@@ -132,7 +132,10 @@ namespace Xe { namespace Game {
 		std::vector<ISoundBgmEntity*> list(m_BgmCount);
 		for (int i = 0; i < m_BgmCount; i++)
 		{
-			list.push_back(m_Bgms[i]);
+			if (m_Bgms[i])
+			{
+				list.push_back(m_Bgms[i]);
+			}
 		}
 
 		return list;
