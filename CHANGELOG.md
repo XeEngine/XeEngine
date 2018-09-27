@@ -1,6 +1,29 @@
 # Changelog
 
-## [0.9.1] - 2018-09-??
+## [0.9.2] - 2018-10-27
+
+### Added in XeSDK
+- IContext::GetVertexBuffer and IContext::SetVertexBuffer.
+- IContext::GetIndexBuffer and IContext::SetIndexBuffer.
+- Now it is possible to create an Indexed Buffer of 32-bit per element.
+- Added IContext::GetCapabilities.
+
+### Changed in XeSDK
+- IContext::SetBuffer is not obsolete. Please use Set*Buffer instead.
+
+### Fixed in XeSDK
+- IBuffer can be now properly locked.
+
+### Added in XeGame
+- Implemented ISoundEntity::GetSamplesCount.
+
+### Changed in XeGame
+- ISoundManager and ISoundEntity now adjust time using seconds instead of speed.
+
+### Fixed in XeSDK
+- Fixed a bug where a ISoundEntity would not stop if paused.
+
+## [0.9.1] - 2018-09-22
 
 ### Added in XeSDK
 - Xe::IDelegate and Xe::Event as oberver pattern implementation.
