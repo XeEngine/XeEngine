@@ -56,16 +56,17 @@ namespace Xe { namespace Game {
 		void Update(double deltaTime);
 
 		float GetVolume() const;
-		void SetVolume(float volume, float speed, EaseFuncf ease);
+		void SetVolume(float volume, float seconds, EaseFuncf ease);
 
 		const Xe::Math::Vector3f& GetPosition() const;
 		void SetPosition(const Xe::Math::Vector3f& position);
 
 		bool IsPlaying() const;
-		void Play(float speed, EaseFuncf ease);
-		void Pause(float speed, EaseFuncf ease);
-		void Stop(float speed, EaseFuncf ease);
+		void Play(float seconds, EaseFuncf ease);
+		void Pause(float seconds, EaseFuncf ease);
+		void Stop(float seconds, EaseFuncf ease);
 
+		u64 GetSamplesCount() const;
 		u64 GetSamplesPosition() const;
 		void SetSamplesPosition(u64 position);
 

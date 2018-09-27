@@ -133,11 +133,11 @@ namespace Xe { namespace Game {
 		return (float)m_Volume;
 	}
 
-	void CSoundEntity::SetVolume(float volume, float speed, EaseFuncf ease)
+	void CSoundEntity::SetVolume(float volume, float seconds, EaseFuncf ease)
 	{
 		m_SrcVolume = m_Volume;
 		m_DstVolume = volume;
-		m_Speed = speed;
+		m_Speed = 1.0 / seconds;
 		m_Timer = 0.0;
 		m_EaseFunc = ease;
 	}
@@ -158,23 +158,23 @@ namespace Xe { namespace Game {
 		return m_Buffer->IsPlaying();
 	}
 
-	void CSoundEntity::Play(float speed, EaseFuncf ease)
+	void CSoundEntity::Play(float seconds, EaseFuncf ease)
 	{
 		InternalPlay();
-		if (speed > 0.0f)
+		if (seconds > 0.0f)
 		{
-			SetVolume(1.0f, speed, ease);
+			SetVolume(1.0f, seconds, ease);
 		}
 
 		m_NextState = State_Play;
 	}
 
-	void CSoundEntity::Pause(float speed, EaseFuncf ease)
+	void CSoundEntity::Pause(float seconds, EaseFuncf ease)
 	{
-		if (speed > 0.0f)
+		if (seconds > 0.0f)
 		{
 			m_NextState = State_Pause;
-			SetVolume(0.0f, speed, ease);
+			SetVolume(0.0f, seconds, ease);
 		}
 		else
 		{
@@ -182,17 +182,23 @@ namespace Xe { namespace Game {
 		}
 	}
 
-	void CSoundEntity::Stop(float speed, EaseFuncf ease)
+	void CSoundEntity::Stop(float seconds, EaseFuncf ease)
 	{
-		if (speed > 0.0f)
+		if (IsPlaying() && seconds > 0.0f)
 		{
 			m_NextState = State_Stop;
-			SetVolume(0.0f, speed, ease);
+			SetVolume(0.0f, seconds, ease);
 		}
 		else
 		{
 			InternalStop();
 		}
+	}
+
+	u64 CSoundEntity::GetSamplesCount() const
+	{
+		LOGFA(m_Source);
+		return m_Source->GetSamplesCount();
 	}
 
 	u64 CSoundEntity::GetSamplesPosition() const

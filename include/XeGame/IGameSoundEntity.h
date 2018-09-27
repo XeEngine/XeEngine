@@ -26,7 +26,7 @@ namespace Xe { namespace Game {
 		 * and the volume parameter.
 		 */
 		virtual void SetVolume(float volume,
-			float speed = 1.0f,
+			float seconds = 1.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
 		virtual const Xe::Math::Vector3f& GetPosition() const = 0;
@@ -37,23 +37,25 @@ namespace Xe { namespace Game {
 
 		//! \brief Play the current sound.
 		//! \details If it is already playing, then do nothing.
-		virtual void Play(float speed = 0.0f,
+		virtual void Play(float seconds = 0.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
 		//! \brief Pause the current playing sound.
 		//! \details If it is paused, then do nothing.
-		virtual void Pause(float speed = 0.0f,
+		virtual void Pause(float seconds = 0.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
 		//! \brief Pause the current playing sound and go to the beginning.
-		virtual void Stop(float speed = 0.0f,
+		virtual void Stop(float seconds = 0.0f,
 			EaseFuncf ease = Xe::Game::Ease::Linear) = 0;
 
+		virtual u64 GetSamplesCount() const = 0;
+
 		//! \brief Get the current position of the playing's sound entity.
-		u64 GetSamplesPosition() const;
+		virtual u64 GetSamplesPosition() const = 0;
 
 		//! \brief Set the next position of the playing's sound entity while playing.
-		void SetSamplesPosition(u64 position);
+		virtual void SetSamplesPosition(u64 position) = 0;
 
 		//! \brief Specify a group of loops.
 		//! \param[in] loops Array of loops. Ignored if loopsCount is 0.
