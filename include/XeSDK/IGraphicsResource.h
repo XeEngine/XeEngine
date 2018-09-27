@@ -49,7 +49,7 @@ namespace Xe {
 		protected:
 			IContext* m_pContext;
 			UsageType m_Usage;
-			svar m_length;
+			size_t m_Length;
 
 			virtual bool SubLock(DataDesc& map, LockType type) = 0;
 			virtual void SubUnlock() = 0;

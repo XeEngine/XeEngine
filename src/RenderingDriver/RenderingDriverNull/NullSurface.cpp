@@ -1,35 +1,38 @@
 #include "pch.h"
-#include <XeSDK/IGraphicsBuffer.h>
 #include <XeSDK/IGraphicsContext.h>
+#include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/XeMemory.h>
-#include "NullBuffer.h"
 
 using namespace Xe::Graphics;
+#include "NullSurface.h"
+#include "ContextNull.h"
 
 namespace RenderingDriverNull
 {
-	CBuffer::CBuffer(
-		Xe::Graphics::IContext* pContext,
-		Xe::Graphics::UsageType usage,
-		svar length,
-		Xe::Graphics::BufferType type) :
-		Base(pContext, usage, length, type),
+	CSurface::CSurface(
+		Xe::Graphics::IContext *context,
+		SurfaceType type,
+		const Size &size,
+		Color::Format format) :
+		ISurface(context, type, size, format),
 		m_Data(nullptr),
 		m_BackData(nullptr),
 		m_CopyBack(false)
 	{
-		m_Data = Xe::Memory::Alloc(length);
+		m_Length = size.x * size.y * Xe::Graphics::Color::GetBitsPerPixel(format) / 8;
+		m_Data = Xe::Memory::Alloc(m_Length);
 	}
-	
-	CBuffer::~CBuffer()
+
+	CSurface::~CSurface()
 	{
 		Xe::Memory::Free(m_Data);
 	}
 
-	bool CBuffer::SubLock(
-		Xe::Graphics::DataDesc& map,
-		Xe::Graphics::LockType type)
+	bool CSurface::SubLock(DataDesc & map, LockType type)
 	{
+		map.data = nullptr;
+		map.pitch = 0;
+
 		switch (type)
 		{
 		case Lock_Read:
@@ -47,11 +50,11 @@ namespace RenderingDriverNull
 			m_CopyBack = false;
 			break;
 		}
-
+		
 		return true;
 	}
 
-	void CBuffer::SubUnlock()
+	void CSurface::SubUnlock()
 	{
 		if (m_CopyBack)
 		{

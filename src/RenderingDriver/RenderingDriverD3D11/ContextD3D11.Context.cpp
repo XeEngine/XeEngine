@@ -120,7 +120,8 @@ namespace Xe { namespace Graphics {
 	void CContextD3D11::SetInternalResolution(const Size& size) {
 		if (m_pBackbufferTexture)
 		{
-			m_pBackbufferTexture->Release();
+			auto refs = m_pBackbufferTexture->Release();
+			if (refs > 0) LOGW("m_pBackbufferTexture has still %i refs", refs);
 			m_pBackbufferTexture = nullptr;
 		}
 
@@ -131,12 +132,14 @@ namespace Xe { namespace Graphics {
 		}
 
 		HRESULT hr = m_swapChain->ResizeBuffers(0, size.x, size.y, DXGI_FORMAT_UNKNOWN, 0);
-		if (FAILED(hr)) {
-			LOGF("Unable to resize the swapchain.");
-		}
-		else {
+		if (SUCCEEDED(hr))
+		{
 			CreateResourcesForSwapchain();
 			SetViewport(size);
+		}
+		else
+		{
+			LOGF("Unable to resize the swapchain (hr=%08X)", hr);
 		}
 	}
 
@@ -199,7 +202,8 @@ namespace Xe { namespace Graphics {
 
 	void CContextD3D11::SwapBuffers(VBlankSync sync) {
 		HRESULT hr = m_swapChain->Present(sync, 0);
-		if (m_d3dContext1) {
+		if (m_d3dContext1)
+		{
 			m_d3dContext1->DiscardView(m_pBackbufferRenderTargetView);
 			m_d3dContext1->DiscardView(m_pDepthStencilView);
 		}

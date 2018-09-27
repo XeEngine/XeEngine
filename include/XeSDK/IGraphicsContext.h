@@ -154,6 +154,9 @@ namespace Xe { namespace Graphics {
 			*/
 		virtual void SelectSurface(ISurface *surface, svar slot) = 0;
 
+		virtual void GetRenderingSurface(ISurface** ppSurface) = 0;
+		virtual void SetRenderingSurface(ISurface* surface) = 0;
+
 		virtual bool CreateDepthStencilState(IDepthStencilState **depthStencilState, const DepthStencilStateDesc& desc) = 0;
 		virtual void SelectDepthStencilState(IDepthStencilState *depthStencilState) = 0;
 

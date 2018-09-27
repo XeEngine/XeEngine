@@ -65,6 +65,7 @@ namespace Xe {
 			};
 			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 			void SelectSurface(ISurface *surface, svar index);
+			void SetRenderingSurface(ISurface* surface);
 
 			///////////////////////////////////////////////////////////////////
 			// Buffer management
