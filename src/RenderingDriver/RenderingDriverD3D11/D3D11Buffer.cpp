@@ -65,8 +65,8 @@ namespace RenderingDriverD3D11
 		if (FAILED(hr)) {
 			LOGW("Unable to lock the current buffer, trying to clone the resource (slower but it does work!).");
 
-			map.data = m_LockBuffer = Xe::Memory::Alloc(m_length);
-			map.pitch = m_length;
+			map.data = m_LockBuffer = Xe::Memory::Alloc(m_Length);
+			map.pitch = m_Length;
 			m_DirectMode = false;
 		}
 		else {
@@ -90,7 +90,7 @@ namespace RenderingDriverD3D11
 		{
 			BufferDesc bufferDesc;
 			bufferDesc.Usage = Usage_Standard;
-			bufferDesc.Length = m_length;
+			bufferDesc.Length = m_Length;
 			bufferDesc.Type = m_type;
 
 			DataDesc dataDesc;

@@ -78,10 +78,6 @@ namespace Xe { namespace Graphics {
 				return;
 			}
 		}
-		else
-		{
-			m_d3dContext->IASetVertexBuffers(0, 1, NULL, &stride, &offset);
-		}
 
 		if (m_State.VertexBuffer) m_State.VertexBuffer->Release();
 		m_State.VertexBuffer = pBuffer;
@@ -111,10 +107,6 @@ namespace Xe { namespace Graphics {
 				LOGE("Buffer type %i is not valid.", pBuffer->GetType());
 				return;
 			}
-		}
-		else
-		{
-			m_d3dContext->IASetIndexBuffer(NULL, DXGI_FORMAT_R16_UINT, 0);
 		}
 
 		if (m_State.IndexBuffer) m_State.IndexBuffer->Release();

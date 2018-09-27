@@ -15,7 +15,7 @@ namespace Xe {
                 m_Usage(usage)
         {
             m_pContext->AddRef();
-            m_length = 0;
+			m_Length = 0;
             m_isLocked = false;
         }
         IResource::~IResource()
@@ -31,7 +31,7 @@ namespace Xe {
         }
         svar IResource::GetLength() const
         {
-            return m_length;
+            return m_Length;
         }
         UsageType IResource::GetUsageType() const
         {
@@ -43,7 +43,23 @@ namespace Xe {
         }
         bool IResource::Lock(DataDesc& map, LockType type)
         {
-            switch (m_Usage) {
+			map.data = nullptr;
+			map.pitch = 0;
+
+			if (m_Usage == Usage_Static)
+			{
+				LOGE("Unable to lock a static resource");
+				return false;
+			}
+
+			if (m_isLocked)
+			{
+				LOGE("Resource has been previously locked.");
+				return false;
+			}
+
+            switch (m_Usage)
+			{
                 case Usage_Standard:
 					break;
                 case Usage_Static:
@@ -56,20 +72,16 @@ namespace Xe {
                     break;
             }
 
-            if (m_isLocked)
-            {
-                LOGW("Resource already locked.");
-                return false;
-            }
             return m_isLocked = SubLock(map, type);
         }
         void IResource::Unlock()
         {
             if (!m_isLocked)
             {
-                LOGW("Resource already unlocked.");
+				LOGE("Resource has not been previously locked.");
                 return;
             }
+
             SubUnlock();
             m_isLocked = false;
         }
@@ -78,7 +90,7 @@ namespace Xe {
                          BufferType type) : IResource(pContext, usage),
                                             m_type(type)
         {
-            m_length = length;
+			m_Length = length;
         }
         IBuffer::~IBuffer()
         {}

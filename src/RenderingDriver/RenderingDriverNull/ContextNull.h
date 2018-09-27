@@ -5,27 +5,19 @@
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
 #include <XeSDK/IGraphicsTilemap.h>
+#include "NullSurface.h"
+
+using namespace RenderingDriverNull;
 
 namespace Xe { namespace Graphics {
 	struct ContextState
 	{
 		Xe::Graphics::IBuffer* VertexBuffer;
 		Xe::Graphics::IBuffer* IndexBuffer;
+		Xe::Graphics::ISurface* RenderSurface;
 	};
 
 	class CContextNull : public IContext {
-		class CSurface : public ISurface {
-		public:
-			IContext *m_context;
-
-			CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format);
-			~CSurface();
-
-			// Inherited via ISurface
-			virtual bool SubLock(DataDesc& map, LockType type);
-			virtual void SubUnlock();
-		};
-
 		class CDepthStencilState : public IDepthStencilState {
 		public:
 			IContext *m_context;
@@ -116,6 +108,8 @@ namespace Xe { namespace Graphics {
 
 		bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
 		void SelectSurface(ISurface *surface, svar index);
+		void GetRenderingSurface(ISurface** ppSurface);
+		void SetRenderingSurface(ISurface* surface);
 
 		bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData);
 		void SelectBuffer(IBuffer *pBuffer);

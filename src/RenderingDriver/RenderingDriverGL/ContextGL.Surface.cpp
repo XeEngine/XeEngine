@@ -77,6 +77,11 @@ namespace Xe {
 			}
 		}
 
+		void CContextGLCommon::SetRenderingSurface(ISurface* surface)
+		{
+			ASSERT(!"CContextGLCommon::SetRenderingSurface not implemented.");
+		}
+
 		CContextGLCommon::CSurface::CSurface(IContext *context, GLuint id, SurfaceType type, const Size &size, Color::Format format) :
 			ISurface(context, type, size, format),
 			m_context(context),

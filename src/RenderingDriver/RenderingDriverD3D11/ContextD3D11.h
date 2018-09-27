@@ -14,35 +14,19 @@
 #include <XeSDK/IGraphicsBuffer.h>
 #include <XeSDK/IGraphicsTilemap.h>
 #include "XeGraphicsCommon.h"
+#include "D3D11Surface.h"
+
+using namespace RenderingDriverD3D11;
 
 namespace Xe { namespace Graphics {
 	struct ContextState
 	{
 		Xe::Graphics::IBuffer* VertexBuffer;
 		Xe::Graphics::IBuffer* IndexBuffer;
+		Xe::Graphics::ISurface* RenderSurface;
 	};
 
 	struct CContextD3D11 : public IContext {
-		class CSurface : public ISurface {
-		public:
-			ID3D11Resource *m_pResource;
-			ID3D11ShaderResourceView *m_pResourceView;
-			ID3D11RenderTargetView *m_pTargetView;
-
-			CSurface(IContext *context, SurfaceType type, const Size &size, Color::Format format,
-				ID3D11Resource *resource, ID3D11ShaderResourceView *resourceView, ID3D11RenderTargetView *targetView);
-			~CSurface();
-
-			// Inherited via ISurface
-			bool SubLock(DataDesc & map, LockType type);
-			void SubUnlock();
-
-		private:
-			void* m_LockBuffer;
-			bool m_IsLocked;
-			bool m_DirectMode;
-		};
-
 		class CDepthStencilState : public IDepthStencilState {
 		public:
 			IContext *m_context;
@@ -220,8 +204,10 @@ namespace Xe { namespace Graphics {
 		void Draw(Primitive primitive, u32 count, u32 start = 0);
 		void DrawIndexed(Primitive primitive, u32 count, u32 start = 0);
 
-			bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
-			void SelectSurface(ISurface *surface, svar index);
+		bool CreateSurface(ISurface **surface, SurfaceType type, const Size &size, Color::Format format, const DataDesc& dataDesc);
+		void SelectSurface(ISurface *surface, svar index);
+		void GetRenderingSurface(ISurface** ppSurface);
+		void SetRenderingSurface(ISurface* surface);
 
 		bool CreateDepthStencilState(IDepthStencilState **depthStencilState, const DepthStencilStateDesc& desc);
 		void SelectDepthStencilState(IDepthStencilState *depthStencilState);
