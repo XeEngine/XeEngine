@@ -1,5 +1,11 @@
 #include "pch.h"
+
+#ifdef _XBOX
+#include <d3d11_x.h>
+#else
 #include <d3d11.h>
+#endif
+
 #include <XeSDK/IGraphicsContext.h>
 
 using namespace Xe::Graphics;

@@ -2,7 +2,12 @@
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/XeMemory.h>
+
+#ifdef _XBOX
+#include <d3d11_x.h>
+#else
 #include <d3d11.h>
+#endif
 
 using namespace Xe::Graphics;
 #include "D3D11Surface.h"
