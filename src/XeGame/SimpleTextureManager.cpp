@@ -6,7 +6,6 @@
 #include <XeSDK/XeCryptoCrc64.h>
 
 namespace Xe { namespace Game {
-
 	struct SimpleTextureManager : ITextureManager
 	{
 		static const svar MaxTexturesCount = 256;
@@ -592,7 +591,7 @@ namespace Xe { namespace Game {
 			InvalidateClut();
 		}
 
-		bool GetProfile(TextureManagerProfile& profile, int maxEntriesCount)
+		bool GetProfile(TextureManagerProfile& profile)
 		{
 #ifdef DEVELOPMENT
 			profile.TexturesCount = m_TexturesCount;
@@ -602,22 +601,29 @@ namespace Xe { namespace Game {
 			profile.TexturesReferencesCount = 0;
 			profile.MaxClutsCountPerTexture = MaxSubClutsCount;
 
-			int entries = Math::Min(m_TexturesCount, maxEntriesCount);
-			for (int i = 0, j = 0; i < MaxTexturesCount && j < entries; i++)
+			for (int i = 0; i < MaxTexturesCount; i++)
 			{
 				Texture& tex = m_Texture[i];
 				if (tex.Hash != 0)
 				{
 					auto& size = tex.Surface->GetSize();
-					auto& e = profile.Textures[j];
+					TextureManagerProfileEntry e;
 					e.Name = tex.Name;
+					e.TexId = tex.Id;
 					e.Width = size.x;
 					e.Height = size.y;
 					e.ReferencesCount = tex.ReferencesCount;
-					e.ClutsCount = tex.ClutsCount;
+
+					for (int j = 0; j < MaxSubClutsCount; j++)
+					{
+						if (tex.Palette[j] != ClutInvalid)
+						{
+							e.Cluts.push_back(tex.Palette[j]);
+						}
+					}
 
 					profile.TexturesReferencesCount += tex.ReferencesCount;
-					j++;
+					profile.Textures.push_back(e);
 				}
 			}
 
@@ -629,7 +635,6 @@ namespace Xe { namespace Game {
 			profile.MaxClutsCount = 0;
 			profile.TexturesReferencesCount = 0;
 			profile.MaxClutsCountPerTexture = 0;
-			profile.Textures = nullptr;
 			return false;
 #endif
 		}

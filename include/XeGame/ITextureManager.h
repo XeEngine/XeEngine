@@ -23,9 +23,10 @@ namespace Xe { namespace Game {
 	struct TextureManagerProfileEntry
 	{
 		std::string Name;
+		TexId TexId;
 		int Width, Height;
 		int ReferencesCount;
-		int ClutsCount;
+		std::list<ClutId> Cluts;
 	};
 
 	struct TextureManagerProfile
@@ -36,7 +37,7 @@ namespace Xe { namespace Game {
 		int MaxClutsCount;
 		int TexturesReferencesCount;
 		int MaxClutsCountPerTexture;
-		TextureManagerProfileEntry *Textures;
+		std::list<TextureManagerProfileEntry> Textures;
 	};
 
 	interface ITextureManager
@@ -55,7 +56,7 @@ namespace Xe { namespace Game {
 		//! \brief Get the surface from a texture id.
 		virtual Xe::Graphics::ISurface* GetSurface(TexId texId) = 0;
 
-		//! \brief Get the surface from a texture id.
+		//! \brief Get the surface used as a color look-up table.
 		virtual Xe::Graphics::ISurface* GetClutSurface() = 0;
 
 		//! \brief Select the texture for the next draw.
@@ -123,6 +124,6 @@ namespace Xe { namespace Game {
 		//! \param[out] profile Profile to fill
 		//! \param[in] maxEntriesCount The maximum number of entries that the profile can hold.
 		//! \return true if the profile was available; usually returns false on RELEASE configurations.
-		virtual bool GetProfile(TextureManagerProfile& profile, int maxEntriesCount) = 0;
+		virtual bool GetProfile(TextureManagerProfile& profile) = 0;
 	};
 } }
