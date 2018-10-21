@@ -20,12 +20,11 @@ namespace Xe { namespace Graphics {
 			DRIVER_D3D11,
 			DRIVER_NULL,
 			DRIVER_D3D9,
-			DRIVER_D3D10,
 			DRIVER_D3D11,
 			DRIVER_OPENGL
 		};
 
-		ASSERT((unsigned int)renderEngine > lengthof(DriverNames));
+		ASSERT((unsigned int)renderEngine < lengthof(DriverNames));
 
 		return Create(context, DriverNames[renderEngine], properties);
 	}
