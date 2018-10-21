@@ -8,8 +8,8 @@ namespace Xe { namespace Core {
 		void OnFocusGot() { }
 		void OnFocusLost() { }
 		void OnVisibilityChanged(bool visibility) { }
-		void OnSizeChanged(const Graphics::Size& size) { }
-		void OnOrientationChanged(Graphics::Orientation orientation) { }
+		void OnSizeChanged(const Xe::Graphics::Size& size) { }
+		void OnOrientationChanged(Xe::Core::Orientation orientation) { }
 		void OnDpiChanged(float dpi) { }
 	};
 } }

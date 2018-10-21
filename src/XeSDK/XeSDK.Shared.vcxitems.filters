@@ -296,7 +296,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h">
       <Filter>Core\private</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h">
+      <Filter>Core\private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DummyApplicationHandler.h">
+      <Filter>Core\private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">

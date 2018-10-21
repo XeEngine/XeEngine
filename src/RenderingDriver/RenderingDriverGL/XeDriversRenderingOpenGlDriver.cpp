@@ -6,7 +6,7 @@
 
 #include "ContextGL.Win32.h"
 #define TYPECONTEXT Xe::Graphics::ContextGL_Win32
-#define CREATECONTEXT (new TYPECONTEXT(pView))
+#define CREATECONTEXT (new TYPECONTEXT)
 
 #else
 
@@ -25,7 +25,7 @@ namespace Xe { namespace Drivers { namespace Rendering {
 		return DriverType_Rendering;
 	}
 
-	bool OpenGlDriver::Factory(Xe::Graphics::IContext** pContext, Xe::Core::IView *pView, const Xe::Graphics::ContextInitDesc& properties)
+	bool OpenGlDriver::Factory(Xe::Graphics::IContext** pContext, const Xe::Graphics::ContextInitDesc& properties)
 	{
 		ASSERT(pContext != nullptr);
 		auto driver = CREATECONTEXT;

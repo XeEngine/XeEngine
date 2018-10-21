@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CFrameView.h"
+#include "DummyApplicationHandler.h"
 #include "DummyFrameHandler.h"
 #include "DummyKeyboardHandler.h"
 #include "DummyPointerHandler.h"
@@ -144,6 +145,20 @@ bool CFrameView::Initialize(const Xe::Core::FrameViewInitDesc& properties)
 	m_isClosed = false;
 	m_isWindowMinimized = false;
 	return true;
+}
+
+void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler)
+{
+	m_pApplicationHandler->Release();
+	m_pApplicationHandler = pApplicationHandler;
+	if (m_pApplicationHandler != nullptr)
+	{
+		m_pApplicationHandler->AddRef();
+	}
+	else
+	{
+		m_pApplicationHandler = new DummyApplicationHandler;
+	}
 }
 
 void CFrameView::SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler)
