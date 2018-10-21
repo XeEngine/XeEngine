@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(PLATFORM_WIN32) || defined(PLATFORM_WINAPP) || defined(PLATFORM_WINPHONE) || defined(PLATFORM_WINUNIVERSAL)
+#if defined(PLATFORM_WIN32) || defined(PLATFORM_UWP)
 #define AUDIO_XAUDIO2
 #endif
 

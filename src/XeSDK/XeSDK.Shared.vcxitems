@@ -163,7 +163,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStringFormatted.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeThread_Windows.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp" />
   </ItemGroup>

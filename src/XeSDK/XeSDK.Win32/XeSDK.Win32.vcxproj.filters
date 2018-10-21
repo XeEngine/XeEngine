@@ -13,10 +13,16 @@
     <ClCompile Include="XeCoreMain_Win32.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="XeIODevices_Win32.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
       <UniqueIdentifier>{9fdad279-0b7f-4906-94f1-064533036f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{b968f1e2-c1b2-4ed5-bba5-a4e0fe4a4f6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

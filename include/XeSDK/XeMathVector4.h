@@ -1,5 +1,7 @@
 #pragma once
 #include <XeSDK/XeMath.h>
+#include <XeSDK/XeMathVector2.h>
+#include <XeSDK/XeMathVector3.h>
 #include <XeSDK/XeMathMatrix.h>
 
 namespace Xe {

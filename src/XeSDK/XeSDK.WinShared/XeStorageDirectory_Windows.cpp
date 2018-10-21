@@ -9,7 +9,7 @@ namespace Xe {
 	namespace Storage {
 		class CDirectory : public IDirectory {
 			HANDLE m_handle;
-			WIN32_FIND_DATA m_findData;
+			WIN32_FIND_DATAA m_findData;
 			tstring m_path;
 
 			ctstring m_name;
@@ -28,7 +28,7 @@ namespace Xe {
 				return false;
 			}
 		public:
-			CDirectory(HANDLE h, WIN32_FIND_DATA &findData, ctstring path) :
+			CDirectory(HANDLE h, WIN32_FIND_DATAA &findData, ctstring path) :
 				m_handle(h), m_findData(findData) {
 				svar len = Xe::String::GetLength(path);
 				m_path = new tchar[len + 1];
@@ -43,7 +43,7 @@ namespace Xe {
 				return m_path;
 			}
 			bool Next() {
-				if (FindNextFile(m_handle, &m_findData) != 0) {
+				if (FindNextFileA(m_handle, &m_findData) != 0) {
 					m_name = m_findData.cFileName;
 					m_isDir = (m_findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
 					m_length = ((s64)m_findData.nFileSizeHigh * ((s64)MAXDWORD + 1)) + (s64)m_findData.nFileSizeLow;
@@ -70,7 +70,7 @@ namespace Xe {
 }
 
 bool Xe::Storage::Directory::Create(ctstring path) {
-	if (CreateDirectory(path, nullptr) != 0)
+	if (CreateDirectoryA(path, nullptr) != 0)
 		return Error::OK;
 	switch (GetLastError()) {
 	case ERROR_ALREADY_EXISTS:
@@ -82,14 +82,14 @@ bool Xe::Storage::Directory::Create(ctstring path) {
 }
 bool Xe::Storage::Directory::Exists(ctstring path) {
 	WIN32_FILE_ATTRIBUTE_DATA attributeData;
-	if (GetFileAttributesEx(path, GetFileExInfoStandard, &attributeData))
+	if (GetFileAttributesExA(path, GetFileExInfoStandard, &attributeData))
 		return (attributeData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
 	return false;
 }
 Xe::RESULT Xe::Storage::Directory::Delete(ctstring path) {
 	if (!Exists(path))
 		return Error::IO_NOT_FOUND;
-	if (RemoveDirectory(path) != 0)
+	if (RemoveDirectoryA(path) != 0)
 		return Error::OK;
 	switch (GetLastError()) {
 	case ERROR_FILE_NOT_FOUND:
@@ -169,8 +169,8 @@ Xe::RESULT Xe::Storage::Directory::Open(IDirectory **directory, ctstring path) {
 	}
 
 	RESULT r;
-	WIN32_FIND_DATA findData;
-	HANDLE h = FindFirstFileEx(strFilter, (FINDEX_INFO_LEVELS)1/*FindExInfoBasic*/, &findData, FindExSearchNameMatch, nullptr, 0);
+	WIN32_FIND_DATAA findData;
+	HANDLE h = FindFirstFileExA(strFilter, (FINDEX_INFO_LEVELS)1/*FindExInfoBasic*/, &findData, FindExSearchNameMatch, nullptr, 0);
 	if (h != INVALID_HANDLE_VALUE) {
 		*directory = new CDirectory(h, findData, path);
 		r = Error::OK;
