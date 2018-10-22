@@ -8,6 +8,13 @@ namespace Xe { namespace Drivers { namespace Input {
 		InputDeviceType_Gamepad
 	};
 
+	interface IGamepadEventHandler : public IObject
+	{
+		virtual void OnGamepadAttached(const Xe::IO::GamepadEntry& entry) = 0;
+
+		virtual void OnGamepadDeattached(const Xe::IO::GamepadEntry& entry) = 0;
+	};
+
 	//! \brief Contract for Input Drivers
 	interface IInputDriver : public IDriver
 	{
@@ -35,5 +42,8 @@ namespace Xe { namespace Drivers { namespace Input {
 			Xe::IO::GamepadEntry* pEntries,
 			size_t index,
 			size_t count) = 0;
+
+		//virtual void SetGamepadEventHandler(
+		//	IGamepadEventHandler* pGamepadEventHandler) = 0;
 	};
 } } }
