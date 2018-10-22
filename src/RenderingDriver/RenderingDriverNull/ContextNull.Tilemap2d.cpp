@@ -15,8 +15,8 @@ namespace Xe {
 		}
 
 		void CContextNull::CTilemap::SetTileset(const TilesetProperties& tileset) {}
-		const Size& CContextNull::CTilemap::GetMapSize() const { return Size(); }
-		void CContextNull::CTilemap::SetMapSize(const Size& size) {}
+		const Size& CContextNull::CTilemap::GetMapSize() const { return m_Size; }
+		void CContextNull::CTilemap::SetMapSize(const Size& size) { m_Size = size; }
 		void CContextNull::CTilemap::Lock(TilemapData& data) {
 			data.Tilemap = nullptr;
 			data.Stride = 0;

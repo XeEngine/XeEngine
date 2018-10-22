@@ -47,6 +47,7 @@ typedef unsigned int		uvar;
 #define _CRT_SECURE_NO_WARNINGS_GLOBALS
 //
 #define INLINE __forceinline
+#define NOOP __noop
 
 #if _MSC_VER < 1500
 // Previous MSC compilers does not support C++11's nullptr
