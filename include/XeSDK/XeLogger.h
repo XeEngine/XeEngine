@@ -4,35 +4,37 @@
 
 #pragma once
 #include <XeSDK/XeDef.h>
+#include <XeSDK/ILogHandler.h>
 #include <stdarg.h>
 
+#if defined(_DEBUG) || defined(DEVELOPMENT)
+#define LOGF(fmt, ...) Xe::Logger::FatalEx(__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGE(fmt, ...) Xe::Logger::ErrorEx(__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGW(fmt, ...) Xe::Logger::WarningEx(__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGI(fmt, ...) Xe::Logger::InfoEx(__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGD(fmt, ...) Xe::Logger::DebugEx(__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGT(fmt, ...) Xe::Logger::TraceEx(__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#else
+#define LOGF(fmt, ...) (((void)0)())
+#define LOGE(fmt, ...) (((void)0)())
+#define LOGW(fmt, ...) (((void)0)())
+#define LOGI(fmt, ...) (((void)0)())
+#define LOGD(fmt, ...) (((void)0)())
+#define LOGT(fmt, ...) (((void)0)())
+#endif
+
 namespace Xe {
+	interface ILogHandler;
     class Logger {
     public:
         static Logger Instance;
-
-        enum LogLevel {
-            LogLevel_Critical,
-            LogLevel_Error,
-            LogLevel_Warning,
-            LogLevel_Info,
-			LogLevel_Debug,
-			LogLevel_Trace,
-        };
-        enum HeaderInfo {
-            //! Print the log level
-            HeaderInfo_Level,
-            //! Print the timestamp since the application is running in hh:mm:ss.zzz
-            HeaderInfo_Timealive
-        };
 
         Logger();
         virtual ~Logger();
 
         LogLevel GetLogLevel() const;
         void SetLogLevel(LogLevel logLevel);
-        bool IsHeaderInfoEnabled(HeaderInfo headerInfo) const;
-        void SetHeaderInfoEnabled(HeaderInfo headerInfo, bool isEnabled);
+		void SetLogHandler(ILogHandler& logHandler);
 
         void Log(int level, ctstring str, ...);
 
@@ -45,15 +47,20 @@ namespace Xe {
         static void Debug(ctstring str, ...);
 		static void Trace(ctstring str, ...);
 
-    private:
-        static const ctstring STRLOGLEVEL[];
-        static const ctstring STRLOGLEVEL_SHORT[];
+		static void FatalEx(ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void ErrorEx(ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void WarningEx(ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void InfoEx(ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void DebugEx(ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void TraceEx(ctstring fileName, int line, ctstring function, ctstring str, ...);
 
+    private:
         LogLevel m_LogLevel;
-        int m_HeaderInfo;
+		ILogHandler* m_pLogHandler;
 
     protected:
-        void LogArgs(int level, ctstring str, va_list args);
-        virtual void LowLevelLog(LogLevel level, ctstring str);
+		void LogArgs(int level, ctstring str, va_list args);
+		void LogArgs(int level, ctstring fileName, int line, ctstring function, ctstring str, va_list args);
+        virtual void LowLevelLog(LogLevel level, double timer, ctstring fileName, int line, ctstring function, ctstring str);
     };
 }

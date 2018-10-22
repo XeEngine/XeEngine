@@ -33,25 +33,25 @@ namespace Xe { namespace Debug {
 		msg[n + 1] = '\0';
 		va_end(args);
 
-		Logger::LogLevel level;
+		LogLevel level;
 		switch (priority) {
 		case Priority_Diagnostics:
-			level = Logger::LogLevel_Debug;
+			level = LogLevel_Debug;
 			break;
 		case Priority_Info:
-			level = Logger::LogLevel_Info;
+			level = LogLevel_Info;
 			break;
 		case Priority_Warning:
-			level = Logger::LogLevel_Warning;
+			level = LogLevel_Warning;
 			break;
 		case Priority_Error:
-			level = Logger::LogLevel_Error;
+			level = LogLevel_Error;
 			break;
 		case Priority_Critical:
-			level = Logger::LogLevel_Critical;
+			level = LogLevel_Critical;
 			break;
 		case Priority_Assertion:
-			level = Logger::LogLevel_Critical;
+			level = LogLevel_Critical;
 			break;
 		}
 		Logger::Instance.Log(level, msg);
