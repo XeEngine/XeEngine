@@ -125,32 +125,32 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>libXeSDK</TargetName>
-    <OutDir>$(SolutionDir)lib\win32\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(XESDK_DIR)lib\win32\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(TargetName)\win32\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>libXeSDK</TargetName>
-    <OutDir>$(SolutionDir)lib\win32\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(XESDK_DIR)lib\win32\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(TargetName)\win32\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|Win32'">
     <TargetName>libXeSDK</TargetName>
-    <OutDir>$(SolutionDir)lib\win32\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(XESDK_DIR)lib\win32\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(TargetName)\win32\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>libXeSDK</TargetName>
-    <OutDir>$(SolutionDir)lib\win32\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(XESDK_DIR)lib\win32\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(TargetName)\win32\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>libXeSDK</TargetName>
-    <OutDir>$(SolutionDir)lib\win32\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(XESDK_DIR)lib\win32\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(TargetName)\win32\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">
     <TargetName>libXeSDK</TargetName>
-    <OutDir>$(SolutionDir)lib\win32\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(XESDK_DIR)lib\win32\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(TargetName)\win32\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -158,7 +158,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(XESDK_DIR)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -176,7 +176,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(XESDK_DIR)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -196,7 +196,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(XESDK_DIR)include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -218,7 +218,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(XESDK_DIR)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -243,7 +243,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(XESDK_DIR)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -265,7 +265,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(XESDK_DIR)include;$(SolutionDir)src\ThirdParty\libogg\include;$(SolutionDir)src\ThirdParty\libvorbis\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>_MSVC_WINDOWS_SDK="$(WindowsTargetPlatformVersion)";DEBUGLOG;DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;PLATFORM_WIN32;PLATFORM_GL;PLATFORM_LIBC;PLATFORM_LIBCW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
