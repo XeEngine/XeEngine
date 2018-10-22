@@ -14,6 +14,7 @@ class CFrameView : public Xe::Core::IFrameView
 	DWORD m_styleEx;
 	WINDOWPLACEMENT m_OriginalWindowPlacement;
 	HWND m_hWnd;
+	HDEVNOTIFY m_DevNotify;
 	bool m_isClosed;
 	bool m_isFullscreenSwitchEnabled;
 	bool m_isWindowMinimized;
@@ -57,6 +58,7 @@ class CFrameView : public Xe::Core::IFrameView
 	uvar GetMouseButtonFromWParam(WPARAM wParam);
 	void OnMouseMove(WPARAM wParam, LPARAM lParam);
 	void OnMouseButton(WPARAM wParam, LPARAM lParam, bool isReleased);
+	void OnDeviceChange(WPARAM wParam, LPARAM lParam);
 
 public:
 	CFrameView(Xe::Core::IFrameHandler* pFrameHandler);

@@ -34,6 +34,11 @@ namespace Xe {
 
 	namespace Core
 	{
+		struct DeviceArgs
+		{
+
+		};
+
 		interface IApplicationHandler : public virtual IObject
 		{
 			//! \brief This is called before any other event.
@@ -54,6 +59,9 @@ namespace Xe {
 
 			//! \brief When the application needs a re-draw of screen content.
 			virtual void OnDraw() = 0;
+
+			//! \brief Fired when a device has been attached or de-attached.
+			virtual void OnDevice(const DeviceArgs& args) = 0;
 		};
 
 		interface IFrameHandler : public virtual IObject
