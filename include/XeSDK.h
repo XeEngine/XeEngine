@@ -3,7 +3,7 @@
 #include <XeSDK/IApplication.h>
 #include <XeSDK/ICollection.h>
 #include <XeSDK/IComparable.h>
-//#include <XeSDK/ICoreApplication.h>
+#include <XeSDK/IFrameView.h>
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IDictionary.h>
 #include <XeSDK/IEnumerable.h>
@@ -18,6 +18,7 @@
 #include <XeSDK/XeApplication.h>
 #include <XeSDK/XeCollections.h>
 #include <XeSDK/XeCore.h>
+#include <XeSDK/XeCoreFrameView.h>
 #include <XeSDK/XeCryptoCrc32.h>
 #include <XeSDK/XeCryptoCrc64.h>
 #include <XeSDK/XeGraphics.h>

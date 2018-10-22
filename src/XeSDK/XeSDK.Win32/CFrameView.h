@@ -19,17 +19,15 @@ class CFrameView : public Xe::Core::IFrameView
 	bool m_isWindowMinimized;
 	Xe::Graphics::Size m_size;
 
-	Xe::Core::IApplicationHandler* m_pApplicationHandler;
 	Xe::Core::IFrameHandler* m_pFrameHandler;
+	Xe::Core::IApplicationHandler* m_pApplicationHandler;
 	Xe::Core::IKeyboardHandler* m_pKeyboardHandler;
 	Xe::Core::IPointerHandler* m_pPointerHandler;
 
 	Xe::IO::PointerEvent m_pointerEvent;
-	bool m_IsViewInitialized;
 
 	// Inherted from IFrameView
 	void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler);
-	void SetFrameHandler(Xe::Core::IFrameHandler* pFrameHandler);
 	void SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler);
 	void SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler);
 	bool DispatchEvents(Xe::Core::DispatchType type);
@@ -61,10 +59,11 @@ class CFrameView : public Xe::Core::IFrameView
 	void OnMouseButton(WPARAM wParam, LPARAM lParam, bool isReleased);
 
 public:
-	CFrameView();
+	CFrameView(Xe::Core::IFrameHandler* pFrameHandler);
 	~CFrameView();
 
 	bool Initialize(const Xe::Core::FrameViewInitDesc& desc);
+	bool Run();
 
 	static LRESULT CALLBACK _WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };

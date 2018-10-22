@@ -26,5 +26,6 @@ namespace Xe { namespace Core {
 		{ }
 	};
 
-	bool Factory(IFrameView*& pFrameView, const FrameViewInitDesc& desc);
+	bool Run(Xe::Core::IFrameHandler* pFrameHandler,
+		const FrameViewInitDesc& desc);
 }}
