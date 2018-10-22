@@ -19,7 +19,7 @@ namespace Xe {
 			void SetPositionLoop(SampleOffset position);
 
 			void SetEffect(IEffect *effect);
-			svar Read(float *data, svar offset, svar bytescount);
+			svar Read(void *data, svar offset, svar bytescount);
 
 		protected:
 			u64 m_posEnd;
@@ -29,7 +29,7 @@ namespace Xe {
 			IEffect *m_pEffect;
 
 			virtual void SetPositionCurrentSub(SampleOffset position) = 0;
-			virtual svar ReadSub(float *data, svar offset, SampleOffset count) = 0;
+			virtual svar ReadSub(void *data, svar offset, SampleOffset count) = 0;
 		};
 	}
 }

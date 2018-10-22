@@ -326,6 +326,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h">
       <Filter>Sound\Private</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)OggAudioSource.h">
+      <Filter>Sound\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundOggSoundFormatFactory.h">
+      <Filter>Sound\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -476,6 +482,12 @@
       <Filter>Sound\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)OggAudioSource.cpp">
+      <Filter>Sound\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundOggSoundFormatFactory.cpp">
       <Filter>Sound\Private</Filter>
     </ClCompile>
   </ItemGroup>

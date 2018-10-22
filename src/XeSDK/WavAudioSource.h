@@ -459,7 +459,7 @@ namespace Xe { namespace Sound {
 		bool FormatExtendible(WAVEFORMATEXTENSIBLE& fmt);
 
 		void SetPositionCurrentSub(SampleOffset position);
-		svar ReadSub(float *data, svar offset, SampleOffset count);
+		svar ReadSub(void *data, svar offset, SampleOffset count);
 	public:
 		WavAudioSource();
 		~WavAudioSource();

@@ -6,9 +6,14 @@
 namespace Xe { namespace Sound {
 	std::list<ISoundFormatFactory*> m_SoundFormatFactoryList;
 
-	void RegisterSoundFormatFactory(ISoundFormatFactory* pSoundFormatFactory)
+	void RegisterSoundFormatFactory(ISoundFormatFactory& pSoundFormatFactory)
 	{
-		m_SoundFormatFactoryList.push_back(pSoundFormatFactory);
+		m_SoundFormatFactoryList.push_back(&pSoundFormatFactory);
+	}
+
+	void UnregisterAllSoundFormatFactories()
+	{
+		m_SoundFormatFactoryList.clear();
 	}
 
 	std::list<ISoundFormatFactory*> GetSoundFormatFactories()
@@ -16,14 +21,14 @@ namespace Xe { namespace Sound {
 		return m_SoundFormatFactoryList;
 	}
 
-	bool GetFirstSoundFormatFactory(ISoundFormatFactory& soundFormatFactory, ctstring extension)
+	bool GetFirstSoundFormatFactory(ISoundFormatFactory*& soundFormatFactory, ctstring extension)
 	{
 		for (auto it = m_SoundFormatFactoryList.begin(); it != m_SoundFormatFactoryList.end(); ++it)
 		{
 			auto currentSoundFormatFactory = *it;
 			if (Xe::String::CompareInsensitive(extension, currentSoundFormatFactory->GetExtension()) == 0)
 			{
-				soundFormatFactory = *currentSoundFormatFactory;
+				soundFormatFactory = currentSoundFormatFactory;
 				return true;
 			}
 		}

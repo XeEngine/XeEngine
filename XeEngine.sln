@@ -68,6 +68,7 @@ Global
 		src\SoundDriver\SoundDriverWasapi\SoundDriverWasapi.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\libpng\libpng.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\ThirdParty\libvorbis\libvorbis.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\tinyxml\tinyxml.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\winsdk\winsdk.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\ThirdParty\zlib\zlib.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4

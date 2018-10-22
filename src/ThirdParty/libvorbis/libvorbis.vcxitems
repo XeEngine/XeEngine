@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{0fbc02cc-7b1f-4b85-8b8a-523de7bbebb8}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\vorbis\codec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\vorbis\vorbisenc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\vorbis\vorbisfile.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\backends.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\bitrate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\coupled\res_books_51.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\coupled\res_books_stereo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\floor\floor_books.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\books\uncoupled\res_books_uncoupled.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\codebook.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\codec_internal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\envelope.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\highlevel.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lookup.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lookup_data.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lpc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\lsp.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\masking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\mdct.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\misc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\floor_all.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_16.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_44.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\psych_8.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_16.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_44.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_44p51.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_44u.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\residue_8.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_16.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_22.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_32.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_44.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_44p51.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_44u.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_8.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\modes\setup_X.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\os.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\psy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\registry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\scales.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\smallft.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)libvorbis\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libogg\bitwise.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libogg\framing.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\analysis.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\bitrate.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\block.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\codebook.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\envelope.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\floor0.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\floor1.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\info.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\lookup.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\lpc.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\lsp.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\mapping0.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\mdct.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\psy.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\registry.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\res0.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\sharedbook.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\smallft.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\synthesis.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\vorbisenc.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\vorbisfile.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libvorbis\window.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+</Project>

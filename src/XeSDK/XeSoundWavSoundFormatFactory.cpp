@@ -1,6 +1,5 @@
 #include "pch.h"
 #include <XeSDK/XeSoundWavSoundFormatFactory.h>
-#include <cstdint>
 #include "WavAudioSource.h"
 
 namespace Xe { namespace Sound {
