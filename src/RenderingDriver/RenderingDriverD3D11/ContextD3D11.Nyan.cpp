@@ -2,6 +2,7 @@
 #include "ContextD3D11.h"
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
+#include <dxgi1_2.h>
 
 using namespace Xe::Debug;
 
@@ -14,7 +15,8 @@ namespace Xe {
 				if (FAILED(hr)) {
 					LOG(Log::Priority_Info, Log::Type_Graphics, _T("DXGI 1.2 not supported."));
 					hr = CreateDXGIFactory1(IID_PPV_ARGS(&m_pFactory1));
-#ifndef PLATFORM_WINRT // Windows Store apps does not support CreateDXGIFactory
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
+					// Windows Store apps does not support CreateDXGIFactory
 					if (FAILED(hr)) {
 						LOG(Log::Priority_Info, Log::Type_Graphics, _T("DXGI 1.1 not supported."));
 						hr = CreateDXGIFactory(IID_PPV_ARGS(&m_pFactory));
@@ -26,7 +28,7 @@ namespace Xe {
 						LOG(Log::Priority_Critical, Log::Type_Graphics, _T("Unable to create DXGI Factory."));
 						return false;
 					}
-#ifdef PLATFORM_WINRT
+#if WINAPI_FAMILY != WINAPI_FAMILY_DESKTOP_APP
 					m_pFactory1->QueryInterface(&m_pFactory);
 #endif
 				}

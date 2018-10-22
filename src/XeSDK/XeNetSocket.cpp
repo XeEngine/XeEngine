@@ -7,7 +7,7 @@
 #ifndef PLATFORM_WINDOWS
 #include <sys/socket.h>
 #include <unistd.h>
-#elif PLATFORM_UWP
+#elif !defined(PLATFORM_WIN32)
 #include <Winsock2.h>
 #endif
 
@@ -132,7 +132,7 @@ namespace Xe {
                 return r >= 0 ? Error::OK : Errno();
             }
             RESULT Accept(Socket **ppSocket) {
-                SOCKET r = accept(m_Socket, 0, 0);
+                SOCKET r = accept(m_Socket, (sockaddr*)nullptr, (int*)nullptr);
                 if (r < 0) return Errno();
                 *ppSocket = new CSocket(r, *this);
                 return Error::OK;

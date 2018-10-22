@@ -102,7 +102,11 @@ namespace Xe {
 			attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
 			break;
 		}
+
+#ifndef _DURANGO
 		SetConsoleTextAttribute(hConsole, attributes);
+#endif
+
 #endif
 
         fputs(str, isError ? stderr : stdout);

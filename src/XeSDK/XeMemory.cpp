@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <XeSDK/XeMemory.h>
 #include <cstdlib>
+#include <cstring>
 
 void Xe::Memory::Copy(void* dst, const void* src, uvar length) {
 	if (src == 0 || dst == 0 || length == 0) return;
