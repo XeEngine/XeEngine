@@ -13,13 +13,13 @@ namespace Xe { namespace Drivers { namespace Sound {
 		return DriverType_Sound;
 	}
 
-	bool XAudioDriver::Factory(Xe::Sound::IAudio** pContext)
+	bool XAudioDriver::Factory(Xe::Sound::IAudio** pContext, const Xe::Sound::AudioInitDesc& desc)
 	{
 		ASSERT(pContext != nullptr);
 		auto driver = new Xe::Sound::XAudioEngine;
 
 		ASSERT(driver != nullptr);
-		bool result = driver->Initialize();
+		bool result = driver->Initialize(desc);
 		if (result)
 		{
 			*pContext = driver;

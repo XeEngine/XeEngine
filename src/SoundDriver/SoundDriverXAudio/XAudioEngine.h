@@ -1,6 +1,7 @@
 #pragma once
 #include <XeSDK/ISound.h>
 #include "XAudioDefinitions.h"
+#include <XeSDK/IDriversSoundDriver.h>
 
 namespace Xe { namespace Sound {
 	class XAudioEngine : public IAudio {
@@ -9,21 +10,21 @@ namespace Xe { namespace Sound {
 		PFNXAUDIO2CREATE pfnXAudio2Create;
 
 	public:
-		static void LogHresult(HRESULT hr);
+		static HRESULT Log(HRESULT hr, ctstring func, ctstring source, int line);
 
 		bool Query(IObject **obj, UID id);
 
 		XAudioEngine();
 		~XAudioEngine();
 
-		bool Initialize();
+		bool Initialize(const Xe::Sound::AudioInitDesc& desc);
 		bool SetSampleRate(svar sampleRate);
 
 		bool CreateBuffer(IAudioBuffer **buffer, const WaveFormat &format,
 			IAudioBuffer::ICallback *pCallback);
 
 		HMODULE m_hDllAudio;
-		svar m_minVersion;
+		svar m_MinVersion;
 		IXAudio2 *m_pAudio;
 		IXAudio2MasteringVoice *m_pMasterVoice;
 	};

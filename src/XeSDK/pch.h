@@ -10,7 +10,7 @@
 #endif
 
 #ifdef PLATFORM_WINDOWS
-#define HR(x) (ASSERT((x) == S_OK))
+#define HR(x) (ASSERT(SUCCEEDED((x))))
 
 #ifndef WIN32_LEAN_AND_MEAN
 //#define WIN32_LEAN_AND_MEAN
