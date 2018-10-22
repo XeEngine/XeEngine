@@ -146,6 +146,11 @@ namespace Xe {
 		}
 
 		bool CreatePlayable(IPlayable **pPlayable, IAudio *audio, IAudioSource *src) {
+			if (audio == nullptr)
+			{
+				return false;
+			}
+
 			IAudioBuffer *dst;
 			CCallback *callback = new CCallback;
 			if (audio->CreateBuffer(&dst, src->GetFormat(), callback)) {
