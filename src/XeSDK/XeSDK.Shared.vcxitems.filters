@@ -340,6 +340,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreCommon.h">
+      <Filter>Core\private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
