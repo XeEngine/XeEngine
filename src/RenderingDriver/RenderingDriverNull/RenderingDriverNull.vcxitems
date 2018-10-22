@@ -15,10 +15,12 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NullBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextNull.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversRenderingNullDriver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NullBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Buffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Context.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Drawing2d.cpp" />

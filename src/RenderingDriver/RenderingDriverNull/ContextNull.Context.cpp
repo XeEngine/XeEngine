@@ -12,7 +12,9 @@ namespace Xe {
 			m_ClearColor(Color::Black),
 			m_ClearDepth(0.0f),
 			m_ClearStencil(0),
-			m_DepthStencilState(nullptr) {
+			m_DepthStencilState(nullptr)
+		{
+			Memory::Fill(&m_State, 0, sizeof(m_State));
 			Memory::Fill(m_Surface, 0, sizeof(m_Surface));
 		}
 		CContextNull::~CContextNull() {
