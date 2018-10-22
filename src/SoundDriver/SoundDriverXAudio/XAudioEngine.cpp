@@ -33,8 +33,7 @@ namespace Xe { namespace Sound {
 		m_pMasterVoice(nullptr)
 	{
 		HRESULT hr;
-		LOGA(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED));
-		HR(hr);
+		hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	}
 	
 	XAudioEngine::~XAudioEngine()
