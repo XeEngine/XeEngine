@@ -164,7 +164,7 @@ namespace Xe {
                     }
 
                     if (errno != EAGAIN) {
-                        Logger::Warning("Pad disconnected (errno: %08X).\n", errno);
+                        LOGW("Pad disconnected (errno: %08X).\n", errno);
                         close(m_fd);
                         m_fd = 0;
                     }

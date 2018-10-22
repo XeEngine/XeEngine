@@ -47,9 +47,7 @@
 #endif
 
 #include <XeSDK/XeDef.h>
-#if defined(__cplusplus)
-#include "XeDebugLog.h"
-#endif
+#include <XeSDK/XeLogger.h>
 
 #include <cstdio>
 #include <cstdlib>

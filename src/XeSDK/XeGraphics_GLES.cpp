@@ -188,7 +188,7 @@ namespace Xe {
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR)
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("GLerr %s"), GetMessageError(err));
+				LOGE("GLerr %s", GetMessageError(err));
 			}
 #endif
 			return true;
@@ -219,7 +219,7 @@ namespace Xe {
 			};
 
 			if (size.x < 0 || size.y < 0) {
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Invalid size (%i, %i)"), size.x, size.y);
+				LOGE("Invalid size (%i, %i)", size.x, size.y);
 				return false;
 			}
 
@@ -227,11 +227,11 @@ namespace Xe {
 			EGLint numConfigs;
 			EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 			if (display == EGL_NO_DISPLAY) {
-				LOG(Log::Priority_Assertion, Log::Type_Graphics, _T("EGL_NO_DISPLAY"));
+				LOGF("EGL_NO_DISPLAY");
 				return false;
 			}
 			if (eglInitialize(display, &maj, &min) == EGL_FALSE) {
-				LOG(Log::Priority_Assertion, Log::Type_Graphics, _T("eglInitialize failed"));
+				LOGE("eglInitialize failed");
 				return false;
 			}
 
@@ -240,7 +240,7 @@ namespace Xe {
 			pConfigs = new EGLConfig[numConfigs];
 			eglChooseConfig(display, attribs, pConfigs, numConfigs, &numConfigs);
 
-			LOG(Log::Priority_Diagnostics, Log::Type_Graphics, "egl found %i different configurations", numConfigs);
+			LOGD("egl found %i different configurations", numConfigs);
 
 			struct EGLConfiguration {
 				EGLint id;
@@ -308,7 +308,7 @@ namespace Xe {
 				if (GetNativeWindowType(&pWindow, size, pConfigs2[i].format)) {
 					m_pSurface = eglCreateWindowSurface(display, pConfigs[i], pWindow, NULL);
 					if (m_pSurface == NULL) {
-						LOG(Log::Priority_Assertion, Log::Type_Graphics, _T("eglInitialize failed"));
+						LOGE("eglInitialize failed");
 						return false;
 					}
 					static const EGLint contextAttribs[] = {
@@ -318,18 +318,18 @@ namespace Xe {
 					};
 					m_pContext = eglCreateContext(display, pConfigs[i], NULL, contextAttribs);
 					if (m_pContext == NULL) {
-						LOG(Log::Priority_Assertion, Log::Type_Graphics, _T("eglCreateContext failed"));
+						LOGE("eglCreateContext failed");
 						return false;
 					}
 					if (eglMakeCurrent(display, m_pSurface, m_pSurface, m_pContext) != EGL_FALSE) {
-						LOG(Log::Priority_Diagnostics, Log::Type_Graphics, "GL Version: %s", (const char*)glGetString(GL_VERSION));
-						LOG(Log::Priority_Diagnostics, Log::Type_Graphics, "GL Vendor: %s", (const char*)glGetString(GL_VENDOR));
-						LOG(Log::Priority_Diagnostics, Log::Type_Graphics, "GL Renderer: %s", (const char*)glGetString(GL_RENDERER));
-						LOG(Log::Priority_Diagnostics, Log::Type_Graphics, "GL Extensions: %s", (const char*)glGetString(GL_EXTENSIONS));
+						LOGD("GL Version: %s", (const char*)glGetString(GL_VERSION));
+						LOGD("GL Vendor: %s", (const char*)glGetString(GL_VENDOR));
+						LOGD("GL Renderer: %s", (const char*)glGetString(GL_RENDERER));
+						LOGD("GL Extensions: %s", (const char*)glGetString(GL_EXTENSIONS));
 						EGLint w, h;
 						eglQuerySurface(display, m_pSurface, EGL_WIDTH, &w);
 						eglQuerySurface(display, m_pSurface, EGL_HEIGHT, &h);
-						LOG(Log::Priority_Diagnostics, Log::Type_Graphics, "Detected GL size %ix%i", w, h);
+						LOGD("Detected GL size %ix%i", w, h);
 						size.x = w;
 						size.y = h;
 						m_pDisplay = display;
@@ -337,7 +337,7 @@ namespace Xe {
 						break;
 					}
 					else
-						LOG(Log::Priority_Assertion, Log::Type_Graphics, _T("eglMakeCurrent failed"));
+						LOGE("eglMakeCurrent failed"));
 				}
 
 			}
@@ -443,11 +443,11 @@ namespace Xe {
 		}
 		void ContextGLES::SelectSurface(ISurface *surface, svar index) {
 			if (index < 0 || index >= MaximumSelectedSurfaces) {
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("SelectSurface(,%i) index not valid"), index);
+				LOGE("SelectSurface(,%i) index not valid", index);
 				return;
 			}
 			if (index >= m_capabilities.MaxTextureUnits) {
-				LOG(Log::Priority_Warning, Log::Type_Graphics, _T("SelectSurface(,%i) index exceed GetCapabilities().MaxTextureUnits"), index);
+				LOGE("SelectSurface(,%i) index exceed GetCapabilities().MaxTextureUnits", index);
 				return;
 			}
 			// XTODO check if it's a ContextGLES surface

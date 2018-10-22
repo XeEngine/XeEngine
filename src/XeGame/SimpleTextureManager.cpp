@@ -229,7 +229,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugError("Clut slots full.\n");
+				LOGE("Clut slots full.\n");
 			}
 
 			return clutId;
@@ -265,7 +265,7 @@ namespace Xe { namespace Game {
 					}
 					else
 					{
-						Logger::DebugError("Unable to create the clut's surface.\n");
+						LOGE("Unable to create the clut's surface.\n");
 					}
 				}
 				else
@@ -279,7 +279,7 @@ namespace Xe { namespace Game {
 					}
 					else
 					{
-						Logger::DebugWarning("Unable to lock the clut's surface; it will be recreated.\n");
+						LOGW("Unable to lock the clut's surface; it will be recreated.\n");
 
 						m_SurfacePalette->Release();
 						m_SurfacePalette = nullptr;
@@ -331,15 +331,15 @@ namespace Xe { namespace Game {
 					tex.Name = name;
 #endif
 					m_TexturesCount++;
-					Logger::Info("Texture %s opened as %i.\n", name, texId);
+					LOGI("Texture %s opened as %i.\n", name, texId);
 				}
 				else {
-					Logger::Error("Unable to allocate %s.\n", name);
+					LOGE("Unable to allocate %s.\n", name);
 					tex.Surface = nullptr;
 				}
 			}
 			else {
-				Logger::Warning("There's no space to allocate %s.\n", name);
+				LOGW("There's no space to allocate %s.\n", name);
 			}
 
 			return texId;
@@ -359,7 +359,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "GetTexture");
+				LOGW("An invalid Id has been specified for %s.\n", "GetTexture");
 			}
 
 			return nullptr;
@@ -385,7 +385,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "Select");
+				LOGW("An invalid Id has been specified for %s.\n", "Select");
 			}
 		}
 
@@ -415,7 +415,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "GetUvLTRB");
+				LOGW("An invalid Id has been specified for %s.\n", "GetUvLTRB");
 			}
 		}
 
@@ -428,7 +428,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "AddReference");
+				LOGW("An invalid Id has been specified for %s.\n", "AddReference");
 			}
 
 			return texId;
@@ -447,7 +447,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "RemoveReference");
+				LOGW("An invalid Id has been specified for %s.\n", "RemoveReference");
 			}
 
 			return texId;
@@ -462,7 +462,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "GetReferencesCount");
+				LOGW("An invalid Id has been specified for %s.\n", "GetReferencesCount");
 			}
 
 			return 0;
@@ -502,17 +502,17 @@ namespace Xe { namespace Game {
 					}
 					else
 					{
-						Logger::DebugWarning("The max cluts count %i has been reached.\n", MaxClutsCount);
+						LOGW("The max cluts count %i has been reached.\n", MaxClutsCount);
 					}
 				}
 				else
 				{
-					Logger::DebugWarning("The max subcluts of %i has been reached for TexId %i.\n", MaxSubClutsCount, texId);
+					LOGW("The max subcluts of %i has been reached for TexId %i.\n", MaxSubClutsCount, texId);
 				}
 			}
 			else
 			{
-				Logger::DebugWarning("The specified texture %i has no embedded palette.\n", texId);
+				LOGW("The specified texture %i has no embedded palette.\n", texId);
 			}
 
 			return ClutInvalid;
@@ -550,7 +550,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugWarning("An invalid Id has been specified for %s.\n", "FreeClut");
+				LOGW("An invalid Id has been specified for %s.\n", "FreeClut");
 			}
 
 			return ClutInvalid;
@@ -583,7 +583,7 @@ namespace Xe { namespace Game {
 			}
 			else
 			{
-				Logger::DebugError("An invalid Id has been specified for %s.\n", "GetClutData");
+				LOGE("An invalid Id has been specified for %s.\n", "GetClutData");
 			}
 		}
 

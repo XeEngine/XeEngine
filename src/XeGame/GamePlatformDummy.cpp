@@ -23,7 +23,7 @@ namespace Xe { namespace Game {
 		{
 			if (init.Callback == nullptr)
 			{
-				Xe::Logger::DebugError("IGamePlatformCallback cannot be null.");
+				LOGE("IGamePlatformCallback cannot be null.");
 				return false;
 			}
 

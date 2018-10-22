@@ -29,13 +29,13 @@ namespace Xe { namespace Graphics {
 
 		if (m_IsLocked)
 		{
-			Logger::DebugError("Unable to lock the buffer: it was already locked");
+			LOGE("Unable to lock the buffer: it was already locked");
 			return false;
 		}
 
 		if (m_Usage == Usage_Static)
 		{
-			Logger::DebugWarning("Unable to lock a static buffer");
+			LOGW("Unable to lock a static buffer");
 			return false;
 		}
 
@@ -53,7 +53,7 @@ namespace Xe { namespace Graphics {
 			);
 
 		if (FAILED(hr)) {
-			Logger::DebugWarning("Unable to lock the current buffer, trying to clone the resource (slower but it does work!).");
+			LOGW("Unable to lock the current buffer, trying to clone the resource (slower but it does work!).");
 
 			map.data = m_LockBuffer = Xe::Memory::Alloc(m_length);
 			map.pitch = m_length;
@@ -73,7 +73,7 @@ namespace Xe { namespace Graphics {
 	{
 		if (!m_IsLocked)
 		{
-			Logger::DebugError("Unable to unlock the buffer: it was not locked");
+			LOGE("Unable to unlock the buffer: it was not locked");
 		}
 
 		if (!m_DirectMode)
@@ -96,7 +96,7 @@ namespace Xe { namespace Graphics {
 			}
 			else
 			{
-				Logger::DebugError("Unable to create a temporary buffer for undirect SubLock.");
+				LOGE("Unable to create a temporary buffer for undirect SubLock.");
 			}
 
 			Xe::Memory::Free(m_pBuffer);
@@ -137,7 +137,7 @@ namespace Xe { namespace Graphics {
 		if (FAILED(hr))
 		{
 			*ppBuffer = nullptr;
-			Logger::DebugError("D3D11::CreateBuffer: Unable to create index buffer (%08X).", hr);
+			LOGE("D3D11::CreateBuffer: Unable to create index buffer (%08X).", hr);
 			return false;
 		}
 

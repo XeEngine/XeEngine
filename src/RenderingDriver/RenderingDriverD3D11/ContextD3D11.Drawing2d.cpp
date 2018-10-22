@@ -5,8 +5,6 @@
 //#include "ShaderD3D11_VSDefault.h"
 //#include "ShaderD3D11_FSDefault.h"
 
-using namespace Xe::Debug;
-
 namespace Xe {
 	namespace Graphics {
 		///////////////////////////////////////////////////////////////////////
@@ -29,20 +27,20 @@ namespace Xe {
 			};
 			HRESULT hr = context->p_d3dDevice->CreateInputLayout(vertexDesc, 3, d3d11vsDefault, sizeof(d3d11vsDefault), &m_pInputLayout);
 			if (FAILED(hr)) {
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("CreateInputLayout failed (%08X)."), hr);
+				LOGE("CreateInputLayout failed (%08X).", hr);
 				return;
 			}
 
 			hr = context->p_d3dDevice->CreateVertexShader(d3d11vsDefault, sizeof(d3d11vsDefault), nullptr, &m_pVertexShader);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create default vertex shader (%08X)."), hr);
+				LOGE("Unable to create default vertex shader (%08X).", hr);
 				return;
 			}
 			hr = context->p_d3dDevice->CreatePixelShader(d3d11fsDefault, sizeof(d3d11fsDefault), nullptr, &m_pPixelShader);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create default pixel shader (%08X)."), hr);
+				LOGE("Unable to create default pixel shader (%08X).", hr);
 				return;
 			}
 
@@ -63,7 +61,7 @@ namespace Xe {
 			hr = context->p_d3dDevice->CreateSamplerState(&samplerDesc, &m_pSamplerState);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create default sampler state."));
+				LOGE("Unable to create default sampler state.");
 				return;
 			}
 
@@ -80,7 +78,7 @@ namespace Xe {
 			hr = context->p_d3dDevice->CreateBuffer(&desc, nullptr, &m_pVertexBuffer);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create vertex buffer (%08X)."), hr);
+				LOGE("Unable to create vertex buffer (%08X).", hr);
 				return;
 			}
 
@@ -107,7 +105,7 @@ namespace Xe {
 
 			if (!m_context->CreateBuffer(&m_pIndexBuffer, indexBufferDesc, &indexDataDesc))
 			{
-				Logger::DebugError("Unable to create default index buffer.");
+				LOGE("Unable to create default index buffer.");
 			}
 
 			m_IsInitialized = true;
@@ -149,7 +147,7 @@ namespace Xe {
 					m_context->DrawIndexed(Primitive_TriangleList, m_curQuadsCount * 6, start);
 				}
 				else
-					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to upload new buffer's content."));
+					LOGE("Unable to upload new buffer's content.");
 			}
 			m_curQuadsCount = 0;
 		}

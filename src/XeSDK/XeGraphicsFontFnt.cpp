@@ -140,8 +140,7 @@ namespace Xe {
                     m_name = (const char*)m_stream->GetMemory() + m_prop.dfFace - 66;
 
                     if (m_prop.dfType & 1) {
-                        LOG(Debug::Log::Priority_Warning, Debug::Log::Type_Font,
-                            _T("FNT %s is vectorial and it's not currently supported."), m_name.GetData());
+                        LOGW("FNT %s is vectorial and it's not currently supported.", m_name.GetData());
                         return false;
                     }
 
@@ -155,13 +154,11 @@ namespace Xe {
                     if (m_isFixedWidth)
                         m_chByteLength = m_pxWidth * m_pxHeight * Color::GetBitsPerPixel(m_format) / 8;
                     else {
-                        LOG(Debug::Log::Priority_Warning, Debug::Log::Type_Font,
-                            _T("FNT %s uses variable width that's not currently supported."), m_name.GetData());
+						LOGW("FNT %s uses variable width that's not currently supported.", m_name.GetData());
                         m_chByteLength = 0;
                         return false;
                     }
-                    LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                        _T("FNT details: %s %ix%i count %i."), m_name.GetData(), m_pxWidth, m_pxHeight, m_chCount);
+					LOGD("FNT details: %s %ix%i count %i.", m_name.GetData(), m_pxWidth, m_pxHeight, m_chCount);
                     return true;
                 }
 
@@ -178,8 +175,7 @@ namespace Xe {
                     }
                     else {
                         tchar ch = m_prop.dfDefaultChar;
-                        LOG(Debug::Log::Priority_Info, Debug::Log::Type_Font,
-                            _T("FNT::GetCharacter %p (%s) character %04X not found. Returing default character %04X"), this, m_name.GetData(), ch);
+						LOGI("FNT::GetCharacter %p (%s) character %04X not found. Returing default character %04X", this, m_name.GetData(), ch);
                     }
                     return false;
                 }
@@ -213,16 +209,14 @@ namespace Xe {
                         }
                         return true;
                     }
-                    LOG(Debug::Log::Priority_Info, Debug::Log::Type_Font,
-                        _T("FNT::ReadCharater %p (%s) character %04X not found. Returing default character %04X"), this, m_name.GetData(), ch);
+					LOGI("FNT::ReadCharater %p (%s) character %04X not found. Returing default character %04X", this, m_name.GetData(), ch);
                     return false;
                 }
             };
             bool OpenFnt(IFont **font, IO::IStream *stream) {
                 stream->AddRef();
                 s64 remain = stream->GetLength() - stream->GetPosition();
-                LOG(Debug::Log::Priority_Info, Debug::Log::Type_Font,
-                    _T("Opening FNT from stream %p..."), stream);
+				LOGI("Opening FNT from stream %p...", stream);
                 if (remain >= 66) {
                     short dfVersion;
                     long dfSize;
@@ -233,41 +227,34 @@ namespace Xe {
                         stream->Read(&dfSize, 0, 4);
                         stream->Read(&copyright, 0, 60);
                         if (remain < dfSize) {
-                            LOG(Debug::Log::Priority_Error, Debug::Log::Type_Font,
-                                _T("%p dfSize is greater than the stream."), stream);
+							LOGE("%p dfSize is greater than the stream.", stream);
                         }
                         else {
-                            LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                                _T("FNT seems to be a valid file."));
+							LOGD("FNT seems to be a valid file.");
                             IO::IMemoryStream *memStream = IO::IMemoryStream::New(dfSize - 66, false);
                             IO::Copy(memStream, stream, memStream->GetLength());
-                            LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                                _T("FNT copied into main memory."));
+							LOGD("FNT copied into main memory.");
                             stream->Release();
                             memStream->SetPosition(0);
                             Fnt *fnt = new Fnt(memStream);
                             memStream->Release();
                             if (fnt->Open()) {
                                 *font = fnt;
-                                LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                                    _T("FNT opened with success!"), stream);
+                                LOGI("FNT opened with success!", stream);
                                 return true;
                             }
                             else {
-                                LOG(Debug::Log::Priority_Error, Debug::Log::Type_Font,
-                                    _T("%p unable to open FNT."), stream);
+                                LOGE("%p unable to open FNT.", stream);
                             }
                             fnt->Release();
                         }
                     }
                     else {
-                        LOG(Debug::Log::Priority_Error, Debug::Log::Type_Font,
-                            _T("%p version %i is not supported."), dfVersion);
+						LOGE("%p version %i is not supported.", dfVersion);
                     }
                 }
                 else {
-                    LOG(Debug::Log::Priority_Error, Debug::Log::Type_Font,
-                        _T("%p not enough bytes to be valid."), stream);
+					LOGE("%p not enough bytes to be valid.", stream);
                 }
                 *font = nullptr;
                 stream->Release();

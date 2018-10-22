@@ -22,7 +22,7 @@ namespace Xe {
                     auto HidD_GetHidGuid = (ptrHidD_GetHidGuid)GetProcAddress(m_ModuleHid, "HidD_GetHidGuid");
                     if (HidD_GetHidGuid != nullptr) {
                         HidD_GetHidGuid(&m_GuidHid);
-						Logger::Info("HID GUID: {0x%08X-0x%04X-0x%04X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X}\n",
+						LOGI("HID GUID: {0x%08X-0x%04X-0x%04X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X-0x%02X}\n",
                                      m_GuidHid.Data1, m_GuidHid.Data2, m_GuidHid.Data3,
                                      m_GuidHid.Data4[0], m_GuidHid.Data4[1], m_GuidHid.Data4[2], m_GuidHid.Data4[3],
                                      m_GuidHid.Data4[4], m_GuidHid.Data4[5], m_GuidHid.Data4[6], m_GuidHid.Data4[7]);
@@ -105,21 +105,21 @@ namespace Xe {
 										addDevice = true;
 									if (addDevice) {
 
-										Logger::Debug("Device found: %04X:%04X %s\n", device.VendorId, device.ProductId, device.Path);
+										LOGD("Device found: %04X:%04X %s\n", device.VendorId, device.ProductId, device.Path);
 										devices.push_back(device);
 									}
 								}
 							}
 						}
 						else {
-							Logger::Error("SetupDiGetDeviceInterfaceDetailA failed: %08X\n", GetLastError());
+							LOGE("SetupDiGetDeviceInterfaceDetailA failed: %08X\n", GetLastError());
 						}
                     }
                 }
                 SetupDiDestroyDeviceInfoList(hDevInfo);
             }
             else {
-                Logger::Error("Unable to enumerate Hid Devices.");
+                LOGE("Unable to enumerate Hid Devices.");
             }
 			return devices;
         }

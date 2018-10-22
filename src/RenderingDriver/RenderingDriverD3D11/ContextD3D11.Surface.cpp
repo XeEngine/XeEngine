@@ -3,8 +3,6 @@
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeGraphicsColor.h>
 
-using namespace Xe::Debug;
-
 namespace Xe {
 	namespace Graphics {
 		///////////////////////////////////////////////////////////////////////
@@ -91,7 +89,7 @@ namespace Xe {
 			hr = p_d3dDevice->CreateTexture2D(&texDesc, pResData, &_pTexture);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create 2D texture."));
+				LOGE("Unable to create 2D texture.");
 				return false;
 			}
 			pTexture = _pTexture;
@@ -101,7 +99,7 @@ namespace Xe {
 			hr = p_d3dDevice->CreateShaderResourceView(pTexture, &resDesc, &pResView);
 			if (FAILED(hr))
 			{
-				LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create shader resource view."));
+				LOGE("Unable to create shader resource view.");
 				return false;
 			}
 
@@ -119,7 +117,7 @@ namespace Xe {
 				{
 					pResView->Release();
 					pTexture->Release();
-					LOG(Log::Priority_Error, Log::Type_Graphics, _T("Unable to create render target view."));
+					LOGE("Unable to create render target view.");
 					return false;
 				}
 			}
@@ -172,13 +170,13 @@ namespace Xe {
 
 			if (m_IsLocked)
 			{
-				Logger::DebugError("Unable to lock the surface: it was already locked");
+				LOGE("Unable to lock the surface: it was already locked");
 				return false;
 			}
 
 			if (m_Usage == Usage_Static)
 			{
-				Logger::DebugWarning("Unable to lock a static surface");
+				LOGW("Unable to lock a static surface");
 				return false;
 			}
 
@@ -196,7 +194,7 @@ namespace Xe {
 				);
 
 			if (FAILED(hr)) {
-				Logger::DebugWarning("Unable to lock the current buffer, trying to clone the resource (slower but it does work!).");
+				LOGW("Unable to lock the current buffer, trying to clone the resource (slower but it does work!).");
 
 				map.data = m_LockBuffer = Xe::Memory::Alloc(m_length);
 				map.pitch = m_length;
@@ -216,7 +214,7 @@ namespace Xe {
 		{
 			if (!m_IsLocked)
 			{
-				Logger::DebugError("Unable to unlock the buffer: it was not locked");
+				LOGE("Unable to unlock the buffer: it was not locked");
 			}
 
 			if (!m_DirectMode)
@@ -236,7 +234,7 @@ namespace Xe {
 				}
 				else
 				{
-					Logger::DebugError("Unable to create a temporary surface for undirect SubLock.");
+					LOGE("Unable to create a temporary surface for undirect SubLock.");
 				}
 
 				Xe::Memory::Free(m_LockBuffer);

@@ -119,15 +119,15 @@ namespace Xe {
                             result = true;
                         }
                         else {
-                            Logger::Error("XCreateWindow failed.");
+                            LOGE("XCreateWindow failed.");
                         }
                     }
                     else {
-                        Logger::Error("glXChooseVisual failed.");
+                        LOGE("glXChooseVisual failed.");
                     }
                 }
                 else {
-                    Logger::Error("XOpenDisplay failed.");
+                    LOGE("XOpenDisplay failed.");
                 }
                 return result;
             }

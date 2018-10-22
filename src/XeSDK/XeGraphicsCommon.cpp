@@ -3,8 +3,6 @@
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
 
-using namespace Xe::Debug;
-
 namespace Xe {
     namespace Graphics {
         Capabilities::Capabilities() :
@@ -63,7 +61,7 @@ namespace Xe {
 
             if (m_isLocked)
             {
-                LOG(Log::Priority_Warning, Log::Type_Graphics, _T("Resource already locked."));
+                LOGW("Resource already locked.");
                 return false;
             }
             return m_isLocked = SubLock(map, type);
@@ -72,7 +70,7 @@ namespace Xe {
         {
             if (!m_isLocked)
             {
-                LOG(Log::Priority_Warning, Log::Type_Graphics, _T("Resource already unlocked."));
+                LOGW("Resource already unlocked.");
                 return;
             }
             SubUnlock();

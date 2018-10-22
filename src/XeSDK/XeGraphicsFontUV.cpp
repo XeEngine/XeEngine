@@ -13,19 +13,16 @@ namespace Xe {
                     m_pUv(nullptr) {
                 m_font->AddRef();
                 m_context->AddRef();
-                LOG(Debug::Log::Priority_Info, Debug::Log::Type_Font,
-                    _T("Creating a FontUV from font %p (%s)..."), font, (ctstring)font->GetName());
+				LOGI("Creating a FontUV from font %p (%s)...", font, (ctstring)font->GetName());
                 m_chFirst = m_font->GetChFirst();
                 m_chCount = m_font->GetChCount();
                 m_chDefault = m_font->GetDefaultCharacter();
                 if (CreateSurface(format))
                     CreateUV();
                 else {
-                    LOG(Debug::Log::Priority_Warning, Debug::Log::Type_Font,
-                        _T("There was an error creating surface from font %p (%s)"), font, (ctstring)font->GetName());
+					LOGW("There was an error creating surface from font %p (%s)", font, (ctstring)font->GetName());
                 }
-                LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                    _T("FontUV created with success!"));
+				LOGD("FontUV created with success!");
             }
             FontUV::~FontUV() {
                 if (m_pUv)
@@ -81,8 +78,7 @@ namespace Xe {
 
             }
             bool FontUV::CreateSurface(Color::Format format) {
-                LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                    _T("Creating font surface..."));
+				LOGD("Creating font surface...");
 
                 format = Color::Format_BGRX8888;
                 svar w = m_font->GetPxWidth();
@@ -103,8 +99,7 @@ namespace Xe {
                 return m_context->CreateSurface(&m_surface, SurfaceType_Texture, size, Color::Format_BGRA8888, desc);
             }
             void FontUV::CreateUV() {
-                LOG(Debug::Log::Priority_Diagnostics, Debug::Log::Type_Font,
-                    _T("Defining UV..."));
+				LOGD("Defining UV...");
                 svar w = m_font->GetPxWidth();
                 svar h = m_font->GetPxHeight();
                 const Size &size = m_surface->GetSize();
