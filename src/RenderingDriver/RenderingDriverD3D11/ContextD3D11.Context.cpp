@@ -166,6 +166,27 @@ namespace Xe { namespace Graphics {
 		m_ClearStencil = stencil;
 	}
 
+	const Xe::Math::Rectangle<int> CContextD3D11::GetScissor()
+	{
+		UINT numRects = 1;
+		D3D11_RECT rect;
+		m_d3dContext->RSGetScissorRects(&numRects, &rect);
+
+		return Xe::Math::Rectangle<int>((int)rect.left, (int)rect.top, (int)rect.right, (int)rect.bottom);
+	}
+
+	void CContextD3D11::SetScissor(const Xe::Math::Rectangle<int>& scissor)
+	{
+		if (scissor.left | scissor.top | scissor.right | scissor.bottom)
+		{
+			D3D11_RECT rect{ (LONG)scissor.left, (LONG)scissor.top, (LONG)scissor.right, (LONG)scissor.bottom };
+			m_d3dContext->RSSetScissorRects(1, &rect);
+		}
+		else
+		{
+			m_d3dContext->RSSetScissorRects(0, NULL);
+		}
+	}
 
 	void CContextD3D11::Clear(svar clearmask) {
 		if (clearmask == 0)

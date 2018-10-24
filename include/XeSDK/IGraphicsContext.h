@@ -177,6 +177,16 @@ namespace Xe { namespace Graphics {
 		virtual int GetClearStencil() const = 0;
 		virtual void SetClearStencil(int stencil) = 0;
 
+		//! \brief Get the current scissor rectangle.
+		virtual const Xe::Math::Rectangle<int> GetScissor() = 0;
+
+		//! \brief Set the scissor rectangle bound.
+		//! \param scissor Scissor rectangle, where each value must be positive.
+		/** \details When a scissor rectangle is set, everything pixel outside will be discarded.
+		 * The default value is an empty rectangle, where all the values are 0
+		 */
+		virtual void SetScissor(const Xe::Math::Rectangle<int>& scissor) = 0;
+
 		//! \brief clear selected rendering buffer
 		//! \param[in] clearmask mask of ClearMask 
 		//! \sa ClearMask

@@ -67,6 +67,17 @@ namespace Xe {
 			m_ClearStencil = stencil;
 		}
 
+		const Xe::Math::Rectangle<int> CContextNull::GetScissor()
+		{
+			return m_Scissor;
+		}
+
+		void CContextNull::SetScissor(const Xe::Math::Rectangle<int>& scissor)
+		{
+			m_Scissor = scissor;
+		}
+
+
 		void CContextNull::Clear(svar clearmask) {
 
 		}

@@ -199,6 +199,9 @@ namespace Xe { namespace Graphics {
 		float GetClearDepth() const;
 		int GetClearStencil() const;
 		void SetClearStencil(int stencil);
+
+		const Xe::Math::Rectangle<int> GetScissor();
+		void SetScissor(const Xe::Math::Rectangle<int>& scissor);
 			
 		void Clear(svar clearmask);
 		void Draw(Primitive primitive, u32 count, u32 start = 0);

@@ -84,6 +84,7 @@ namespace Xe { namespace Graphics {
 		int m_ClearStencil;
 		CSurface *m_Surface[0x100];
 		CDepthStencilState *m_DepthStencilState;
+		Xe::Math::Rectangle<int> m_Scissor;
 
 	public:
 		CContextNull();
@@ -101,6 +102,9 @@ namespace Xe { namespace Graphics {
 		void SetClearDepthSub(float depth);
 		int GetClearStencil() const;
 		void SetClearStencil(int stencil);
+
+		const Xe::Math::Rectangle<int> GetScissor();
+		void SetScissor(const Xe::Math::Rectangle<int>& scissor);
 
 		void Clear(svar clearmask);
 		void Draw(Primitive primitive, u32 count, u32 start);
