@@ -68,6 +68,7 @@ namespace Xe {
 		//! \warning DEPRECATED; for backward compatibility only.
 		bool Create(IContext **context, RenderEngine renderEngine, const ContextInitDesc& properties = ContextInitDesc());
 
+		//! \warning DEPRECATED; for backward compatibility only.
 		bool Create(IContext **context, ctstring driverName, const ContextInitDesc& properties = ContextInitDesc());
 	}
 }

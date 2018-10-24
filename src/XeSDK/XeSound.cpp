@@ -92,7 +92,7 @@ namespace Xe { namespace Sound {
 		LOGD("Checking for '%s' sound driver...", driverName);
 
 		Xe::Drivers::Sound::ISoundDriver* soundDriver = nullptr;
-		auto drivers = Xe::Drivers::GetDrivers(Xe::Drivers::DriverTypeFilter_Sound);
+		auto drivers = Xe::Drivers::GetDrivers<Xe::Drivers::Sound::ISoundDriver>();
 		for (auto it = drivers.begin(); it != drivers.end(); it++)
 		{
 			auto currentDriverName = (*it)->GetDriverName();

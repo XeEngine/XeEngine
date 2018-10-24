@@ -12,9 +12,46 @@ namespace Xe { namespace Drivers {
 		DriverTypeFilter_Input = 1 << DriverType_Input,
 	};
 
+	// Get all the registered drivers
+	std::list<IDriver*> GetAllDrivers();
+
+	// Register a specific driver
 	void RegisterDriver(IDriver* driver);
 
+	// Unregister a previously registered driver
 	void UnregisterDriver(IDriver* driver);
 
+	//! \warning DEPRECATED
 	std::list<IDriver*> GetDrivers(DriverTypeFilter filter);
+
+	// Get all the drivers from the given driver type
+	template <class TDriver>
+	std::list<TDriver*> GetDrivers()
+	{
+		static_assert(std::is_base_of<IDriver, TDriver>::value,
+			"TDriver must derive IDriver");
+
+		std::list<TDriver*> driversFound;
+		auto drivers = GetAllDrivers();
+
+		for (auto it = drivers.begin(); it != drivers.end(); ++it)
+		{
+			auto driver = dynamic_cast<TDriver*>(*it);
+			if (driver)
+			{
+				drivers.push_back(driver);
+			}
+		}
+
+		return drivers;
+	}
+
+	template <>
+	std::list<Rendering::IRenderingDriver*> GetDrivers();
+
+	template <>
+	std::list<Sound::ISoundDriver*> GetDrivers();
+
+	template <>
+	std::list<Input::IInputDriver*> GetDrivers();
 } }

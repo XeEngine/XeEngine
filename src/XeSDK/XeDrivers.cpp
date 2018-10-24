@@ -7,6 +7,11 @@ namespace Xe { namespace Drivers {
 
 	std::list<IDriver*> g_Drivers;
 
+	std::list<IDriver*> GetAllDrivers()
+	{
+		return g_Drivers;
+	}
+
 	void RegisterDriver(IDriver* driver)
 	{
 		ASSERT(driver != nullptr);
@@ -49,17 +54,41 @@ namespace Xe { namespace Drivers {
 		}
 	}
 
-	std::list<IDriver*> GetDrivers(DriverTypeFilter filter)
+	template <class TDriver>
+	std::list<TDriver*> InternalGetDrivers(DriverTypeFilter filter)
 	{
-		std::list<IDriver*> drivers;
+		std::list<TDriver*> drivers;
 		for (auto it = g_Drivers.begin(); it != g_Drivers.end(); ++it)
 		{
 			if ((1 << (*it)->GetDriverType()) & filter)
 			{
-				drivers.push_back(*it);
+				drivers.push_back(static_cast<TDriver*>(*it));
 			}
 		}
 
 		return drivers;
+	}
+
+	std::list<IDriver*> GetDrivers(DriverTypeFilter filter)
+	{
+		return InternalGetDrivers<IDriver>(filter);
+	}
+
+	template <>
+	std::list<Rendering::IRenderingDriver*> GetDrivers()
+	{
+		return InternalGetDrivers<Rendering::IRenderingDriver>(DriverTypeFilter_Rendering);
+	}
+
+	template <>
+	std::list<Sound::ISoundDriver*> GetDrivers()
+	{
+		return InternalGetDrivers<Sound::ISoundDriver>(DriverTypeFilter_Sound);
+	}
+
+	template <>
+	std::list<Input::IInputDriver*> GetDrivers()
+	{
+		return InternalGetDrivers<Input::IInputDriver>(DriverTypeFilter_Input);
 	}
 }}
