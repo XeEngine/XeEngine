@@ -14,26 +14,14 @@ namespace Xe {
 			if (m_obj) m_obj->AddRef();
 		}
 		~ObjPtr() {
-			m_obj->Release();
+			if (m_obj) m_obj->Release();
 		}
 
 		//! \brief Get the associated object
 		T* Get() const { return m_obj; }
 
-		//! \brief Get the object as U
-		//! \param[out] objptr that will hold the specified IObject
-		//! \return true if the operation was successed, else false.
-		/** \details When As is called, on the associated IObject will be
-		 * called a query with the same ID of U. If the query fails then
-		 * false is returned and objptr will contain a null reference.
-		 */
-		template <typename U>
-		bool As(ObjPtr<U>& objptr) {
-			if (m_obj != nullptr)
-				return m_obj->Query((IObject**)&objptr.m_obj, U::ID);
-			return false;
-		}
-
+		operator T*() { return m_obj; }
+		T** operator&() { return &m_obj; }
 		T& operator*() const { return *m_obj; }
 		T* operator->() const { return m_obj; }
 		bool operator!() const { return !m_obj; }
