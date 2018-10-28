@@ -1,5 +1,5 @@
 #pragma once
-#include <XeSDK/ICoreView.h>
+#include <XeSDK/ICoreFrameEventHandler.h>
 
 namespace Xe { namespace Core {
 	class DummyFrameHandler : public IFrameHandler

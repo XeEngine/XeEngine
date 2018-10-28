@@ -1,5 +1,5 @@
 #pragma once
-#include <XeSDK/ICoreView.h>
+#include <XeSDK/ICoreApplicationEventHandler.h>
 
 namespace Xe { namespace Core {
 	class DummyApplicationHandler : public IApplicationHandler

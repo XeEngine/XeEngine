@@ -17,7 +17,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICollection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IComparable.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreApplicationEventHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreFrameEventHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreKeyboardEventHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICorePointerDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDictionary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IDriversDriver.h" />
@@ -85,7 +88,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIO.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIODevices.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIOGamepad.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIOPointer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeLogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathMatrix.h" />

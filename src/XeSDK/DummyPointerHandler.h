@@ -1,5 +1,5 @@
 #pragma once
-#include <XeSDK/ICoreView.h>
+#include <XeSDK/ICorePointerDelegate.h>
 
 namespace Xe { namespace Core {
 	class DummyPointerHandler : public IPointerHandler

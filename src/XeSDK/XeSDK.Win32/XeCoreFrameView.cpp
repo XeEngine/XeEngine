@@ -1,4 +1,3 @@
-#include "..\..\..\include\XeSDK\XeCoreFrameView.h"
 #include "pch.h"
 #include <XeSDK/XeCoreFrameView.h>
 #include <XeSDK/XeObjPtr.h>

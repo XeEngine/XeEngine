@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ContextD3D11.h"
+#include <XeSDK/ICoreFrameEventHandler.h>
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeLogger.h>

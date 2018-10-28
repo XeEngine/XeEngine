@@ -2,6 +2,7 @@
 #include "ContextD3D11.h"
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
+#include <XeSDK/ICoreFrameEventHandler.h>
 #include <XeSDK/XeMemory.h>
 
 #if !_DURANGO

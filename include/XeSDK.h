@@ -7,7 +7,10 @@
 #include <XeSDK/IComparable.h>
 #include <XeSDK/IDelegate.h>
 #include <XeSDK/IFrameView.h>
-#include <XeSDK/ICoreView.h>
+#include <XeSDK/ICoreApplicationEventHandler.h>
+#include <XeSDK/ICoreFrameEventHandler.h>
+#include <XeSDK/ICoreKeyboardEventHandler.h>
+#include <XeSDK/ICorePointerDelegate.h>
 #include <XeSDK/IDictionary.h>
 #include <XeSDK/IEnumerable.h>
 #include <XeSDK/IGraphicsContext.h>
@@ -34,7 +37,6 @@
 #include <XeSDK/XeIO.h>
 #include <XeSDK/XeIODevices.h>
 #include <XeSDK/XeIOGamepad.h>
-#include <XeSDK/XeIOPointer.h>
 #include <XeSDK/XeLogger.h>
 #include <XeSDK/XeMath.h>
 #include <XeSDK/XeMathRandom.h>

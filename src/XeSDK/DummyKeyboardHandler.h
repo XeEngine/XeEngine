@@ -1,5 +1,5 @@
 #pragma once
-#include <XeSDK/ICoreView.h>
+#include <XeSDK/ICoreKeyboardEventHandler.h>
 
 namespace Xe { namespace Core {
 	class DummyKeyboardHandler : public IKeyboardHandler

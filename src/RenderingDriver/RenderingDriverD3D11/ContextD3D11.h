@@ -7,7 +7,6 @@
 #include <d3d11_x.h>
 #endif
 
-#include <XeSDK/ICoreView.h>
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/IGraphicsSurface.h>

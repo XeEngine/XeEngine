@@ -67,7 +67,7 @@ CFrameView::CFrameView(Xe::Core::IFrameHandler* pFrameHandler) :
 	m_hInstance = GetModuleHandle(NULL);
 
 	m_pointerEvent.CurrentPointer.IsProcessed = true;
-	m_pointerEvent.CurrentPointer.Device.Type = IO::PointerType_Mouse;
+	m_pointerEvent.CurrentPointer.Device.Type = PointerType_Mouse;
 	m_pointerEvent.CurrentPointer.Device.Is3dSupported = false;
 	m_pointerEvent.CurrentPointer.Position.Set(-1, -1);
 	m_pointerEvent.CurrentPointer.Buttons = 0;

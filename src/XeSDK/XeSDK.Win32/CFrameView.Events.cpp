@@ -1,13 +1,12 @@
 #include "pch.h"
 #include "CFrameView.h"
-#include <XeSDK/XeIOPointer.h>
 
 #include <Windows.h>
 #include <windowsx.h>
 #include <dbt.h>
 
 using namespace Xe;
-using namespace Xe::IO;
+using namespace Xe::Core;
 
 LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -235,11 +234,11 @@ void CFrameView::OnTouch(HWND hWnd, WPARAM wParam, LPARAM lParam)
 }
 uvar CFrameView::GetMouseButtonFromWParam(WPARAM wParam)
 {
-	return ((wParam & MK_LBUTTON) ? IO::PointerButton_Left : 0) |
-		((wParam & MK_RBUTTON) ? IO::PointerButton_Right : 0) |
-		((wParam & MK_MBUTTON) ? IO::PointerButton_Center : 0) |
-		((wParam & MK_XBUTTON1) ? IO::PointerButton_XButton1 : 0) |
-		((wParam & MK_XBUTTON2) ? IO::PointerButton_XButton2 : 0);
+	return ((wParam & MK_LBUTTON) ? PointerButton_Left : 0) |
+		((wParam & MK_RBUTTON) ? PointerButton_Right : 0) |
+		((wParam & MK_MBUTTON) ? PointerButton_Center : 0) |
+		((wParam & MK_XBUTTON1) ? PointerButton_XButton1 : 0) |
+		((wParam & MK_XBUTTON2) ? PointerButton_XButton2 : 0);
 }
 void CFrameView::OnMouseMove(WPARAM wParam, LPARAM lParam)
 {
@@ -250,13 +249,13 @@ void CFrameView::OnMouseMove(WPARAM wParam, LPARAM lParam)
 	{
 		m_pointerEvent.CurrentPointer.Buttons = GetMouseButtonFromWParam(wParam);
 		m_pointerEvent.CurrentPointer.Pressure = 1.0f;
-		m_pointerEvent.CurrentPointer.Action = IO::PointerAction_Moved;
+		m_pointerEvent.CurrentPointer.Action = PointerAction_Moved;
 	}
 	else
 	{
 		m_pointerEvent.CurrentPointer.Buttons = 0;
 		m_pointerEvent.CurrentPointer.Pressure = 0.0f;
-		m_pointerEvent.CurrentPointer.Action = IO::PointerAction_Moved;
+		m_pointerEvent.CurrentPointer.Action = PointerAction_Moved;
 	}
 
 	m_pPointerHandler->OnPointerMoved(m_pointerEvent);
@@ -280,12 +279,12 @@ void CFrameView::OnMouseButton(WPARAM wParam, LPARAM lParam, bool isReleased)
 
 	if (isReleased)
 	{
-		m_pointerEvent.CurrentPointer.Action = IO::PointerAction_Released;
+		m_pointerEvent.CurrentPointer.Action = PointerAction_Released;
 		m_pPointerHandler->OnPointerReleased(m_pointerEvent);
 	}
 	else
 	{
-		m_pointerEvent.CurrentPointer.Action = IO::PointerAction_Pressed;
+		m_pointerEvent.CurrentPointer.Action = PointerAction_Pressed;
 		m_pPointerHandler->OnPointerPressed(m_pointerEvent);
 	}
 }

@@ -1,7 +1,9 @@
 #pragma once
-#include <XeSDK/ICoreView.h>
 #include <XeSDK/XeCoreFrameView.h>
-#include <XeSDK/XeIOPointer.h>
+#include <XeSDK/ICoreApplicationEventHandler.h>
+#include <XeSDK/ICoreFrameEventHandler.h>
+#include <XeSDK/ICoreKeyboardEventHandler.h>
+#include <XeSDK/ICorePointerDelegate.h>
 #include <XeSDK/XeString.h>
 
 class CFrameView : public Xe::Core::IFrameView
