@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "src\ThirdParty\imgui.vcxitems", "{135D632A-8017-4646-9FD0-B3C1F569C357}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
@@ -76,6 +78,7 @@ Global
 		src\ThirdParty\zlib\zlib.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.Shared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\XeSDK\XeSDK.WinShared.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
+		src\ThirdParty\imgui.vcxitems*{135d632a-8017-4646-9fd0-b3c1f569c357}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.Unix\XeSDK.Shared.Unix.vcxitems*{1e4b9a2c-c668-4671-8b81-fe0f23326787}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.Dummy\XeSDK.Shared.Dummy.vcxitems*{23c41de4-1f9c-4556-9391-532353102816}*SharedItemsImports = 9
 		src\XeSDK\XeSDK.Shared.vcxitems*{26e3750a-fdf1-46ff-81ef-4031f3be2d43}*SharedItemsImports = 9
@@ -83,6 +86,7 @@ Global
 		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{32285449-9c04-4464-811f-8fe3f87a3914}*SharedItemsImports = 9
 		src\XeGame\XeGame.vcxitems*{364e7032-37e4-42b0-8617-fedb3b7673b5}*SharedItemsImports = 9
 		src\GamePlatformDriver\GamePlatform.Steam\GamePlatform.Steam.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
+		src\ThirdParty\imgui.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
 		src\XeGame\XeGame.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
 		src\ThirdParty\winsdk\winsdk.vcxitems*{4385b406-a2ea-4dd0-9f9b-cfdbc27fc12e}*SharedItemsImports = 9
 		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{69c0c0a8-0787-4bcd-993f-fbc1c05dd267}*SharedItemsImports = 9
@@ -152,6 +156,7 @@ Global
 		{3FAC9736-EDC1-4C37-8178-876110DC7F89} = {888BD4A4-767A-4CE7-8DCF-996B476801AB}
 		{724EC9FA-CCE0-4A11-9AB2-E86748B4A15B} = {888BD4A4-767A-4CE7-8DCF-996B476801AB}
 		{DCCB15FF-2DA3-4CC6-A918-D5633E64D85C} = {724EC9FA-CCE0-4A11-9AB2-E86748B4A15B}
+		{135D632A-8017-4646-9FD0-B3C1F569C357} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27233E81-5340-49F9-BF5E-A0B089653147}

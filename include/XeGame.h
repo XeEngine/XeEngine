@@ -11,3 +11,4 @@
 #include <XeGame/XeGameEaseFunctions.h>
 #include <XeGame/XeGameSoundManager.h>
 #include <XeGame/XeGameTextureManager.h>
+#include <XeGame/XeGameImGuiHandler.h>

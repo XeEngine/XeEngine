@@ -7,6 +7,12 @@
     <Filter Include="src">
       <UniqueIdentifier>{60502b67-56d2-445d-a73d-7010bfaf911e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\SoundManager">
+      <UniqueIdentifier>{f3f4f3b8-3de0-44ba-a35e-d27f40206068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\TextureManager">
+      <UniqueIdentifier>{b6b5433e-0d4e-4c88-899f-4505cbc9f674}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
@@ -54,28 +60,31 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundBgmEntity.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundSfxEntity.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.h">
-      <Filter>src</Filter>
+      <Filter>src\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h">
+      <Filter>src\SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h">
+      <Filter>src\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.h">
-      <Filter>src</Filter>
+      <Filter>src\SoundManager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h">
+      <Filter>src\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,28 +95,31 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundManager.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTimerComponent.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.cpp">
-      <Filter>src</Filter>
+      <Filter>src\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp">
+      <Filter>src\SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundManager.cpp">
+      <Filter>src\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.cpp">
-      <Filter>src</Filter>
+      <Filter>src\SoundManager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTimerComponent.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp">
+      <Filter>src\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp">
+      <Filter>src\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameImGuiHandler.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

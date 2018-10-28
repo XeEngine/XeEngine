@@ -18,6 +18,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameImGuiHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
@@ -42,6 +43,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundSfxEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h" />
