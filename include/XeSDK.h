@@ -1,6 +1,5 @@
 #pragma once
 
-#include <XeSDK/IApplication.h>
 #include <XeSDK/IDriversRenderingDriver.h>
 #include <XeSDK/IDriversSoundDriver.h>
 #include <XeSDK/IDriversGamepadDriver.h>
@@ -20,7 +19,6 @@
 #include <XeSDK/ISoundAudioEffect.h>
 #include <XeSDK/ISoundSoundFormatFactory.h>
 
-#include <XeSDK/XeApplication.h>
 #include <XeSDK/XeCollections.h>
 #include <XeSDK/XeCore.h>
 #include <XeSDK/XeCoreFrameView.h>

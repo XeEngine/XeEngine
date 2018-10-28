@@ -15,7 +15,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICollection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IComparable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICoreView.h" />
@@ -54,7 +53,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStorageDirectory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IStringable.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeApplication.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollections.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsDictionary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsListDynamic.h" />
@@ -138,7 +136,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDrivers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversInput.cpp" />

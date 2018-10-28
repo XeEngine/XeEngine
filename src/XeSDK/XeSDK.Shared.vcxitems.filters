@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsFont.h">
@@ -100,13 +100,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
       <Filter>Private</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IApplication.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IObject.h">
-      <Filter>Public</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeApplication.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h">
@@ -409,9 +403,6 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
-      <Filter>Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeApplication.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMemory.cpp">
