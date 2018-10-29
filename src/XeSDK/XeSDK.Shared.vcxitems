@@ -115,11 +115,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DefaultGamepadEventHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyApplicationHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyAudioBufferCallback.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyFrameHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OggAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeDef.h" />

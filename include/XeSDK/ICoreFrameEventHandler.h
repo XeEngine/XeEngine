@@ -4,12 +4,26 @@
 #include <XeSDK/IDelegate.h>
 #include <XeSDK/IFrameView.h>
 
+namespace Xe { namespace Core {
+
+	//! \brief Type of orientation.
+	enum Orientation
+	{
+		//! \brief Not specified or not supported by current device.
+		Orientation_Unknown,
+		Orientation_Landscape,
+		Orientation_Portrait,
+		Orientation_LandscapeFlipped,
+		Orientation_PortraitFlipped,
+	};
+} }
+
 namespace Xe { namespace Graphics {
+	//! \warning DEPRECATED
 	typedef Xe::Core::Orientation Orientation;
 } }
 
 namespace Xe { namespace Core {
-
 	struct AttachEventArgs
 	{
 		//! \brief Frame to attach

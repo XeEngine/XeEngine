@@ -271,18 +271,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCoreFrameView.h">
       <Filter>Core\public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyFrameHandler.h">
-      <Filter>Core\private</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyPointerHandler.h">
-      <Filter>Core\private</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyKeyboardHandler.h">
-      <Filter>Core\private</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DummyApplicationHandler.h">
-      <Filter>Core\private</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DefaultGamepadEventHandler.h">
       <Filter>Driver\Input</Filter>
     </ClInclude>

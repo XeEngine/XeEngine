@@ -1,5 +1,10 @@
 #pragma once
 #include <XeSDK/XeGraphics.h>
+#include <XeSDK/XeObjPtr.h>
+#include <XeSDK/ICoreApplicationEventHandler.h>
+#include <XeSDK/ICoreFrameEventHandler.h>
+#include <XeSDK/ICoreKeyboardEventHandler.h>
+#include <XeSDK/ICorePointerDelegate.h>
 
 namespace Xe { namespace Core {
 
@@ -61,23 +66,12 @@ namespace Xe { namespace Core {
 		DispatchType_WaitUntilQuit,
 	};
 
-	//! \brief Type of orientation.
-	enum Orientation
-	{
-		//! \brief Not specified or not supported by current device.
-		Orientation_Unknown,
-		Orientation_Landscape,
-		Orientation_Portrait,
-		Orientation_LandscapeFlipped,
-		Orientation_PortraitFlipped,
-	};
-
 	//! \internal
 	interface IFrameView : public IObject
 	{
-		virtual void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler) = 0;
-		virtual void SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler) = 0;
-		virtual void SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler) = 0;
+		virtual void SetApplicationEventHandler(Xe::Core::IApplicationEventHandler*) = 0;
+		virtual void SetKeyboardEventHandler(Xe::Core::IKeyboardEventHandler*) = 0;
+		virtual void SetPointerEventHandler(Xe::Core::IPointerEventHandler*) = 0;
 
 		//! \brief Process and remove from the event queue the events.
 		virtual bool DispatchEvents(DispatchType type) = 0;
@@ -107,5 +101,102 @@ namespace Xe { namespace Core {
 
 		//! \brief Get a pointer of window system's object, used for internal stuff.
 		virtual void* GetSystemWindow() const = 0;
+
+		// Compatibility layer. To remove on 0.10.x
+		Xe::Core::IApplicationEventHandler* m_TmpApplicationEventHandler = nullptr;
+		Xe::Core::IKeyboardEventHandler* m_TmpKeyboardEventHandler = nullptr;
+		Xe::Core::IPointerEventHandler* m_TmpPointerEventHandler = nullptr;
+
+		//! \warning DEPRECATED
+		void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler)
+		{
+			struct ApplicationEventHandler : public IApplicationEventHandler
+			{
+				ObjPtr<Xe::Core::IApplicationHandler> m_Handler;
+
+				ApplicationEventHandler(Xe::Core::IApplicationHandler* pApplicationHandler) :
+					m_Handler(pApplicationHandler)
+				{}
+
+				void operator()(InitializeEventArgs& args) { args.Succeeded = m_Handler->OnInitialize(); }
+				void operator()(const DestroyEventArgs& args) { m_Handler->OnDestroy(); }
+				void operator()(const SuspendEventArgs& args) { m_Handler->OnDestroy(); }
+				void operator()(const ResumeEventArgs& args) { m_Handler->OnDestroy(); }
+				void operator()(const RunEventArgs& args) { m_Handler->OnDestroy(); }
+				void operator()(const DrawEventArgs& args) { m_Handler->OnDestroy(); }
+				void operator()(const DeviceChangedEventArgs& args) { m_Handler->OnDestroy(); }
+			};
+
+			SetApplicationEventHandler(pApplicationHandler ? new ApplicationEventHandler(pApplicationHandler) : nullptr);
+		}
+
+		//! \warning DEPRECATED
+		void SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler)
+		{
+			struct KeyboardEventHandler : public IKeyboardEventHandler
+			{
+				ObjPtr<Xe::Core::IKeyboardHandler> m_Handler;
+
+				KeyboardEventHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler) :
+					m_Handler(pKeyboardHandler)
+				{}
+
+				void operator()(const CharPressedEventArgs& args) { m_Handler->OnCharacter(args); }
+				void operator()(const KeyPressedEventArgs& args) { m_Handler->OnKeyPressed(args); }
+				void operator()(const KeyReleasedEventArgs& args) { m_Handler->OnKeyReleased(args); }
+			};
+
+			if (m_TmpKeyboardEventHandler)
+			{
+				*this -= m_TmpKeyboardEventHandler;
+				delete m_TmpKeyboardEventHandler;
+			}
+
+			if (pKeyboardHandler)
+			{
+				m_TmpKeyboardEventHandler = new KeyboardEventHandler(pKeyboardHandler);
+				*this += m_TmpKeyboardEventHandler;
+			}
+			else
+			{
+				m_TmpKeyboardEventHandler = nullptr;
+			}
+		}
+
+		//! \warning DEPRECATED
+		void SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler)
+		{
+			struct PointerEventHandler : public IPointerEventHandler
+			{
+				ObjPtr<Xe::Core::IPointerHandler> m_Handler;
+
+				PointerEventHandler(Xe::Core::IPointerHandler* pPointerHandler) :
+					m_Handler(pPointerHandler)
+				{}
+
+				void operator()(const PointerMovedEventArgs& args) { m_Handler->OnPointerMoved(args); }
+				void operator()(const PointerPressedEventArgs& args) { m_Handler->OnPointerPressed(args); }
+				void operator()(const PointerReleasedEventArgs& args) { m_Handler->OnPointerReleased(args); }
+				void operator()(const PointerEnterEventArgs& args) { m_Handler->OnPointerEnter(args); }
+				void operator()(const PointerLeaveEventArgs& args) { m_Handler->OnPointerLeave(args); }
+				void operator()(const PointerWheelEventArgs& args) { m_Handler->OnPointerWheel(args); }
+			};
+
+			if (m_TmpPointerEventHandler)
+			{
+				*this -= m_TmpPointerEventHandler;
+				delete m_TmpPointerEventHandler;
+			}
+
+			if (pPointerHandler)
+			{
+				m_TmpPointerEventHandler = new PointerEventHandler(pPointerHandler);
+				*this += m_TmpPointerEventHandler;
+			}
+			else
+			{
+				m_TmpPointerEventHandler = nullptr;
+			}
+		}
 	};
 } }

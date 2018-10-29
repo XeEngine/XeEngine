@@ -1,5 +1,6 @@
 #pragma once
 #include <XeSDK/IFrameView.h>
+#include <XeSDK/ICoreFrameEventHandler.h>
 
 namespace Xe { namespace Core {
 
@@ -27,5 +28,8 @@ namespace Xe { namespace Core {
 	};
 
 	bool Run(Xe::Core::IFrameHandler* pFrameHandler,
+		const FrameViewInitDesc& desc);
+
+	bool Run(Xe::Core::IFrameEventHandler* pFrameHandler,
 		const FrameViewInitDesc& desc);
 }}

@@ -8,8 +8,16 @@
 using namespace Xe;
 using namespace Xe::Core;
 
+
 LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	union
+	{
+		ClosingEventArgs Closing;
+		FocusChangedEventArgs FocusChanged;
+		VisibilityChangedEventArgs VisibilityChanged;
+	} args;
+
 	switch (uMsg)
 	{
 	case WM_CREATE:
@@ -36,9 +44,11 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 		case SIZE_MAXIMIZED:
 		case SIZE_MAXSHOW:
 		case SIZE_MAXHIDE:
-			if (m_isWindowMinimized) {
+			if (m_isWindowMinimized)
+			{
 				m_isWindowMinimized = false;
-				m_pFrameHandler->OnVisibilityChanged(true);
+				args.VisibilityChanged.IsVisible = true;
+				(*m_pFrameHandler)(args.VisibilityChanged);
 			}
 			m_size.x = LOWORD(lParam);
 			m_size.y = HIWORD(lParam);
@@ -46,24 +56,36 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 			m_pointerEvent.CurrentPointer.Device.Rectangle.top = 0;
 			m_pointerEvent.CurrentPointer.Device.Rectangle.right = m_size.x;
 			m_pointerEvent.CurrentPointer.Device.Rectangle.bottom = m_size.y;
-			m_pFrameHandler->OnSizeChanged(GetSize());
+
+			{
+				SizeChangedEventArgs SizeChanged;
+				SizeChanged.Size = GetSize();
+				SizeChanged.Scale = 1.0f;
+				(*m_pFrameHandler)(SizeChanged);
+
+			}
 			break;
 		case SIZE_MINIMIZED:
-			m_isWindowMinimized = true;
-			m_pFrameHandler->OnVisibilityChanged(false);
+			args.VisibilityChanged.IsVisible = false;
+			(*m_pFrameHandler)(args.VisibilityChanged);
 			break;
 		}
 		break;
 	case WM_SETFOCUS:
-		m_pFrameHandler->OnFocusGot();
+		args.FocusChanged.IsFocused = true;
+		(*m_pFrameHandler)(args.FocusChanged);
 		break;
 	case WM_KILLFOCUS:
-		m_pFrameHandler->OnFocusLost();
+		args.FocusChanged.IsFocused = false;
+		(*m_pFrameHandler)(args.FocusChanged);
 		break;
 	case WM_PAINT:
 		break;
 	case WM_CLOSE:
-		if (m_pFrameHandler->OnClosing(false))
+		args.Closing.IsCloseForced = false;
+		args.Closing.CloseApproved = true;
+		(*m_pFrameHandler)(args.Closing);
+		if (args.Closing.CloseApproved)
 			DestroyWindow(hWnd);
 		return 0;
 	case WM_ERASEBKGND:
@@ -112,10 +134,10 @@ LRESULT CALLBACK CFrameView::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 
 void CFrameView::OnChar(WPARAM wParam, LPARAM lParam)
 {
-	IO::CharacterEvent e;
+	Xe::Core::CharacterEventArgs e;
 	e.ScanCode = (u32)((wParam >> 16) & 8);
 	e.Character = (u32)wParam;
-	m_pKeyboardHandler->OnCharacter(e);
+	(*m_pKeyboardHandler)(e);
 }
 
 void CFrameView::OnKey(WPARAM wParam, LPARAM lParam, bool isReleased)
@@ -133,7 +155,7 @@ void CFrameView::OnKey(WPARAM wParam, LPARAM lParam, bool isReleased)
 		};
 	};
 
-	IO::KeyboardEvent e;
+	Xe::Core::KeyboardEvent e;
 	Param param; param.Data = lParam;
 	e.ScanCode = param.ScanCode;
 	e.VirtualCode = (u32)wParam;

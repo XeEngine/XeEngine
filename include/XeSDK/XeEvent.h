@@ -4,6 +4,39 @@
 
 namespace Xe
 {
+	template <typename TEventHandler>
+	class EventHandler
+	{
+		std::list<TEventHandler*> m_Handlers;
+
+	public:
+		const EventHandler& operator += (TEventHandler* handler)
+		{
+			m_Handlers.push_back(handler);
+			return *this;
+		}
+
+		const EventHandler& operator -= (TEventHandler* handler)
+		{
+			m_Handlers.remove(handler);
+			return *this;
+		}
+
+		void Clear()
+		{
+			m_Handlers.clear();
+		}
+
+		template <class TArgs>
+		void operator()(TArgs args) const
+		{
+			for (auto it = m_Handlers.begin(); it != m_Handlers.end(); ++it)
+			{
+				(**it)(args);
+			}
+		}
+	};
+
 	template <typename TArgs>
 	class Event
 	{
@@ -20,6 +53,11 @@ namespace Xe
 		{
 			m_Delegates.remove(mydelegate);
 			return *this;
+		}
+
+		void Clear()
+		{
+			m_Handlers.clear();
 		}
 
 		void operator()(TArgs args) const

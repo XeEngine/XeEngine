@@ -1,9 +1,5 @@
 #include "pch.h"
 #include "CFrameView.h"
-#include "DummyApplicationHandler.h"
-#include "DummyFrameHandler.h"
-#include "DummyKeyboardHandler.h"
-#include "DummyPointerHandler.h"
 
 #include <Windows.h>
 #include <Windowsx.h>
@@ -56,15 +52,15 @@ typedef BOOL(WINAPI * PFNSETPROCESSDPIAWARENESSPROC)(PROCESS_DPI_AWARENESS value
 svar CFrameView::m_classesInstanceCount = 0;
 ATOM CFrameView::m_atom = 0;
 
-CFrameView::CFrameView(Xe::Core::IFrameHandler* pFrameHandler) :
+CFrameView::CFrameView(Xe::Core::IFrameEventHandler* pFrameHandler) :
 	m_isClosed(true),
 	m_hWnd(nullptr),
-	m_pFrameHandler(pFrameHandler),
-	m_pApplicationHandler(new DummyApplicationHandler),
-	m_pKeyboardHandler(new DummyKeyboardHandler),
-	m_pPointerHandler(new DummyPointerHandler)
+	m_pFrameHandler(pFrameHandler)
 {
 	m_hInstance = GetModuleHandle(NULL);
+	SetApplicationEventHandler(nullptr);
+	SetKeyboardEventHandler(nullptr);
+	SetPointerEventHandler(nullptr);
 
 	m_pointerEvent.CurrentPointer.IsProcessed = true;
 	m_pointerEvent.CurrentPointer.Device.Type = PointerType_Mouse;
@@ -73,15 +69,12 @@ CFrameView::CFrameView(Xe::Core::IFrameHandler* pFrameHandler) :
 	m_pointerEvent.CurrentPointer.Buttons = 0;
 	m_pointerEvent.CurrentPointer.Pressure = 0.0f;
 	m_pointerEvent.CurrentPointer.Time = Timer::Current();
-
-	pFrameHandler->AddRef();
 }
 CFrameView::~CFrameView()
 {
 	if (m_hWnd) CloseWindow(m_hWnd);
 	UnregisterWindowClass();
 
-	m_pFrameHandler->Release();
 	m_pApplicationHandler->Release();
 	m_pKeyboardHandler->Release();
 	m_pPointerHandler->Release();
@@ -155,55 +148,84 @@ bool CFrameView::Initialize(const Xe::Core::FrameViewInitDesc& properties)
 
 bool CFrameView::Run()
 {
-	bool result = m_pApplicationHandler->OnInitialize();
-	if (result)
+	Xe::Core::InitializeEventArgs initializeArgs{ false };
+	(*m_pApplicationHandler)(initializeArgs);
+	
+	if (initializeArgs.Succeeded)
 	{
-		m_pApplicationHandler->OnRun();
+		(*m_pApplicationHandler)(Xe::Core::RunEventArgs());
 	}
-	m_pApplicationHandler->OnDestroy();
 
-	return result;
+	Xe::Core::DestroyEventArgs destroyArgs;
+	(*m_pApplicationHandler)(Xe::Core::DestroyEventArgs());
+
+	return initializeArgs.Succeeded;
 }
 
-void CFrameView::SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler)
+void CFrameView::SetApplicationEventHandler(Xe::Core::IApplicationEventHandler* eventHandler)
 {
 	m_pApplicationHandler->Release();
-	m_pApplicationHandler = pApplicationHandler;
+	m_pApplicationHandler = eventHandler;
 	if (m_pApplicationHandler != nullptr)
 	{
 		m_pApplicationHandler->AddRef();
 	}
 	else
 	{
-		m_pApplicationHandler = new DummyApplicationHandler;
+		struct ApplicationEventHandler : public Xe::Core::IApplicationEventHandler
+		{
+			void operator()(InitializeEventArgs& args) { }
+			void operator()(const DestroyEventArgs& args) { }
+			void operator()(const SuspendEventArgs& args) { }
+			void operator()(const ResumeEventArgs& args) {  }
+			void operator()(const RunEventArgs& args) { }
+			void operator()(const DrawEventArgs& args) { }
+			void operator()(const DeviceChangedEventArgs& args) { }
+		};
+		m_pApplicationHandler = new ApplicationEventHandler;
 	}
 }
 
-void CFrameView::SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler)
+void CFrameView::SetKeyboardEventHandler(Xe::Core::IKeyboardEventHandler* eventHandler)
 {
 	m_pKeyboardHandler->Release();
-	m_pKeyboardHandler = pKeyboardHandler;
+	m_pKeyboardHandler = eventHandler;
 	if (m_pKeyboardHandler != nullptr)
 	{
 		m_pKeyboardHandler->AddRef();
 	}
 	else
 	{
-		m_pKeyboardHandler = new DummyKeyboardHandler;
+		struct KeyboardEventHandler : public IKeyboardEventHandler
+		{
+			void operator()(const CharPressedEventArgs& args) { }
+			void operator()(const KeyPressedEventArgs& args) { }
+			void operator()(const KeyReleasedEventArgs& args) { }
+		};
+		m_pKeyboardHandler = new KeyboardEventHandler;
 	}
 }
 
-void CFrameView::SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler)
+void CFrameView::SetPointerEventHandler(Xe::Core::IPointerEventHandler* eventHandler)
 {
 	m_pPointerHandler->Release();
-	m_pPointerHandler = pPointerHandler;
+	m_pPointerHandler = eventHandler;
 	if (m_pPointerHandler != nullptr)
 	{
 		m_pPointerHandler->AddRef();
 	}
 	else
 	{
-		m_pPointerHandler = new DummyPointerHandler;
+		struct PointerEventHandler : public IPointerEventHandler
+		{
+			void operator()(const PointerMovedEventArgs& args) { }
+			void operator()(const PointerPressedEventArgs& args) { }
+			void operator()(const PointerReleasedEventArgs& args) { }
+			void operator()(const PointerEnterEventArgs& args) { }
+			void operator()(const PointerLeaveEventArgs& args) { }
+			void operator()(const PointerWheelEventArgs& args) { }
+		};
+		m_pPointerHandler = new PointerEventHandler;
 	}
 }
 

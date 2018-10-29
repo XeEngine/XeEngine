@@ -61,10 +61,18 @@ namespace Xe { namespace IO {
 	typedef Xe::Core::VirtualKey VirtualKey;
 
 	//! \brief Describe the event for a keyboard button.
-	struct KeyboardEvent : public Xe::Core::KeyboardEventArgs {};
+	struct KeyboardEvent : public Xe::Core::KeyboardEventArgs
+	{
+		KeyboardEvent(const Xe::Core::KeyboardEventArgs& args) :
+			Xe::Core::KeyboardEventArgs(args) {}
+	};
 
 	//! \brief Describe the event for a character.
-	struct CharacterEvent : public Xe::Core::CharPressedEventArgs {};
+	struct CharacterEvent : public Xe::Core::CharPressedEventArgs
+	{
+		CharacterEvent(const Xe::Core::CharPressedEventArgs& args) :
+			Xe::Core::CharPressedEventArgs(args) {}
+	};
 } }
 
 namespace Xe { namespace Core {

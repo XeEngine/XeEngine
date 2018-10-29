@@ -22,17 +22,18 @@ class CFrameView : public Xe::Core::IFrameView
 	bool m_isWindowMinimized;
 	Xe::Graphics::Size m_size;
 
-	Xe::Core::IFrameHandler* m_pFrameHandler;
-	Xe::Core::IApplicationHandler* m_pApplicationHandler;
-	Xe::Core::IKeyboardHandler* m_pKeyboardHandler;
-	Xe::Core::IPointerHandler* m_pPointerHandler;
+	Xe::Core::IFrameEventHandler* m_pFrameHandler;
+	Xe::Core::IApplicationEventHandler* m_pApplicationHandler;
+	Xe::Core::IKeyboardEventHandler* m_pKeyboardHandler;
+	Xe::Core::IPointerEventHandler* m_pPointerHandler;
 
 	Xe::IO::PointerEvent m_pointerEvent;
 
 	// Inherted from IFrameView
-	void SetApplicationHandler(Xe::Core::IApplicationHandler* pApplicationHandler);
-	void SetKeyboardHandler(Xe::Core::IKeyboardHandler* pKeyboardHandler);
-	void SetPointerHandler(Xe::Core::IPointerHandler* pPointerHandler);
+	void SetApplicationEventHandler(Xe::Core::IApplicationEventHandler*);
+	void SetKeyboardEventHandler(Xe::Core::IKeyboardEventHandler*);
+	void SetPointerEventHandler(Xe::Core::IPointerEventHandler*);
+
 	bool DispatchEvents(Xe::Core::DispatchType type);
 	void SetTitle(const Xe::String& title);
 	Xe::Graphics::Size GetSize() const;
@@ -63,7 +64,7 @@ class CFrameView : public Xe::Core::IFrameView
 	void OnDeviceChange(WPARAM wParam, LPARAM lParam);
 
 public:
-	CFrameView(Xe::Core::IFrameHandler* pFrameHandler);
+	CFrameView(Xe::Core::IFrameEventHandler* pFrameHandler);
 	~CFrameView();
 
 	bool Initialize(const Xe::Core::FrameViewInitDesc& desc);

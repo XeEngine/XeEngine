@@ -153,7 +153,21 @@ namespace Xe { namespace IO {
 	};
 
 	//! \warning DEPRECATED
-	struct PointerEvent : public Xe::Core::PointerEventArgs {};
+	struct PointerEvent : public Xe::Core::PointerEventArgs
+	{
+		PointerEvent(const Xe::Core::PointerEventArgs& args) :
+			Xe::Core::PointerEventArgs(args) {}
+		PointerEvent(const Xe::Core::PointerMovedEventArgs& args) :
+			Xe::Core::PointerEventArgs(args) {}
+		PointerEvent(const Xe::Core::PointerPressedEventArgs& args) :
+			Xe::Core::PointerEventArgs(args) {}
+		PointerEvent(const Xe::Core::PointerReleasedEventArgs& args) :
+			Xe::Core::PointerEventArgs(args) {}
+		PointerEvent(const Xe::Core::PointerEnterEventArgs& args) :
+			Xe::Core::PointerEventArgs(args) {}
+		PointerEvent(const Xe::Core::PointerLeaveEventArgs& args) :
+			Xe::Core::PointerEventArgs(args) {}
+	};
 } }
 
 namespace Xe { namespace Core {
