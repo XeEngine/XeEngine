@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <XeSDK/XeStreamLogHandler.h>
 #include <XeSDK/IIoStream.h>
+#include <string>
 
 namespace Xe
 {

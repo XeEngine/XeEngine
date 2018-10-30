@@ -1,4 +1,5 @@
 #pragma once
+#include <XeSDK/XeDef.h>
 
 namespace Xe {
 	class System {

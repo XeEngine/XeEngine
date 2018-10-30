@@ -5,7 +5,9 @@
 namespace Xe
 {
 	ConsoleLogHandler::ConsoleLogHandler(bool flushOnLog) :
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 		hOutConsole(nullptr),
+#endif
 		m_FlushOnLog(flushOnLog),
 		m_LogTimer(true),
 		m_LogFilename(true),

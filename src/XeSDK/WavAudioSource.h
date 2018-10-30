@@ -303,6 +303,14 @@ const unsigned int FOURCC_XMA_SEEK = MAKEFOURCC('s', 'e', 'e', 'k');
 #ifndef WAVE_FORMAT_PCM
 #define WAVE_FORMAT_PCM         1
 
+#ifndef WORD
+typedef unsigned long       DWORD;
+typedef int                 BOOL;
+typedef unsigned char       BYTE;
+typedef unsigned short      WORD;
+typedef float               FLOAT;
+#endif
+
 typedef struct waveformat_tag {
 	WORD    wFormatTag;        /* format type */
 	WORD    nChannels;         /* number of channels (i.e. mono, stereo...) */

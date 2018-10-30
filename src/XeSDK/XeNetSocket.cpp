@@ -4,11 +4,17 @@
 
 #include <cerrno>
 
-#ifndef PLATFORM_WINDOWS
+#ifdef PLATFORM_WINDOWS
+#ifndef PLATFORM_WIN32
+#include <Winsock2.h>
+#endif
+
+#pragma comment(lib, "Ws2_32.lib")
+
+#else
 #include <sys/socket.h>
 #include <unistd.h>
-#elif !defined(PLATFORM_WIN32)
-#include <Winsock2.h>
+
 #endif
 
 namespace Xe {

@@ -9,7 +9,9 @@ namespace Xe
 {
 	class ConsoleLogHandler : public GenericLogHandler
 	{
+#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 		HANDLE hOutConsole;
+#endif
 		bool m_FlushOnLog;
 		bool m_LogTimer, m_LogFilename, m_LogFunction;
 
