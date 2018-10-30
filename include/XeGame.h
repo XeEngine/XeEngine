@@ -13,4 +13,6 @@
 #include <XeGame/XeGameTilemap2d.h>
 #include <XeGame/XeGameTextureManager.h>
 #include <XeGame/XeGameSoundManager.h>
+#include <XeGame/XeGameSpriteBatch.h>
+#include <XeGame/XeGameTextureManager.h>
 #include <XeGame/XeGameImGuiHandler.h>
