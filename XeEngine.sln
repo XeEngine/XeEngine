@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26510.0
@@ -6,6 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XeSDK", "XeSDK", "{D2847274-0B1D-4D23-A1E9-38BFC02E4E43}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Shared", "src\XeSDK\XeSDK.Shared.vcxitems", "{26E3750A-FDF1-46FF-81EF-4031F3BE2D43}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Tests", "src\XeSDK\XeSDK.Tests\XeSDK.Tests.vcxproj", "{6863ACA4-2166-4A34-B52C-39A1FDB0F459}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XeSDK.Win32", "src\XeSDK\XeSDK.Win32\XeSDK.Win32.vcxproj", "{11F0CE85-E904-4231-A27C-F7FF076FC7FB}"
 EndProject
@@ -92,6 +94,11 @@ Global
 		src\ThirdParty\imgui.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
 		src\XeGame\XeGame.vcxitems*{3fac9736-edc1-4c37-8178-876110dc7f89}*SharedItemsImports = 4
 		src\ThirdParty\winsdk\winsdk.vcxitems*{4385b406-a2ea-4dd0-9f9b-cfdbc27fc12e}*SharedItemsImports = 9
+		src\ThirdParty\libpng\libpng.vcxitems*{6863aca4-2166-4a34-b52c-39a1fdb0f459}*SharedItemsImports = 4
+		src\ThirdParty\libvorbis\libvorbis.vcxitems*{6863aca4-2166-4a34-b52c-39a1fdb0f459}*SharedItemsImports = 4
+		src\ThirdParty\zlib\zlib.vcxitems*{6863aca4-2166-4a34-b52c-39a1fdb0f459}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.Shared.vcxitems*{6863aca4-2166-4a34-b52c-39a1fdb0f459}*SharedItemsImports = 4
+		src\XeSDK\XeSDK.WinShared.vcxitems*{6863aca4-2166-4a34-b52c-39a1fdb0f459}*SharedItemsImports = 4
 		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{69c0c0a8-0787-4bcd-993f-fbc1c05dd267}*SharedItemsImports = 9
 		src\SoundDriver\SoundDriverXAudio\SoundDriverXAudio.vcxitems*{69d5bb40-2d91-407b-8b87-1089e02a4032}*SharedItemsImports = 9
 		src\ThirdParty\libpng\libpng.vcxitems*{7745487a-b7ca-4073-b035-621710b56cd2}*SharedItemsImports = 9
@@ -111,6 +118,18 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Debug|Win32.Build.0 = Debug|Win32
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Debug|x64.ActiveCfg = Debug|x64
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Debug|x64.Build.0 = Debug|x64
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Dev|Win32.ActiveCfg = Debug|Win32
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Dev|Win32.Build.0 = Debug|Win32
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Dev|x64.ActiveCfg = Debug|x64
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Dev|x64.Build.0 = Debug|x64
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Release|Win32.ActiveCfg = Release|Win32
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Release|Win32.Build.0 = Release|Win32
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Release|x64.ActiveCfg = Release|x64
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459}.Release|x64.Build.0 = Release|x64
 		{11F0CE85-E904-4231-A27C-F7FF076FC7FB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{11F0CE85-E904-4231-A27C-F7FF076FC7FB}.Debug|Win32.Build.0 = Debug|Win32
 		{11F0CE85-E904-4231-A27C-F7FF076FC7FB}.Debug|x64.ActiveCfg = Debug|x64
@@ -141,6 +160,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26E3750A-FDF1-46FF-81EF-4031F3BE2D43} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
+		{6863ACA4-2166-4A34-B52C-39A1FDB0F459} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
 		{11F0CE85-E904-4231-A27C-F7FF076FC7FB} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
 		{EF4E1787-9547-4AEF-AF68-F75347D19383} = {D2847274-0B1D-4D23-A1E9-38BFC02E4E43}
 		{7745487A-B7CA-4073-B035-621710B56CD2} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}
