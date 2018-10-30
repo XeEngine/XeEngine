@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26510.0
@@ -62,8 +62,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "src\ThirdParty\imgui.vcxitems", "{135D632A-8017-4646-9FD0-B3C1F569C357}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis", "src\ThirdParty\libvorbis\libvorbis.vcxitems", "{0FBC02CC-7B1F-4B85-8B8A-523DE7BBEBB8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\ThirdParty\libvorbis\libvorbis.vcxitems*{0fbc02cc-7b1f-4b85-8b8a-523de7bbebb8}*SharedItemsImports = 9
 		src\InputDriver\InputDriverWindowsCustom\InputDriverWindowsCustom.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\InputDriver\InputDriverXInput\InputDriverXInput.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
 		src\RenderingDriver\RenderingDriverD3D11\RenderingDriverD3D11.vcxitems*{11f0ce85-e904-4231-a27c-f7ff076fc7fb}*SharedItemsImports = 4
@@ -157,6 +160,7 @@ Global
 		{724EC9FA-CCE0-4A11-9AB2-E86748B4A15B} = {888BD4A4-767A-4CE7-8DCF-996B476801AB}
 		{DCCB15FF-2DA3-4CC6-A918-D5633E64D85C} = {724EC9FA-CCE0-4A11-9AB2-E86748B4A15B}
 		{135D632A-8017-4646-9FD0-B3C1F569C357} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}
+		{0FBC02CC-7B1F-4B85-8B8A-523DE7BBEBB8} = {BDA8E5A5-E6EB-4BAE-9152-9539646FDDC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {27233E81-5340-49F9-BF5E-A0B089653147}
