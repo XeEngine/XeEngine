@@ -1,6 +1,22 @@
 # Changelog
 
-## [0.9.2] - 2018-10-27
+## [0.9.3] - 2018-10-30
+
+## Added in XeSDK
+ - New operators in Xe::ObjPtr.
+ - Implemented Xe::Drivers::GetDriver<> and GetAllDrivers.
+ - Implemented Xe::Graphics::IContext::Get/SetScissor.
+
+## Fixed in XeSDK
+ - Fixed a crash when IContext::SelectSurface was called before IContext::GetRendering.
+
+## Changed in XeSDK
+ - Xe::Graphics::Create is now marked as deprecate.
+
+## Added in XeGame
+ - Support for ImGui via Xe::Core::I*Handler interfaces.
+
+## [0.9.2] - 2018-09-27
 
 ### Added in XeSDK
 - IContext::GetVertexBuffer and IContext::SetVertexBuffer.

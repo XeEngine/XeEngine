@@ -3,7 +3,7 @@
 
 #define XESDK_VER_MAJ	0
 #define XESDK_VER_MIN	9
-#define XESDK_VER_BUILD	2
+#define XESDK_VER_BUILD	3
 #define XESDK_VER ((XESDK_VER_MAJ << 24) | (XESDK_VER_MIN << 16) | (XESDK_VER_BUILD << 8))
 
 //! \brief Basic functionalities of the engine
