@@ -5,7 +5,6 @@
  *////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include <XeSDK/XeDefinitions.h>
 
 #if defined(_WIN64) || defined(_M_X64) || defined(_LP64)
 #define PLATFORM_64
