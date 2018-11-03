@@ -349,6 +349,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch_winapi.h">
       <Filter>Private</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeString2.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeStringInternal.h">
+      <Filter>Private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -502,6 +508,9 @@
       <Filter>Sound\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundGenericAudioSource.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeString2.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>

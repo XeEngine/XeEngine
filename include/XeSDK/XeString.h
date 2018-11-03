@@ -1,5 +1,7 @@
 #pragma once
 #include <XeSDK/IObject.h>
+#include <string>
+#include <XeSDK/XeMemory.h>
 
 #undef _INTSIZEOF
 #define _INTSIZEOF(n)           ((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))
@@ -23,11 +25,8 @@ namespace Xe
 			Compare_IgnoreLength = 2,
 		};
 
-		//! \brief create an empty string
 		String();
 
-		//! \brief create a string from another string
-		//! \param[in] string to copy
 		String(const String& string);
 
 		//! \brief create an empty string with a specified initial capacity

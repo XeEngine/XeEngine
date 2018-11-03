@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClCompile Include="XeObjPtrTest.cpp" />
     <ClCompile Include="XeIODevices_Dummy.cpp" />
+    <ClCompile Include="XeStringTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

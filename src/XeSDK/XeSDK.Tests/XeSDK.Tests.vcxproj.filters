@@ -5,6 +5,7 @@
       <Filter>Definitions</Filter>
     </ClCompile>
     <ClCompile Include="XeObjPtrTest.cpp" />
+    <ClCompile Include="XeStringTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
