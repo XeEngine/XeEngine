@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -109,6 +109,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStreamLogHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeString.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeString2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStringSpan.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeTimer.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeString.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeString2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStringFormatted.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStringSpan.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp" />

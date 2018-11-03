@@ -55,6 +55,7 @@
 #include <XeSDK/XeStoragePath.h>
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeString2.h>
+#include <XeSDK/XeStringSpan.h>
 #include <XeSDK/XeTimer.h>
 
 #include <XeSDK/XeGameComponentPosition2d.h>

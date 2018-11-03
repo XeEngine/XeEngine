@@ -355,6 +355,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XeStringInternal.h">
       <Filter>Private</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStringSpan.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -511,6 +514,9 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeString2.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeStringSpan.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
