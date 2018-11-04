@@ -1,7 +1,5 @@
 #pragma once
 
-#define NAMEOF(x) #x
-
 #define ASSERT_POSITIVE(x) \
 	if (x < 0) { throw std::invalid_argument("\""#x"\" cannot be a negative number"); }
 

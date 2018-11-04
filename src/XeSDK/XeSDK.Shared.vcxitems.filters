@@ -355,6 +355,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStringSpan.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsArray.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStaticArray.h">
+      <Filter>Collections\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">

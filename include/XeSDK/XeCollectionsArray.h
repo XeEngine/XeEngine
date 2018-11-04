@@ -1,58 +1,95 @@
 #pragma once
 #include <XeSDK/ICollection.h>
+#include <stdexcept>
 
-namespace Xe {
-	namespace Collections {
-		template <class T>
-		class Array<T> : public ICollection<T> {
-			svar m_count;
-			T* m_items;
-		public:
-			//! \brief interface id
-			static const UID ID = 0xc7e96d1d1bbf41d3ULL;
+namespace Xe { namespace Collections {
+	template <typename T>
+	class Array
+	{
+		int m_Length;
+		T* m_Array;
+	public:
+		template <size_t length>
+		Array(T(&items)[length]) :
+			Array(items, length)
+		{}
 
-			bool Query(IObject** obj, UID id) {
-				switch (id) {
-				case Array::ID:
-				case ICollection::ID:
-				case IObject::ID:
-					AddRef();
-					*obj = this;
-					return true;
-				}
-				*obj = nullptr;
-				return false;
+		Array() :
+			m_Length(0),
+			m_Array(nullptr)
+		{}
+
+		Array(T* items, int length) :
+			m_Length(length),
+			m_Array(items)
+		{}
+
+		operator T*() const
+		{
+			return m_Array;
+		}
+
+		T& operator[](int index)
+		{
+			if (index < 0)
+				throw std::out_of_range(NAMEOF(index)" cannot be negative");
+			if (index >= m_Length)
+				throw std::out_of_range(NAMEOF(index)" cannot be greater than the size of the array");
+			return m_Array[index];
+		}
+
+		bool IsEmpty() const
+		{
+			return m_Length == 0;
+		}
+		
+		int GetLength() const
+		{
+			return m_Length;
+		}
+
+		int IndexOf(T item) const
+		{
+			for (int i = 0; i < m_Length; ++i)
+			{
+				if (m_Array[i] == item)
+					return i;
 			}
 
-			Array(svar length) :
-				m_count(length),
-				m_items(new T[length]) { }
-			~Array() {
-				delete[] m_items;
+			return -1;
+		}
+
+		int LastIndexOf(T item) const
+		{
+			for (int i = m_Length - 1; i >= 0; --i)
+			{
+				if (m_Array[i] == item)
+					return i;
 			}
 
-			T& operator[](int index) {
-				return m_items[index];
-			}
+			return -1;
+		}
 
-			// Implementation of ICollection
-			bool Empty() const {
-				return m_count == 0;
-			}
-			svar Count() const {
-				return m_count;
-			}
-			bool Contains(const T& value) const {
-				for (svar i = 0; i < m_count; i++)
-					if (m_items[i] == value)
-						return true;
-				return false;
-			}
-			bool CopyTo(T* array, svar index, svar count, svar start) const {
-				for (svar i = 0; i < count; i++) {
-					array[index + i] = m_items[start + i];
-				}
-			}
-		};
-	}
-}
+		bool Contains(T item) const
+		{
+			return IndexOf(item) >= 0;
+		}
+
+		Array SubArray(int startIndex) const
+		{
+			return SubArray(startIndex, m_Length - startIndex);
+		}
+
+		Array SubArray(int startIndex, int length) const
+		{
+			if (startIndex < 0)
+				throw std::out_of_range(NAMEOF(startIndex)" cannot be negative");
+			if (length >= m_Length)
+				throw std::out_of_range(NAMEOF(length)" cannot benegative");
+			if (startIndex + length > m_Length)
+				throw std::out_of_range(NAMEOF(startIndex)" and " NAMEOF(length)" are out of range");
+
+			return Array(m_Array + startIndex, length);
+		}
+	};
+} }

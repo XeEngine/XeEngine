@@ -20,6 +20,8 @@
 #include <XeSDK/ISoundSoundFormatFactory.h>
 
 #include <XeSDK/XeCollections.h>
+#include <XeSDK/XeCollectionsArray.h>
+#include <XeSDK/XeCollectionsStaticArray.h>
 #include <XeSDK/XeCore.h>
 #include <XeSDK/XeCoreFrameView.h>
 #include <XeSDK/XeCryptoCrc32.h>

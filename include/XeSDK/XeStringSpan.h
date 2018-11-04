@@ -28,6 +28,8 @@ namespace Xe
 			StringSpan(str, length - 1)
 		{ }
 
+		StringSpan();
+
 		//! \brief Create a string from a C-style string
 		//! \param[in] string to copy
 		StringSpan(const char* str);

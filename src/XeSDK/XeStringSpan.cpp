@@ -9,6 +9,10 @@ using namespace Xe;
 
 StringSpan StringSpan::Empty("");
 
+StringSpan::StringSpan() :
+	StringSpan(Empty)
+{}
+
 StringSpan::StringSpan(const char* str) :
 	m_Length(str ? strlen(str) : 0),
 	m_Data(str ? str : "")

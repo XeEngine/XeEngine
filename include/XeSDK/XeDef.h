@@ -79,6 +79,8 @@ typedef unsigned int		uvar;
 #endif
 #define lengthof(x) (sizeof(x) / sizeof(*x))
 
+#define NAMEOF(x) #x
+
 #ifndef NULL
 #define NULL 0
 #endif

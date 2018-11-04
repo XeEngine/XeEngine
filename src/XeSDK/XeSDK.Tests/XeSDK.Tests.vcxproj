@@ -39,6 +39,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="XeArrayTest.cpp" />
     <ClCompile Include="XeObjPtrTest.cpp" />
     <ClCompile Include="XeIODevices_Dummy.cpp" />
     <ClCompile Include="XeStringTest.cpp" />

@@ -6,6 +6,7 @@
     </ClCompile>
     <ClCompile Include="XeObjPtrTest.cpp" />
     <ClCompile Include="XeStringTest.cpp" />
+    <ClCompile Include="XeArrayTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
