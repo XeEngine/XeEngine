@@ -25,8 +25,8 @@ namespace Xe { namespace Drivers {
 		case DriverType_Sound:
 			break;
 		case DriverType_Input:
-			ASSERT(dynamic_cast<Xe::Drivers::Input::IInputDriver*>(driver));
-			Xe::Drivers::Input::RegisterInputDriver((Xe::Drivers::Input::IInputDriver*)driver);
+			ASSERT(dynamic_cast<Xe::Drivers::IInputDriver*>(driver));
+			Xe::Drivers::RegisterInputDriver((Xe::Drivers::IInputDriver*)driver);
 			break;
 		}
 	}
@@ -48,8 +48,8 @@ namespace Xe { namespace Drivers {
 		case DriverType_Sound:
 			break;
 		case DriverType_Input:
-			ASSERT(dynamic_cast<Xe::Drivers::Input::IInputDriver*>(driver));
-			Xe::Drivers::Input::UnregisterInputDriver((Xe::Drivers::Input::IInputDriver*)driver);
+			ASSERT(dynamic_cast<Xe::Drivers::IInputDriver*>(driver));
+			Xe::Drivers::UnregisterInputDriver((Xe::Drivers::IInputDriver*)driver);
 			break;
 		}
 	}
@@ -70,20 +70,20 @@ namespace Xe { namespace Drivers {
 	}
 
 	template <>
-	std::list<Rendering::IRenderingDriver*> GetDrivers()
+	std::list<IRenderingDriver*> GetDrivers()
 	{
-		return InternalGetDrivers<Rendering::IRenderingDriver>(DriverTypeFilter_Rendering);
+		return InternalGetDrivers<IRenderingDriver>(DriverTypeFilter_Rendering);
 	}
 
 	template <>
-	std::list<Sound::ISoundDriver*> GetDrivers()
+	std::list<ISoundDriver*> GetDrivers()
 	{
-		return InternalGetDrivers<Sound::ISoundDriver>(DriverTypeFilter_Sound);
+		return InternalGetDrivers<ISoundDriver>(DriverTypeFilter_Sound);
 	}
 
 	template <>
-	std::list<Input::IInputDriver*> GetDrivers()
+	std::list<IInputDriver*> GetDrivers()
 	{
-		return InternalGetDrivers<Input::IInputDriver>(DriverTypeFilter_Input);
+		return InternalGetDrivers<IInputDriver>(DriverTypeFilter_Input);
 	}
 }}

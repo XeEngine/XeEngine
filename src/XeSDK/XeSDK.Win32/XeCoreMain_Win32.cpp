@@ -19,14 +19,14 @@
 
 namespace Xe {
 
-	Xe::Drivers::Rendering::NullDriver g_DriverRenderingNull;
-	Xe::Drivers::Rendering::D3D11Driver g_DriverRenderingD3D11;
-	//Xe::Drivers::Rendering::OpenGlDriver g_DriverRenderingOpenGl;
-	Xe::Drivers::Sound::NullDriver g_DriverSoundNull;
-	Xe::Drivers::Sound::WasapiDriver g_DriverSoundWasapi;
-	Xe::Drivers::Sound::XAudioDriver g_DriverSoundXAudio2;
-	Xe::Drivers::Input::WindowsCustom g_DriverInputCustom;
-	Xe::Drivers::Input::XInput g_DriverInputXInput;
+	Xe::Drivers::NullRenderingDriver g_DriverRenderingNull;
+	Xe::Drivers::D3D11Driver g_DriverRenderingD3D11;
+	//Xe::Drivers::OpenGlDriver g_DriverRenderingOpenGl;
+	Xe::Drivers::NullSoundDriver g_DriverSoundNull;
+	Xe::Drivers::WasapiDriver g_DriverSoundWasapi;
+	Xe::Drivers::XAudioDriver g_DriverSoundXAudio2;
+	Xe::Drivers::WindowsCustom g_DriverInputCustom;
+	Xe::Drivers::XInput g_DriverInputXInput;
 
 	void RegisterRenderingDrivers()
 	{

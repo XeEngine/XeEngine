@@ -6,7 +6,7 @@
 #pragma comment(lib, "xinput.lib")
 #endif
 
-namespace Xe { namespace Drivers { namespace Input {
+namespace Xe { namespace Drivers {
 	void XInputLib::Initialize()
 	{
 #if SETTINGS_LOADLIBRARY == 1
@@ -98,4 +98,4 @@ namespace Xe { namespace Drivers { namespace Input {
 		return ERROR_NOT_SUPPORTED;
 	}
 
-} } }
+} }

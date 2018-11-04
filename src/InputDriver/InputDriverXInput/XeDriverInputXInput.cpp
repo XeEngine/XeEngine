@@ -3,7 +3,7 @@
 #include "XeDriverInputXInput.h"
 #include <XeSDK/XeIOGamepad.h>
 
-namespace Xe { namespace Drivers { namespace Input {
+namespace Xe { namespace Drivers {
 	XInputLib g_XInput;
 
 	struct GamepadXInput : public Xe::IO::Gamepad {
@@ -249,4 +249,4 @@ namespace Xe { namespace Drivers { namespace Input {
 
 		return found;
 	}
-} } }
+} }

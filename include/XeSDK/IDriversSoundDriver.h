@@ -11,10 +11,10 @@ namespace Xe { namespace Sound {
 	};
 } }
 
-namespace Xe { namespace Drivers { namespace Sound {
+namespace Xe { namespace Drivers {
 	//! \brief Contract for a Sound Driver
 	interface ISoundDriver : public IDriver
 	{
 		virtual bool Factory(Xe::Sound::IAudio** pContext, const Xe::Sound::AudioInitDesc& desc) = 0;
 	};
-} } }
+} }

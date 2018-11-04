@@ -8,7 +8,7 @@ namespace Xe { namespace IO {
 		Xe::IO::Gamepad** ppGamepad,
 		const Xe::IO::GamepadEntry& entry)
 	{
-		auto& gamepadDrivers = Xe::Drivers::Input::GetGamepadDrivers();
+		auto& gamepadDrivers = Xe::Drivers::GetGamepadDrivers();
 		for (auto it = gamepadDrivers.begin(); it != gamepadDrivers.end(); ++it)
 		{
 			if ((*it)->OpenDevice(ppGamepad, entry))
@@ -27,7 +27,7 @@ namespace Xe { namespace IO {
 	{
 		size_t found = 0;
 
-		auto& gamepadDrivers = Xe::Drivers::Input::GetGamepadDrivers();
+		auto& gamepadDrivers = Xe::Drivers::GetGamepadDrivers();
 		for (auto it = gamepadDrivers.begin();
 			it != gamepadDrivers.end() && index + found < count;
 			++it)

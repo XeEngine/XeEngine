@@ -2,7 +2,7 @@
 #include "XeDriversSoundWasapiDriver.h"
 #include "XAudioEngine.h"
 
-namespace Xe { namespace Drivers { namespace Sound {
+namespace Xe { namespace Drivers {
 	const char* WasapiDriver::GetDriverName() const
 	{
 		return "Wasapi";
@@ -25,4 +25,4 @@ namespace Xe { namespace Drivers { namespace Sound {
 
 		return false;
 	}
-} } }
+} }

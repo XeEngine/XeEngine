@@ -31,8 +31,8 @@ namespace Xe { namespace Graphics {
 	{
 		LOGD("Checking for '%s' rendering driver...", driverName);
 
-		Xe::Drivers::Rendering::IRenderingDriver* renderingDriver = nullptr;
-		auto drivers = Xe::Drivers::GetDrivers<Xe::Drivers::Rendering::IRenderingDriver>();
+		Xe::Drivers::IRenderingDriver* renderingDriver = nullptr;
+		auto drivers = Xe::Drivers::GetDrivers<Xe::Drivers::IRenderingDriver>();
 		for (auto it = drivers.begin(); it != drivers.end(); it++)
 		{
 			auto currentDriverName = (*it)->GetDriverName();

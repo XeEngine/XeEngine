@@ -6,10 +6,10 @@ namespace Xe { namespace Graphics {
 	interface IContext;
 } }
 
-namespace Xe { namespace Drivers { namespace Rendering {
+namespace Xe { namespace Drivers {
 	//! \brief Contract for a Rendering Driver
 	interface IRenderingDriver : public IDriver
 	{
 		virtual bool Factory(Xe::Graphics::IContext** pContext, const Xe::Graphics::ContextInitDesc& properties) = 0;
 	};
-} } }
+} }

@@ -2,18 +2,18 @@
 #include "XeDriversRenderingNullDriver.h"
 #include "ContextNull.h"
 
-namespace Xe { namespace Drivers { namespace Rendering {
-	const char* NullDriver::GetDriverName() const
+namespace Xe { namespace Drivers {
+	const char* NullRenderingDriver::GetDriverName() const
 	{
 		return "Null render";
 	}
 
-	DriverType NullDriver::GetDriverType() const
+	DriverType NullRenderingDriver::GetDriverType() const
 	{
 		return DriverType_Rendering;
 	}
 
-	bool NullDriver::Factory(Xe::Graphics::IContext** pContext, const Xe::Graphics::ContextInitDesc& properties)
+	bool NullRenderingDriver::Factory(Xe::Graphics::IContext** pContext, const Xe::Graphics::ContextInitDesc& properties)
 	{
 		ASSERT(pContext != nullptr);
 		auto driver = new Xe::Graphics::CContextNull;
@@ -27,4 +27,4 @@ namespace Xe { namespace Drivers { namespace Rendering {
 
 		return result;
 	}
-} } }
+} }

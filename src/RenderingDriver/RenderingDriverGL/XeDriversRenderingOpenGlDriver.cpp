@@ -14,7 +14,7 @@
 
 #endif
 
-namespace Xe { namespace Drivers { namespace Rendering {
+namespace Xe { namespace Drivers {
 	const char* OpenGlDriver::GetDriverName() const
 	{
 		return "OpenGL";
@@ -39,4 +39,4 @@ namespace Xe { namespace Drivers { namespace Rendering {
 
 		return result;
 	}
-} } }
+} }

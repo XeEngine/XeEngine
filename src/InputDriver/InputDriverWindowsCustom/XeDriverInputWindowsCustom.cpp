@@ -23,8 +23,7 @@
 #define VID_SONY_DS4V2 0x09CC
 #define VID_SONY_DS4W 0x0BA0
 
-namespace Xe { namespace Drivers { namespace Input
-{
+namespace Xe { namespace Drivers {
 	struct InternalGamepad
 	{
 		Xe::IO::HidDevice HidDevice;
@@ -104,4 +103,4 @@ namespace Xe { namespace Drivers { namespace Input
 		return found;
 	}
 
-} } }
+} }

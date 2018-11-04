@@ -1,7 +1,7 @@
 #pragma once
 #include <XeSDK/IDriversGamepadDriver.h>
 
-namespace Xe { namespace Drivers { namespace Input {
+namespace Xe { namespace Drivers {
 
 	class WindowsCustom : public IGamepadDriver {
 
@@ -23,4 +23,4 @@ namespace Xe { namespace Drivers { namespace Input {
 			size_t count);
 	};
 
-} } }
+} }

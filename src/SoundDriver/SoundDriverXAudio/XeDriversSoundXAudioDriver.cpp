@@ -2,7 +2,7 @@
 #include "XeDriversSoundXAudioDriver.h"
 #include "XAudioEngine.h"
 
-namespace Xe { namespace Drivers { namespace Sound {
+namespace Xe { namespace Drivers {
 	const char* XAudioDriver::GetDriverName() const
 	{
 		return "XAudio2";
@@ -27,4 +27,4 @@ namespace Xe { namespace Drivers { namespace Sound {
 
 		return result;
 	}
-} } }
+} }

@@ -1,7 +1,7 @@
 #pragma once
 #include <XeSDK/IDriversGamepadDriver.h>
 
-namespace Xe { namespace Drivers { namespace Input {
+namespace Xe { namespace Drivers {
 	class DefaultGamepadEventHandler : public IGamepadEventHandler
 	{
 		void OnGamepadAttached(const Xe::IO::GamepadEntry& entry) { }

@@ -2,7 +2,7 @@
 #include <XeSDK/IDriversDriver.h>
 #include <XeSDK/XeIOGamepad.h>
 
-namespace Xe { namespace Drivers { namespace Input {
+namespace Xe { namespace Drivers {
 	enum InputDeviceType
 	{
 		InputDeviceType_Gamepad
@@ -46,4 +46,4 @@ namespace Xe { namespace Drivers { namespace Input {
 		//virtual void SetGamepadEventHandler(
 		//	IGamepadEventHandler* pGamepadEventHandler) = 0;
 	};
-} } }
+} }

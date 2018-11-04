@@ -44,11 +44,11 @@ namespace Xe { namespace Drivers {
 	}
 
 	template <>
-	std::list<Rendering::IRenderingDriver*> GetDrivers();
+	std::list<IRenderingDriver*> GetDrivers();
 
 	template <>
-	std::list<Sound::ISoundDriver*> GetDrivers();
+	std::list<ISoundDriver*> GetDrivers();
 
 	template <>
-	std::list<Input::IInputDriver*> GetDrivers();
+	std::list<IInputDriver*> GetDrivers();
 } }

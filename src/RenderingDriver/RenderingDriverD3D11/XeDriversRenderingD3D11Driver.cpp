@@ -2,7 +2,7 @@
 #include "XeDriversRenderingD3D11Driver.h"
 #include "ContextD3D11.h"
 
-namespace Xe { namespace Drivers { namespace Rendering {
+namespace Xe { namespace Drivers {
 	const char* D3D11Driver::GetDriverName() const
 	{
 		return "Direct3D 11";
@@ -30,4 +30,4 @@ namespace Xe { namespace Drivers { namespace Rendering {
 		*pContext = nullptr;
 		return false;
 	}
-} } }
+} }

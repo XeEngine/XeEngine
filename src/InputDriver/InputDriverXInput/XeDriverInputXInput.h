@@ -41,7 +41,7 @@ typedef DWORD(WINAPI *PFNXINPUTGETAUDIODEVICESIDSPROC) (
 	_Inout_opt_  UINT *pCaptureCount
 	);
 
-namespace Xe { namespace Drivers { namespace Input {
+namespace Xe { namespace Drivers {
 
 	class XInput : public IGamepadDriver {
 
@@ -98,4 +98,4 @@ namespace Xe { namespace Drivers { namespace Input {
 		void Destroy();
 	};
 
-} } }
+} }
