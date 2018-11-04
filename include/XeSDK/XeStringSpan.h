@@ -22,7 +22,7 @@ namespace Xe
 		//! \param[in] length Number of characters to copy
 		StringSpan(const char* str, int length);
 
-		char operator [](int index);
+		char operator [](int index) const;
 		StringSpan& operator =(const StringSpan& str);
 		bool operator == (const StringSpan& str) const;
 		bool operator != (const StringSpan& str) const;

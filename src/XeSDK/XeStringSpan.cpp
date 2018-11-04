@@ -18,7 +18,7 @@ StringSpan::StringSpan(const char* str, int length) :
 	ASSERT_POSITIVE(length);
 }
 
-char StringSpan::operator [](int index) { return m_Data[index]; }
+char StringSpan::operator [](int index) const { return m_Data[index]; }
 
 StringSpan& StringSpan::operator =(const StringSpan& str)
 {

@@ -70,7 +70,7 @@ TEST(XeStringTest, EndsWithTest)
 
 TEST(XeStringTest, IndexOfTest)
 {
-	EXPECT_EQ(12, Xe::String2("Hello world!").IndexOf('\0'));
+	EXPECT_EQ(-1, Xe::String2("Hello world!").IndexOf('\0'));
 	EXPECT_EQ(0, Xe::String2("Hello world!").IndexOf('H'));
 	EXPECT_EQ(2, Xe::String2("Hello world!").IndexOf('l'));
 	EXPECT_EQ(11, Xe::String2("Hello world!").IndexOf('!'));
@@ -99,20 +99,12 @@ TEST(XeStringTest, IndexOfAnyTest)
 	EXPECT_EQ(2, Xe::String2("02468").IndexOfAny("13574"));
 	EXPECT_EQ(-1, Xe::String2("02468").IndexOfAny(""));
 	EXPECT_EQ(-1, Xe::String2("02468").IndexOfAny("1"));
-
-	EXPECT_EQ(-1, Xe::String2("02468").IndexOfAny("2", 0));
-	EXPECT_EQ(4, Xe::String2("02468").IndexOfAny("8642", 1));
-	EXPECT_EQ(1, Xe::String2("02468").IndexOfAny("8642", 4));
-	EXPECT_EQ(-1, Xe::String2("02468").IndexOfAny("13574", 4));
-
 	EXPECT_EQ(1, Xe::String2("abba").IndexOfAny("b"));
-	EXPECT_EQ(0, Xe::String2("abba").IndexOfAny("a", 1));
-	EXPECT_EQ(1, Xe::String2("abba").IndexOfAny("b", 1));
 }
 
 TEST(XeStringTest, LastIndexOfTest)
 {
-	EXPECT_EQ(12, Xe::String2("Hello world!").LastIndexOf('\0'));
+	EXPECT_EQ(-1, Xe::String2("Hello world!").LastIndexOf('\0'));
 	EXPECT_EQ(0, Xe::String2("Hello world!").LastIndexOf('H'));
 	EXPECT_EQ(9, Xe::String2("Hello world!").LastIndexOf('l'));
 	EXPECT_EQ(11, Xe::String2("Hello world!").LastIndexOf('!'));
@@ -142,15 +134,7 @@ TEST(XeStringTest, LastIndexOfAnyTest)
 	EXPECT_EQ(2, Xe::String2("02468").LastIndexOfAny("13574"));
 	EXPECT_EQ(-1, Xe::String2("02468").LastIndexOfAny(""));
 	EXPECT_EQ(-1, Xe::String2("02468").LastIndexOfAny("1"));
-
-	EXPECT_EQ(-1, Xe::String2("02468").LastIndexOfAny("2", 0));
-	EXPECT_EQ(1, Xe::String2("02468").LastIndexOfAny("2468", 1));
-	EXPECT_EQ(4, Xe::String2("02468").LastIndexOfAny("2468", 4));
-	EXPECT_EQ(-1, Xe::String2("02468").LastIndexOfAny("13574", 4));
-
 	EXPECT_EQ(2, Xe::String2("abba").LastIndexOfAny("b"));
-	EXPECT_EQ(3, Xe::String2("abba").LastIndexOfAny("a", 1));
-	EXPECT_EQ(2, Xe::String2("abba").LastIndexOfAny("b", 1));
 }
 
 TEST(XeStringTest, ToUpperTest)
@@ -179,7 +163,8 @@ TEST(XeStringTest, AppendTest)
 {
 	STRASSERT("test-toast", Xe::String2("test").Append("-toast"));
 	STRASSERT("test-toast", Xe::String2("test").Append(Xe::String2("-toast")));
-	STRASSERT("test-toast", Xe::String2("test") + "-toast");
+	//STRASSERT("test-toast", Xe::String2("test") + "-toast");
+	//STRASSERT("test-toast", Xe::String2("test") + Xe::StringSpan("-toast"));
 	STRASSERT("test-toast", Xe::String2("test") + Xe::String2("-toast"));
 }
 
@@ -307,7 +292,7 @@ TEST(XeStringTest, CompareInsensitiveTest)
 
 TEST(XeStringTest, JoinTest)
 {
-	const char* str[]{ "1", "2", "3" };
+	const Xe::StringSpan str[]{ "1", "2", "3" };
 	STRASSERT("1, 2, 3", Xe::String2::Join(", ", str));
 	STRASSERT("1, 2, 3", Xe::String2::Join(", ", str, 3));
 	STRASSERT("1,2,3", Xe::String2::Join(",", str, 3));

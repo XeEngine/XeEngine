@@ -1,5 +1,6 @@
 #pragma once
 #include <XeSDK/XeString2.h>
+#include <XeSDK/XeStringSpan.h>
 
 namespace Xe
 {
@@ -20,34 +21,60 @@ namespace Xe
 		//! \brief Create an empty string
 		String2();
 
-		//! \brief Create a string from a C-style string
+		//! \brief Create a string from a StringSpan
 		//! \param[in] string to copy
-		String2(const char* string);
-
-		//! \brief Create a string from a C-style string with a specified length
-		//! \param[in] string String to copy
-		//! \param[in] length Number of characters to copy
-		String2(const char* string, int length);
-
+		String2(const StringSpan& string);
+		
 		//! \brief Create a string from another string
 		//! \param[in] string to copy
 		String2(const String2& string);
+
 		~String2();
 
 		operator const char*() const;
-		char& operator [](int index);
-		String2& operator =(const char* str);
+		operator StringSpan() const;
+		char operator [](int index);
+		String2& operator =(const StringSpan& str);
 		String2& operator =(const String2& str);
-		String2 operator +(const char* str) const;
+		
+		template <size_t length>
+		String2 operator +(const char(&str)[length])
+		{
+			return *this + StringSpan(str);
+		}
+
+		String2 operator +(const StringSpan& str) const;
+
 		String2 operator +(const String2& str) const;
-		String2 operator +=(const char* str) const;
+
+		template <size_t length>
+		String2 operator +=(const char(&str)[length])
+		{
+			return *this + StringSpan(str);
+		}
+
+		String2 operator +=(const StringSpan& str) const;
+
 		String2 operator +=(const String2& str) const;
-		bool operator == (const char* str) const;
+
+		template <size_t length>
+		bool operator ==(const char(&str)[length])
+		{
+			return *this == String2(str);
+		}
+
+		//bool operator == (const StringSpan& str) const;
+
 		bool operator == (const String2& str) const;
+
 		bool operator != (const String2& str) const;
+
 		bool operator > (const String2& str) const;
+
 		bool operator >= (const String2& str) const;
+
 		bool operator < (const String2& str) const;
+
 		bool operator <= (const String2& str) const;
 
 		//! \brief Length of the string
@@ -62,33 +89,29 @@ namespace Xe
 
 		bool IsEmptyOrWhitespace() const;
 
-		bool StartsWith(const char* str) const;
+		bool StartsWith(const StringSpan& str) const;
 
 		bool StartsWith(const String2& str) const;
 
-		bool EndsWith(const char* str) const;
+		bool EndsWith(const StringSpan& str) const;
 
 		bool EndsWith(const String2& str) const;
 
 		int IndexOf(char ch) const;
 
-		int IndexOf(const char* str) const;
+		int IndexOf(const StringSpan& str) const;
 
 		int IndexOf(const String2& str) const;
 
-		int IndexOfAny(const char* chs) const;
-
-		int IndexOfAny(const char* chs, int count) const;
+		int IndexOfAny(const StringSpan& chs) const;
 
 		int LastIndexOf(char ch) const;
 
-		int LastIndexOf(const char* str) const;
+		int LastIndexOf(const StringSpan& str) const;
 
 		int LastIndexOf(const String2& str) const;
 
-		int LastIndexOfAny(const char* chs) const;
-
-		int LastIndexOfAny(const char* chs, int count) const;
+		int LastIndexOfAny(const StringSpan& chs) const;
 
 		//! \brief Get the string as uppercase
 		/** \details From "TeSt" to "TEST".
@@ -104,11 +127,11 @@ namespace Xe
 
 		String2 Substring(int startIndex, int length) const;
 
-		String2 Append(const char* str) const;
+		String2 Append(const StringSpan& str) const;
 
 		String2 Append(const String2& str) const;
 
-		String2 Insert(int position, const char* str) const;
+		String2 Insert(int position, const StringSpan& str) const;
 
 		String2 Insert(int position, const String2& str) const;
 
@@ -118,7 +141,7 @@ namespace Xe
 
 		String2 Replace(char chDst, char chSrc) const;
 
-		String2 Replace(const char* strDst, const char* strSrc) const;
+		String2 Replace(const StringSpan& strDst, const StringSpan& strSrc) const;
 
 		String2 Replace(const String2& strDst, const String2& strSrc) const;
 
@@ -134,12 +157,18 @@ namespace Xe
 
 		// TODO SPLIT
 
+		static int Compare(const StringSpan& stra, const StringSpan& strb);
+		static int Compare(const String2& stra, const StringSpan& strb);
+		static int Compare(const StringSpan& stra, const String2& strb);
 		static int Compare(const String2& stra, const String2& strb);
 
+		static int CompareInsensitive(const StringSpan& stra, const StringSpan& strb);
+		static int CompareInsensitive(const StringSpan& stra, const String2& strb);
+		static int CompareInsensitive(const String2& stra, const StringSpan& strb);
 		static int CompareInsensitive(const String2& stra, const String2& strb);
 
 		template <size_t length>
-		static String2 Join(char separator, const char* (&strs)[length])
+		static String2 Join(char separator, const StringSpan (&strs)[length])
 		{
 			return Join(separator, strs, length);
 		}
@@ -151,7 +180,19 @@ namespace Xe
 		}
 
 		template <size_t length>
-		static String2 Join(const String2& separator, const char* (&strs)[length])
+		static String2 Join(const StringSpan& separator, const StringSpan(&strs)[length])
+		{
+			return Join(separator, strs, length);
+		}
+
+		template <size_t length>
+		static String2 Join(const String2& separator, const StringSpan(&strs)[length])
+		{
+			return Join(separator, strs, length);
+		}
+
+		template <size_t length>
+		static String2 Join(const StringSpan& separator, String2(&strs)[length])
 		{
 			return Join(separator, strs, length);
 		}
@@ -162,11 +203,15 @@ namespace Xe
 			return Join(separator, strs, length);
 		}
 
-		static String2 Join(char separator, const char** strs, int count);
+		static String2 Join(char separator, const StringSpan* strs, int count);
 
 		static String2 Join(char separator, const String2* strs, int count);
 
-		static String2 Join(const String2& separator, const char** strs, int count);
+		static String2 Join(const StringSpan& separator, const StringSpan* strs, int count);
+
+		static String2 Join(const String2& separator, const StringSpan* strs, int count);
+
+		static String2 Join(const StringSpan& separator, const String2* strs, int count);
 
 		static String2 Join(const String2& separator, const String2* strs, int count);
 	};

@@ -21,7 +21,7 @@ void Xe_FastHeap_Free(T* data)
 	Xe::Memory::Free((void*)data);
 }
 
-String2 String2::Empty("", 0);
+String2 String2::Empty("");
 
 String2::String2(int length) :
 	m_Length(length),
@@ -35,22 +35,14 @@ String2::String2() :
 	String2(Empty)
 { }
 
-String2::String2(const char* string) :
-	String2(string, strlen(string))
-{ }
-
-String2::String2(const char* string, int length) :
-	String2(length)
+String2::String2(const StringSpan& string) :
+	String2(string.GetLength())
 {
-	// Avoid undesiderable memory access
-	int len = strlen(string);
-	ASSERT_CPOSITION(0, len);
-
-	Xe::Memory::Copy((char*)m_Data, string, m_Length * sizeof(char));
+	Xe::Memory::Copy((char*)m_Data, string.GetData(), m_Length * sizeof(char));
 }
 
 String2::String2(const String2& string) :
-	String2(string.m_Data, string.m_Length)
+	String2(StringSpan(string.m_Data, string.m_Length))
 { }
 
 String2::~String2()
@@ -73,13 +65,18 @@ String2::operator const char*() const
 	return m_Data;
 }
 
-char& String2::operator [](int index)
+String2::operator StringSpan() const
+{
+	return StringSpan(m_Data, m_Length);
+}
+
+char String2::operator [](int index)
 {
 	ASSERT_POSITION(index);
 	return m_Data[index];
 }
 
-String2& String2::operator =(const char* str)
+String2& String2::operator =(const StringSpan& str)
 {
 	// TODO optimize
 	return *this = String2(str);
@@ -99,7 +96,7 @@ String2& String2::operator =(const String2& str)
 	return *this;
 }
 
-String2 String2::operator +(const char* str) const
+String2 String2::operator +(const StringSpan& str) const
 {
 	return Append(str);
 }
@@ -109,9 +106,9 @@ String2 String2::operator +(const String2& str) const
 	return Append(str);
 }
 
-String2 String2::operator +=(const char* str) const { return *this + str; }
+String2 String2::operator +=(const StringSpan& str) const { return *this + str; }
 String2 String2::operator +=(const String2& str) const { return *this + str; }
-bool String2::operator == (const char* str) const { return Compare(*this, str) == 0; }
+//bool String2::operator == (const StringSpan& str) const { return Compare(*this, str) == 0; }
 bool String2::operator == (const String2& str) const { return Compare(*this, str) == 0; }
 bool String2::operator != (const String2& str) const { return Compare(*this, str) != 0; }
 bool String2::operator > (const String2& str) const { return Compare(*this, str) > 0; }
@@ -147,7 +144,7 @@ bool String2::IsEmptyOrWhitespace() const
 	return true;
 }
 
-bool String2::StartsWith(const char* str) const
+bool String2::StartsWith(const StringSpan& str) const
 {
 	return IndexOf(str) == 0;
 }
@@ -157,9 +154,9 @@ bool String2::StartsWith(const String2& str) const
 	return IndexOf(str) == 0;
 }
 
-bool String2::EndsWith(const char* str) const
+bool String2::EndsWith(const StringSpan& str) const
 {
-	return LastIndexOf(str) == GetLength() - strlen(str);
+	return LastIndexOf(str) == GetLength() - str.GetLength();
 }
 
 bool String2::EndsWith(const String2& str) const
@@ -169,9 +166,6 @@ bool String2::EndsWith(const String2& str) const
 
 int String2::IndexOf(char ch) const
 {
-	if (ch == '\0')
-		return m_Length;
-
 	for (int i = 0; i < m_Length; i++)
 	{
 		if (m_Data[i] == ch)
@@ -181,7 +175,7 @@ int String2::IndexOf(char ch) const
 	return -1;
 }
 
-int String2::IndexOf(const char* str) const
+int String2::IndexOf(const StringSpan& str) const
 {
 	// TODO optimize
 	return IndexOf(String2(str));
@@ -197,19 +191,14 @@ int String2::IndexOf(const String2& str) const
 	return -1;
 }
 
-int String2::IndexOfAny(const char* chs) const
+int String2::IndexOfAny(const StringSpan& chs) const
 {
-	// TODO optimize
-	return IndexOfAny(chs, String2(chs).GetLength());
-}
-
-int String2::IndexOfAny(const char* chs, int count) const
-{
+	int count = chs.GetLength();
 	if (count == 1)
 	{
 		for (int i = 0; i < m_Length; i++)
 		{
-			if (m_Data[i] == *chs)
+			if (m_Data[i] == chs[0])
 				return i;
 		}
 	}
@@ -230,12 +219,16 @@ int String2::IndexOfAny(const char* chs, int count) const
 
 int String2::LastIndexOf(char ch) const
 {
-	// TODO optimize!!!!!
-	char str[2]{ ch, '\0' };
-	return LastIndexOf(String2(str));
+	for (int i = m_Length - 1; i >= 0; --i)
+	{
+		if (m_Data[i] == ch)
+			return i;
+	}
+
+	return -1;
 }
 
-int String2::LastIndexOf(const char* str) const
+int String2::LastIndexOf(const StringSpan& str) const
 {
 	// TODO optimize
 	return LastIndexOf(String2(str));
@@ -265,19 +258,14 @@ int String2::LastIndexOf(const String2& str) const
 	return -1;
 }
 
-int String2::LastIndexOfAny(const char* chs) const
+int String2::LastIndexOfAny(const StringSpan& chs) const
 {
-	// TODO optimize
-	return LastIndexOfAny(chs, String2(chs).GetLength());
-}
-
-int String2::LastIndexOfAny(const char* chs, int count) const
-{
+	int count = chs.GetLength();
 	if (count == 1)
 	{
 		for (int i = m_Length - 1; i >= 0; i--)
 		{
-			if (m_Data[i] == *chs)
+			if (m_Data[i] == chs[0])
 				return i;
 		}
 	}
@@ -336,7 +324,7 @@ String2 String2::Substring(int startIndex, int length) const
 	return str;
 }
 
-String2 String2::Append(const char* str) const
+String2 String2::Append(const StringSpan& str) const
 {
 	// TODO optimize
 	return Append(String2(str));
@@ -350,7 +338,7 @@ String2 String2::Append(const String2& str) const
 	return strOut;
 }
 
-String2 String2::Insert(int position, const char* str) const
+String2 String2::Insert(int position, const StringSpan& str) const
 {
 	// TODO optimize
 	return Insert(position, String2(str));
@@ -390,7 +378,7 @@ String2 String2::Remove(int startIndex, int length) const
 	else if (startIndex + length == m_Length)
 	{
 		// Remove at the end
-		return String2(m_Data, m_Length - length);
+		return String2(StringSpan(m_Data, m_Length - length));
 	}
 	else
 	{
@@ -400,7 +388,6 @@ String2 String2::Remove(int startIndex, int length) const
 		Xe::Memory::Copy(strOut.m_Data + startIndex, m_Data + startIndex + length, m_Length - startIndex - length);
 		return strOut;
 	}
-	//return String2(m_Data + endIndex, length);
 }
 
 String2 String2::Replace(char chOld, char chNew) const
@@ -411,7 +398,7 @@ String2 String2::Replace(char chOld, char chNew) const
 	return str;
 }
 
-String2 String2::Replace(const char* strOld, const char* strNew) const
+String2 String2::Replace(const StringSpan& strOld, const StringSpan& strNew) const
 {
 	// TODO optimize
 	return Replace(Xe::String2(strOld), Xe::String2(strNew));
@@ -516,15 +503,30 @@ String2 String2::TrimStart() const
 {
 	int startIndex;
 	for (startIndex = 0; startIndex < m_Length && m_Data[startIndex] == ' '; ++startIndex);
-	return String2(m_Data + startIndex, m_Length - startIndex);
+	return String2(StringSpan(m_Data + startIndex, m_Length - startIndex));
 }
 
 String2 String2::TrimEnd() const
 {
 	int endIndex;
 	for (endIndex = m_Length - 1; endIndex >= 0 && m_Data[endIndex] == ' '; --endIndex);
-	return String2(m_Data, endIndex + 1);
+	return String2(StringSpan(m_Data, endIndex + 1));
 	return String2();
+}
+
+int String2::Compare(const StringSpan& stra, const StringSpan& strb)
+{
+	return strncmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
+}
+
+int String2::Compare(const String2& stra, const StringSpan& strb)
+{
+	return strncmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
+}
+
+int String2::Compare(const StringSpan& stra, const String2& strb)
+{
+	return strncmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
 }
 
 int String2::Compare(const String2& stra, const String2& strb)
@@ -532,12 +534,27 @@ int String2::Compare(const String2& stra, const String2& strb)
 	return strncmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
 }
 
+int String2::CompareInsensitive(const StringSpan& stra, const StringSpan& strb)
+{
+	return _strnicmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
+}
+
+int String2::CompareInsensitive(const StringSpan& stra, const String2& strb)
+{
+	return _strnicmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
+}
+
+int String2::CompareInsensitive(const String2& stra, const StringSpan& strb)
+{
+	return _strnicmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
+}
+
 int String2::CompareInsensitive(const String2& stra, const String2& strb)
 {
 	return _strnicmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
 }
 
-String2 String2::Join(char separator, const char** strs, int count)
+String2 String2::Join(char separator, const StringSpan* strs, int count)
 {
 	// TODO optimize
 	char s[] = { separator, '\0' };
@@ -550,7 +567,7 @@ String2 String2::Join(char separator, const String2* strs, int count)
 	return Join(String2(s), strs, count);
 }
 
-String2 String2::Join(const String2& separator, const char** strs, int count)
+String2 String2::Join(const StringSpan& separator, const StringSpan* strs, int count)
 {
 	// TODO optimize
 	String2* _strs = new String2[count];
@@ -561,6 +578,31 @@ String2 String2::Join(const String2& separator, const char** strs, int count)
 
 	return Join(separator, _strs, count);
 }
+
+String2 String2::Join(const String2& separator, const StringSpan* strs, int count)
+{
+	// TODO optimize
+	String2* _strs = new String2[count];
+	for (int i = 0; i < count; i++)
+	{
+		_strs[i] = String2(strs[i]);
+	}
+
+	return Join(separator, _strs, count);
+}
+
+String2 String2::Join(const StringSpan& separator, const String2* strs, int count)
+{
+	// TODO optimize
+	Xe::String2 str;
+	for (int i = 0; i < count - 1; i++)
+	{
+		str = str + strs[i] + separator;
+	}
+
+	return str + strs[count - 1];
+}
+
 
 String2 String2::Join(const String2& separator, const String2* strs, int count)
 {
