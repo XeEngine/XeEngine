@@ -19,7 +19,7 @@ namespace Xe {
 		public:
 			CDirectory(HANDLE h, WIN32_FIND_DATAA &findData, ctstring path) :
 				m_handle(h), m_findData(findData) {
-				svar len = Xe::String::GetLength(path);
+				svar len = StringSpan(path).GetLength();
 				m_path = new tchar[len + 1];
 				Xe::Memory::Copy(m_path, path, sizeof(tchar) * (len + 1));
 			}
@@ -129,7 +129,7 @@ Xe::RESULT Xe::Storage::Directory::SetCurrent(ctstring path) {
 Xe::RESULT Xe::Storage::Directory::Open(IDirectory **directory, ctstring path) {
 	ctstring strFilter;
 	tstring str;
-	svar len = String::GetLength(path);
+	svar len = StringSpan(path).GetLength();
 	bool alloc;
 	if (len > 0)
 	{

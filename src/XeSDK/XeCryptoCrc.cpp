@@ -41,7 +41,7 @@ namespace Xe { namespace Crypto {
 
 	u32 Crc32::Calculate(ctstring str) const
 	{
-		int strLen = Xe::String::GetLength(str);
+		int strLen = Xe::StringSpan(str).GetLength();
 		return Calculate(str, 0, strLen);
 	}
 
@@ -57,7 +57,7 @@ namespace Xe { namespace Crypto {
 
 	u64 Crc64::Calculate(ctstring str) const
 	{
-		int strLen = Xe::String::GetLength(str);
+		int strLen = Xe::StringSpan(str).GetLength();
 		return Calculate(str, 0, strLen);
 	}
 

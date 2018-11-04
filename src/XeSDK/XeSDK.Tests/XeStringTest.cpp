@@ -9,7 +9,7 @@
 void XeStringTest(const char* strExpected)
 {
 	Xe::String str(strExpected);
-	EXPECT_EQ(str, str.GetData());
+	EXPECT_EQ(0, strcmp(strExpected, str.GetData()));
 	STRASSERT(strExpected, str);
 }
 
@@ -17,6 +17,7 @@ TEST(XeStringTest, BaseTest)
 {
 	XeStringTest("");
 	XeStringTest("test");
+	XeStringTest(Xe::String::Empty);
 }
 
 TEST(XeStringTest, EmptyTest)
@@ -111,6 +112,7 @@ TEST(XeStringTest, LastIndexOfTest)
 	EXPECT_EQ(-1, Xe::String("Hello world!").LastIndexOf('?'));
 	EXPECT_EQ(12, Xe::String("Hello world!").LastIndexOf(""));
 	EXPECT_EQ(12, Xe::String("Hello world!").LastIndexOf(Xe::String("")));
+	EXPECT_EQ(0, Xe::String("Hello world!").LastIndexOf("H"));
 	EXPECT_EQ(0, Xe::String("Hello world!").LastIndexOf("Hello"));
 	EXPECT_EQ(0, Xe::String("Hello world!").LastIndexOf(Xe::String("Hello")));
 	EXPECT_EQ(6, Xe::String("Hello world!").LastIndexOf("world"));
@@ -299,7 +301,7 @@ TEST(XeStringTest, JoinTest)
 	STRASSERT("123", Xe::String::Join("", str, 3));
 	STRASSERT("1,2,3", Xe::String::Join(',', str, 3));
 
-	Xe::String str2[]{ "1", "2", "3" };
+	const Xe::String str2[]{ "1", "2", "3" };
 	STRASSERT("1, 2, 3", Xe::String::Join(", ", str));
 	STRASSERT("1, 2, 3", Xe::String::Join(", ", str, 3));
 	STRASSERT("1,2,3", Xe::String::Join(",", str, 3));

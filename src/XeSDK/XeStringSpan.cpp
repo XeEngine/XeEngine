@@ -7,6 +7,8 @@
 
 using namespace Xe;
 
+StringSpan StringSpan::Empty("");
+
 StringSpan::StringSpan(const char* str) :
 	m_Length(str ? strlen(str) : 0),
 	m_Data(str ? str : "")
@@ -19,7 +21,11 @@ StringSpan::StringSpan(const char* str, int length) :
 	ASSERT_POSITIVE(length);
 }
 
-char StringSpan::operator [](int index) const { return m_Data[index]; }
+char StringSpan::operator [](int index) const
+{
+	ASSERT_CPOSITION(index, m_Length);
+	return m_Data[index];
+}
 
 StringSpan StringSpan::operator + (int index) const
 {
@@ -40,32 +46,32 @@ StringSpan& StringSpan::operator =(const StringSpan& str)
 
 bool StringSpan::operator == (const StringSpan& str) const
 {
-	return strncmp(m_Data, str.m_Data, Xe::Math::Min(m_Length, str.m_Length)) == 0;
+	return Compare(*this, str) == 0;
 }
 
 bool StringSpan::operator != (const StringSpan& str) const
 {
-	return strncmp(m_Data, str.m_Data, Xe::Math::Min(m_Length, str.m_Length)) != 0;
+	return Compare(*this, str) != 0;
 }
 
 bool StringSpan::operator > (const StringSpan& str) const
 {
-	return strncmp(m_Data, str.m_Data, Xe::Math::Min(m_Length, str.m_Length)) > 0;
+	return Compare(*this, str) > 0;
 }
 
 bool StringSpan::operator >= (const StringSpan& str) const
 {
-	return strncmp(m_Data, str.m_Data, Xe::Math::Min(m_Length, str.m_Length)) >= 0;
+	return Compare(*this, str) >= 0;
 }
 
 bool StringSpan::operator < (const StringSpan& str) const
 {
-	return strncmp(m_Data, str.m_Data, Xe::Math::Min(m_Length, str.m_Length)) < 0;
+	return Compare(*this, str) < 0;
 }
 
 bool StringSpan::operator <= (const StringSpan& str) const
 {
-	return strncmp(m_Data, str.m_Data, Xe::Math::Min(m_Length, str.m_Length)) <= 0;
+	return Compare(*this, str) <= 0;
 }
 
 int StringSpan::GetLength() const { return m_Length; }
@@ -75,6 +81,169 @@ const char* StringSpan::GetData() const { return m_Data; }
 bool StringSpan::IsEmpty() const
 {
 	return m_Length == 0;
+}
+
+bool StringSpan::IsEmptyOrWhitespace() const
+{
+	for (int i = 0; i < m_Length; ++i)
+	{
+		switch (m_Data[i])
+		{
+		case '\t':
+		case '\n':
+		case '\r':
+		case ' ':
+			break;
+		default:
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool StringSpan::StartsWith(const StringSpan& str) const
+{
+	return IndexOf(str) == 0;
+}
+
+bool StringSpan::EndsWith(const StringSpan& str) const
+{
+	return LastIndexOf(str) == m_Length - str.m_Length;
+}
+
+int StringSpan::IndexOf(char ch) const
+{
+	for (int i = 0; i < m_Length; i++)
+	{
+		if (m_Data[i] == ch)
+			return i;
+	}
+
+	return -1;
+}
+
+int StringSpan::IndexOf(const StringSpan& str) const
+{
+	if (str.m_Length == 0)
+		return 0;
+	else if (str.m_Length == 1)
+		return IndexOf(str[0]);
+
+	for (int i = 0; i < m_Length - str.m_Length + 1; i++)
+	{
+		if (m_Data[i] == str.m_Data[0])
+		{
+			int j;
+			for (j = 1; j < str.m_Length; j++)
+			{
+				if (m_Data[i + j] != str.m_Data[j])
+				{
+					j = -1;
+					break;
+				}
+			}
+
+			if (j >= 0)
+				return i;
+		}
+	}
+
+	return -1;
+}
+
+
+int StringSpan::IndexOfAny(const StringSpan& chs) const
+{
+	int count = chs.GetLength();
+	if (count == 1)
+	{
+		for (int i = 0; i < m_Length; i++)
+		{
+			if (m_Data[i] == chs[0])
+				return i;
+		}
+	}
+	else if (count > 1)
+	{
+		for (int i = 0; i < m_Length; i++)
+		{
+			for (int j = 0; j < count; j++)
+			{
+				if (m_Data[i] == chs[j])
+					return i;
+			}
+		}
+	}
+
+	return -1;
+}
+
+int StringSpan::LastIndexOf(char ch) const
+{
+	for (int i = m_Length - 1; i >= 0; --i)
+	{
+		if (m_Data[i] == ch)
+			return i;
+	}
+
+	return -1;
+}
+
+int StringSpan::LastIndexOf(const StringSpan& str) const
+{
+	if (str.m_Length == 0)
+		return m_Length;
+	else if (str.m_Length == 1)
+		return LastIndexOf(str[0]);
+
+	for (int i = m_Length - str.m_Length; i >= 0; --i)
+	{
+		if (m_Data[i] == str.m_Data[0])
+		{
+			int j;
+			for (j = 1; j < str.m_Length; j++)
+			{
+				if (m_Data[i + j] != str.m_Data[j])
+				{
+					j = -1;
+					break;
+				}
+			}
+
+			if (j >= 0)
+				return i;
+		}
+	}
+
+	return -1;
+}
+
+
+int StringSpan::LastIndexOfAny(const StringSpan& chs) const
+{
+	int count = chs.GetLength();
+	if (count == 1)
+	{
+		for (int i = m_Length - 1; i >= 0; i--)
+		{
+			if (m_Data[i] == chs[0])
+				return i;
+		}
+	}
+	else if (count > 1)
+	{
+		for (int i = m_Length - 1; i >= 0; i--)
+		{
+			for (int j = 0; j < count; j++)
+			{
+				if (m_Data[i] == chs[j])
+					return i;
+			}
+		}
+	}
+
+	return -1;
 }
 
 bool StringSpan::TryParse(int& value, int base)
@@ -199,4 +368,14 @@ int StringSpan::Parse(int defaultValue, int base)
 {
 	int value;
 	return TryParse(value, base) ? value : defaultValue;
+}
+
+int StringSpan::Compare(const StringSpan& stra, const StringSpan& strb)
+{
+	return strncmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
+}
+
+int StringSpan::CompareInsensitive(const StringSpan& stra, const StringSpan& strb)
+{
+	return _strnicmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
 }

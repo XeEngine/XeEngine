@@ -152,7 +152,7 @@ namespace Xe {
                      * i percorsi in UNICODE verranno ritrasportati in
                      * UTF-8 se PLATFORM_UNICODE � definito.
                      */
-                    svar len = String::GetLength(filename);
+                    svar len = StringSpan(filename).GetLength();
                     const char *fname = new char[len + 1];
 #if defined(PLATFORM_UNICODE)
                     for (svar i = 0; i < len; i++) {

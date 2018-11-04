@@ -170,11 +170,11 @@ void Xe_FastHeap_Free(T* data)
 String String::Empty("");
 
 String::String(int length) :
-	m_Length(length),
-	m_Data(Xe_FastHeap_Alloc<char>(length + 1))
+	Base(Xe_FastHeap_Alloc<char>(length + 1), length),
+	m_String(*this)
 {
 	ASSERT_POSITIVE(length);
-	m_Data[length] = '\0';
+	((char*)m_Data)[length] = '\0';
 }
 
 String::String() :
@@ -188,12 +188,12 @@ String::String(const StringSpan& string) :
 }
 
 String::String(const String& string) :
-	String(StringSpan(string.m_Data, string.m_Length))
+	String((StringSpan)string)
 { }
 
 String::~String()
 {
-	Xe_FastHeap_Free<char>(m_Data);
+	Xe_FastHeap_Free<char>((char*)m_Data);
 }
 
 void String::CheckRangeIndex(int startIndex, int length) const
@@ -211,34 +211,17 @@ String::operator const char*() const
 	return m_Data;
 }
 
-String::operator StringSpan() const
-{
-	return StringSpan(m_Data, m_Length);
-}
-
-char String::operator [](int index) const
-{
-	ASSERT_POSITION(index);
-	return m_Data[index];
-}
-
 String& String::operator =(const StringSpan& str)
-{
-	// TODO optimize
-	return *this = String(str);
-}
-
-String& String::operator =(const String& str)
 {
 	// For performance reasons, m_Data will not be trimmed
 	if (str.m_Length > m_Length)
 	{
-		Xe_FastHeap_Free<char>(m_Data);
+		Xe_FastHeap_Free<char>((char*)m_Data);
 		m_Data = Xe_FastHeap_Alloc<char>(str.m_Length + 1);
 	}
 
 	m_Length = str.m_Length;
-	strncpy(m_Data, str.m_Data, str.m_Length);
+	strncpy((char*)m_Data, str.m_Data, str.m_Length);
 	return *this;
 }
 
@@ -247,195 +230,14 @@ String String::operator +(const StringSpan& str) const
 	return Append(str);
 }
 
-String String::operator +(const String& str) const
-{
-	return Append(str);
-}
-
 String String::operator +=(const StringSpan& str) const { return *this + str; }
-String String::operator +=(const String& str) const { return *this + str; }
-//bool String::operator == (const StringSpan& str) const { return Compare(*this, str) == 0; }
-bool String::operator == (const String& str) const { return Compare(*this, str) == 0; }
-bool String::operator != (const String& str) const { return Compare(*this, str) != 0; }
-bool String::operator > (const String& str) const { return Compare(*this, str) > 0; }
-bool String::operator >= (const String& str) const { return Compare(*this, str) >= 0; }
-bool String::operator < (const String& str) const { return Compare(*this, str) < 0; }
-bool String::operator <= (const String& str) const { return Compare(*this, str) <= 0; }
-
-int String::GetLength() const { return m_Length; }
-
-const char* String::GetData() const { return m_Data; }
-
-bool String::IsEmpty() const
-{
-	return GetLength() == 0;
-}
-
-bool String::IsEmptyOrWhitespace() const
-{
-	for (int i = 0; i < m_Length; ++i)
-	{
-		switch (m_Data[i])
-		{
-		case '\t':
-		case '\n':
-		case '\r':
-		case ' ':
-			break;
-		default:
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool String::StartsWith(const StringSpan& str) const
-{
-	return IndexOf(str) == 0;
-}
-
-bool String::StartsWith(const String& str) const
-{
-	return IndexOf(str) == 0;
-}
-
-bool String::EndsWith(const StringSpan& str) const
-{
-	return LastIndexOf(str) == GetLength() - str.GetLength();
-}
-
-bool String::EndsWith(const String& str) const
-{
-	return LastIndexOf(str) == GetLength() - str.GetLength();
-}
-
-int String::IndexOf(char ch) const
-{
-	for (int i = 0; i < m_Length; i++)
-	{
-		if (m_Data[i] == ch)
-			return i;
-	}
-
-	return -1;
-}
-
-int String::IndexOf(const StringSpan& str) const
-{
-	// TODO optimize
-	return IndexOf(String(str));
-}
-
-int String::IndexOf(const String& str) const
-{
-	char* r = strstr(m_Data, str.m_Data);
-	if (r)
-	{
-		return (int)(r - m_Data);
-	}
-	return -1;
-}
-
-int String::IndexOfAny(const StringSpan& chs) const
-{
-	int count = chs.GetLength();
-	if (count == 1)
-	{
-		for (int i = 0; i < m_Length; i++)
-		{
-			if (m_Data[i] == chs[0])
-				return i;
-		}
-	}
-	else if (count > 1)
-	{
-		for (int i = 0; i < m_Length; i++)
-		{
-			for (int j = 0; j < count; j++)
-			{
-				if (m_Data[i] == chs[j])
-					return i;
-			}
-		}
-	}
-
-	return -1;
-}
-
-int String::LastIndexOf(char ch) const
-{
-	for (int i = m_Length - 1; i >= 0; --i)
-	{
-		if (m_Data[i] == ch)
-			return i;
-	}
-
-	return -1;
-}
-
-int String::LastIndexOf(const StringSpan& str) const
-{
-	// TODO optimize
-	return LastIndexOf(String(str));
-}
-
-int String::LastIndexOf(const String& str) const
-{
-	for (int i = m_Length - str.m_Length; i >= 0; --i)
-	{
-		if (m_Data[i] == str.m_Data[0])
-		{
-			int j;
-			for (j = 1; j < str.m_Length; j++)
-			{
-				if (m_Data[i + j] != str.m_Data[j])
-				{
-					j = -1;
-					break;
-				}
-			}
-
-			if (j >= 0)
-				return i;
-		}
-	}
-
-	return -1;
-}
-
-int String::LastIndexOfAny(const StringSpan& chs) const
-{
-	int count = chs.GetLength();
-	if (count == 1)
-	{
-		for (int i = m_Length - 1; i >= 0; i--)
-		{
-			if (m_Data[i] == chs[0])
-				return i;
-		}
-	}
-	else if (count > 1)
-	{
-		for (int i = m_Length - 1; i >= 0; i--)
-		{
-			for (int j = 0; j < count; j++)
-			{
-				if (m_Data[i] == chs[j])
-					return i;
-			}
-		}
-	}
-
-	return -1;
-}
 
 String String::ToUpper() const
 {
 	String str(m_Length);
 	for (int i = 0; i < str.m_Length; ++i)
 	{
-		str.m_Data[i] = toupper(m_Data[i]);
+		((char*)str.m_Data)[i] = toupper(m_Data[i]);
 	}
 
 	return str;
@@ -446,7 +248,7 @@ String String::ToLower() const
 	String str(m_Length);
 	for (int i = 0; i < str.m_Length; ++i)
 	{
-		str.m_Data[i] = tolower(m_Data[i]);
+		((char*)str.m_Data)[i] = tolower(m_Data[i]);
 	}
 
 	return str;
@@ -464,7 +266,7 @@ String String::Substring(int startIndex, int length) const
 	String str(length);
 	for (int i = 0; i < str.m_Length; ++i)
 	{
-		str.m_Data[i] = m_Data[startIndex + i];
+		((char*)str.m_Data)[i] = m_Data[startIndex + i];
 	}
 
 	return str;
@@ -472,34 +274,22 @@ String String::Substring(int startIndex, int length) const
 
 String String::Append(const StringSpan& str) const
 {
-	// TODO optimize
-	return Append(String(str));
-}
-
-String String::Append(const String& str) const
-{
 	String strOut(m_Length + str.m_Length);
-	Xe::Memory::Copy(strOut.m_Data, m_Data, m_Length);
-	Xe::Memory::Copy(strOut.m_Data + m_Length, str.m_Data, str.m_Length);
+	Xe::Memory::Copy((char*)strOut.m_Data, m_Data, m_Length);
+	Xe::Memory::Copy((char*)strOut.m_Data + m_Length, str.m_Data, str.m_Length);
 	return strOut;
 }
 
 String String::Insert(int position, const StringSpan& str) const
-{
-	// TODO optimize
-	return Insert(position, String(str));
-}
-
-String String::Insert(int position, const String& str) const
 {
 	ASSERT_POSITIVE(position);
 	if (position > m_Length)
 		ASSERT_POSITION(position);
 
 	String strOut(m_Length + str.m_Length);
-	Xe::Memory::Copy(strOut.m_Data, m_Data, position);
-	Xe::Memory::Copy(strOut.m_Data + position, str.m_Data, str.m_Length);
-	Xe::Memory::Copy(strOut.m_Data + position + str.m_Length, m_Data + position, m_Length - position);
+	Xe::Memory::Copy((char*)strOut.m_Data, m_Data, position);
+	Xe::Memory::Copy((char*)strOut.m_Data + position, str.m_Data, str.m_Length);
+	Xe::Memory::Copy((char*)strOut.m_Data + position + str.m_Length, m_Data + position, m_Length - position);
 	return strOut;
 }
 
@@ -530,8 +320,8 @@ String String::Remove(int startIndex, int length) const
 	{
 		// Remove between
 		String strOut(m_Length - length);
-		Xe::Memory::Copy(strOut.m_Data, m_Data, startIndex);
-		Xe::Memory::Copy(strOut.m_Data + startIndex, m_Data + startIndex + length, m_Length - startIndex - length);
+		Xe::Memory::Copy((char*)strOut.m_Data, m_Data, startIndex);
+		Xe::Memory::Copy((char*)strOut.m_Data + startIndex, m_Data + startIndex + length, m_Length - startIndex - length);
 		return strOut;
 	}
 }
@@ -540,17 +330,11 @@ String String::Replace(char chOld, char chNew) const
 {
 	String str(m_Length);
 	for (int i = 0; i < m_Length; ++i)
-		str.m_Data[i] = m_Data[i] == chOld ? chNew : m_Data[i];
+		((char*)str.m_Data)[i] = m_Data[i] == chOld ? chNew : m_Data[i];
 	return str;
 }
 
 String String::Replace(const StringSpan& strOld, const StringSpan& strNew) const
-{
-	// TODO optimize
-	return Replace(Xe::String(strOld), Xe::String(strNew));
-}
-
-String String::Replace(const String& strOld, const String& strNew) const
 {
 	if (strOld.m_Length == 0)
 	{
@@ -565,7 +349,7 @@ String String::Replace(const String& strOld, const String& strNew) const
 	{
 		while (index < m_Length - strOld.m_Length)
 		{
-			char *strFound = strstr(m_Data + index, strOld.m_Data);
+			char *strFound = strstr((char*)m_Data + index, strOld.m_Data);
 			if (strFound != NULL)
 			{
 				newStrLength += strNew.m_Length - strOld.m_Length;
@@ -588,13 +372,13 @@ String String::Replace(const String& strOld, const String& strNew) const
 		int newIndex = strstr(m_Data + index, strOld.m_Data) - m_Data;
 		if (newIndex > index)
 		{
-			memcpy(str.m_Data + str.m_Length, m_Data + index, newIndex - index);
+			memcpy((char*)str.m_Data + str.m_Length, m_Data + index, newIndex - index);
 			str.m_Length += newIndex - index;
 		}
 
 		if (strNew.m_Length > 0)
 		{
-			memcpy(str.m_Data + str.m_Length, strNew.m_Data, strNew.m_Length);
+			memcpy((char*)str.m_Data + str.m_Length, strNew.m_Data, strNew.m_Length);
 			str.m_Length += strNew.m_Length;
 		}
 
@@ -603,10 +387,10 @@ String String::Replace(const String& strOld, const String& strNew) const
 
 	if (index < m_Length)
 	{
-		memcpy(str.m_Data + str.m_Length, m_Data + m_Length - (newStrLength - str.m_Length), newStrLength - str.m_Length);
+		memcpy((char*)str.m_Data + str.m_Length, m_Data + m_Length - (newStrLength - str.m_Length), newStrLength - str.m_Length);
 		str.m_Length += newStrLength - str.m_Length;
 	}
-	
+
 	LOGFA(str.m_Length == newStrLength);
 
 	return str;
@@ -620,8 +404,8 @@ String String::PadLeft(int totalWidth, char ch) const
 
 	String str(m_Length + totalWidth);
 	for (int i = 0; i < totalWidth; i++)
-		str.m_Data[i] = ch;
-	Xe::Memory::Copy(str.m_Data + totalWidth, m_Data, m_Length);
+		((char*)str.m_Data)[i] = ch;
+	Xe::Memory::Copy((char*)str.m_Data + totalWidth, m_Data, m_Length);
 
 	return str;
 }
@@ -633,9 +417,9 @@ String String::PadRight(int totalWidth, char ch) const
 		return *this;
 
 	String str(m_Length + totalWidth);
-	Xe::Memory::Copy(str.m_Data, m_Data, m_Length);
+	Xe::Memory::Copy((char*)str.m_Data, m_Data, m_Length);
 	for (int i = 0; i < totalWidth; i++)
-		str.m_Data[m_Length + i] = ch;
+		((char*)str.m_Data)[m_Length + i] = ch;
 	return str;
 }
 
@@ -657,7 +441,6 @@ String String::TrimEnd() const
 	int endIndex;
 	for (endIndex = m_Length - 1; endIndex >= 0 && m_Data[endIndex] == ' '; --endIndex);
 	return String(StringSpan(m_Data, endIndex + 1));
-	return String();
 }
 
 bool String::IsSpace(int ch)
@@ -695,108 +478,30 @@ bool String::IsUpper(int ch)
 	return !!(gc_XeStringCharProp[(u8)ch] & CHPROP_UPPER);
 }
 
-int String::GetLength(const char* str)
-{
-	return strlen(str);
-}
-
 int String::Compare(const StringSpan& stra, const StringSpan& strb)
 {
-	return strncmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
-}
-
-int String::Compare(const String& stra, const StringSpan& strb)
-{
-	return strncmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
-}
-
-int String::Compare(const StringSpan& stra, const String& strb)
-{
-	return strncmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
-}
-
-int String::Compare(const String& stra, const String& strb)
-{
-	return strncmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
+	return StringSpan::Compare(stra, strb);
 }
 
 int String::CompareInsensitive(const StringSpan& stra, const StringSpan& strb)
 {
-	return _strnicmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
-}
-
-int String::CompareInsensitive(const StringSpan& stra, const String& strb)
-{
-	return _strnicmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
-}
-
-int String::CompareInsensitive(const String& stra, const StringSpan& strb)
-{
-	return _strnicmp(stra.GetData(), strb.GetData(), Math::Min(stra.GetLength(), strb.GetLength()));
-}
-
-int String::CompareInsensitive(const String& stra, const String& strb)
-{
-	return _strnicmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
+	return StringSpan::CompareInsensitive(stra, strb);
 }
 
 String String::Join(char separator, const StringSpan* strs, int count)
 {
 	// TODO optimize
 	char s[] = { separator, '\0' };
-	return Join(String(s), strs, count);
-}
-
-String String::Join(char separator, const String* strs, int count)
-{
-	char s[] = { separator, '\0' };
-	return Join(String(s), strs, count);
+	return Join(StringSpan(s), strs, count);
 }
 
 String String::Join(const StringSpan& separator, const StringSpan* strs, int count)
 {
 	// TODO optimize
-	String* _strs = new String[count];
-	for (int i = 0; i < count; i++)
-	{
-		_strs[i] = String(strs[i]);
-	}
-
-	return Join(separator, _strs, count);
-}
-
-String String::Join(const String& separator, const StringSpan* strs, int count)
-{
-	// TODO optimize
-	String* _strs = new String[count];
-	for (int i = 0; i < count; i++)
-	{
-		_strs[i] = String(strs[i]);
-	}
-
-	return Join(separator, _strs, count);
-}
-
-String String::Join(const StringSpan& separator, const String* strs, int count)
-{
-	// TODO optimize
 	Xe::String str;
 	for (int i = 0; i < count - 1; i++)
 	{
-		str = str + strs[i] + separator;
-	}
-
-	return str + strs[count - 1];
-}
-
-
-String String::Join(const String& separator, const String* strs, int count)
-{
-	// TODO optimize
-	Xe::String str;
-	for (int i = 0; i < count - 1; i++)
-	{
-		str = str + strs[i] + separator;
+		str = StringSpan(str + strs[i] + separator);
 	}
 
 	return str + strs[count - 1];
