@@ -246,7 +246,19 @@ int StringSpan::LastIndexOfAny(const StringSpan& chs) const
 	return -1;
 }
 
-bool StringSpan::TryParse(int& value, int base)
+bool StringSpan::TryParse(bool& value) const
+{
+	auto trimmed = String(*this).Trim();
+	if (StringSpan::CompareInsensitive(trimmed, "true") == 0)
+		value = true;
+	else if (StringSpan::CompareInsensitive(trimmed, "false") == 0)
+		value = false;
+	else
+		return false;
+	return true;
+}
+
+bool StringSpan::TryParse(int& value, int base) const
 {
 	const char* str = m_Data;
 	int length = m_Length;
@@ -364,7 +376,13 @@ bool StringSpan::TryParse(int& value, int base)
 	return true;
 }
 
-int StringSpan::Parse(int defaultValue, int base)
+bool StringSpan::ParseBool(bool defaultValue) const
+{
+	bool value;
+	return TryParse(value) ? value : defaultValue;
+}
+
+int StringSpan::ParseInt(int defaultValue, int base) const
 {
 	int value;
 	return TryParse(value, base) ? value : defaultValue;
@@ -372,10 +390,10 @@ int StringSpan::Parse(int defaultValue, int base)
 
 int StringSpan::Compare(const StringSpan& stra, const StringSpan& strb)
 {
-	return strncmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
+	return strncmp(stra.m_Data, strb.m_Data, Xe::Math::Max(stra.m_Length, strb.m_Length));
 }
 
 int StringSpan::CompareInsensitive(const StringSpan& stra, const StringSpan& strb)
 {
-	return _strnicmp(stra.m_Data, strb.m_Data, Xe::Math::Min(stra.m_Length, strb.m_Length));
+	return _strnicmp(stra.m_Data, strb.m_Data, Xe::Math::Max(stra.m_Length, strb.m_Length));
 }

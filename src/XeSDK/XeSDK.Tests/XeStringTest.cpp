@@ -314,6 +314,43 @@ TEST(XeStringTest, JoinTest)
 	STRASSERT("123", Xe::String::Join(Xe::String(""), str, 3));
 }
 
+TEST(XeStringTest, TryParseBoolTest)
+{
+	bool value;
+	EXPECT_TRUE(Xe::StringSpan("true").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("True").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("tRUe").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("TRUE").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("false").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("False").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("fAlSe").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("FALSE").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan(" true").TryParse(value));
+	EXPECT_TRUE(Xe::StringSpan("true  ").TryParse(value));
+
+	EXPECT_FALSE(Xe::StringSpan("").TryParse(value));
+	EXPECT_FALSE(Xe::StringSpan("0").TryParse(value));
+	EXPECT_FALSE(Xe::StringSpan("1").TryParse(value));
+	EXPECT_FALSE(Xe::StringSpan("a").TryParse(value));
+}
+
+TEST(XeStringTest, ParseBoolTest)
+{
+	EXPECT_TRUE(Xe::StringSpan("true").ParseBool());
+	EXPECT_TRUE(Xe::StringSpan("True").ParseBool());
+	EXPECT_TRUE(Xe::StringSpan("tRUe").ParseBool());
+	EXPECT_TRUE(Xe::StringSpan("TRUE").ParseBool());
+	EXPECT_FALSE(Xe::StringSpan("false").ParseBool());
+	EXPECT_FALSE(Xe::StringSpan("False").ParseBool());
+	EXPECT_FALSE(Xe::StringSpan("fAlSe").ParseBool());
+	EXPECT_FALSE(Xe::StringSpan("FALSE").ParseBool());
+	EXPECT_TRUE(Xe::StringSpan(" true").ParseBool());
+	EXPECT_TRUE(Xe::StringSpan("true  ").ParseBool());
+
+	EXPECT_FALSE(Xe::StringSpan("").ParseBool(false));
+	EXPECT_TRUE(Xe::StringSpan("").ParseBool(true));
+}
+
 TEST(XeStringTest, TryParseIntTest)
 {
 	int value;
@@ -346,28 +383,28 @@ TEST(XeStringTest, TryParseIntTest)
 TEST(XeStringTest, ParseIntTest)
 {
 	int value;
-	EXPECT_EQ(0, Xe::StringSpan("").Parse(-1));
-	EXPECT_EQ(0, Xe::StringSpan("0").Parse(-1));
-	EXPECT_EQ(1, Xe::StringSpan("1").Parse(-1));
-	EXPECT_EQ(10, Xe::StringSpan("10").Parse(-1));
-	EXPECT_EQ(99999999, Xe::StringSpan("99999999").Parse(-1));
-	EXPECT_EQ(3, Xe::StringSpan("11").Parse(-1, 2));
-	EXPECT_EQ(342391, Xe::StringSpan("01234567").Parse(-1, 8));
-	EXPECT_EQ(162254319, Xe::StringSpan("9ABCDEF").Parse(-1, 16));
-	EXPECT_EQ(3735928559U, Xe::StringSpan("deadbeef").Parse(-1, 16));
-	EXPECT_EQ(+123, Xe::StringSpan("+123").Parse(-1));
-	EXPECT_EQ(-123, Xe::StringSpan("-123").Parse(-1));
-	EXPECT_EQ(+123, Xe::StringSpan("\t\t \n\r+123").Parse(-1));
-	EXPECT_EQ(+123, Xe::StringSpan("123 ").Parse(-1));
+	EXPECT_EQ(0, Xe::StringSpan("").ParseInt(-1));
+	EXPECT_EQ(0, Xe::StringSpan("0").ParseInt(-1));
+	EXPECT_EQ(1, Xe::StringSpan("1").ParseInt(-1));
+	EXPECT_EQ(10, Xe::StringSpan("10").ParseInt(-1));
+	EXPECT_EQ(99999999, Xe::StringSpan("99999999").ParseInt(-1));
+	EXPECT_EQ(3, Xe::StringSpan("11").ParseInt(-1, 2));
+	EXPECT_EQ(342391, Xe::StringSpan("01234567").ParseInt(-1, 8));
+	EXPECT_EQ(162254319, Xe::StringSpan("9ABCDEF").ParseInt(-1, 16));
+	EXPECT_EQ(3735928559U, Xe::StringSpan("deadbeef").ParseInt(-1, 16));
+	EXPECT_EQ(+123, Xe::StringSpan("+123").ParseInt(-1));
+	EXPECT_EQ(-123, Xe::StringSpan("-123").ParseInt(-1));
+	EXPECT_EQ(+123, Xe::StringSpan("\t\t \n\r+123").ParseInt(-1));
+	EXPECT_EQ(+123, Xe::StringSpan("123 ").ParseInt(-1));
 	
-	EXPECT_EQ(-1, Xe::StringSpan(" a123 ").Parse(-1));
-	EXPECT_EQ(-1, Xe::StringSpan(" 123 a").Parse(-1));
-	EXPECT_EQ(-1, Xe::StringSpan("2").Parse(-1, 2));
-	EXPECT_EQ(-1, Xe::StringSpan("9").Parse(-1, 8));
-	EXPECT_EQ(-1, Xe::StringSpan("A").Parse(-1, 10));
-	EXPECT_EQ(-1, Xe::StringSpan("x").Parse(-1, 16));
-	EXPECT_EQ(-1, Xe::StringSpan("12").Parse(-1, 2));
-	EXPECT_EQ(-1, Xe::StringSpan("19").Parse(-1, 8));
-	EXPECT_EQ(-1, Xe::StringSpan("1A").Parse(-1, 10));
-	EXPECT_EQ(-1, Xe::StringSpan("1x").Parse(-1, 16));
+	EXPECT_EQ(-1, Xe::StringSpan(" a123 ").ParseInt(-1));
+	EXPECT_EQ(-1, Xe::StringSpan(" 123 a").ParseInt(-1));
+	EXPECT_EQ(-1, Xe::StringSpan("2").ParseInt(-1, 2));
+	EXPECT_EQ(-1, Xe::StringSpan("9").ParseInt(-1, 8));
+	EXPECT_EQ(-1, Xe::StringSpan("A").ParseInt(-1, 10));
+	EXPECT_EQ(-1, Xe::StringSpan("x").ParseInt(-1, 16));
+	EXPECT_EQ(-1, Xe::StringSpan("12").ParseInt(-1, 2));
+	EXPECT_EQ(-1, Xe::StringSpan("19").ParseInt(-1, 8));
+	EXPECT_EQ(-1, Xe::StringSpan("1A").ParseInt(-1, 10));
+	EXPECT_EQ(-1, Xe::StringSpan("1x").ParseInt(-1, 16));
 }

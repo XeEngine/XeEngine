@@ -144,13 +144,25 @@ namespace Xe
 		//! \param value Parsed value
 		//! \param base Base used for parsing; can be 2, 8, 10 or 16
 		//! \return True if the value has been parsed with success; otherwise false
-		bool TryParse(int& value, int base = 10);
+		bool TryParse(bool& value) const;
+
+		//! \brief Try to parse the string to the specified value
+		//! \param value Parsed value
+		//! \param base Base used for parsing; can be 2, 8, 10 or 16
+		//! \return True if the value has been parsed with success; otherwise false
+		bool TryParse(int& value, int base = 10) const;
 
 		//! \brief Parse the string to the specified value,
 		//! \param defaultValue Default value if the parse fails
 		//! \param base Base used for parsing; can be 2, 8, 10 or 16
 		//! \return The parsed value or the default one
-		int Parse(int defaultValue = 0, int base = 10);
+		bool ParseBool(bool defaultValue = false) const;
+
+		//! \brief Parse the string to the specified value,
+		//! \param defaultValue Default value if the parse fails
+		//! \param base Base used for parsing; can be 2, 8, 10 or 16
+		//! \return The parsed value or the default one
+		int ParseInt(int defaultValue = 0, int base = 10) const;
 
 		static int Compare(const StringSpan& stra, const StringSpan& strb);
 

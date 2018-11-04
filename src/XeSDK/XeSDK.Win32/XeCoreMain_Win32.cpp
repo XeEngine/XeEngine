@@ -92,12 +92,12 @@ namespace Xe {
 						{
 							// The format for 10.0.17134.0, take only the build number
 							StringSpan strBuild = strMinor + indexBuild + 1;
-							m_HostInfo.SdkVersion = strBuild.Parse();
+							m_HostInfo.SdkVersion = strBuild.ParseInt();
 						}
 						else
 						{
 							// The format is 8.1
-							m_HostInfo.SdkVersion = (strMajor.Parse() << 8) | strMinor.Parse();
+							m_HostInfo.SdkVersion = (strMajor.ParseInt() << 8) | strMinor.ParseInt();
 						}
 					}
 					else

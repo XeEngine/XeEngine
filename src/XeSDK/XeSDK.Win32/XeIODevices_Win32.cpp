@@ -82,10 +82,10 @@ namespace Xe { namespace IO {
 						strncpy(device.Path, (const char*)interfaceDetailData.DevicePath, sizeof(device.Path));
 						strIndex = strstr((char*)interfaceDetailData.DevicePath, "vid_");
 						if (strIndex != nullptr) {
-							device.VendorId = (u16)StringSpan(strIndex, 4).Parse(0, 16);
+							device.VendorId = (u16)StringSpan(strIndex, 4).ParseInt(0, 16);
 							if (vendorId == 0 || (vendorId != 0 && vendorId == device.VendorId)) {
 								strIndex = strstr(strIndex, "pid_");
-								device.ProductId = (u16)StringSpan(strIndex, 4).Parse(0, 16);
+								device.ProductId = (u16)StringSpan(strIndex, 4).ParseInt(0, 16);
 
 								// Optimized way to filter from productId
 								bool addDevice = false;

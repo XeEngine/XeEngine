@@ -92,7 +92,7 @@ namespace Xe { namespace Drivers { namespace Input
 		for (auto it = controllers.begin(); it != controllers.end(); it++) {
 			InternalGamepad& internalGamepad = g_Gamepads[padIndex++];
 			internalGamepad.HidDevice = *it;
-			internalGamepad.Hash = Crypto::Fnv1a64(internalGamepad.HidDevice.Path, String::GetLength(internalGamepad.HidDevice.Path));
+			internalGamepad.Hash = Crypto::Fnv1a64(internalGamepad.HidDevice.Path, StringSpan(internalGamepad.HidDevice.Path).GetLength());
 		}
 		g_GamepadsCount = padIndex;
 
