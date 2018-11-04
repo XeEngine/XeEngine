@@ -170,10 +170,13 @@ namespace Xe {
 #ifdef DEBUGLOG
 			DXGI_ADAPTER_DESC adapterDesc;
 			pAdapter->GetDesc(&adapterDesc);
+
+			char strAdapterDescription[128];
+			wcstombs(strAdapterDescription, adapterDesc.Description, Math::Min(lengthof(strAdapterDescription), lengthof(adapterDesc.Description)));
 			LOGI("Videocard %i VEN=%04X DEV=%04X SUB=%08X REV=%02X\n%s\nVideo Memory: %iMB\nSystem Memory: %iMB\nShared Memory: %iMB\n",
 				properties.VideoCardIndex,
 				adapterDesc.VendorId, adapterDesc.DeviceId, adapterDesc.SubSysId, adapterDesc.Revision,
-				String(adapterDesc.Description).GetData(),
+				strAdapterDescription,
 				adapterDesc.DedicatedVideoMemory / 1048576,
 				adapterDesc.DedicatedSystemMemory / 1048576,
 				adapterDesc.SharedSystemMemory / 1048576);

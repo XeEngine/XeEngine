@@ -3,6 +3,7 @@
 #include <XeSDK/XeMath.h>
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeIODevices.h>
+#include <XeSDK/XeCryptoFnv1a.h>
 #include <cassert>
 #include <Windows.h>
 
@@ -91,7 +92,7 @@ namespace Xe { namespace Drivers { namespace Input
 		for (auto it = controllers.begin(); it != controllers.end(); it++) {
 			InternalGamepad& internalGamepad = g_Gamepads[padIndex++];
 			internalGamepad.HidDevice = *it;
-			internalGamepad.Hash = String::GetHashFNV1a(internalGamepad.HidDevice.Path, String::GetLength(internalGamepad.HidDevice.Path));
+			internalGamepad.Hash = Crypto::Fnv1a64(internalGamepad.HidDevice.Path, String::GetLength(internalGamepad.HidDevice.Path));
 		}
 		g_GamepadsCount = padIndex;
 

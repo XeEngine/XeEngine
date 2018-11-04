@@ -108,7 +108,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStoragePath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStreamLogHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeString.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeString2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStringSpan.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeThread.h" />
@@ -184,8 +183,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStoragePath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStreamLogHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeString.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeString2.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeStringFormatted.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeStringSpan.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp" />

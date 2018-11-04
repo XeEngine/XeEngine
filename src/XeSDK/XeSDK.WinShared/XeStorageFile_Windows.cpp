@@ -8,7 +8,7 @@ namespace Xe {
 		class FileStream : public IO::IFileStream {
 			HANDLE m_handle;
 			Access m_access;
-			tstring m_filename;
+			String m_filename;
 
 			void Flush() {
 				FlushFileBuffers(m_handle);
@@ -101,14 +101,13 @@ namespace Xe {
 
 		public:
 			FileStream(HANDLE handle, ctstring filename, Access access) :
-				m_handle(handle), m_access(access) {
-				svar len = String::GetLength(filename);
-				m_filename = new tchar[len + 1];
-				String::NCopy(m_filename, filename, len + 1);
-			}
+				m_handle(handle),
+				m_access(access),
+				m_filename(filename)
+			{ }
+
 			~FileStream() {
 				CloseHandle(m_handle);
-				delete[] m_filename;
 			}
 		};
 

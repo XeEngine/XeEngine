@@ -20,6 +20,7 @@ namespace Xe { namespace Storage { namespace Path {
 
 	ctstring GetExtension(ctstring fileName)
 	{
-		return Xe::String::FindLastCharacter(fileName, '.');
+		int index = String(fileName).LastIndexOf('.');
+		return index >= 0 ? fileName + index : "";
 	}
 } } }

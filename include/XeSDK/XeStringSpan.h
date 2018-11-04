@@ -26,6 +26,10 @@ namespace Xe
 		//! \brief Raw access to the string, char by char
 		char operator [](int index) const;
 
+		StringSpan operator + (int index) const;
+
+		StringSpan operator += (int index) const;
+
 		//! \brief Assign a StringSpan to the existing one
 		StringSpan& operator =(const StringSpan& str);
 
@@ -59,5 +63,22 @@ namespace Xe
 		//! \brief Get the raw pointer
 		//! \return Raw pointer, could not terminate with a null-terminator
 		const char* GetData() const;
+
+		//! \brief Check if the string is empty
+		//! \return True if GetLength is 0
+		//! \sa GetLength
+		bool IsEmpty() const;
+
+		//! \brief Try to parse the string to the specified value
+		//! \param value Parsed value
+		//! \param base Base used for parsing; can be 2, 8, 10 or 16
+		//! \return True if the value has been parsed with success; otherwise false
+		bool TryParse(int& value, int base = 10);
+
+		//! \brief Parse the string to the specified value,
+		//! \param defaultValue Default value if the parse fails
+		//! \param base Base used for parsing; can be 2, 8, 10 or 16
+		//! \return The parsed value or the default one
+		int Parse(int defaultValue = 0, int base = 10);
 	};
 }

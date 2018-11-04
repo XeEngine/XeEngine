@@ -76,30 +76,28 @@ namespace Xe {
 				else ver = _WIN32_WINNT_WIN2K;
 
 #ifdef _MSVC_WINDOWS_SDK
-				const char* msvcWindowsSdk = _MSVC_WINDOWS_SDK;
+				auto msvcWindowsSdk = _MSVC_WINDOWS_SDK;
 
 				// Search for 10.0.17134.0
-				auto strMajor = msvcWindowsSdk;
-				if (strMajor)
+				StringSpan strMajor = msvcWindowsSdk;
+				if (strMajor.IsEmpty())
 				{
-					auto strMinor = Xe::String::FindCharacter(msvcWindowsSdk, '.') + 1;
-					if (strMinor - 1)
+					int indexMinor = Xe::String(strMajor).IndexOf('.');
+					if (indexMinor >= 0)
 					{
-						auto strBuild = Xe::String::FindCharacter(strMinor, '.') + 1;
-						if (strBuild - 1)
-						{
-							auto strRev = Xe::String::FindCharacter(strBuild, '.');
-							int len = strRev ? (int)(strRev - strBuild) : Xe::String::GetLength(strBuild);
+						StringSpan strMinor = strMajor + indexMinor + 1;
+						int indexBuild = Xe::String(strMinor).IndexOf('.');
 
-							// The format for 10.0.17134.0
-							m_HostInfo.SdkVersion = Xe::String::Atoi(strBuild, len, 10);
+						if (indexBuild > 0)
+						{
+							// The format for 10.0.17134.0, take only the build number
+							StringSpan strBuild = strMinor + indexBuild + 1;
+							m_HostInfo.SdkVersion = strBuild.Parse();
 						}
 						else
 						{
 							// The format is 8.1
-							int major = Xe::String::Atoi(strMajor, (int)(strMinor - strMajor), 10);
-							int minor = Xe::String::Atoi(strMinor, Xe::String::GetLength(strMinor), 10);
-							m_HostInfo.SdkVersion = (major << 8) | minor;
+							m_HostInfo.SdkVersion = (strMajor.Parse() << 8) | strMinor.Parse();
 						}
 					}
 					else

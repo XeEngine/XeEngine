@@ -2,6 +2,7 @@
 #include <XeSDK/XeStorageContainerXefs.h>
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeIO.h>
+#include <XeSDK/XeCryptoFnv1a.h>
 
 namespace Xe {
     namespace Storage {
@@ -167,7 +168,7 @@ namespace Xe {
                      * file, ma comunque calcolata all'apertura del FileSystem
                      * per motivi di performance sulla ricerca di un file.
                      */
-                    u64 hash = String::GetHashFNV1a(fname, len);
+                    u64 hash = Xe::Crypto::Fnv1a64(fname, len);
 
                     /* Ricordiamoci di rilasciare la stringa nel caso il nome
                      * del file venga convertito da UNICODE ad UTF-8
