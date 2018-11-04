@@ -69,11 +69,6 @@ namespace Xe { namespace Drivers {
 		return drivers;
 	}
 
-	std::list<IDriver*> GetDrivers(DriverTypeFilter filter)
-	{
-		return InternalGetDrivers<IDriver>(filter);
-	}
-
 	template <>
 	std::list<Rendering::IRenderingDriver*> GetDrivers()
 	{

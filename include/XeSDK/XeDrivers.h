@@ -21,9 +21,6 @@ namespace Xe { namespace Drivers {
 	// Unregister a previously registered driver
 	void UnregisterDriver(IDriver* driver);
 
-	//! \warning DEPRECATED
-	std::list<IDriver*> GetDrivers(DriverTypeFilter filter);
-
 	// Get all the drivers from the given driver type
 	template <class TDriver>
 	std::list<TDriver*> GetDrivers()
