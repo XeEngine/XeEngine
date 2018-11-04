@@ -151,7 +151,7 @@ namespace Xe { namespace Graphics {
 		
 		//! \brief select a surface to use during drawing
 		//! \param[in] surface to select; it can be nullptr
-		//! \param[in] index slot index where the surface will be selected
+		//! \param[in] slot Slot index where the surface will be selected
 		/** \details When a surface is selected, it's assigned to the
 			* specified slot and every slot can store only one surface at time.
 			*/

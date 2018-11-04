@@ -18,7 +18,8 @@ namespace Xe { namespace Game {
 		virtual float GetVolume() const = 0;
 
 		//! \brief Change the volume with a specified ease function.
-		//! \param[in] speed Speed of fading; can be negative.
+		//! \param[in] volume New volume value.
+		//! \param[in] seconds Fading timer; can be negative for fade-in instead of fade-out.
 		//! \param[in] ease Ease function used for fading; default is Ease::One.
 		/** \details Fade state is updated only when Update is launched. The value
 		 * from GetMasterVolume does not change, but GetVolume does.

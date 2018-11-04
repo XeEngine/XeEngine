@@ -76,7 +76,7 @@ namespace Xe { namespace Game {
 		/** \details When the same texture has to be used by different objects
 		 * then it is convenient to increase the reference count.
 		 */
-		virtual TexId AddReference(TexId) = 0;
+		virtual TexId AddReference(TexId texId) = 0;
 
 		//! \brief Remove a reference or delete a texture.
 		//! \param[in] texId lower the references count by 1.
@@ -85,7 +85,7 @@ namespace Xe { namespace Game {
 		 * this is called, then the texture will be deleted and the TexId will
 		 * not be longer valid.
 		 */
-		virtual TexId RemoveReference(TexId) = 0;
+		virtual TexId RemoveReference(TexId texId) = 0;
 
 		//! \brief Get the references count for a specific texture.
 		//! \return A number higher than 0 if the texture is valid.
@@ -113,16 +113,17 @@ namespace Xe { namespace Game {
 		virtual float GetClutIndexf(ClutId clutId) const = 0;
 
 		//! \brief Lock the data for the specified Clut. The data must be then unlocked.
-		//! \param[in] clutId
-		//! \param[out] cllutData
+		//! \param[in] clutId Clut to lock
+		//! \param[out] clutData The data representation of the specified Clut
 		virtual void LockClut(ClutId clutId, ClutData& clutData) = 0;
 
 		//! \brief Unlock a previously locked data.
+		//! \param[in] clutId Clut to unlock
+		//! \param[out] clutData The data obtained from the previous LockClut with the specified ID
 		virtual void UnlockClut(ClutId clutId, ClutData& clutData) = 0;
 
 		//! \brief Get a snapshot of the current usage profile
 		//! \param[out] profile Profile to fill
-		//! \param[in] maxEntriesCount The maximum number of entries that the profile can hold.
 		//! \return true if the profile was available; usually returns false on RELEASE configurations.
 		virtual bool GetProfile(TextureManagerProfile& profile) = 0;
 	};

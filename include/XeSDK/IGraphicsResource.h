@@ -55,7 +55,8 @@ namespace Xe {
 			virtual void SubUnlock() = 0;
 		public:
 			//! \brief set basic resource attributes
-			//! \param[in] video resource that creates this resource
+			//! \param[in] pContext The context that will create the resource
+			//! \param[in] usage Usage type of the resource
 			IResource(IContext* pContext, UsageType usage);
 
 			//! \brief release all resources

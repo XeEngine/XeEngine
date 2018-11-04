@@ -142,6 +142,7 @@ namespace Xe {
 
 		//! \brief Get all the connected gamepads
 		//! \param[out] pEntries Contiguous memory that will be populated by connected pads.
+		//! \param[in] index Start index of pEntries
 		//! \param[in] count Maximum number of gamepads to retrieve; GamepadEntry[count].
 		size_t EnumerateDevices(
 			Xe::IO::GamepadEntry* pEntries,

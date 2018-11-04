@@ -34,11 +34,11 @@ namespace Xe
 		StringSpan();
 
 		//! \brief Create a string from a C-style string
-		//! \param[in] string to copy
+		//! \param[in] str String to copy
 		StringSpan(const char* str);
 
 		//! \brief Create a string from a C-style string with a specified length
-		//! \param[in] string String to copy
+		//! \param[in] str String to copy
 		//! \param[in] length Number of characters to copy
 		StringSpan(const char* str, int length);
 
@@ -156,7 +156,6 @@ namespace Xe
 
 		//! \brief Try to parse the string to the specified value
 		//! \param value Parsed value
-		//! \param base Base used for parsing; can be 2, 8, 10 or 16
 		//! \return True if the value has been parsed with success; otherwise false
 		bool TryParse(bool& value) const;
 
@@ -174,7 +173,6 @@ namespace Xe
 
 		//! \brief Parse the string to the specified value,
 		//! \param defaultValue Default value if the parse fails
-		//! \param base Base used for parsing; can be 2, 8, 10 or 16
 		//! \return The parsed value or the default one
 		int ParseInt(int defaultValue = 0, int base = 10) const;
 

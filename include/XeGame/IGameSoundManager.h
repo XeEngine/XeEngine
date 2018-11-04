@@ -19,6 +19,7 @@ namespace Xe { namespace Game {
 		virtual ~ISoundManager() = 0 { }
 
 		//! \brief Update the logic for all the sound entities.
+		//! \param deltaTime Delta time for updating the logic
 		//! \details This is required to have the fadein and fadeout logic working.
 		virtual void Update(double deltaTime) = 0;
 
@@ -58,7 +59,7 @@ namespace Xe { namespace Game {
 		 */
 		virtual std::vector<ISoundBgmEntity*> GetBgms() const = 0;
 
-		//! \brif Get the list of playing SFXs.
+		//! \brief Get the list of playing SFXs.
 		/** \details The returned ISoundSfxEntity could be deallocated
 		 * at any time if Update, PlaySfx or StopAllSfx are called.
 		 */
@@ -67,7 +68,7 @@ namespace Xe { namespace Game {
 		//! \brief Push the specified BGM into the BGM's stack, pausing the previous track.
 		//! \param bgmId An unique identifier for the specified source.
 		//! \param source Audio source where to get the playing sound.
-		//! \param speed Fading speed for the music to play and the previous one.
+		//! \param seconds Fading timer for the music to play and to stop previous one.
 		//! \param ease Ease algorithm used for fading.
 		//! \return The new BGM above the stack. Can be nullptr.
 		//! \details If the previous popped music has the same bgmId then it will be resumed.
@@ -79,7 +80,7 @@ namespace Xe { namespace Game {
 
 		//! \brief Pop from the BGM's stack the executing music.
 		//! \param pause Specify if the music must be paused instead of stopping it.
-		//! \param speed Fading speed for the music to play and the previous one.
+		//! \param seconds Fading timer for the music to play and to stop previous one.
 		//! \param ease Ease algorithm used for fading.
 		//! \return The new BGM above the stack. Can be nullptr.
 		/** \details The music is not removed when this function is called. Instead it
@@ -98,7 +99,7 @@ namespace Xe { namespace Game {
 		//! \brief Same as PushBgm, but just replace the existing BGM.
 		//! \param bgmId An unique identifier for the specified source.
 		//! \param source Audio source where to get the playing sound.
-		//! \param speed Fading speed for the music to play and the previous one.
+		//! \param seconds Fading timer for the music to play and to stop previous one.
 		//! \param ease Ease algorithm used for fading.
 		/** \details The playing BGM will be stopped with the specified fade-out
 		 * and pushed one position above the stack, but without incrementing the
