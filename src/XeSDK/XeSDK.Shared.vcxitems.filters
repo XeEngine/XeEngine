@@ -345,6 +345,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ILogEventHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGenericLogHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeExtensionsRapidjsonReadStream.h">
+      <Filter>Extensions\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeExtensionsRapidjsonWriteStream.h">
+      <Filter>Extensions\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -609,6 +615,15 @@
     </Filter>
     <Filter Include="Driver\Input">
       <UniqueIdentifier>{ef248b82-5ee7-4b93-8b8a-2a0fa64ecd3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions">
+      <UniqueIdentifier>{07f926d1-731f-456e-90b4-ddc411b123f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions\Private">
+      <UniqueIdentifier>{fcdcdb1a-bda6-4428-87ac-970b522bae0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extensions\Public">
+      <UniqueIdentifier>{c051eab7-7804-4861-9d31-c6ce961b93a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
