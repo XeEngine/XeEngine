@@ -48,8 +48,8 @@ namespace rapidjson
 		}
 
 		// Not implemented
-		void Put(Ch) { RAPIDJSON_ASSERT(false); }
-		void Flush() { RAPIDJSON_ASSERT(false); }
+		void Put(Ch ch) { RAPIDJSON_ASSERT(false); }
+		void Flush() { m_Stream->Flush(); }
 		Ch* PutBegin() { RAPIDJSON_ASSERT(false); return 0; }
 		size_t PutEnd(Ch*) { RAPIDJSON_ASSERT(false); return 0; }
 
@@ -60,8 +60,45 @@ namespace rapidjson
 			{
 				m_LastReadChar = 0;
 			}
-			
-			return &m_LastReadChar;
+
+			return (Ch*)&m_LastReadChar;
 		}
+	};
+
+	class XeWriteStream
+	{
+		Xe::IO::IStream* m_Stream;
+	public:
+		typedef char Ch;    //!< Character type (byte).
+
+		XeWriteStream(Xe::IO::IStream* pStream) :
+			m_Stream(pStream)
+		{
+			RAPIDJSON_ASSERT(!!pStream);
+			RAPIDJSON_ASSERT(pStream->CanWrite());
+			m_Stream->AddRef();
+		}
+
+		~XeWriteStream()
+		{
+			m_Stream->Release();
+		}
+
+		void Put(Ch ch)
+		{
+			m_Stream->Write(&ch, 0, sizeof(ch));
+		}
+
+		void Flush()
+		{
+			m_Stream->Flush();
+		}
+
+		Ch Peek() const { RAPIDJSON_ASSERT(false); }
+		Ch Take() { RAPIDJSON_ASSERT(false); }
+		size_t Tell() const { RAPIDJSON_ASSERT(false); }
+		Ch* PutBegin() { RAPIDJSON_ASSERT(false); return 0; }
+		size_t PutEnd(Ch*) { RAPIDJSON_ASSERT(false); return 0; }
+		const Ch* Peek4() const { RAPIDJSON_ASSERT(false); }
 	};
 }
