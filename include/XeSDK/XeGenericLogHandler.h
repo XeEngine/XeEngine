@@ -1,9 +1,9 @@
 #pragma once
-#include <XeSDK/ILogHandler.h>
+#include <XeSDK/ILogEventHandler.h>
 
 namespace Xe
 {
-	class GenericLogHandler : public virtual ILogHandler
+	class GenericLogHandler : public Xe::IDelegate<const LogArgs&>
 	{
 	protected:
 		int m_LogLevel;

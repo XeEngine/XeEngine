@@ -4,7 +4,8 @@
 
 #pragma once
 #include <XeSDK/XeDef.h>
-#include <XeSDK/ILogHandler.h>
+#include <XeSDK/ILogEventHandler.h>
+#include <XeSDK/XeEvent.h>
 #include <stdarg.h>
 
 // Configuration:
@@ -36,12 +37,12 @@ constexpr const char* _LogGetFilenameWithoutPath(const char(&path)[length]) {
 
 #define LOGFA(expression) (!!(expression) || (LOGF(#expression), 0))
 #define LOGA(expression) (!!(expression) || (LOGE(#expression), 0))
-#define LOGF(fmt, ...) Xe::Logger::Fatal(XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
-#define LOGE(fmt, ...) Xe::Logger::Error(XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
-#define LOGW(fmt, ...) Xe::Logger::Warning(XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
-#define LOGI(fmt, ...) Xe::Logger::Info(XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
-#define LOGD(fmt, ...) Xe::Logger::Debug(XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
-#define LOGT(fmt, ...) Xe::Logger::Trace(XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGF(fmt, ...) Xe::Logger::Fatal(__COUNTER__, XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGE(fmt, ...) Xe::Logger::Error(__COUNTER__, XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGW(fmt, ...) Xe::Logger::Warning(__COUNTER__, XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGI(fmt, ...) Xe::Logger::Info(__COUNTER__, XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGD(fmt, ...) Xe::Logger::Debug(__COUNTER__, XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
+#define LOGT(fmt, ...) Xe::Logger::Trace(__COUNTER__, XE__FILE__, __LINE__, __func__, fmt, __VA_ARGS__)
 #else
 #define LOGFA(expression) (expression)
 #define LOGA(expression) (expression)
@@ -59,13 +60,13 @@ namespace Xe {
 	{
         static LogLevel GetLogLevel();
         static void SetLogLevel(LogLevel logLevel);
-		static void SetLogHandler(ILogHandler& logHandler);
+		static Event<const LogArgs&>& GetLogEvent();
 
-		static void Fatal(ctstring fileName, int line, ctstring function, ctstring str, ...);
-		static void Error(ctstring fileName, int line, ctstring function, ctstring str, ...);
-		static void Warning(ctstring fileName, int line, ctstring function, ctstring str, ...);
-		static void Info(ctstring fileName, int line, ctstring function, ctstring str, ...);
-		static void Debug(ctstring fileName, int line, ctstring function, ctstring str, ...);
-		static void Trace(ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void Fatal(int counter, ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void Error(int counter, ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void Warning(int counter, ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void Info(int counter, ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void Debug(int counter, ctstring fileName, int line, ctstring function, ctstring str, ...);
+		static void Trace(int counter, ctstring fileName, int line, ctstring function, ctstring str, ...);
     };
 }

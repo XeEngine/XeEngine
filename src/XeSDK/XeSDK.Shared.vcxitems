@@ -40,7 +40,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIoStream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIOMemoryStream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IList.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ILogHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ILogEventHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\INetSocket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IQueue.h" />
@@ -97,7 +97,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathVector3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMathVector4.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMemory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMultipleLogHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeObjPtr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSound.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSoundGenericAudioSource.h" />
@@ -167,7 +166,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMathMatrix.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMathRandom.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeMemory.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeMultipleLogHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeNetSocket.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">

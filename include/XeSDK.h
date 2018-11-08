@@ -38,6 +38,7 @@
 #include <XeSDK/XeIOGamepad.h>
 #include <XeSDK/XeIOPointer.h>
 #include <XeSDK/XeLogger.h>
+#include <XeSDK/XeConsoleLogHandler.h>
 #include <XeSDK/XeMath.h>
 #include <XeSDK/XeMathRandom.h>
 #include <XeSDK/XeMathRectangle.h>

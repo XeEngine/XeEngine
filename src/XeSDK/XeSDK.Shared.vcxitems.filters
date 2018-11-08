@@ -292,16 +292,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DefaultGamepadEventHandler.h">
       <Filter>Driver\Input</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ILogHandler.h">
-      <Filter>Public</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeMultipleLogHandler.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeConsoleLogHandler.h">
-      <Filter>Public</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGenericLogHandler.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeStreamLogHandler.h">
@@ -361,6 +352,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStaticArray.h">
       <Filter>Collections\Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ILogEventHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGenericLogHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -485,9 +478,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSoundSoundFormatFactory.cpp">
       <Filter>Sound\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeMultipleLogHandler.cpp">
-      <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeConsoleLogHandler.cpp">
       <Filter>Private</Filter>

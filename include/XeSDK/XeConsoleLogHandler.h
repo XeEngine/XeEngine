@@ -9,13 +9,10 @@ namespace Xe
 {
 	class ConsoleLogHandler : public GenericLogHandler
 	{
-#if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
-		HANDLE hOutConsole;
-#endif
 		bool m_FlushOnLog;
 		bool m_LogTimer, m_LogFilename, m_LogFunction;
 
-		void OnLog(int level, double timer, ctstring fileName, int line, ctstring function, ctstring str);
+		void operator()(const LogArgs&);
 		void Write(ctstring str, int len);
 	
 	public:
