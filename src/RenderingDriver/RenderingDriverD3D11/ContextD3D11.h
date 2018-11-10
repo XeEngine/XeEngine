@@ -216,7 +216,6 @@ namespace Xe { namespace Graphics {
 		void SelectDepthStencilState(IDepthStencilState *depthStencilState);
 
 		bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData);
-		void SelectBuffer(IBuffer *pBuffer);
 		void GetVertexBuffer(IBuffer** ppBuffer);
 		void SetVertexBuffer(IBuffer* pBuffer);
 		void GetIndexBuffer(IBuffer** ppBuffer);

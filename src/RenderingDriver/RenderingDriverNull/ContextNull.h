@@ -99,7 +99,6 @@ namespace Xe { namespace Graphics {
 		const Color &GetClearColor() const;
 		void SetClearColor(const Color &color);
 		float GetClearDepth() const;
-		void SetClearDepthSub(float depth);
 		int GetClearStencil() const;
 		void SetClearStencil(int stencil);
 
@@ -116,7 +115,6 @@ namespace Xe { namespace Graphics {
 		void SetRenderingSurface(ISurface* surface);
 
 		bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData);
-		void SelectBuffer(IBuffer *pBuffer);
 		void GetVertexBuffer(IBuffer** ppBuffer);
 		void SetVertexBuffer(IBuffer* pBuffer);
 		void GetIndexBuffer(IBuffer** ppBuffer);

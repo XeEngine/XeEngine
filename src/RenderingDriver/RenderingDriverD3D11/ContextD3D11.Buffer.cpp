@@ -41,20 +41,6 @@ namespace Xe { namespace Graphics {
 		return true;
 	}
 
-	void CContextD3D11::SelectBuffer(IBuffer *pBuffer)
-	{
-		switch (pBuffer->GetType())
-		{
-		case BufferType_Vertex:
-			SetVertexBuffer(pBuffer);
-			break;
-		case BufferType_Index16:
-		case BufferType_Index32:
-			SetIndexBuffer(pBuffer);
-			break;
-		}
-	}
-
 	void CContextD3D11::GetVertexBuffer(IBuffer** ppBuffer)
 	{
 		if (m_State.VertexBuffer) m_State.VertexBuffer->AddRef();

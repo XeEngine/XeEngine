@@ -161,9 +161,6 @@ namespace Xe { namespace Graphics {
 		virtual void SelectDepthStencilState(IDepthStencilState *depthStencilState) = 0;
 
 		virtual bool CreateBuffer(IBuffer **ppBuffer, const BufferDesc& desc, DataDesc* pData) = 0;
-		//! \warning DEPRECATED
-		virtual void SelectBuffer(IBuffer *pBuffer) = 0;
-
 		virtual void GetVertexBuffer(IBuffer** ppBuffer) = 0;
 		virtual void SetVertexBuffer(IBuffer* pBuffer) = 0;
 
