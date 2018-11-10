@@ -19,6 +19,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextD3D11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)D3D11Surface.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)D3D11Utilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderD3D11_FSDefault.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderD3D11_VSDefault.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversRenderingD3D11Driver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -26,7 +28,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Buffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Context.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Drawing2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Nyan.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.States.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Surface.cpp" />

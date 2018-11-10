@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "ContextD3D11.h"
 #include <XeSDK/IGraphicsContext.h>
-#include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/XeMemory.h>
 
 #if !_DURANGO
@@ -14,7 +13,6 @@
 namespace Xe { namespace Graphics {
 	CContextD3D11::CContextD3D11() :
 		m_pFrameView(nullptr),
-		m_Drawing(nullptr),
 		m_Size(800, 480),
 		m_ClearColor(Color::Black),
 		m_ClearDepth(0.0f),
@@ -47,7 +45,6 @@ namespace Xe { namespace Graphics {
 		for (svar i = 0; i < lengthof(m_Surface); i++)
 			if (m_Surface[i]) m_Surface[i]->Release();
 		if (m_DepthStencilState) m_DepthStencilState->Release();
-		if (m_Drawing) m_Drawing->Release();
 		if (m_d3dContext1) r = m_d3dContext1->Release();
 		if (p_d3dDevice1) r = p_d3dDevice1->Release();
 		if (m_d3dContext) r = m_d3dContext->Release();
@@ -94,12 +91,6 @@ namespace Xe { namespace Graphics {
 		}
 
 		return success;
-	}
-	void CContextD3D11::GetDrawing(IDrawing2d** drawing) {
-		if (m_Drawing == nullptr)
-			m_Drawing = new CDrawing(this);
-		m_Drawing->AddRef();
-		*drawing = m_Drawing;
 	}
 
 	void CContextD3D11::GetCapabilities(Capabilities& capabilities)

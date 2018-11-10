@@ -123,12 +123,6 @@ namespace Xe { namespace Graphics {
 				CSurface *p;
 				if (p = static_cast<CSurface*>(surface))
 				{
-					// TODO HACK temporary solution, to solve on IDrawing2D removal
-					IDrawing2d *pDrawing;
-					GetDrawing(&pDrawing);
-					pDrawing->Flush();
-					pDrawing->Release();
-					
 					if (m_Surface[index]) m_Surface[index]->Release();
 					m_Surface[index] = p;
 					m_Surface[index]->AddRef();

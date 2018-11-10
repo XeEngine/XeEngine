@@ -22,9 +22,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsContext.h">
       <Filter>Graphics\Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsDrawing2d.h">
-      <Filter>Graphics\Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeGraphics.h">
       <Filter>Graphics\Public</Filter>
     </ClInclude>
@@ -36,9 +33,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h">
       <Filter>Graphics\Private</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h">
-      <Filter>Graphics\Private\Common</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeIO.h">
       <Filter>IO\Public</Filter>
@@ -362,9 +356,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsColor.cpp">
       <Filter>Graphics\Private</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsDrawing.cpp">
-      <Filter>Graphics\Private</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImagingPng.cpp">
       <Filter>Graphics\Imaging\Private</Filter>
     </ClCompile>
@@ -376,9 +367,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFontUV.cpp">
       <Filter>Graphics\Font\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.cpp">
-      <Filter>Graphics\Private\Common</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIOMemoryStream.cpp">
       <Filter>IO\Private</Filter>
@@ -500,6 +488,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeString.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.cpp">
+      <Filter>Graphics\Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Graphics">
@@ -528,9 +519,6 @@
     </Filter>
     <Filter Include="Graphics\Imaging\Public">
       <UniqueIdentifier>{6f062af4-f87d-4e4b-be05-728a487df526}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Private\Common">
-      <UniqueIdentifier>{e7648014-55f0-491e-8845-38773b437975}</UniqueIdentifier>
     </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{b70bb70f-793f-44d9-b70f-aa63c259175f}</UniqueIdentifier>

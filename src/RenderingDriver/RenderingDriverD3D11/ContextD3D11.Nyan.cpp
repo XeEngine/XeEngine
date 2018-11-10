@@ -3,6 +3,8 @@
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeLogger.h>
+#include "ShaderD3D11_VSDefault.h"
+#include "ShaderD3D11_FSDefault.h"
 
 #if !_XBOX_ONE
 #include <dxgi1_2.h>
@@ -267,7 +269,7 @@ namespace Xe {
 				pDepthStencilState->Release();
 			}
 			else
-				LOGE("Unable to create depth/stencil state.");
+				LOGE("Unable to create depth/stencil state (HR: %08X).", hr);
 
 			D3D11_RASTERIZER_DESC rasterizerDesc;
 			Memory::Fill(&rasterizerDesc, 0, sizeof(rasterizerDesc));
@@ -284,7 +286,7 @@ namespace Xe {
 				rasterizerState->Release();
 			}
 			else
-				LOGE("Unable to create rasterizer state.");
+				LOGE("Unable to create rasterizer state (HR: %08X).", hr);
 
 			D3D11_BLEND_DESC blendStateDesc;
 			Memory::Fill(&blendStateDesc, 0, sizeof(blendStateDesc));
@@ -306,7 +308,71 @@ namespace Xe {
 				pBlendState->Release();
 			}
 			else
-				LOGE("Unable to create blend state.");
+				LOGE("Unable to create blend state (HR: %08X).", hr);
+
+			static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
+			{
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "TEXTURE", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float) * 3,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(float) * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+
+			ID3D11InputLayout* pInputLayout;
+			hr = p_d3dDevice->CreateInputLayout(vertexDesc, 3, d3d11vsDefault, sizeof(d3d11vsDefault), &pInputLayout);
+			if (SUCCEEDED(hr))
+			{
+				m_d3dContext->IASetInputLayout(pInputLayout);
+				pInputLayout->Release();
+			}
+			else
+				LOGE("CreateInputLayout failed (HR: %08X).", hr);
+
+
+			D3D11_SAMPLER_DESC samplerDesc;
+			samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+			samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+			samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+			samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+			samplerDesc.MipLODBias = 0.0f;
+			samplerDesc.MaxAnisotropy = 1;
+			samplerDesc.ComparisonFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_NEVER;
+			samplerDesc.BorderColor[0] = 1.0f;
+			samplerDesc.BorderColor[1] = 1.0f;
+			samplerDesc.BorderColor[2] = 1.0f;
+			samplerDesc.BorderColor[3] = 1.0f;
+			samplerDesc.MinLOD = -3.402823466e+38F;
+			samplerDesc.MaxLOD = +3.402823466e+38F;
+
+			ID3D11SamplerState* pSamplerState;
+			hr = p_d3dDevice->CreateSamplerState(&samplerDesc, &pSamplerState);
+			if (SUCCEEDED(hr))
+			{
+				m_d3dContext->PSSetSamplers(0, 1, &pSamplerState);
+				m_d3dContext->PSSetSamplers(1, 1, &pSamplerState);
+			}
+			else
+				LOGE("Unable to create default sampler state (HR: %08X).", hr);
+
+			ID3D11VertexShader* pVertexShader;
+			hr = p_d3dDevice->CreateVertexShader(d3d11vsDefault, sizeof(d3d11vsDefault), nullptr, &pVertexShader);
+			if (SUCCEEDED(hr))
+			{
+				m_d3dContext->VSSetShader(pVertexShader, nullptr, 0);
+				pVertexShader->Release();
+			}
+			else
+				LOGE("Unable to create default vertex shader (%08X).", hr);
+
+			ID3D11PixelShader* pPixelShader;
+			hr = p_d3dDevice->CreatePixelShader(d3d11fsDefault, sizeof(d3d11fsDefault), nullptr, &pPixelShader);
+			if (SUCCEEDED(hr))
+			{
+				m_d3dContext->PSSetShader(pPixelShader, nullptr, 0);
+				pPixelShader->Release();
+			}
+			else
+				LOGE("Unable to create default pixel shader (%08X).", hr);
+
 			return true;
 		}
 		bool CContextD3D11::CreateWindowSizeDependentResources() {

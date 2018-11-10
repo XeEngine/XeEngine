@@ -11,7 +11,6 @@
 #include <XeSDK/IDictionary.h>
 #include <XeSDK/IEnumerable.h>
 #include <XeSDK/IGraphicsContext.h>
-#include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/IIOFileStream.h>
 #include <XeSDK/IIOMemoryStream.h>
 #include <XeSDK/INetSocket.h>

@@ -10,8 +10,6 @@
 
 #include <SDKDDKVer.h>
 #include <windows.h>
-#include "ShaderD3D11_VSDefault.h"
-#include "ShaderD3D11_FSDefault.h"
 
 #if WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP
 

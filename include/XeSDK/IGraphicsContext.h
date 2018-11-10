@@ -1,6 +1,7 @@
 
 #pragma once
 #include <XeSDK/IObject.h>
+#include <XeSDK/XeMathVector3.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeGraphicsColor.h>
 #include <XeSDK/IGraphicsSurface.h>
@@ -62,6 +63,12 @@ namespace Xe { namespace Graphics {
 		Comparison_Always,
 	};
 
+	struct Vertex {
+		Xe::Math::Vector3f Position;
+		Xe::Math::Vector3f Texture;
+		Xe::Graphics::Color Color;
+	};
+
 	//! \brief describe capabilities of specified context
 	struct Capabilities
 	{
@@ -120,7 +127,6 @@ namespace Xe { namespace Graphics {
 	{
 	};
 
-	interface IDrawing2d;
 	interface IContext : public IObject
 	{
 		//! \brief used to syncronize swap buffers with v-blank
@@ -129,8 +135,6 @@ namespace Xe { namespace Graphics {
 			VBlank_DoNotWait,
 			VBlank_Wait,
 		};
-
-		virtual void GetDrawing(IDrawing2d **ppDrawing) = 0;
 
 		virtual void GetCapabilities(Capabilities& capabilities) = 0;
 

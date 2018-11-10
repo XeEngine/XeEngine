@@ -9,10 +9,8 @@
 
 #include <XeSDK/ICoreView.h>
 #include <XeSDK/IGraphicsContext.h>
-#include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include "XeGraphicsCommon.h"
 #include "D3D11Surface.h"
 
 using namespace RenderingDriverD3D11;
@@ -34,59 +32,7 @@ namespace Xe { namespace Graphics {
 			~CDepthStencilState();
 		};
 
-		class CDrawing : public IDrawing2d {
-			static const svar MaximumQuadsCount = 16383;
-
-			CContextD3D11* m_context;
-			ID3D11InputLayout* m_pInputLayout;
-			ID3D11VertexShader* m_pVertexShader;
-			ID3D11PixelShader* m_pPixelShader;
-			ID3D11SamplerState* m_pSamplerState;
-			IBuffer* m_pVertexBuffer;
-			IBuffer* m_pIndexBuffer;
-			Vertex* m_pVertex;
-			uvar m_curQuadsCount;
-			bool m_IsInitialized;
-
-			inline Vertex *Get() {
-				if (m_curQuadsCount < MaximumQuadsCount)
-					return m_pVertex + m_curQuadsCount++ * 4;
-				Flush();
-				m_curQuadsCount = 0;
-				return m_pVertex;
-			}
-
-		public:
-			CDrawing(CContextD3D11 *context);
-			~CDrawing();
-
-			bool GetDestinationSurface(ISurface **surface);
-			void SetDestinationSurface(ISurface *surface);
-			void Flush();
-			void DrawRectangle(const Math::Vector2f(&position)[2], const Color &color);
-			void DrawRectangle(const Math::Vector2f(&position)[2], const Color(&color)[4]);
-			void DrawRectangle(const Math::Vector2f(&position)[4], const Color &color);
-			void DrawRectangle(const Math::Vector2f(&position)[4], const Color(&color)[4]);
-			void DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color &color);
-			void DrawRectangle(const Math::Vector2f(&position)[2], float z, const Color(&color)[4]);
-			void DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color &color);
-			void DrawRectangle(const Math::Vector2f(&position)[4], float z, const Color(&color)[4]);
-			void DrawRectangle(const Math::Vector3f(&position)[4], const Color &color);
-			void DrawRectangle(const Math::Vector3f(&position)[4], const Color(&color)[4]);
-			void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
-			void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
-			void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
-			void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
-			void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode);
-			void DrawSurface(const Math::Vector2f(&position)[2], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode);
-			void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color &color, float mode);
-			void DrawSurface(const Math::Vector2f(&position)[4], const Math::Vector2f(&uvCoord)[4], float z, const Color(&color)[4], float mode);
-			void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color &color, float mode);
-			void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
-		};
-
 		Xe::Core::IFrameView* m_pFrameView;
-		CDrawing *m_Drawing;
 		ContextState m_State;
 		Size m_Size;
 		Color m_ClearColor;
@@ -147,7 +93,6 @@ namespace Xe { namespace Graphics {
 		~CContextD3D11();
 
 		bool Initialize(const ContextInitDesc& properties);
-		void GetDrawing(IDrawing2d** drawing);
 
 		void GetCapabilities(Capabilities& capabilities);
 

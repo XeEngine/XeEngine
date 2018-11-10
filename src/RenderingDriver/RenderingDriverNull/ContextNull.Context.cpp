@@ -1,13 +1,11 @@
 #include "pch.h"
 #include "ContextNull.h"
 #include <XeSDK/IGraphicsContext.h>
-#include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/XeMemory.h>
 
 namespace Xe {
 	namespace Graphics {
 		CContextNull::CContextNull() :
-			m_Drawing(nullptr),
 			m_Size(800, 480),
 			m_ClearColor(Color::Black),
 			m_ClearDepth(0.0f),
@@ -21,16 +19,10 @@ namespace Xe {
 			for (svar i = 0; i < lengthof(m_Surface); i++)
 				if (m_Surface[i]) m_Surface[i]->Release();
 			if (m_DepthStencilState) m_DepthStencilState->Release();
-			if (m_Drawing) m_Drawing->Release();
 		}
 
 		bool CContextNull::Initialize(const ContextInitDesc& properties) {
-			m_Drawing = new CDrawing(this);
 			return true;
-		}
-		void CContextNull::GetDrawing(IDrawing2d** drawing) {
-			m_Drawing->AddRef();
-			*drawing = m_Drawing;
 		}
 
 		void CContextNull::GetCapabilities(Capabilities& capabilities)

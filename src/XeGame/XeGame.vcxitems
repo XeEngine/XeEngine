@@ -18,6 +18,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameDrawing2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameImGuiHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -36,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IEntityManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAchievement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatformCallback.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundBgmEntity.h" />
@@ -44,12 +46,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundSfxEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h" />

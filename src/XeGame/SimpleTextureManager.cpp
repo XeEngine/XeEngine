@@ -374,12 +374,6 @@ namespace Xe { namespace Game {
 		{
 			if (texId != TexInvalid)
 			{
-				// Block probably not needed.
-				Xe::Graphics::IDrawing2d* pDrawing;
-				m_Context.GetDrawing(&pDrawing);
-				pDrawing->Flush(); 
-				pDrawing->Release();
-
 				m_Context.SelectSurface(GetSurface(texId), slot);
 			}
 			else

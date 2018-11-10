@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)D3D11Buffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Buffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Helpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Context.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Nyan.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.States.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ContextD3D11.Surface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)D3D11Surface.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)D3D11Utilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversRenderingD3D11Driver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)D3D11Buffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ContextD3D11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)D3D11Surface.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)D3D11Utilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversRenderingD3D11Driver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderD3D11_FSDefault.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderD3D11_VSDefault.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{022409f2-2124-4337-a587-386b9778e66a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -9,6 +9,8 @@
 #include <XeGame/IGameSoundBgmEntity.h>
 #include <XeGame/IGameSoundSfxEntity.h>
 #include <XeGame/XeGameEaseFunctions.h>
-#include <XeGame/XeGameSoundManager.h>
+#include <XeGame/XeGameDrawing2d.h>
+#include <XeGame/XeGameTilemap2d.h>
 #include <XeGame/XeGameTextureManager.h>
+#include <XeGame/XeGameSoundManager.h>
 #include <XeGame/XeGameImGuiHandler.h>

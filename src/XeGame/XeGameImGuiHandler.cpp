@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <XeSDK/ICoreView.h>
 #include <XeGame/XeGameImGuiHandler.h>
+#include <XeGame/IGameDrawing2d.h>
 #include <imgui/imgui.h>
 
 using namespace Xe::Game;
@@ -230,7 +231,7 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 			vDst->Position.y = 1.0f - vSrc->pos.y * my;
 			vDst->Texture.x = vSrc->uv.x;
 			vDst->Texture.y = vSrc->uv.y;
-			vDst->Texture.z = Xe::Graphics::IDrawing2d::MODE_TEXTURED;
+			vDst->Texture.z = Xe::Game::IDrawing2d::MODE_TEXTURED;
 			vDst->Color = Xe::Graphics::Color(vSrc->col);
 			++vSrc, ++vDst;
 		}
@@ -269,11 +270,6 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 	LOGA(m_Context->CreateBuffer(&indexBuffer, ibDesc, &ibDataDesc));
 	delete[] indexData;
 
-	Xe::ObjPtr<Xe::Graphics::IDrawing2d> drawing;
-	m_Context->GetDrawing(&drawing);
-	auto prevMatix = drawing->GetMatrix();
-	drawing->SetMatrix(Xe::Math::Matrix4());
-
 	u32 primitiveOffset = 0;
 	for (int n = 0; n < draw_data->CmdListsCount; n++)
 	{
@@ -293,8 +289,6 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 	}
 	m_Context->SetVertexBuffer(nullptr);
 	m_Context->SetIndexBuffer(nullptr);
-
-	drawing->SetMatrix(prevMatix);
 
 	indexBuffer->Release();
 	vertexBuffer->Release();

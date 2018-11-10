@@ -2,5 +2,6 @@
 
 namespace Xe { namespace Game {
 	interface ITilemap2d;
-	void Factory(ITilemap2d** ppTilemap2d, Xe::Graphics::IDrawing2d* pDrawing2d);
+	interface IDrawing2d;
+	void Factory(ITilemap2d** ppTilemap2d, IDrawing2d* pDrawing2d);
 } }

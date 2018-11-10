@@ -2,7 +2,7 @@
 #include <XeSDK/XeMathVector2.h>
 #include <XeSDK/XeGraphicsDef.h>
 #include <XeSDK/IGraphicsContext.h>
-#include <XeSDK/IGraphicsDrawing2d.h>
+#include <XeGame/IGameDrawing2d.h>
 #include <XeGame/IGameTilemap2d.h>
 #include <XeGame/XeGameTilemap2d.h>
 #include "CGameTilemap2d.h"
@@ -203,7 +203,7 @@ void CTilemap2d::DrawFlip() const {
 	}
 }
 
-void Xe::Game::Factory(ITilemap2d** ppTilemap2d, Xe::Graphics::IDrawing2d* pDrawing2d)
+void Xe::Game::Factory(ITilemap2d** ppTilemap2d, IDrawing2d* pDrawing2d)
 {
 	*ppTilemap2d = new CTilemap2d(pDrawing2d);
 }

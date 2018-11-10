@@ -14,7 +14,6 @@ namespace Xe {
 				CDepthStencilState *p;
 				if (p = static_cast<CDepthStencilState*>(depthStencilState)) {
 					if (p->m_context == this) {
-						m_Drawing->Flush();
 						if (m_DepthStencilState) m_DepthStencilState->Release();
 						m_DepthStencilState = p;
 						m_DepthStencilState->AddRef();

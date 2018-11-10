@@ -96,6 +96,15 @@
     <ClInclude Include="D:\Repository\XeEngine\XeEngine\src\XeGame\CGameTilemap2d.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameDrawing2d.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameDrawing2d.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameDrawing2d.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -132,6 +141,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="D:\Repository\XeEngine\XeEngine\src\XeGame\XeGameTilemap2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameDrawing2d.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

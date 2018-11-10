@@ -1,6 +1,5 @@
 #include "pch.h"
 #include <XeSDK/IGraphicsContext.h>
-#include "XeGraphicsCommon.h"
 #if defined(PLATFORM_GLES2)
 #include "ContextGL.Library.h"
 #include <cstdlib>

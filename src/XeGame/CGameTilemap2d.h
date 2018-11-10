@@ -2,7 +2,7 @@
 
 namespace Xe { namespace Game {
 	class CTilemap2d : public ITilemap2d {
-		Graphics::IDrawing2d* m_pDrawing;
+		IDrawing2d* m_pDrawing;
 
 		Graphics::Size m_TileSize;
 		Math::Vector2f m_TileSizef;
@@ -37,7 +37,7 @@ namespace Xe { namespace Game {
 		void DrawFlip() const;
 
 	public:
-		CTilemap2d(Graphics::IDrawing2d* context);
+		CTilemap2d(IDrawing2d* context);
 		~CTilemap2d();
 	};
 } }

@@ -29,7 +29,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGameComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsContext.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsFont.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsImagingImage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsResource.h" />
@@ -127,7 +126,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)WavAudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeCoreCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeDriversInput.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeStorageDirectory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeStorageFile.h" />
@@ -147,7 +145,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsColor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsDrawing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFont.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFontFnt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsFontUV.cpp" />

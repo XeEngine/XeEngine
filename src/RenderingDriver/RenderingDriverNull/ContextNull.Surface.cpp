@@ -17,7 +17,6 @@ namespace Xe { namespace Graphics {
 				CSurface *p;
 				if (p = static_cast<CSurface*>(surface))
 				{
-					m_Drawing->Flush();
 					if (m_Surface[index]) m_Surface[index]->Release();
 					m_Surface[index] = p;
 					m_Surface[index]->AddRef();
