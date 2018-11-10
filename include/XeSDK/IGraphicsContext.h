@@ -1,11 +1,11 @@
+
 #pragma once
 #include <XeSDK/IObject.h>
 #include <XeSDK/XeGraphics.h>
 #include <XeSDK/XeGraphicsColor.h>
-
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include <XeSDK/IGraphicsTilemap.h>
+#include <XeSDK/XeMathRectangle.h>
 
 namespace Xe { namespace Graphics {
 	//! \brief type of clearing function for selected rendering buffer
@@ -131,7 +131,6 @@ namespace Xe { namespace Graphics {
 		};
 
 		virtual void GetDrawing(IDrawing2d **ppDrawing) = 0;
-		virtual void CreateTilemap(ITilemap **ppTilemap) = 0;
 
 		virtual void GetCapabilities(Capabilities& capabilities) = 0;
 

@@ -1,8 +1,7 @@
 #pragma once
-#include <XeSDK/IObject.h>
-#include <XeSDK/XeMathRectangle.h>
+#include <XeSDK/XeGraphicsColor.h>
 
-namespace Xe { namespace Graphics {
+namespace Xe { namespace Game {
 	struct TilesetProperties {
 		// Size of a single tile
 		Math::Vector2i TileSize;
@@ -20,7 +19,7 @@ namespace Xe { namespace Graphics {
 			u16 Tile;
 		};
 		u16 RESERVED;
-		Color BlendColor;
+		Graphics::Color BlendColor;
 	};
 	struct TilemapData {
 		TileData* Tilemap;
@@ -28,7 +27,7 @@ namespace Xe { namespace Graphics {
 		Math::Vector2i Size;
 	};
 
-	interface ITilemap : public IObject
+	interface ITilemap2d : public IObject
 	{
 		enum DrawFlags {
 			Draw_Default = 0,
@@ -38,7 +37,7 @@ namespace Xe { namespace Graphics {
 			Draw_Color = 8,
 		};
 
-		virtual ~ITilemap() {};
+		virtual ~ITilemap2d() {};
 
 		virtual void SetTileset(const TilesetProperties& tileset) = 0;
 

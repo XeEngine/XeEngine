@@ -235,9 +235,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsTilemap.h">
-      <Filter>Graphics\Public</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeLogger.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -454,9 +451,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp">
       <Filter>Private</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp">
-      <Filter>Graphics\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIODevices.cpp">
       <Filter>IO\Private</Filter>

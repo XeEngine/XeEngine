@@ -31,7 +31,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Resource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.States.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Surface.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Tilemap.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Win32.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversRenderingOpenGlDriver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsGl.cpp" />

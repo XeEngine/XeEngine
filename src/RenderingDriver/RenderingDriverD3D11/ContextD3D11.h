@@ -12,7 +12,6 @@
 #include <XeSDK/IGraphicsDrawing2d.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include <XeSDK/IGraphicsTilemap.h>
 #include "XeGraphicsCommon.h"
 #include "D3D11Surface.h"
 
@@ -86,47 +85,6 @@ namespace Xe { namespace Graphics {
 			void DrawSurface(const Vector3f(&position)[4], const Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 		};
 
-		class CTilemap : public ITilemap {
-			IContext* m_pContext;
-			IDrawing2d* m_pDrawing;
-
-			Size m_TileSize;
-			Vector2f m_TileSizef;
-
-			int m_TilesPerRow;
-			Math::Rectangle<float> m_TilesetRectf;
-			Vector2f m_TilesetPos;
-			Vector2f m_TilesetSize;
-			Vector2f m_TilesetMul;
-			Vector2f m_TilesetPadding;
-
-			Rectanglef m_Camera;
-
-			Size m_MapSize;
-			int m_ParallaxSize;
-			TileData* m_Tilemap;
-			float* m_Parallax;
-
-			void SetTileset(const TilesetProperties& tileset);
-
-			const Size& GetMapSize() const;
-			void SetMapSize(const Size& size);
-
-			void Lock(TilemapData& data);
-			void Unlock();
-
-			const Rectanglef& GetCamera() const;
-			void SetCamera(const Rectanglef& camera);
-
-			void Draw(int flags);
-			void DrawStandard() const;
-			void DrawFlip() const;
-
-		public:
-			CTilemap(IContext* context);
-			~CTilemap();
-		};
-
 		Xe::Core::IFrameView* m_pFrameView;
 		CDrawing *m_Drawing;
 		ContextState m_State;
@@ -190,7 +148,6 @@ namespace Xe { namespace Graphics {
 
 		bool Initialize(const ContextInitDesc& properties);
 		void GetDrawing(IDrawing2d** drawing);
-		void CreateTilemap(ITilemap** pTilemap);
 
 		void GetCapabilities(Capabilities& capabilities);
 

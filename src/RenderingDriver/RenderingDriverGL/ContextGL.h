@@ -57,46 +57,6 @@ namespace Xe {
 
 				inline Vertex *Get();
 			};
-			class CTilemap : public ITilemap {
-				IContext* m_pContext;
-				IDrawing2d* m_pDrawing;
-
-				Size m_TileSize;
-				Vector2f m_TileSizef;
-
-				int m_TilesPerRow;
-				Math::Rectangle<float> m_TilesetRectf;
-				Vector2f m_TilesetPos;
-				Vector2f m_TilesetSize;
-				Vector2f m_TilesetMul;
-				Vector2f m_TilesetPadding;
-
-				Rectanglef m_Camera;
-
-				Size m_MapSize;
-				int m_ParallaxSize;
-				TileData* m_Tilemap;
-				float* m_Parallax;
-
-				void SetTileset(const TilesetProperties& tileset);
-
-				const Size& GetMapSize() const;
-				void SetMapSize(const Size& size);
-
-				void Lock(TilemapData& data);
-				void Unlock();
-
-				const Rectanglef& GetCamera() const;
-				void SetCamera(const Rectanglef& camera);
-
-				void Draw(int flags);
-				void DrawStandard() const;
-				void DrawFlip() const;
-
-			public:
-				CTilemap(IContext* context);
-				~CTilemap();
-			};
 
 			Size m_Size;
 
@@ -108,7 +68,6 @@ namespace Xe {
 
 			virtual bool Initialize(const ContextInitDesc& properties);
 			void GetDrawing(IDrawing2d** drawing);
-			void CreateTilemap(ITilemap** pTilemap);
 
 			void GetCapabilities(Capabilities& capabilities);
 

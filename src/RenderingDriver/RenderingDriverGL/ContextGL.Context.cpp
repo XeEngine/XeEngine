@@ -29,9 +29,6 @@ namespace Xe {
 			m_Drawing->AddRef();
 			*drawing = m_Drawing;
 		}
-		void CContextGL::CreateTilemap(ITilemap** pTilemap) {
-			*pTilemap = new CTilemap(this);
-		}
 
 		void CContextGL::GetCapabilities(Capabilities& capabilities)
 		{

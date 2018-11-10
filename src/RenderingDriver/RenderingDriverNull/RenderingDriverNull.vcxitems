@@ -28,7 +28,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Resource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.States.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Surface.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextNull.Tilemap2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NullSurface.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeDriversRenderingNullDriver.cpp" />
   </ItemGroup>

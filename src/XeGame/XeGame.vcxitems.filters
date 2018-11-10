@@ -87,6 +87,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemap2d.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTilemap2d.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Repository\XeEngine\XeEngine\src\XeGame\CGameTilemap2d.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -120,6 +129,9 @@
       <Filter>src\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameImGuiHandler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Repository\XeEngine\XeEngine\src\XeGame\XeGameTilemap2d.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

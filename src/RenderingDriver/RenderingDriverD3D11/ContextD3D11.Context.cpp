@@ -101,9 +101,6 @@ namespace Xe { namespace Graphics {
 		m_Drawing->AddRef();
 		*drawing = m_Drawing;
 	}
-	void CContextD3D11::CreateTilemap(ITilemap** pTilemap) {
-		*pTilemap = new CTilemap(this);
-	}
 
 	void CContextD3D11::GetCapabilities(Capabilities& capabilities)
 	{

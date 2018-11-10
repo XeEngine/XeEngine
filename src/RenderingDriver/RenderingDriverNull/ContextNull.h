@@ -1,10 +1,8 @@
 #pragma once
 #include <XeSDK/IGraphicsContext.h>
 #include <XeSDK/IGraphicsDrawing2d.h>
-#include <XeSDK/IGraphicsTilemap.h>
 #include <XeSDK/IGraphicsSurface.h>
 #include <XeSDK/IGraphicsBuffer.h>
-#include <XeSDK/IGraphicsTilemap.h>
 #include "NullSurface.h"
 
 using namespace RenderingDriverNull;
@@ -55,26 +53,6 @@ namespace Xe { namespace Graphics {
 			void DrawSurface(const Math::Vector3f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color &color, float mode);
 			void DrawSurface(const Math::Vector3f(&position)[4], const Math::Vector2f(&uvCoord)[4], const Color(&color)[4], float mode);
 		};
-		class CTilemap : public ITilemap {
-			IContext *m_pContext;
-			Size m_Size;
-
-			void SetTileset(const TilesetProperties& tileset);
-
-			const Size& GetMapSize() const;
-			void SetMapSize(const Size& size);
-
-			void Lock(TilemapData& data);
-			void Unlock();
-
-			const Math::Rectanglef& GetCamera() const;
-			void SetCamera(const Math::Rectanglef& camera);
-
-			void Draw(int flags);
-		public:
-			CTilemap(IContext *context);
-			~CTilemap();
-		};
 
 		CDrawing *m_Drawing;
 		ContextState m_State;
@@ -92,7 +70,6 @@ namespace Xe { namespace Graphics {
 
 		bool Initialize(const ContextInitDesc& properties);
 		void GetDrawing(IDrawing2d** drawing);
-		void CreateTilemap(ITilemap** tilemap);
 
 		void GetCapabilities(Capabilities& capabilities);
 

@@ -32,9 +32,6 @@ namespace Xe {
 			m_Drawing->AddRef();
 			*drawing = m_Drawing;
 		}
-		void CContextNull::CreateTilemap(ITilemap** tilemap) {
-			*tilemap = new CTilemap(this);
-		}
 
 		void CContextNull::GetCapabilities(Capabilities& capabilities)
 		{

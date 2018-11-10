@@ -34,7 +34,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsImagingImage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsSurface.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IGraphicsTilemap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IHashable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIOFileStream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IIoStream.h" />
@@ -155,7 +154,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImaging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsImagingPng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsSpriteBatch.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsTilemap.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics_GLES.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeIODevices.cpp" />

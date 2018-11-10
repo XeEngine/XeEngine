@@ -28,6 +28,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTimerComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTilemap2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame.h" />
@@ -41,16 +42,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundSfxEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundBgmEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlatformConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h" />
