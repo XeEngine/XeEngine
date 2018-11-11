@@ -5,7 +5,7 @@
 #ifdef PLATFORM_WIN32
 
 #include "ContextGL.Win32.h"
-#define TYPECONTEXT Xe::Graphics::ContextGL_Win32
+#define TYPECONTEXT Xe::Graphics::ContextGL_Win32(properties.FrameView)
 #define CREATECONTEXT (new TYPECONTEXT)
 
 #else

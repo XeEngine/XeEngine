@@ -15,6 +15,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.Buffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.Common.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ContextGL.Library.h" />
@@ -26,7 +27,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Helpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Common.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Context.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Drawing2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Library.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.Resource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ContextGL.States.cpp" />

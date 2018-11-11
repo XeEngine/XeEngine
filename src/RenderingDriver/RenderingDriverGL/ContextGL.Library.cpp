@@ -1,10 +1,6 @@
 #include "pch.h"
-
-#ifdef PLATFORM_GL
 #include "ContextGL.Library.h"
 #include "ContextGL.Common.h"
-
-using namespace Xe::Debug;
 
 #if defined(PLATFORM_WIN32)
 #define GL_LOAD_FUNCTIONS
@@ -13,6 +9,8 @@ using namespace Xe::Debug;
 #else
 #define GETPROCADDRESS(name)
 #endif
+
+#define LOAD(t, n) r |= (n = (t)GETPROCADDRESS(#n)) == NULL
 
 #ifndef PLATFORM_GLES
 // OpenGL 1.3
@@ -54,8 +52,14 @@ PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
 // OpenGL 3.0
 PFNGLMAPBUFFERRANGEPROC glMapBufferRange;
 PFNGLUNIFORM2UIPROC glUniform2ui;
+PFNGLGENVERTEXARRAYS glGenVertexArrays;
+PFNGLBINDVERTEXARRAY glBindVertexArray;
+
 // OpenGL 3.1
 PFNGLTEXBUFFERPROC glTexBuffer;
+
+// OpenGL 3.2
+PFNWGLCREATECONTEXTATTRIBSARB wglCreateContextAttribsARB;
 
 // OpenGL EXT
 PFNGLEXTSWAPINTERVAL glExtSwapInterval;
@@ -69,7 +73,7 @@ namespace Xe {
 	namespace Graphics {
 		PROC WINAPI HeyGetProcAddress(const char *func) {
 			PROC f = _GETPROCADDRESS(func);
-			if (f == nullptr) LOG(Log::Priority_Info, Log::Type_Graphics, "%s not found.", func);
+			if (f == nullptr) LOGD("%s not found.", func);
 			return f;
 		}
 		GLVersion CContextGLCommon::LoadLibraries() {
@@ -84,9 +88,11 @@ namespace Xe {
 #else
 			GLVersion ver = GL_11;
 			bool r2;
+
 			// OpenGL 1.3
 			r |= (glActiveTexture = (PFNGLACTIVETEXTUREPROC)GETPROCADDRESS("glActiveTexture")) == NULL;
 			if (!r) ver = GL_13;
+
 			// OpenGL 1.5
 			r |= (glBindBuffer = (PFNGLBINDBUFFERPROC)GETPROCADDRESS("glBindBuffer")) == NULL;
 			r |= (glBufferData = (PFNGLBUFFERDATAPROC)GETPROCADDRESS("glBufferData")) == NULL;
@@ -94,6 +100,7 @@ namespace Xe {
 			r |= (glGenBuffers = (PFNGLGENBUFFERSPROC)GETPROCADDRESS("glGenBuffers")) == NULL;
 			r |= (glMapBuffer = (PFNGLMAPBUFFERPROC)GETPROCADDRESS("glMapBuffer")) == NULL;
 			r |= (glUnmapBuffer = (PFNGLUNMAPBUFFERPROC)GETPROCADDRESS("glUnmapBuffer")) == NULL;
+
 			if (!r) ver = GL_15;
 			// OpenGL 2.0
 			r |= (glAttachShader = (PFNGLATTACHSHADERPROC)GETPROCADDRESS("glAttachShader")) == NULL;
@@ -120,13 +127,22 @@ namespace Xe {
 			r |= (glUseProgram = (PFNGLUSEPROGRAMPROC)GETPROCADDRESS("glUseProgram")) == NULL;
 			r |= (glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)GETPROCADDRESS("glVertexAttribPointer")) == NULL;
 			if (!r) ver = GL_20;
+
 			// OpenGL 3.0
-			r |= (glMapBufferRange = (PFNGLMAPBUFFERRANGEPROC)GETPROCADDRESS("glMapBufferRange")) == NULL;
-			r |= (glUniform2ui = (PFNGLUNIFORM2UIPROC)GETPROCADDRESS("glUniform2ui")) == NULL;
+			LOAD(PFNGLMAPBUFFERRANGEPROC, glMapBufferRange);
+			LOAD(PFNGLUNIFORM2UIPROC, glUniform2ui);
+			LOAD(PFNGLGENVERTEXARRAYS, glGenVertexArrays);
+			LOAD(PFNGLBINDVERTEXARRAY, glBindVertexArray);
 			if (!r) ver = GL_30;
+
 			// OpenGL 3.1
-			r |= (glTexBuffer = (PFNGLTEXBUFFERPROC)GETPROCADDRESS("glTexBuffer")) == NULL;
+			LOAD(PFNGLTEXBUFFERPROC, glTexBuffer);
 			if (!r) ver = GL_31;
+
+			// OpenGL 3.2
+			LOAD(PFNWGLCREATECONTEXTATTRIBSARB, wglCreateContextAttribsARB);
+			if (!r) ver = GL_32;
+
 			// OpenGL EXT
 			r2 = false;
 			r2 |= (glExtSwapInterval = (PFNGLEXTSWAPINTERVAL)GETPROCADDRESS("wglSwapIntervalEXT")) == NULL;
@@ -134,8 +150,7 @@ namespace Xe {
 			r |= r2;
 #endif
 
-			return ver;
+			return m_Version = ver;
 		}
 	}
 }
-#endif // PLATFORM_GL

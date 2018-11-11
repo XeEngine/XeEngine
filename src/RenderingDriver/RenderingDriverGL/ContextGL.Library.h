@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#ifdef PLATFORM_GL
 #include <gl/GL.h>
 
 namespace Xe {
@@ -28,6 +27,7 @@ namespace Xe {
 // OpenGL 1.2
 #define GL_BGR 0x80E0
 #define GL_BGRA 0x80E1
+#define GL_CLAMP_TO_EDGE 0x812F
 #define GL_UNSIGNED_SHORT_4_4_4_4 0x8033
 #define GL_UNSIGNED_SHORT_5_5_5_1 0x8034
 #define GL_UNSIGNED_SHORT_5_6_5 0x8363
@@ -37,6 +37,7 @@ namespace Xe {
 #define GL_SHADING_LANGUAGE_VERSION 0x8B8C
 
 // OpenGL 1.3
+#define GL_CLAMP_TO_BORDER 0x812D
 #define GL_TEXTURE0 0x84C0
 #define GL_MAX_TEXTURE_UNITS 0x84E2
 typedef void(__stdcall * PFNGLACTIVETEXTUREPROC) (GLenum texture);
@@ -45,7 +46,9 @@ extern PFNGLACTIVETEXTUREPROC glActiveTexture;
 // OpenGL 1.5
 #define GL_ARRAY_BUFFER 0x8892
 #define GL_ELEMENT_ARRAY_BUFFER 0x8893
+#define GL_READ_ONLY 0x88B8
 #define GL_WRITE_ONLY 0x88B9
+#define GL_READ_WRITE 0x88BA
 #define GL_STREAM_DRAW 0x88E0
 #define GL_STREAM_READ 0x88E1
 #define GL_STREAM_COPY 0x88E2
@@ -128,14 +131,32 @@ extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
 typedef ptrdiff_t GLintptr;
 typedef void*(__stdcall * PFNGLMAPBUFFERRANGEPROC) (GLenum target​, GLintptr offset​, GLsizeiptr length​, GLbitfield access​);
 typedef void(__stdcall * PFNGLUNIFORM2UIPROC) (GLint location, GLuint v0, GLuint v1);
+typedef void(__stdcall * PFNGLGENVERTEXARRAYS) (GLsizei n, GLuint *arrays);
+typedef void(__stdcall * PFNGLBINDVERTEXARRAY) (GLuint array);
 extern PFNGLMAPBUFFERRANGEPROC glMapBufferRange;
 extern PFNGLUNIFORM2UIPROC glUniform2ui;
+extern PFNGLGENVERTEXARRAYS glGenVertexArrays;
+extern PFNGLBINDVERTEXARRAY glBindVertexArray;
 
 // OpenGL 3.1
 #define GL_TEXTURE_BUFFER 0x8C2A
 #define GL_MAX_TEXTURE_BUFFER_SIZE 0x8C2B
 typedef void(__stdcall * PFNGLTEXBUFFERPROC) (GLenum target​, GLenum internalFormat​, GLuint buffer);
 extern PFNGLTEXBUFFERPROC glTexBuffer;
+
+// OpenGL 3.2
+#ifdef _WIN32
+#define WGL_CONTEXT_DEBUG_BIT_ARB 0x0001
+#define WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
+#define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
+#define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
+#define WGL_CONTEXT_LAYER_PLANE_ARB 0x2093
+#define WGL_CONTEXT_FLAGS_ARB 0x2094
+#define ERROR_INVALID_VERSION_ARB 0x2095
+#define ERROR_INVALID_PROFILE_ARB 0x2096
+typedef HGLRC(__stdcall * PFNWGLCREATECONTEXTATTRIBSARB) (HDC hDC, HGLRC hShareContext, const int* attribList);
+extern PFNWGLCREATECONTEXTATTRIBSARB wglCreateContextAttribsARB;
+#endif
 
 // OpenGL EXT
 typedef GLboolean(__stdcall * PFNGLEXTSWAPINTERVAL) (int interval);
@@ -152,5 +173,3 @@ extern PFNGLUNMAPBUFFEROESPROC glUnmapBufferOES;
 #endif // PLATFORM_GLES
 
 #endif // GL_LOAD_FUNCTIONS
-
-#endif // PLATFORM_GL

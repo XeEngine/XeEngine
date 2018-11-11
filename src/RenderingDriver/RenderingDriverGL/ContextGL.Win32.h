@@ -17,7 +17,7 @@ namespace Xe { namespace Graphics {
 		bool CreateContext();
 
 	public:
-		ContextGL_Win32();
+		ContextGL_Win32(Xe::Core::IFrameView* pView);
 		~ContextGL_Win32();
 
 		bool Initialize(const ContextInitDesc& properties);
