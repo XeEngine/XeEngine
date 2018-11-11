@@ -169,6 +169,12 @@ namespace Xe
 		//! \return true if condition is verified
 		static bool IsUpper(int ch);
 
+		//! \brief Convert a character to upper-case
+		static int ToUpper(int ch);
+
+		//! \brief Convert a character to lower-case
+		static int ToLower(int ch);
+
 		static int Compare(const StringSpan& stra, const StringSpan& strb);
 
 		static int CompareInsensitive(const StringSpan& stra, const StringSpan& strb);

@@ -501,6 +501,16 @@ bool String::IsUpper(int ch)
 	return !!(gc_XeStringCharProp[(u8)ch] & CHPROP_UPPER);
 }
 
+int String::ToUpper(int ch)
+{
+	return toupper(ch);
+}
+
+int String::ToLower(int ch)
+{
+	return tolower(ch);
+}
+
 int String::Compare(const StringSpan& stra, const StringSpan& strb)
 {
 	return StringSpan::Compare(stra, strb);
