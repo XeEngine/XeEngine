@@ -262,7 +262,7 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 
 	Xe::Graphics::BufferDesc ibDesc;
 	ibDesc.Usage = Xe::Graphics::Usage_Static;
-	ibDesc.Type = Xe::Graphics::BufferType_Index;
+	ibDesc.Type = Xe::Graphics::BufferType_Index16;
 	ibDesc.Length = draw_data->TotalIdxCount * sizeof(ImDrawIdx);
 	Xe::Graphics::DataDesc ibDataDesc;
 	ibDataDesc.data = indexData;

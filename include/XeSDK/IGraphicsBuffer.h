@@ -14,10 +14,6 @@ namespace Xe {
 
 			//! \brief 32-bit index buffer
 			BufferType_Index32,
-
-			//! \brief index buffer
-			//! \warning DEPRECATED
-			BufferType_Index = BufferType_Index16,
 		};
 
 		//! \brief indirect buffer structure

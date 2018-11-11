@@ -46,7 +46,7 @@ CDrawing2d::CDrawing2d(IContext *pContext) :
 	BufferDesc indexBufferDesc;
 	indexBufferDesc.Usage = Usage_Static;
 	indexBufferDesc.Length = MaximumQuadsCount * 6 * sizeof(u16);
-	indexBufferDesc.Type = BufferType_Index;
+	indexBufferDesc.Type = BufferType_Index16;
 
 	DataDesc indexDataDesc;
 	indexDataDesc.data = pIndices;
