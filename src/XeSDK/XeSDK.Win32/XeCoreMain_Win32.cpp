@@ -10,7 +10,7 @@
 
 #include "XeDriversRenderingNullDriver.h"
 #include "XeDriversRenderingD3D11Driver.h"
-//#include "XeDriversRenderingOpenGlDriver.h"
+#include "XeDriversRenderingOpenGlDriver.h"
 #include "XeDriversSoundNullDriver.h"
 #include "XeDriversSoundWasapiDriver.h"
 #include "XeDriversSoundXAudioDriver.h"
@@ -21,7 +21,7 @@ namespace Xe {
 
 	Xe::Drivers::NullRenderingDriver g_DriverRenderingNull;
 	Xe::Drivers::D3D11Driver g_DriverRenderingD3D11;
-	//Xe::Drivers::OpenGlDriver g_DriverRenderingOpenGl;
+	Xe::Drivers::OpenGlDriver g_DriverRenderingOpenGl;
 	Xe::Drivers::NullSoundDriver g_DriverSoundNull;
 	Xe::Drivers::WasapiDriver g_DriverSoundWasapi;
 	Xe::Drivers::XAudioDriver g_DriverSoundXAudio2;
@@ -31,15 +31,15 @@ namespace Xe {
 	void RegisterRenderingDrivers()
 	{
 		Xe::Drivers::RegisterDriver(&g_DriverRenderingD3D11);
+		Xe::Drivers::RegisterDriver(&g_DriverRenderingOpenGl);
 		Xe::Drivers::RegisterDriver(&g_DriverRenderingNull);
-		//Xe::Drivers::RegisterDriver(&g_DriverRenderingOpenGl);
 	}
 
 	void RegisterAudioDrivers()
 	{
 		Xe::Drivers::RegisterDriver(&g_DriverSoundXAudio2);
 		Xe::Drivers::RegisterDriver(&g_DriverSoundNull);
-		//Xe::Drivers::RegisterDriver(&g_DriverSoundWasapi);
+		Xe::Drivers::RegisterDriver(&g_DriverSoundWasapi);
 	}
 
 	void RegisterInputDrivers()
