@@ -1,0 +1,23 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>XeEngineApp</Name>
+    <Description>Create an empty XeEngine application</Description>
+    <ProjectType>VC</ProjectType>
+    <ProjectSubType>XeEngine</ProjectSubType>
+    <SortOrder>2000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>XeApp</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>xeapp.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$ext_safeprojectname$.vcxitems" File="app.vcxitems" ReplaceParameters="true">
+		<ProjectItem OpenInEditor="true" TargetFileName="$ext_safeprojectname$View.h" ReplaceParameters="true">AppView.h</ProjectItem>
+		<ProjectItem OpenInEditor="true" TargetFileName="$ext_safeprojectname$View.cpp" ReplaceParameters="true">AppView.cpp</ProjectItem>
+		<ProjectItem TargetFileName="pch.h" ReplaceParameters="false">pch.h</ProjectItem>
+		<ProjectItem TargetFileName="pch.cpp" ReplaceParameters="false">pch.cpp</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,23 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="ProjectGroup">
+  <TemplateData>
+    <Name>XeEngineApp</Name>
+    <Description>Create an empty XeEngine application</Description>
+    <ProjectType>VC</ProjectType>
+    <ProjectSubType>XeEngine</ProjectSubType>
+    <SortOrder>2000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>XeApp</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>xeapp.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+	  <ProjectCollection>
+		<SolutionFolder Name="$projectname$">
+			<ProjectTemplateLink ProjectName="$projectname$.Shared" CopyParameters="true">proj.shared/shared.vstemplate</ProjectTemplateLink>
+			<ProjectTemplateLink ProjectName="$projectname$.Win32" CopyParameters="true">proj.win32\win32.vstemplate</ProjectTemplateLink>
+		</SolutionFolder>
+	  </ProjectCollection>
+  </TemplateContent>
+</VSTemplate>
