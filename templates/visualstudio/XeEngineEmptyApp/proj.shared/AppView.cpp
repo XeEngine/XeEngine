@@ -6,9 +6,10 @@ using namespace Xe;
 namespace Xe { namespace Core {
 	// Entry point of our application.
 	void Main() {
+		// Initialize XeEngine, starting up the drivers and its dependencies
 		Initialize();
 
-		ObjPtr<$ext_safeprojectname$::$ext_safeprojectname$View> pCoreView = new $ext_safeprojectname$::$ext_safeprojectname$View;
+		ObjPtr<$ext_safeprojectname$::$ext_safeprojectname$View> frameView = new $ext_safeprojectname$::$ext_safeprojectname$View;
 
 		Xe::Core::FrameViewInitDesc viewInitDesc;
 #ifdef DEVELOPMENT
@@ -23,7 +24,8 @@ namespace Xe { namespace Core {
 		viewInitDesc.IsFullscreen = true;
 #endif
 
-		if (Xe::Core::Run(pCoreView.Get(), viewInitDesc) == false)
+		// Ask to the core to initialize and show the specified FrameView
+		if (Xe::Core::Run(frameView, viewInitDesc) == false)
 		{
 			LOGE("Xe::Core::Factory failed.\n");
 		}
@@ -37,11 +39,8 @@ namespace $ext_safeprojectname$
 		m_pFrameView(nullptr),
 		m_pContext(nullptr),
 		m_IsVblankEnabled(true),
-		m_IsFullscreen(false),
-		m_IsOverlayActivated(false)
+		m_IsFullscreen(false)
 	{
-		// Use destructor to deallocate everything not destroyed by OnDestroy.
-		if (m_pFrameView) m_pFrameView->Release();
 	}
 
 	$ext_safeprojectname$View::~$ext_safeprojectname$View()
@@ -50,21 +49,24 @@ namespace $ext_safeprojectname$
 
 	bool $ext_safeprojectname$View::OnAttach(Xe::Core::IFrameView* pFrameView)
 	{
+		// Early call to specify the ApplicationHandler that will initialize the application
 		m_pFrameView = pFrameView;
-		m_pFrameView->AddRef();
 		m_pFrameView->SetApplicationHandler(this);
 
 		return true;
 	}
+
 	bool $ext_safeprojectname$View::OnInitialize()
 	{
 		// Here belong the initialization of our view
 		Xe::Graphics::ContextInitDesc contextInitDesc;
 		contextInitDesc.FrameView = m_pFrameView;
 
-		auto renderingDrivers = Xe::Drivers::GetDrivers(Xe::Drivers::DriverTypeFilter_Rendering);
-		auto defaultRenderingDriver = (Xe::Drivers::Rendering::IRenderingDriver*)*renderingDrivers.begin();
+		// Get the default rendering driver
+		auto renderingDrivers = Xe::Drivers::GetDrivers<Xe::Drivers::IRenderingDriver>();
+		auto defaultRenderingDriver = *renderingDrivers.begin();
 		
+		// Initialize the rendering driver
 		if (!defaultRenderingDriver->Factory(&m_pContext, contextInitDesc))
 		{
 			LOGE("Unable to initialize the default rendering driver %s.", defaultRenderingDriver->GetDriverName());
@@ -74,46 +76,49 @@ namespace $ext_safeprojectname$
 		// Set a default color as background of our app.
 		m_pContext->SetClearColor(Graphics::Color::SlateGray);
 
-		// Set the handlers
-		m_pFrameView->SetApplicationHandler(this);
+		// Set the other handlers (eg. keyboard, mouse, network, overlays, etc.)
 		m_pFrameView->SetKeyboardHandler(this);
-		m_pFrameView->SetPointerHandler(this);
 
 		return true;
 	}
+
 	void $ext_safeprojectname$View::OnDestroy()
 	{
 		// This is called if OnInitialize was previously called, even if it
 		// failed. Destroy here all allocated stuff.
 		if (m_pContext) m_pContext->Release();
 	}
+
 	void $ext_safeprojectname$View::OnRun()
 	{
+		// Slow down the app under 10fps
 		static const double DELTATIME_TRESHOLD = 1.0 / 10.0;
 
 		// This is the body of our application.
 		Timer prev = Timer::Current();
 		bool isRunning;
 
-		do {
-			try {
-				while (isRunning = m_pFrameView->DispatchEvents(Core::DispatchType_One)) {
+		do
+		{
+			try
+			{
+				// Dispatch only one event at the time from the FrameView event dispacher
+				while (isRunning = m_pFrameView->DispatchEvents(Core::DispatchType_One))
+				{
+					// Calculate the raw delta time
 					Timer cur = Timer::Current();
 					double deltaTime = Timer(cur - prev).AsDouble();
 					prev = cur;
 					if (deltaTime > DELTATIME_TRESHOLD)
 						deltaTime = DELTATIME_TRESHOLD;
 
-					if (!m_IsOverlayActivated)
-					{
-						// Process the logic
-					}
-
+					// Draw the scene
 					Draw();
 					SwapBuffer(m_IsVblankEnabled);
 				}
 			}
-			catch (const std::exception& e) {
+			catch (const std::exception& e)
+			{
 				LOGF("OnRun exception: %s", e.what());
 			}
 		} while (isRunning);
@@ -190,36 +195,8 @@ namespace $ext_safeprojectname$
 	{
 	}
 
-	void $ext_safeprojectname$View::OnPointerMoved(const IO::PointerEvent& e)
+	void $ext_safeprojectname$View::Draw()
 	{
-	}
-
-	void $ext_safeprojectname$View::OnPointerPressed(const IO::PointerEvent& e)
-	{
-	}
-
-	void $ext_safeprojectname$View::OnPointerReleased(const IO::PointerEvent& e)
-	{
-	}
-
-	void $ext_safeprojectname$View::OnPointerEnter(const IO::PointerEvent& e)
-	{
-	}
-
-	void $ext_safeprojectname$View::OnPointerLeave(const IO::PointerEvent& e)
-	{
-	}
-
-	void $ext_safeprojectname$View::OnPointerWheel(const Math::Vector2<float>& wheel)
-	{
-	}
-
-	void $ext_safeprojectname$View::OnGameOverlayActivated(bool activated)
-	{
-		m_IsOverlayActivated = activated;
-	}
-
-	void $ext_safeprojectname$View::Draw() {
 		m_pContext->Clear(Graphics::Clear_Color | Graphics::Clear_Depth | Graphics::Clear_Stencil);
 	}
 

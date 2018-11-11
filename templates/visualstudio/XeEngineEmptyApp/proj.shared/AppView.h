@@ -5,15 +5,13 @@ namespace $ext_safeprojectname$ {
 	class $ext_safeprojectname$View :
 		public Xe::Core::IApplicationHandler,
 		public Xe::Core::IFrameHandler,
-		public Xe::Core::IKeyboardHandler,
-		public Xe::Core::IPointerHandler
+		public Xe::Core::IKeyboardHandler
 	{
-		Xe::Core::IFrameView* m_pFrameView;
-		Xe::Graphics::IContext* m_pContext;
+		Xe::ObjPtr<Xe::Core::IFrameView> m_pFrameView;
+		Xe::ObjPtr<Xe::Graphics::IContext> m_pContext;
 
 		bool m_IsVblankEnabled;
 		bool m_IsFullscreen;
-		bool m_IsOverlayActivated;
 
 		void Draw();
 		void SwapBuffer(bool isVblankEnabled);
@@ -41,14 +39,5 @@ namespace $ext_safeprojectname$ {
 		void OnCharacter(const Xe::IO::CharacterEvent& e);
 		void OnKeyPressed(const Xe::IO::KeyboardEvent& e);
 		void OnKeyReleased(const Xe::IO::KeyboardEvent& e);
-
-		void OnPointerMoved(const Xe::IO::PointerEvent& e);
-		void OnPointerPressed(const Xe::IO::PointerEvent& e);
-		void OnPointerReleased(const Xe::IO::PointerEvent& e);
-		void OnPointerEnter(const Xe::IO::PointerEvent& e);
-		void OnPointerLeave(const Xe::IO::PointerEvent& e);
-		void OnPointerWheel(const Xe::Math::Vector2<float>& wheel);
-
-		void OnGameOverlayActivated(bool activated);
 	};
 }

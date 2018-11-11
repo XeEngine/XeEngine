@@ -1,6 +1,6 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="ProjectGroup">
   <TemplateData>
-    <Name>XeEngineApp</Name>
+    <Name>XeEngine empty app</Name>
     <Description>Create an empty XeEngine application</Description>
     <ProjectType>VC</ProjectType>
     <ProjectSubType>XeEngine</ProjectSubType>
