@@ -188,5 +188,25 @@ namespace Xe
 		static String Join(char separator, const StringSpan* strs, int count);
 
 		static String Join(const StringSpan& separator, const StringSpan* strs, int count);
+
+		//! \brief Returns a string from the specified value
+		//! \param value Value to strinfigy
+		//! \param base Integer base; the valid values are 2, 8, 10 and 16
+		static String FromInt(int value, int base = 10);
+
+		//! \brief Returns a string from the specified value
+		//! \param value Value to strinfigy
+		//! \param base Integer base; the valid values are 2, 8, 10 and 16
+		static String FromUInt(unsigned int value, int base = 10);
+
+		//! \brief Returns a string from the specified value
+		//! \param value Value to strinfigy
+		//! \param base Integer base; the valid values are 2, 8, 10 and 16
+		static String FromLong(long value, int base = 10);
+
+		//! \brief Returns a string from the specified value
+		//! \param value Value to strinfigy
+		//! \param base Integer base; the valid values are 2, 8, 10 and 16
+		static String FromULong(unsigned long value, int base = 10);
 	};
 }

@@ -408,3 +408,38 @@ TEST(XeStringTest, ParseIntTest)
 	EXPECT_EQ(-1, Xe::StringSpan("1A").ParseInt(-1, 10));
 	EXPECT_EQ(-1, Xe::StringSpan("1x").ParseInt(-1, 16));
 }
+
+TEST(XeStringTest, FromIntTest)
+{
+	STRASSERT("0", Xe::String::FromInt(0));
+	STRASSERT("2", Xe::String::FromInt(2));
+	STRASSERT("123", Xe::String::FromInt(123));
+	STRASSERT("-1", Xe::String::FromInt(-1));
+	STRASSERT("-123", Xe::String::FromInt(-123));
+	STRASSERT("-1234", Xe::String::FromInt(-1234));
+	STRASSERT("-2147483648", Xe::String::FromInt(0x80000000));
+	STRASSERT("2147483647", Xe::String::FromInt(0x7FFFFFFF));
+	STRASSERT("101010", Xe::String::FromInt(0b101010, 2));
+	STRASSERT("11111111111111111111111110000101", Xe::String::FromInt(-123, 2));
+	STRASSERT("7654", Xe::String::FromInt(07654, 8));
+	STRASSERT("37777777605", Xe::String::FromInt(-123, 8));
+	STRASSERT("1BEEF", Xe::String::FromInt(0x1BEEF, 16));
+	STRASSERT("FFFFFF85", Xe::String::FromUInt(-123, 16));
+}
+
+TEST(XeStringTest, FromUIntTest)
+{
+	STRASSERT("0", Xe::String::FromUInt(0));
+	STRASSERT("2", Xe::String::FromUInt(2));
+	STRASSERT("123", Xe::String::FromUInt(123));
+	STRASSERT("4294967295", Xe::String::FromUInt(-1));
+	STRASSERT("4294967173", Xe::String::FromUInt(-123));
+	STRASSERT("2147483648", Xe::String::FromUInt(0x80000000));
+	STRASSERT("2147483647", Xe::String::FromUInt(0x7FFFFFFF));
+	STRASSERT("101010", Xe::String::FromUInt(0b101010, 2));
+	STRASSERT("11111111111111111111111110000101", Xe::String::FromUInt(-123, 2));
+	STRASSERT("7654", Xe::String::FromUInt(07654, 8));
+	STRASSERT("37777777605", Xe::String::FromUInt(-123, 8));
+	STRASSERT("DEADBEEF", Xe::String::FromUInt(0xDEADBEEF, 16));
+	STRASSERT("FFFFFF85", Xe::String::FromUInt(-123, 16));
+}

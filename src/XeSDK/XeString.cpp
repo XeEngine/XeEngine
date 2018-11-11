@@ -153,6 +153,29 @@ static const u8 gc_XeStringCharProp[0x100] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
+namespace Xe
+{
+	const char String_Digits_Lowercase[] =
+	{
+		'0', '1', '2', '3', '4', '5', '6', '7',
+		'8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+	};
+
+	const char String_Digits_Uppercase[]
+	{
+		'0', '1', '2', '3', '4', '5', '6', '7',
+		'8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+	};
+
+	const char String_Digits_Uppercase_Negative[]
+	{
+		'F', 'E', 'D', 'C', 'B', 'A', '9', '8',
+		'7', '6', '5', '4', '3', '2', '1',
+		'0', '1', '2', '3', '4', '5', '6', '7',
+		'8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+	};
+}
+
 // TODO replace this with a serious fast heap
 template <typename T>
 T* Xe_FastHeap_Alloc(int length)
@@ -505,4 +528,26 @@ String String::Join(const StringSpan& separator, const StringSpan* strs, int cou
 	}
 
 	return str + strs[count - 1];
+}
+
+String String::FromInt(int value, int base)
+{
+	return base == 10 ?
+		FromSigned<int>(value, base) :
+		FromUnsigned<unsigned int>(value, base);
+}
+
+String String::FromUInt(unsigned int value, int base)
+{
+	return FromUnsigned<unsigned int>(value, base);
+}
+
+String String::FromLong(long value, int base)
+{
+	return FromSigned<long>(value, base);
+}
+
+String String::FromULong(unsigned long value, int base)
+{
+	return FromUnsigned<unsigned long>(value, base);
 }
