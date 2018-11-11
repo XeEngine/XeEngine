@@ -56,4 +56,10 @@ TEST(XeObjPtrTest, RefsCheck)
 	// ObjPtr cannot remove a reference when holds a null pointer
 	*&Xe::ObjPtr<XeObjPtrFoo>(myfoo) = nullptr;
 	EXPECT_EQ(2, foo->GetRefsCount());
+
+	foo = nullptr;
+	EXPECT_EQ(1, myfoo->GetRefsCount());
+	EXPECT_EQ(nullptr, foo.Get());
+
+	EXPECT_EQ(0, myfoo->Release());
 }

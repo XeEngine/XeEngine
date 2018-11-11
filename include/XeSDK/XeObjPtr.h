@@ -52,28 +52,22 @@ namespace Xe {
 		//! \brief Check if there is not an IObject alive
 		bool operator!() const { return !m_obj; }
 
-		// Commented because in theory the ObjPtr state should not change after
-		// its initialization. This will remain uncommented because I am not
-		// sure if deleting it completely is the right decision.
-		//ObjPtr<T>& operator=(const ObjPtr<T>& objptr)
-		//{
-		//	T* obj = objptr.m_obj;
-		//	if (obj) obj->AddRef();
-		//	if (m_obj) m_obj->Release();
-		//	m_obj = obj;
-		//	return *this;
-		//}
+		ObjPtr<T>& operator=(const ObjPtr<T>& objptr)
+		{
+			T* obj = objptr.m_obj;
+			if (obj) obj->AddRef();
+			if (m_obj) m_obj->Release();
+			m_obj = obj;
+			return *this;
+		}
 
-		// Commented because in theory the ObjPtr state should not change after
-		// its initialization. This will remain uncommented because I am not
-		// sure if deleting it completely is the right decision.
-		//ObjPtr<T>& operator=(T* obj)
-		//{
-		//	if (obj) obj->AddRef();
-		//	if (m_obj) m_obj->Release();
-		//	m_obj = obj;
-		//	return *this;
-		//}
+		ObjPtr<T>& operator=(T* obj)
+		{
+			if (obj) obj->AddRef();
+			if (m_obj) m_obj->Release();
+			m_obj = obj;
+			return *this;
+		}
 
 		bool operator==(const T* o)
 		{
