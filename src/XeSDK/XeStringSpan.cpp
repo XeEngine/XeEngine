@@ -2,7 +2,7 @@
 #include <XeSDK/XeStringSpan.h>
 #include <XeSDK/XeMath.h>
 #include <XeSDK/XeString.h>
-#include <string>
+#include <string.h>
 #include "XeStringInternal.h"
 
 using namespace Xe;
@@ -399,5 +399,9 @@ int StringSpan::Compare(const StringSpan& stra, const StringSpan& strb)
 
 int StringSpan::CompareInsensitive(const StringSpan& stra, const StringSpan& strb)
 {
+#ifdef _WIN32
 	return _strnicmp(stra.m_Data, strb.m_Data, Xe::Math::Max(stra.m_Length, strb.m_Length));
+#else
+	return strncasecmp(stra.m_Data, strb.m_Data, Xe::Math::Max(stra.m_Length, strb.m_Length));
+#endif
 }

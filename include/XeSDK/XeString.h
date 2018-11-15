@@ -36,7 +36,7 @@ namespace Xe
 		//! \brief Create a string from a StringSpan
 		//! \param[in] string to copy
 		String(const StringSpan& string);
-		
+
 		//! \brief Create a string from another string
 		//! \param[in] string to copy
 		String(const String& string);
@@ -47,7 +47,7 @@ namespace Xe
 		//! \brief Get the raw string pointer as C-like string
 		//! \sa GetData
 		operator const char*() const;
-		
+
 		//! \brief Assign a StringSpan to the existing string
 		/** \details This is the only exception where the object is mutable.
 		 * For performance reason, is preferable to re-use the existing
@@ -133,7 +133,7 @@ namespace Xe
 		String TrimEnd() const;
 
 		// TODO SPLIT
-		
+
 		//! \brief Check if the character is a space or not
 		//! \param[in] ch Character to analyze
 		//! \return true if the condition is verified
@@ -179,13 +179,13 @@ namespace Xe
 
 		static int CompareInsensitive(const StringSpan& stra, const StringSpan& strb);
 
-		template <size_t length>
+		template <unsigned length>
 		static String Join(char separator, const StringSpan (&strs)[length])
 		{
 			return Join(separator, strs, length);
 		}
 
-		template <size_t length>
+		template <unsigned length>
 		static String Join(const StringSpan& separator, const StringSpan(&strs)[length])
 		{
 			return Join(separator, strs, length);

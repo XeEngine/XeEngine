@@ -43,8 +43,8 @@ namespace Xe {
 		T* operator->() const { return m_obj; }
 
 		//! \brief Use the helper operator () for IDelegate
-		template <typename T>
-		void operator()(T arg) { m_obj(arg); }
+		template <typename TArgs>
+		void operator()(TArgs arg) { m_obj(arg); }
 
 		//! \brief Check if there is an IObject alive
 		operator bool() const { return !!m_obj; }

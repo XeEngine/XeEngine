@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #ifdef _WIN32
 #include "pch_winapi.h"
@@ -14,7 +14,7 @@
 #include <dirent.h>
 
 #else
-#error Platform or SDK not supported
+#warning Platform or SDK not supported
 
 #endif
 

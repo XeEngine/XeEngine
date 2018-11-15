@@ -23,7 +23,7 @@ namespace Xe
 		//! \brief Definition of an empty string
 		static StringSpan Empty;
 
-		template <size_t length>
+		template <unsigned length>
 		StringSpan(const char(&str)[length]) :
 			StringSpan(str, length - 1)
 		{ }

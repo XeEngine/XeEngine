@@ -2,7 +2,7 @@
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeMath.h>
 #include <XeSDK/XeMemory.h>
-#include <string>
+#include <string.h>
 #include "XeStringInternal.h"
 
 using namespace Xe;

@@ -81,7 +81,7 @@ namespace Xe {
 
 			//! \brief specify wave format and callback function
 			IAudioBuffer(const WaveDesc &properties);
-			virtual ~IAudioBuffer() = 0 { }
+			virtual ~IAudioBuffer() { }
 
 			virtual void SetCallback(IAudioBufferCallback& callback) = 0;
 
