@@ -1,0 +1,6 @@
+target_sources(XeSDK
+PRIVATE
+	"${CMAKE_CURRENT_LIST_DIR}/../pch.h"
+	"${CMAKE_CURRENT_LIST_DIR}/XeMemory_libc.cpp"
+)
+	
