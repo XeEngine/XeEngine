@@ -6,7 +6,7 @@ namespace Xe { namespace Collections {
 	template <typename T, size_t length>
 	class StaticArray
 	{
-		typedef int(&ArrayRef)[length];
+		typedef T(&ArrayRef)[length];
 
 		T (&m_Array)[length];
 	public:
