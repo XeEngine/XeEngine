@@ -28,6 +28,15 @@ namespace Xe { namespace Collections {
 			return m_Array[index];
 		}
 
+		const T& operator[](int index) const
+		{
+			if (index < 0)
+				throw std::out_of_range(NAMEOF(index)" cannot be negative");
+			if (index >= length)
+				throw std::out_of_range(NAMEOF(index)" cannot be greater than the size of the array");
+			return m_Array[index];
+		}
+
 		bool IsEmpty() const
 		{
 			return length == 0;

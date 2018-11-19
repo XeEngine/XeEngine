@@ -6,6 +6,7 @@ namespace Xe { namespace Collections {
 	template <typename T>
 	class Array
 	{
+	protected:
 		int m_Length;
 		T* m_Array;
 	public:
@@ -30,6 +31,15 @@ namespace Xe { namespace Collections {
 		}
 
 		T& operator[](int index)
+		{
+			if (index < 0)
+				throw std::out_of_range(NAMEOF(index)" cannot be negative");
+			if (index >= m_Length)
+				throw std::out_of_range(NAMEOF(index)" cannot be greater than the size of the array");
+			return m_Array[index];
+		}
+
+		const T& operator[](int index) const
 		{
 			if (index < 0)
 				throw std::out_of_range(NAMEOF(index)" cannot be negative");
