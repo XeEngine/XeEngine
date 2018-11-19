@@ -639,4 +639,9 @@ namespace Xe { namespace Game {
 	{
 		pTextureManager = new SimpleTextureManager(context);
 	}
+
+	void Factory(ITextureManager** ppTextureManager, Xe::Graphics::IContext* pContext)
+	{
+		*ppTextureManager = new SimpleTextureManager(*pContext);
+	}
 } }

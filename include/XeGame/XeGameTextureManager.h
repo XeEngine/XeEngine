@@ -1,5 +1,5 @@
 #pragma once
-#include "ITextureManager.h"
+#include <XeGame/ITextureManager.h>
 
 namespace Xe { namespace IO {
 	interface IStream;
@@ -19,4 +19,6 @@ namespace Xe { namespace Game {
 		static TexId Open(ITextureManager& textureManager, IO::IFileStream& fileStream);
 		static TexId Open(ITextureManager& textureManager, IO::IStream& stream, ctstring name);
 	};
+
+	void Factory(ITextureManager** ppTextureManager, Xe::Graphics::IContext* pContext);
 } }
