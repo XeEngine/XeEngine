@@ -42,6 +42,7 @@
     <ClCompile Include="XeArrayTest.cpp" />
     <ClCompile Include="XeObjPtrTest.cpp" />
     <ClCompile Include="XeIODevices_Dummy.cpp" />
+    <ClCompile Include="XeStoragePathTest.cpp" />
     <ClCompile Include="XeStringTest.cpp" />
   </ItemGroup>
   <ItemGroup>

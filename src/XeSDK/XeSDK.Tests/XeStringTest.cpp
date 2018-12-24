@@ -156,6 +156,7 @@ TEST(XeStringTest, SubstringTest)
 	Xe::String str("Hello world!");
 	STRASSERT("Hello", Xe::String(str.Substring(0, 5)));
 	STRASSERT("world!", Xe::String(str.Substring(6)));
+	STRASSERT("", Xe::String(str.Substring(12)));
 	EXPECT_THROW(Xe::String("error").Substring(-1, 1), std::invalid_argument);
 	EXPECT_THROW(Xe::String("error").Substring(9, 1), std::invalid_argument);
 	EXPECT_THROW(Xe::String("error").Substring(2, 9), std::invalid_argument);
