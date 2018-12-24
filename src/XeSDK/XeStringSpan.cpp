@@ -25,6 +25,16 @@ StringSpan::StringSpan(const char* str, int length) :
 	ASSERT_POSITIVE(length);
 }
 
+void StringSpan::CheckRangeIndex(int startIndex, int length) const
+{
+	ASSERT_POSITION(startIndex);
+	ASSERT_POSITIVE(length);
+	if (startIndex + length > m_Length)
+	{
+		throw std::invalid_argument(NAMEOF(length)" must be in the string range");
+	}
+}
+
 char StringSpan::operator [](int index) const
 {
 	ASSERT_CPOSITION(index, m_Length);
@@ -248,6 +258,21 @@ int StringSpan::LastIndexOfAny(const StringSpan& chs) const
 	}
 
 	return -1;
+}
+
+StringSpan StringSpan::Substring(int startIndex) const
+{
+	return Substring(startIndex, m_Length - startIndex);
+}
+
+StringSpan StringSpan::Substring(int startIndex, int length) const
+{
+	if (length == 0)
+		return Empty;
+
+	CheckRangeIndex(startIndex, length);
+
+	return StringSpan(m_Data + startIndex, length);
 }
 
 bool StringSpan::TryParse(bool& value) const

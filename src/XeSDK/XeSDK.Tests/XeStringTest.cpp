@@ -154,8 +154,8 @@ TEST(XeStringTest, ToLowerTest)
 TEST(XeStringTest, SubstringTest)
 {
 	Xe::String str("Hello world!");
-	STRASSERT("Hello", str.Substring(0, 5));
-	STRASSERT("world!", str.Substring(6));
+	STRASSERT("Hello", Xe::String(str.Substring(0, 5)));
+	STRASSERT("world!", Xe::String(str.Substring(6)));
 	EXPECT_THROW(Xe::String("error").Substring(-1, 1), std::invalid_argument);
 	EXPECT_THROW(Xe::String("error").Substring(9, 1), std::invalid_argument);
 	EXPECT_THROW(Xe::String("error").Substring(2, 9), std::invalid_argument);
@@ -165,8 +165,8 @@ TEST(XeStringTest, AppendTest)
 {
 	STRASSERT("test-toast", Xe::String("test").Append("-toast"));
 	STRASSERT("test-toast", Xe::String("test").Append(Xe::String("-toast")));
-	//STRASSERT("test-toast", Xe::String("test") + "-toast");
-	//STRASSERT("test-toast", Xe::String("test") + Xe::StringSpan("-toast"));
+	STRASSERT("test-toast", Xe::String("test") + "-toast");
+	STRASSERT("test-toast", Xe::String("test") + Xe::StringSpan("-toast"));
 	STRASSERT("test-toast", Xe::String("test") + Xe::String("-toast"));
 }
 

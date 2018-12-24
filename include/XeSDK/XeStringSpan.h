@@ -19,6 +19,9 @@ namespace Xe
 	protected:
 		int m_Length;
 		const char* m_Data;
+
+		//! \brief Check if the specified range is valid, throwing an exception if not
+		void CheckRangeIndex(int startIndex, int length) const;
 	public:
 		//! \brief Definition of an empty string
 		static StringSpan Empty;
@@ -141,6 +144,15 @@ namespace Xe
 		//! \return Between 0 and GetLength - 1 if found, else -1
 		//! \sa IndexOf
 		int LastIndexOfAny(const StringSpan& chs) const;
+
+		//! \brief Return a sub-string
+		//! \param startIndex The new string span will start from the specified index
+		StringSpan Substring(int startIndex) const;
+
+		//! \brief Return a sub-string
+		//! \param startIndex The new string span will start from the specified index
+		//! \param length Length of the characters to take
+		StringSpan Substring(int startIndex, int length) const;
 
 		//! \brief Try to parse the string to the specified value
 		//! \param value Parsed value

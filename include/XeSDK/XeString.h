@@ -23,9 +23,6 @@ namespace Xe
 		//! \brief Pre-allocate a string and append the terminator at the end
 		//! \param[in] length Capacity of string
 		String(int length);
-
-		//! \brief Check if the specified range is valid, throwing an exception if not
-		void CheckRangeIndex(int startIndex, int length) const;
 	public:
 		//! \brief Definition of an empty string
 		static String Empty;
@@ -70,15 +67,6 @@ namespace Xe
 
 		//! \brief Create the same string, but where every letter is lowercase
 		String ToLower() const;
-
-		//! \brief Create a sub-string
-		//! \param startIndex The new string will start from the specified index
-		String Substring(int startIndex) const;
-
-		//! \brief Create a sub-string
-		//! \param startIndex The new string will start from the specified index
-		//! \param length Length of the characters to take
-		String Substring(int startIndex, int length) const;
 
 		//! \brief Append a string
 		//! \param str String to append

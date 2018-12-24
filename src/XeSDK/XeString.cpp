@@ -219,16 +219,6 @@ String::~String()
 	Xe_FastHeap_Free<char>((char*)m_Data);
 }
 
-void String::CheckRangeIndex(int startIndex, int length) const
-{
-	ASSERT_POSITION(startIndex);
-	ASSERT_POSITIVE(length);
-	if (startIndex + length > m_Length)
-	{
-		throw std::invalid_argument(NAMEOF(length)" must be in the string range");
-	}
-}
-
 String::operator const char*() const
 {
 	return m_Data;
@@ -272,24 +262,6 @@ String String::ToLower() const
 	for (int i = 0; i < str.m_Length; ++i)
 	{
 		((char*)str.m_Data)[i] = tolower(m_Data[i]);
-	}
-
-	return str;
-}
-
-String String::Substring(int startIndex) const
-{
-	return Substring(startIndex, m_Length - startIndex);
-}
-
-String String::Substring(int startIndex, int length) const
-{
-	CheckRangeIndex(startIndex, length);
-
-	String str(length);
-	for (int i = 0; i < str.m_Length; ++i)
-	{
-		((char*)str.m_Data)[i] = m_Data[startIndex + i];
 	}
 
 	return str;
