@@ -289,7 +289,7 @@ namespace Xe { namespace Game {
 		}
 
 		#pragma region Inherited via ITextureManager
-		TexId Create(Graphics::Imaging::IImage& image, ctstring name)
+		TexId Create(Graphics::Imaging::IImage* image, ctstring name)
 		{
 			ASSERT(name != nullptr);
 
@@ -308,12 +308,12 @@ namespace Xe { namespace Game {
 				Texture& tex = GetInternalTexture(texId);
 
 				// Check if it is possible to allocate the texture.
-				if (AllocateTexture(image, tex.Surface))
+				if (AllocateTexture(*image, tex.Surface))
 				{
 					ClutId paletteSlot;
-					if (Xe::Graphics::Color::IsIndexed(image.GetFormat()))
+					if (Xe::Graphics::Color::IsIndexed(image->GetFormat()))
 					{
-						paletteSlot = CreateClut(texId, image);
+						paletteSlot = CreateClut(texId, *image);
 					}
 					else
 					{

@@ -39,7 +39,7 @@ namespace Xe { namespace Game {
 		bool r = PngOpen(&pImage, &stream);
 		if (r)
 		{
-			texId = textureManager.Create(*pImage, name);
+			texId = textureManager.Create(pImage, name);
 		}
 		else
 		{

@@ -40,13 +40,13 @@ namespace Xe { namespace Game {
 		std::list<TextureManagerProfileEntry> Textures;
 	};
 
-	interface ITextureManager
+	interface ITextureManager : public virtual IObject
 	{
 		//! \brief Create a texture from an image.
 		//! \param[in] image Image that will be loaded and transformed as a texture.
 		//! \param[in] name An unique name from the image, usually used to cache them; cannot be null..
 		//! \return A proper TexId or TexInvalid.
-		virtual TexId Create(Xe::Graphics::Imaging::IImage& image, ctstring name) = 0;
+		virtual TexId Create(Xe::Graphics::Imaging::IImage* image, ctstring name) = 0;
 
 		//! \brief Get the TexId from the unique name
 		//! \param[in] name Unique name of the image; cannot be null.
