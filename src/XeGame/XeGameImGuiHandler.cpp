@@ -7,6 +7,23 @@
 using namespace Xe::Game;
 using namespace ImGui;
 
+#define VK_BACK		0x08
+#define VK_TAB		0x09
+#define VK_RETURN	0x0D
+#define VK_ESCAPE	0x1B
+#define VK_SPACE	0x20
+#define VK_PRIOR	0x21
+#define VK_NEXT		0x22
+#define VK_END		0x23
+#define VK_HOME		0x24
+#define VK_LEFT		0x25
+#define VK_UP		0x26
+#define VK_RIGHT	0x27
+#define VK_DOWN		0x28
+#define VK_INSERT	0x2D
+#define VK_DELETE	0x2E
+
+
 ImGuiHandler::ImGuiHandler(Xe::Graphics::IContext* pContext) :
 	m_Context(pContext),
 	m_ImGuiContext(nullptr)
@@ -26,6 +43,28 @@ bool ImGuiHandler::OnInitialize()
 	io.ConfigFlags =
 		ImGuiConfigFlags_NavEnableGamepad |
 		ImGuiConfigFlags_NavEnableSetMousePos;
+
+	io.KeyMap[ImGuiKey_Tab] = VK_TAB;
+	io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
+	io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
+	io.KeyMap[ImGuiKey_UpArrow] = VK_UP;
+	io.KeyMap[ImGuiKey_DownArrow] = VK_DOWN;
+	io.KeyMap[ImGuiKey_PageUp] = VK_PRIOR;
+	io.KeyMap[ImGuiKey_PageDown] = VK_NEXT;
+	io.KeyMap[ImGuiKey_Home] = VK_HOME;
+	io.KeyMap[ImGuiKey_End] = VK_END;
+	io.KeyMap[ImGuiKey_Insert] = VK_INSERT;
+	io.KeyMap[ImGuiKey_Delete] = VK_DELETE;
+	io.KeyMap[ImGuiKey_Backspace] = VK_BACK;
+	io.KeyMap[ImGuiKey_Space] = VK_SPACE;
+	io.KeyMap[ImGuiKey_Enter] = VK_RETURN;
+	io.KeyMap[ImGuiKey_Escape] = VK_ESCAPE;
+	io.KeyMap[ImGuiKey_A] = 'A';
+	io.KeyMap[ImGuiKey_C] = 'C';
+	io.KeyMap[ImGuiKey_V] = 'V';
+	io.KeyMap[ImGuiKey_X] = 'X';
+	io.KeyMap[ImGuiKey_Y] = 'Y';
+	io.KeyMap[ImGuiKey_Z] = 'Z';
 
 	ImGui::StyleColorsDark();
 
