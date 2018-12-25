@@ -28,7 +28,7 @@ namespace Xe { namespace Game {
 
 	TexId TextureManager::Open(ITextureManager& textureManager, IO::IFileStream& fileStream)
 	{
-		return Open(textureManager, fileStream, fileStream.GetFilename());
+		return Open(textureManager, fileStream, fileStream.GetFileName());
 	}
 
 	TexId TextureManager::Open(ITextureManager& textureManager, IO::IStream& stream, ctstring name)

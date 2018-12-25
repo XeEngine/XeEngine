@@ -45,7 +45,7 @@ namespace Xe {
                 class FileStream : public IO::IFileStream {
                     IO::IStream *m_stream;
                     Access m_access;
-                    ctstring m_filename;
+					String m_filename;
                     s64 m_offset;
                     s64 m_length;
 
@@ -118,7 +118,7 @@ namespace Xe {
                         m_pos += length;
                         return length;
                     }
-                    ctstring GetFilename() const {
+                    const String& GetFileName() const {
                         return m_filename;
                     }
                 public:
