@@ -15,7 +15,7 @@ bool Imaging::OpenImage(IImage** ppImage, Xe::IO::IFileStream* pStream)
 {
 	const auto ext = Xe::Storage::Path::GetExtension(pStream->GetFileName());
 
-	if (String::CompareInsensitive(ext, ".png"))
+	if (String::CompareInsensitive(ext, ".png") == 0)
 		return PngOpen(ppImage, pStream);
 
 	return false;
