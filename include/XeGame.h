@@ -15,3 +15,4 @@
 #include <XeGame/XeGameSoundManager.h>
 #include <XeGame/XeGameImGuiHandler.h>
 #include <XeGame/XeGameToolsTextureDebugger.h>
+#include <XeGame/XeGameToolsFilePicker.h>

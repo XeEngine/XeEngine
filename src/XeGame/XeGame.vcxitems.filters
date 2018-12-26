@@ -108,8 +108,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameTilemap2d.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsFilePicker.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h">
-      <Filter>src\Tools</Filter>
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +156,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTextureDebugger.cpp">
+      <Filter>src\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsFilePicker.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
   </ItemGroup>

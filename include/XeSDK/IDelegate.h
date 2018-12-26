@@ -3,6 +3,14 @@
 
 namespace Xe
 {
+	template <class TSender, typename TArgs>
+	struct EventArgs
+	{
+		TSender Sender;
+		TArgs Arguments;
+	};
+
+
 	template <typename TArgs>
 	interface IDelegate
 	{
