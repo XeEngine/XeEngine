@@ -18,8 +18,6 @@ namespace Xe
 	{
 		typedef StringSpan Base;
 
-		StringSpan& m_String;
-
 		//! \brief Pre-allocate a string and append the terminator at the end
 		//! \param[in] length Capacity of string
 		String(int length);

@@ -193,8 +193,7 @@ void Xe_FastHeap_Free(T* data)
 String String::Empty("");
 
 String::String(int length) :
-	Base(Xe_FastHeap_Alloc<char>(length + 1), length),
-	m_String(*this)
+	Base(Xe_FastHeap_Alloc<char>(length + 1), length)
 {
 	ASSERT_POSITIVE(length);
 	((char*)m_Data)[length] = '\0';
