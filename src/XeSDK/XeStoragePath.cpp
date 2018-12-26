@@ -87,6 +87,36 @@ namespace Xe { namespace Storage { namespace Path {
 		if (path2.IsEmptyOrWhitespace())
 			return path1;
 
+		if (path2.GetLength() > 0 && path2[0] == '.')
+		{
+			StringSpan nextSubDir = path2;
+			StringSpan subPath;
+
+			auto pathSeparatorIndex = InternalGetIndexOfDirectorySeparator(nextSubDir);
+			if (pathSeparatorIndex > 0)
+			{
+				subPath = nextSubDir.Substring(0, pathSeparatorIndex);
+				nextSubDir = nextSubDir.Substring(pathSeparatorIndex + 1);
+			}
+			else
+			{
+				subPath = nextSubDir;
+				nextSubDir = StringSpan::Empty;
+			}
+
+			if (subPath == "..")
+			{
+				// return back by a folder
+				return Combine(Path::GetDirectoryName(path1), nextSubDir);
+			}
+			
+			if (subPath == ".")
+			{
+				// concate the next directory
+				return Combine(path1, nextSubDir);
+			}
+		}
+
 		const char dirSeparator[]{ UnixDirectorySeparator, '\0' };
 		auto str1 = String(path1);
 

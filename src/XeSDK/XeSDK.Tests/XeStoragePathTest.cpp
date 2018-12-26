@@ -162,7 +162,15 @@ INSTANTIATE_TEST_CASE_P(
 		std::make_tuple("/a/b\\", "/a/", "b\\"),
 		std::make_tuple("/a\\b\\", "/a\\", "b\\"),
 		std::make_tuple("/a\\b/", "/a\\", "b/"),
-		std::make_tuple("/a/b", "/a", "/b")
+		std::make_tuple("/a/b", "/a", "/b"),
+		std::make_tuple("/ParentDir/SubDir", "/ParentDir/SubDir", "."),
+		std::make_tuple("/ParentDir/SubDir", "/ParentDir/SubDir", "./"),
+		std::make_tuple("/ParentDir", "/ParentDir/SubDir", ".."),
+		std::make_tuple("/ParentDir", "/ParentDir/SubDir", "../"),
+		std::make_tuple("ParentDir/NewSubDir", "ParentDir/SubDir/AnotherSubDir", "../../NewSubDir"),
+		std::make_tuple("..", "", ".."),
+		std::make_tuple("~/code/.git/refs", "~/code", ".git/refs"),
+		std::make_tuple("../AnotherDir", "", "../AnotherDir")
 	));
 
 INSTANTIATE_TEST_CASE_P(
