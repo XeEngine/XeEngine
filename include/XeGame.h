@@ -16,3 +16,4 @@
 #include <XeGame/XeGameImGuiHandler.h>
 #include <XeGame/XeGameToolsTextureDebugger.h>
 #include <XeGame/XeGameToolsFilePicker.h>
+#include <XeGame/XeGameTiledDocument.h>

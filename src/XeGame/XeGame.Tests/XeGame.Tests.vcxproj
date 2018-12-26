@@ -52,7 +52,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="XeGameTiledDocumentTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -62,6 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XeSDK\XeSDK.Win32\XeSDK.Win32.vcxproj">
+      <Project>{11f0ce85-e904-4231-a27c-f7ff076fc7fb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\XeGame.Win32\XeGame.Win32.vcxproj">
+      <Project>{3fac9736-edc1-4c37-8178-876110dc7f89}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

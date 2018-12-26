@@ -36,6 +36,7 @@
 #include <XeSDK/XeIODevices.h>
 #include <XeSDK/XeIOGamepad.h>
 #include <XeSDK/XeIOPointer.h>
+#include <XeSDK/XeJson.h>
 #include <XeSDK/XeLogger.h>
 #include <XeSDK/XeConsoleLogHandler.h>
 #include <XeSDK/XeMath.h>
