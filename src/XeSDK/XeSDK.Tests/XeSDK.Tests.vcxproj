@@ -38,6 +38,22 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(SolutionDir)obj\$(TargetName)\tests\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\tests\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(SolutionDir)obj\$(TargetName)\tests\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\tests\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)obj\$(TargetName)\tests\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\tests\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(SolutionDir)obj\$(TargetName)\tests\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\tests\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="XeArrayTest.cpp" />
     <ClCompile Include="XeObjPtrTest.cpp" />
