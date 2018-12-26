@@ -87,7 +87,7 @@ size_t Convert::FromBase64String(IO::IStream* pStream, const StringSpan& string)
 		int in_ = 0;
 		unsigned char char_array_4[4], char_array_3[3];
 
-		ObjPtr<IO::IMemoryStream> inStream = IO::IMemoryStream::New(string.GetData(), string.GetLength(), true);
+		ObjPtr<IO::IMemoryStream> inStream = IO::IMemoryStream::From(string.GetData(), string.GetLength(), true);
 		dstLength = FromBase64String(pStream, inStream, inStream->GetLength());
 	}
 

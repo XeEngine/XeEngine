@@ -2,6 +2,7 @@
 #include <XeSDK/IIOMemoryStream.h>
 #include <XeSDK/XeMemory.h>
 #include <XeSDK/XeIO.h>
+#include <XeSDK/XeMath.h>
 
 namespace Xe {
     namespace IO {
@@ -56,7 +57,8 @@ namespace Xe {
                 m_end = m_start + length;
                 m_cur = m_start;
                 m_created = true;
-                m_resizable = false;
+                m_resizable = resizable;
+				m_writable = true;
                 return true;
             }
 
@@ -73,17 +75,17 @@ namespace Xe {
                 switch (seek)
                 {
                     case Seek_Set:
-                        if (offset < 0 || (CanOverflow() && offset >= GetLength()))
+                        if (offset < 0)
                             return Error::IO_POSITION_INVALID;
                         m_cur = m_start + offset;
                         break;
                     case Seek_Cur:
-                        if (m_cur - m_start + offset < 0 || (CanOverflow() && m_start - m_cur + offset >= GetLength()))
+                        if (m_cur - m_start + offset < 0)
                             return Error::IO_POSITION_INVALID;
                         m_cur += offset;
                         break;
                     case Seek_End:
-                        if (m_end - m_start + offset < 0 || (CanOverflow() && m_start - m_end + offset >= GetLength()))
+                        if (m_end - m_start + offset < 0)
                             return Error::IO_POSITION_INVALID;
                         m_cur = m_end + offset;
                         break;
@@ -123,16 +125,34 @@ namespace Xe {
                 return CanWrite() && m_resizable;
             }
 
-            svar Read(void* data, svar offset, s32 size) {
+            svar Read(void* data, svar offset, s32 size)
+			{
+				if (!CanRead())
+					return 0;
+
                 svar remains = (svar)(GetLength() - GetPosition());
+				remains = Xe::Math::Max(0, remains);
+
                 if (size > remains)
                     size = remains;
-                Memory::Copy((u8*)data + offset, m_cur, size);
-                m_cur += size;
+
+				if (size > 0)
+				{
+					Memory::Copy((u8*)data + offset, m_cur, size);
+					m_cur += size;
+				}
+
                 return size;
             }
-            svar Write(const void* data, svar offset, s32 size) {
+
+            svar Write(const void* data, svar offset, s32 size)
+			{
+				if (!CanWrite())
+					return 0;
+
                 svar remains = (svar)(GetLength() - GetPosition());
+				remains = Xe::Math::Max(0, remains);
+
                 if (size > remains)
                 {
                     if (CanOverflow())
@@ -155,13 +175,18 @@ namespace Xe {
                         size = remains;
                     }
                 }
-                Memory::Copy(m_cur, (u8*)data + offset, size);
-                m_cur += size;
-                return size;
+
+				if (size > 0)
+				{
+					Memory::Copy(m_cur, (u8*)data + offset, size);
+					m_cur += size;
+				}
+                
+				return size;
             }
         };
 
-        IMemoryStream* IMemoryStream::New(void* memory, svar length, bool free)
+        IMemoryStream* IMemoryStream::From(void* memory, svar length, bool free)
         {
             CMemoryStream* p = new CMemoryStream;
             if (p != nullptr)
@@ -174,7 +199,7 @@ namespace Xe {
             }
             return p;
         }
-        IMemoryStream* IMemoryStream::New(const void* memory, svar length, bool free)
+        IMemoryStream* IMemoryStream::From(const void* memory, svar length, bool free)
         {
             CMemoryStream* p = new CMemoryStream;
             if (p != nullptr)

@@ -21,7 +21,7 @@ namespace Xe
 			 * IsWritable() = false
 			 * IsOverflowable() = false
 			 */
-			static IMemoryStream* New(const void* memory, svar length, bool free = true);
+			static IMemoryStream* From(const void* memory, svar length, bool free = true);
 
 			//! \brief open a pre-existed portion of memory
 			//! \param[in] memory pointer where the data to open is contained
@@ -36,7 +36,7 @@ namespace Xe
 			 * IsOverflowable() = false
 			 */
 			//! \sa Open
-			static IMemoryStream* New(void* memory, svar length, bool free = true);
+			static IMemoryStream* From(void* memory, svar length, bool free = true);
 
 			//! \brief create a portion of memory
 			//! \param[in] length size in bytes for the portion of memory to create
@@ -54,6 +54,11 @@ namespace Xe
 			//! \return portion of memory
 			//! \warning use the returned value with consciousness 
 			virtual void* GetMemory() = 0;
+
+			template <typename T>
+			T* GetData() { return GetMemory(); }
+
+			void* GetData() { return GetData<void>(); }
 		};
 	}
 }

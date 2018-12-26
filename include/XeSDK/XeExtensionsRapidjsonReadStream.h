@@ -44,7 +44,7 @@ namespace rapidjson
 
 		size_t Tell() const
 		{
-			return m_Stream->GetPosition();
+			return (size_t)m_Stream->GetPosition();
 		}
 
 		// Not implemented
