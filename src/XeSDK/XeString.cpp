@@ -234,6 +234,7 @@ String& String::operator =(const StringSpan& str)
 
 	m_Length = str.m_Length;
 	strncpy((char*)m_Data, str.m_Data, str.m_Length);
+	((char*)m_Data)[m_Length] = '\0';
 	return *this;
 }
 
