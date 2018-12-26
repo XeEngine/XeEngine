@@ -114,6 +114,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsFilePicker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSprteAnimations.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -161,5 +167,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsFilePicker.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsFilePicker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTextureDebugger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameSprteAnimations.cpp" />
   </ItemGroup>
 </Project>

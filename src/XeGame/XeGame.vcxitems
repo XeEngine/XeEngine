@@ -26,6 +26,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SimpleTextureManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameSprteAnimations.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTextureManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTimerComponent.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSoundManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameSprteAnimations.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTimerComponent.h" />
