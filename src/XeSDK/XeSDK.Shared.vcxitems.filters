@@ -351,6 +351,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeExtensionsRapidjsonWriteStream.h">
       <Filter>Extensions\Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeJson.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeConvert.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -496,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphicsCommon.cpp">
       <Filter>Graphics\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeConvert.Base64.cpp">
+      <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

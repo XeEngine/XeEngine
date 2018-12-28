@@ -8,6 +8,7 @@
     <ClCompile Include="XeStringTest.cpp" />
     <ClCompile Include="XeArrayTest.cpp" />
     <ClCompile Include="XeStoragePathTest.cpp" />
+    <ClCompile Include="XeConvertTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -60,6 +60,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCollectionsStaticArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeConsoleLogHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeConvert.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCoreFrameView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeCryptoCrc32.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OggAudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeConsoleLogHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WavAudioSource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeConvert.Base64.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)libc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeCryptoCrc.cpp" />

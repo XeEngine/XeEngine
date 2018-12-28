@@ -22,6 +22,7 @@
 #include <XeSDK/XeCollectionsStaticArray.h>
 #include <XeSDK/XeCore.h>
 #include <XeSDK/XeCoreFrameView.h>
+#include <XeSDK/XeConvert.h>
 #include <XeSDK/XeCryptoCrc32.h>
 #include <XeSDK/XeCryptoCrc64.h>
 #include <XeSDK/XeDrivers.h>
