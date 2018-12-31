@@ -57,6 +57,7 @@
   <ItemGroup>
     <ClCompile Include="XeArrayTest.cpp" />
     <ClCompile Include="XeConvertTest.cpp" />
+    <ClCompile Include="XeIOStreamTest.cpp" />
     <ClCompile Include="XeObjPtrTest.cpp" />
     <ClCompile Include="XeIODevices_Dummy.cpp" />
     <ClCompile Include="XeStoragePathTest.cpp" />
