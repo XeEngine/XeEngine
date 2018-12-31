@@ -56,14 +56,23 @@ namespace Xe { namespace Storage {
 				info.EndOfFile.QuadPart : -1;
 #endif
 		}
-		RESULT SetLength(s64 offset) {
-			if (CanWrite()) {
+		
+		RESULT SetLength(s64 offset)
+		{
+			if (CanWrite()) 
+			{
+				auto prevPosition = GetPosition();
 				SetPosition(offset);
-				return SetEndOfFile(m_handle) == TRUE ?
+				
+				RESULT result = SetEndOfFile(m_handle) == TRUE ?
 					Error::OK : Error::GENERIC_ERROR;
+
+				SetPosition(prevPosition);
+				return result;
 			}
 			return Error::IO_READ_ONLY;
 		}
+		
 		bool CanRead() const {
 			return (m_access & Storage::Access_Read) != 0;
 		}
@@ -78,19 +87,19 @@ namespace Xe { namespace Storage {
 		}
 		svar Read(void* data, svar offset, s32 length) {
 			if (!CanRead())
-				return -1;
+				return 0;
 			DWORD n;
 			if (ReadFile(m_handle, (u8*)data + offset, (DWORD)length, &n, nullptr) == FALSE)
-				return -1;
+				return 0;
 			else
 				return n;
 		}
 		svar Write(const void* data, svar offset, s32 length) {
 			if (!CanWrite())
-				return -1;
+				return 0;
 			DWORD n;
 			if (WriteFile(m_handle, (u8*)data + offset, (DWORD)length, &n, nullptr) == FALSE)
-				return -1;
+				return 0;
 			else
 				return n;
 		}
