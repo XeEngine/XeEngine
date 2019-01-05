@@ -9,7 +9,7 @@ namespace Xe {
 		public:
 			T x, y;
 
-			Vector2() : x(0), y(0) { }
+			Vector2() : x((T)0), y((T)0) { }
 			Vector2(T v) : x(v), y(v) { }
 			Vector2(T x, T y) : x(x), y(y) { }
 			Vector2(const Vector2& v) : x(v.x), y(v.y) { }
