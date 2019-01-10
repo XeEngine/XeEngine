@@ -49,9 +49,6 @@ namespace Xe
 
 		StringSpan operator += (int index) const;
 
-		//! \brief Assign a StringSpan to the existing one
-		StringSpan& operator =(const StringSpan& str);
-
 		//! \brief Check for equality using a case sensitive comparation
 		//! \param str String to compare
 		bool operator == (const StringSpan& str) const;

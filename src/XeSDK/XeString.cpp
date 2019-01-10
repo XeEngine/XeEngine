@@ -203,6 +203,10 @@ String::String() :
 	String(Empty)
 { }
 
+String::String(const char* str) :
+	String(StringSpan(str))
+{ }
+
 String::String(const StringSpan& string) :
 	String(string.GetLength())
 {
@@ -213,14 +217,28 @@ String::String(const String& string) :
 	String((StringSpan)string)
 { }
 
+String::String(String&& string) noexcept
+{
+	m_Data = std::exchange(string.m_Data, nullptr);
+	m_Length = std::exchange(string.m_Length, 0);
+}
+
 String::~String()
 {
+#ifdef _DEBUG
+	Xe::Memory::Fill((char*)m_Data, 0xDD, m_Length);
+#endif
 	Xe_FastHeap_Free<char>((char*)m_Data);
 }
 
 String::operator const char*() const
 {
 	return m_Data;
+}
+
+String& String::operator =(const char* str)
+{
+	return *this = StringSpan(str);
 }
 
 String& String::operator =(const StringSpan& str)
@@ -235,6 +253,18 @@ String& String::operator =(const StringSpan& str)
 	m_Length = str.m_Length;
 	strncpy((char*)m_Data, str.m_Data, str.m_Length);
 	((char*)m_Data)[m_Length] = '\0';
+	return *this;
+}
+
+String& String::operator =(const String& str)
+{
+	return *this = StringSpan(str);
+}
+
+String& String::operator =(String&& str) noexcept
+{
+	std::swap(m_Data, str.m_Data);
+	std::swap(m_Length, str.m_Length);
 	return *this;
 }
 

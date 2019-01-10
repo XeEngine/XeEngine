@@ -51,13 +51,6 @@ StringSpan StringSpan::operator += (int index) const
 	return *this + index;
 }
 
-StringSpan& StringSpan::operator =(const StringSpan& str)
-{
-	m_Length = str.m_Length;
-	m_Data = str.m_Data;
-	return *this;
-}
-
 bool StringSpan::operator == (const StringSpan& str) const
 {
 	return Compare(*this, str) == 0;

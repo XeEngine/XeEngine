@@ -28,6 +28,15 @@ namespace Xe
 		//! \brief Create an empty string
 		String();
 
+		template <unsigned length>
+		String(const char(&str)[length]) :
+			String(StringSpan(str, length - 1))
+		{ }
+
+		//! \brief Create a string from a C-style string
+		//! \param[in] string to copy
+		String(const char* str);
+
 		//! \brief Create a string from a StringSpan
 		//! \param[in] string to copy
 		String(const StringSpan& string);
@@ -36,12 +45,18 @@ namespace Xe
 		//! \param[in] string to copy
 		String(const String& string);
 
+		//! \brief Create a string from another string
+		//! \param[in] string to copy
+		String(String&& string) noexcept;
+
 		//! \brief Deallocate the string from the memory
-		~String();
+		~String() noexcept;
 
 		//! \brief Get the raw string pointer as C-like string
 		//! \sa GetData
 		operator const char*() const;
+
+		String& operator =(const char* str);
 
 		//! \brief Assign a StringSpan to the existing string
 		/** \details This is the only exception where the object is mutable.
@@ -49,6 +64,10 @@ namespace Xe
 		 * allocated memory instead to free and allocate it once again.
 		 */
 		String& operator =(const StringSpan& str);
+
+		String& operator =(const String& str);
+
+		String& operator =(String&& other) noexcept;
 
 		//! \brief Append the specified string
 		//! \param str String to append
