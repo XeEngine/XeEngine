@@ -1,43 +1,55 @@
 #pragma once
+#include <XeGame/IGameTilemap2d.h>
 
 namespace Xe { namespace Game {
-	class CTilemap2d : public ITilemap2d {
-		IDrawing2d* m_pDrawing;
+	class CTilemap2d : public ITilemap2d
+	{
+		struct Layer
+		{
+			TileData* Data;
+			TilemapBufferSize Size;
+		};
 
-		Graphics::Size m_TileSize;
-		Math::Vector2f m_TileSizef;
+		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
+		TilemapDrawDelegate* m_DrawDelegate;
+		Math::Vector2i m_CameraSize;
+		Math::Vector2i m_CameraPosition;
+		TilemapTileSize m_TileSize;
+		TilemapBufferSize m_BufferSize;
+		TilesetProperties m_Tileset;
+		Layer m_Layer;
 
-		int m_TilesPerRow;
-		Math::Rectangle<float> m_TilesetRectf;
-		Math::Vector2f m_TilesetPos;
-		Math::Vector2f m_TilesetSize;
-		Math::Vector2f m_TilesetMul;
-		Math::Vector2f m_TilesetPadding;
+		std::vector<TilemapDrawVertex> m_DrawVertices;
+		std::vector<TilemapDrawIndex> m_DrawIndices;
 
-		Math::Rectanglef m_Camera;
+		static void ValidateTilesetProperties(TilemapBufferSizeType bufferSizeType);
 
-		Graphics::Size m_MapSize;
-		int m_ParallaxSize;
-		TileData* m_Tilemap;
-		float* m_Parallax;
+		static void ResizeLayer(const TilemapBufferSize& size, Layer& layer);
+	public:
+		CTilemap2d();
+		~CTilemap2d();
+
+		void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate);
+		void SetDrawCallback(TilemapDrawDelegate* delegate);
+
+		const Math::Vector2i& GetCameraSize();
+		void SetCameraSize(const Math::Vector2i& cameraSize);
+
+		const Math::Vector2i& GetCameraPosition();
+		void SetCameraPosition(const Math::Vector2i& cameraPosition);
+
+		const TilemapTileSize& GetTileSize();
+		void SetTileSize(const TilemapTileSize& tileSize);
+
+		const TilemapBufferSize& GetBufferSize();
+		void SetBufferSize(const TilemapBufferSize& bufferSize);
+
+		bool GetBuffer(TilemapData* layer);
 
 		void SetTileset(const TilesetProperties& tileset);
 
-		const Graphics::Size& GetMapSize() const;
-		void SetMapSize(const Graphics::Size& size);
-
-		void Lock(TilemapData& data);
-		void Unlock();
-
-		const Math::Rectanglef& GetCamera() const;
-		void SetCamera(const Math::Rectanglef& camera);
-
+		void Update(double deltaTime);
+		void Flush();
 		void Draw(int flags);
-		void DrawStandard() const;
-		void DrawFlip() const;
-
-	public:
-		CTilemap2d(IDrawing2d* context);
-		~CTilemap2d();
 	};
 } }

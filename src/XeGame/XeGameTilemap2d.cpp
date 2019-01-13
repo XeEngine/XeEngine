@@ -7,203 +7,243 @@
 #include <XeGame/XeGameTilemap2d.h>
 #include "CGameTilemap2d.h"
 
+using namespace Xe;
 using namespace Xe::Math;
 using namespace Xe::Graphics;
 using namespace Xe::Game;
 
-CTilemap2d::CTilemap2d(IDrawing2d* pDrawing) :
-	m_pDrawing(pDrawing)
+CTilemap2d::CTilemap2d() :
+	m_RequestTilesDelegate(nullptr),
+	m_DrawDelegate(nullptr),
+	m_Layer({0})
 {
-	pDrawing->AddRef();
+
 }
 
-CTilemap2d::~CTilemap2d() {
-	Memory::Free(m_Tilemap);
-	Memory::Free(m_Parallax);
-	m_pDrawing->Release();
+CTilemap2d::~CTilemap2d()
+{
+	if (m_Layer.Data)
+		Xe::Memory::Free(m_Layer.Data);
 }
 
-void CTilemap2d::SetTileset(const TilesetProperties& tileset) {
-	m_TilesPerRow = (tileset.Rectangle.right - tileset.Rectangle.left) / tileset.TileSize.x;
-	int tilesPerCol = (tileset.Rectangle.bottom - tileset.Rectangle.top) / tileset.TileSize.y;
-	float xMul = 1.0f / (float)tileset.TextureSize.x;
-	float yMul = 1.0f / (float)tileset.TextureSize.y;
-
-	m_TileSize = tileset.TileSize;
-	m_TileSizef.x = (float)m_TileSize.x;
-	m_TileSizef.y = (float)m_TileSize.y;
-	m_TilesetRectf.left = tileset.Rectangle.left * xMul;
-	m_TilesetRectf.top = tileset.Rectangle.top * yMul;
-	m_TilesetRectf.right = tileset.Rectangle.right * xMul;
-	m_TilesetRectf.bottom = tileset.Rectangle.bottom * yMul;
-	m_TilesetMul.x = m_TileSizef.x * xMul;
-	m_TilesetMul.y = m_TileSizef.y * xMul;
+void CTilemap2d::SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate)
+{
+	m_RequestTilesDelegate = delegate;
 }
 
-const Size& CTilemap2d::GetMapSize() const {
-	return m_MapSize;
+void CTilemap2d::SetDrawCallback(TilemapDrawDelegate* delegate)
+{
+	m_DrawDelegate = delegate;
 }
 
-void CTilemap2d::SetMapSize(const Size& size) {
-	Memory::Free(m_Tilemap);
-	Memory::Free(m_Parallax);
-
-	m_MapSize = size;
-	m_ParallaxSize = Math::Max(size.x, size.y);
-	m_Tilemap = (TileData*)Memory::Alloc(size.x * size.y * sizeof(TileData));
-	m_Parallax = (float*)Memory::Alloc(m_ParallaxSize * sizeof(float));
+const Math::Vector2i& CTilemap2d::GetCameraSize()
+{
+	return m_CameraSize;
 }
 
-void CTilemap2d::Lock(TilemapData& data) {
-	data.Tilemap = m_Tilemap;
-	data.Stride = m_MapSize.x;
-	data.Size = m_MapSize;
+void CTilemap2d::SetCameraSize(const Vector2i& cameraSize)
+{
+	m_CameraSize = cameraSize;
 }
 
-void CTilemap2d::Unlock() {}
-
-const Rectanglef& CTilemap2d::GetCamera() const {
-	return m_Camera;
+const Math::Vector2i& CTilemap2d::GetCameraPosition()
+{
+	return m_CameraPosition;
 }
 
-void CTilemap2d::SetCamera(const Rectanglef& camera) {
-	m_Camera = camera;
+void CTilemap2d::SetCameraPosition(const Vector2i& cameraPosition)
+{
+	m_CameraPosition = cameraPosition;
 }
 
-void CTilemap2d::Draw(int flags) {
-	switch (flags) {
-	case Draw_Default:
-		DrawStandard();
-		break;
-	}
+const TilemapTileSize& CTilemap2d::GetTileSize()
+{
+	return m_TileSize;
 }
 
-void CTilemap2d::DrawStandard() const {
-	static const float Z = 0.0f;
-	static const Color COLOR = Color::White;
-
-	const float MULX = m_TilesetMul.x;
-	const float MULY = m_TilesetMul.y;
-	const float PADX = 0;
-	const float PADY = 0;
-
-	Math::Rectangle<int> tileRect(
-		(int)Floor(m_Camera.left) / m_TileSize.x,
-		(int)Floor(m_Camera.top) / m_TileSize.y,
-		((int)Floor(m_Camera.right) + m_TileSize.x - 1) / m_TileSize.x,
-		((int)Floor(m_Camera.bottom) + m_TileSize.y - 1) / m_TileSize.y);
-	int stride = m_MapSize.x;
-
-	float xStart = Fmod(m_Camera.left, m_TileSizef.x);
-	float yStart = Fmod(m_Camera.top, m_TileSizef.y);
-	Vector2f pos[2];
-	pos[0].y = -yStart;
-	pos[1].y = pos[0].y + m_TileSizef.y;
-	for (int j = tileRect.top; j < tileRect.bottom; j++) {
-		pos[0].x = -xStart;
-		pos[1].x = pos[0].x + m_TileSizef.x;
-		for (int i = tileRect.left; i < tileRect.right; i++) {
-			int index = i % stride + (j % m_MapSize.y) * stride;
-			u16 tile = m_Tilemap[index].Index;
-			if (tile > 0) {
-				Color color = m_Tilemap[index].BlendColor;
-				float fx = (tile % m_TilesPerRow) * m_TilesetMul.x;
-				float fy = (tile / m_TilesPerRow) * m_TilesetMul.y;
-				const Vector2f UV[] = {
-					Vector2f(fx + PADX, fy + PADY),
-					Vector2f(fx + MULX - PADX, fy + PADY),
-					Vector2f(fx + PADX, fy + MULY - PADY),
-					Vector2f(fx + MULX - PADX , fy + MULY - PADY),
-				};
-				m_pDrawing->DrawSurface(pos, UV, Z, color, m_pDrawing->MODE_TEXTURED);
-			}
-			pos[0].x = pos[1].x;
-			pos[1].x += m_TileSizef.x;
-		}
-		pos[0].y = pos[1].y;
-		pos[1].y += m_TileSizef.y;
-	}
+void CTilemap2d::SetTileSize(const TilemapTileSize& tileSize)
+{
+	m_TileSize = tileSize;
 }
 
-void CTilemap2d::DrawFlip() const {
-	static const float Z = 0.0f;
-	static const Color COLOR = Color::White;
+const TilemapBufferSize& CTilemap2d::GetBufferSize()
+{
+	return m_BufferSize;
+}
 
-	const float MULX = m_TilesetMul.x;
-	const float MULY = m_TilesetMul.y;
-	const float PADX = 0;
-	const float PADY = 0;
+void CTilemap2d::SetBufferSize(const TilemapBufferSize& bufferSize)
+{
+	if (m_BufferSize == bufferSize)
+		return;
 
-	Math::Rectangle<int> tileRect(
-		(int)Floor(m_Camera.left) / m_TileSize.x,
-		(int)Floor(m_Camera.top) / m_TileSize.y,
-		((int)Floor(m_Camera.right) + m_TileSize.x - 1) / m_TileSize.x,
-		((int)Floor(m_Camera.bottom) + m_TileSize.y - 1) / m_TileSize.y);
-	int stride = m_MapSize.x;
+	ValidateTilesetProperties(bufferSize.x);
+	ValidateTilesetProperties(bufferSize.y);
 
-	float xStart = Fmod(m_Camera.left, m_TileSizef.x);
-	float yStart = Fmod(m_Camera.top, m_TileSizef.y);
-	Vector2f pos[2];
-	pos[0].y = -yStart;
-	pos[1].y = pos[0].y + m_TileSizef.y;
-	for (int j = tileRect.top; j < tileRect.bottom; j++) {
-		pos[0].x = -xStart;
-		pos[1].x = pos[0].x + m_TileSizef.x;
-		for (int i = tileRect.left; i < tileRect.right; i++) {
-			int index = i % stride + (j % m_MapSize.y) * stride;
-			u16 tile = m_Tilemap[index].Index;
-			if (tile > 0) {
-				Color color = m_Tilemap[index].BlendColor;
-				float fx = (tile % m_TilesPerRow) * m_TilesetMul.x;
-				float fy = (tile / m_TilesPerRow) * m_TilesetMul.y;
-				switch (m_Tilemap[index].Flip) {
-				case 0: {
-					const Vector2f UV[] = {
-						Vector2f(fx + PADX, fy + PADY),
-						Vector2f(fx + MULX - PADX, fy + PADY),
-						Vector2f(fx + PADX, fy + MULY - PADY),
-						Vector2f(fx + MULX - PADX , fy + MULY - PADY),
-					};
-					m_pDrawing->DrawSurface(pos, UV, Z, color, m_pDrawing->MODE_TEXTURED);
-				} break;
-				case 1: {
-					const Vector2f UV[] = {
-						Vector2f(fx + MULX - PADX, fy + PADY),
-						Vector2f(fx + PADX, fy + PADY),
-						Vector2f(fx + MULX - PADX, fy + MULY - PADY),
-						Vector2f(fx + PADX, fy + MULY - PADY),
-					};
-					m_pDrawing->DrawSurface(pos, UV, Z, color, m_pDrawing->MODE_TEXTURED);
-				} break;
-				case 2: {
-					const Vector2f UV[] = {
-						Vector2f(fx + PADX, fy + MULY - PADY),
-						Vector2f(fx + MULX - PADX, fy + MULY - PADY),
-						Vector2f(fx + PADX, fy + PADY),
-						Vector2f(fx + MULX - PADX, fy + PADY),
-					};
-					m_pDrawing->DrawSurface(pos, UV, Z, color, m_pDrawing->MODE_TEXTURED);
-				} break;
-				case 3: {
-					const Vector2f UV[] = {
-						Vector2f(fx + MULX - PADX, fy + MULY - PADY),
-						Vector2f(fx + PADX, fy + MULY - PADY),
-						Vector2f(fx + MULX - PADX, fy + PADY),
-						Vector2f(fx + PADX , fy + PADY),
-					};
-					m_pDrawing->DrawSurface(pos, UV, Z, color, m_pDrawing->MODE_TEXTURED);
-				} break;
+	m_BufferSize = bufferSize;
+	ResizeLayer(bufferSize, m_Layer);
+}
+
+bool CTilemap2d::GetBuffer(TilemapData* layer)
+{
+	assert(!!layer);
+
+	layer->Tilemap = m_Layer.Data;
+	layer->Size.x = m_Layer.Size.x;
+	layer->Size.y = m_Layer.Size.y;
+	layer->Stride = layer->Size.x * sizeof(TileData);
+
+	return true;
+}
+
+void CTilemap2d::SetTileset(const TilesetProperties& tileset)
+{
+	m_Tileset = tileset;
+}
+
+void CTilemap2d::Update(double deltaTime)
+{
+
+}
+
+void CTilemap2d::Flush()
+{
+	auto requiredSizeX = Math::Min<size_t>(m_Layer.Size.x, m_CameraSize.x);
+	auto requiredSizeY = Math::Min<size_t>(m_Layer.Size.y, m_CameraSize.y);
+
+	if (requiredSizeX <= 0 || requiredSizeY <= 0 ||
+		m_TileSize.x <= 0 || m_TileSize.y <= 0)
+		return;
+
+	TilemapRequestTilesArgs args;
+	args.Position.x = m_CameraPosition.x / m_TileSize.x;
+	args.Position.y = m_CameraPosition.y / m_TileSize.y;
+
+	TilemapData& tilemapData = args.Destination;
+	tilemapData.Tilemap = m_Layer.Data;
+	tilemapData.Size = Math::Vector2i(requiredSizeX, requiredSizeY);
+	tilemapData.Stride = m_Layer.Size.x * sizeof(TileData);
+
+	TilemapArgs<TilemapRequestTilesArgs> e;
+	e.Sender = this;
+	e.Arguments = &args;
+	(*m_RequestTilesDelegate)(e);
+}
+
+void CTilemap2d::Draw(int flags)
+{
+	m_DrawVertices.clear();
+	m_DrawIndices.clear();
+
+	u16 index = 0;
+	float tx = (float)m_TileSize.x;
+	float ty = (float)m_TileSize.y;
+	int width = (m_CameraSize.x + m_TileSize.x  - 1) / m_TileSize.x;
+	int height = (m_CameraSize.y + m_TileSize.y - 1) / m_TileSize.y;
+	float cameraShiftX = -Math::Fmod(m_CameraPosition.x, (float)m_TileSize.x);
+	float cameraShiftY = -Math::Fmod(m_CameraPosition.y, (float)m_TileSize.y);
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			TileData tileData = m_Layer.Data[(x % m_Layer.Size.x) + (y % m_Layer.Size.y) * m_Layer.Size.x];
+			u32 tile = tileData.Tile;
+			if (tile > 0)
+			{
+				tile--;
+
+				float fx = cameraShiftX + x * tx;
+				float fy = cameraShiftY + y * ty;
+
+				float u1 = (tile % m_Tileset.TilesPerRow) * m_TileSize.x;
+				float v1 = (tile / m_Tileset.TilesPerRow) * m_TileSize.y;
+				float u2 = u1 + m_TileSize.x;
+				float v2 = v1 + m_TileSize.x;
+
+				if (tileData.Rotate)
+				{
+					if (tileData.Flip)
+					{
+						std::swap(u1, u2);
+					}
+					if (tileData.Mirror)
+					{
+						std::swap(v1, v2);
+					}
+
+					m_DrawVertices.push_back({ fx, fy, u1, v1 });
+					m_DrawVertices.push_back({ fx + tx, fy, u1, v2 });
+					m_DrawVertices.push_back({ fx, fy + ty, u2, v1 });
+					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2 });
 				}
+				else
+				{
+					if (tileData.Mirror)
+					{
+						std::swap(u1, u2);
+					}
+					if (tileData.Flip)
+					{
+						std::swap(v1, v2);
+					}
+
+					m_DrawVertices.push_back({ fx, fy, u1, v1 });
+					m_DrawVertices.push_back({ fx + tx, fy, u2, v1 });
+					m_DrawVertices.push_back({ fx, fy + ty, u1, v2 });
+					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2 });
+				}
+
+				m_DrawIndices.push_back({ (u16)(index + 1) });
+				m_DrawIndices.push_back({ (u16)(index + 0) });
+				m_DrawIndices.push_back({ (u16)(index + 2) });
+				m_DrawIndices.push_back({ (u16)(index + 1) });
+				m_DrawIndices.push_back({ (u16)(index + 2) });
+				m_DrawIndices.push_back({ (u16)(index + 3) });
+				index += 4;
 			}
-			pos[0].x = pos[1].x;
-			pos[1].x += m_TileSizef.x;
 		}
-		pos[0].y = pos[1].y;
-		pos[1].y += m_TileSizef.y;
 	}
+
+	TilemapDrawArgs args;
+	args.Draws.push_back(TilemapDrawList
+	{
+		m_DrawVertices.data(),
+		m_DrawIndices.data(),
+		m_DrawVertices.size(),
+		m_DrawIndices.size()
+	});
+
+	TilemapArgs<TilemapDrawArgs> e;
+	e.Sender = this;
+	e.Arguments = &args;
+	(*m_DrawDelegate)(e);
+}
+
+inline void CTilemap2d::ValidateTilesetProperties(TilemapBufferSizeType bufferSizeType)
+{
+	//switch (bufferSizeType)
+	//{
+	//case TilemapBuffer_16:
+	//case TilemapBuffer_32:
+	//case TilemapBuffer_64:
+	//case TilemapBuffer_128:
+	//case TilemapBuffer_256:
+	//	break;
+	//default:
+	//	throw std::invalid_argument(NAMEOF(bufferSizeType)" must be in the string range");
+	//}
+}
+
+void CTilemap2d::ResizeLayer(const TilemapBufferSize& size, Layer& layer)
+{
+	if (layer.Data)
+		Xe::Memory::Free(layer.Data);
+
+	auto stride = size.x * sizeof(TileData);
+	layer.Size = size;
+	layer.Data = (TileData*)Xe::Memory::Alloc(stride * size.y);
 }
 
 void Xe::Game::Factory(ITilemap2d** ppTilemap2d, IDrawing2d* pDrawing2d)
 {
-	*ppTilemap2d = new CTilemap2d(pDrawing2d);
+	*ppTilemap2d = new CTilemap2d();
 }
