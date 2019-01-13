@@ -109,6 +109,34 @@ TEST(XeGameTiledTest, SaveTilesetTest) {
 	ASSERT_EQ(expected.Version, actual.Version);
 }
 
+TEST(XeGameTiledTest, SaveAndParseTilesetTile) {
+	Xe::ObjPtr<IMemoryStream> memStream = IO::IMemoryStream::New(0, true);
+	Tileset expectedTileset, actualTileset;
+
+	auto& expected = Add(expectedTileset.Tiles);
+	expected.Id = 123;
+	expected.Probability = 2.0;
+	expected.Type = "SomeTileType";
+	expected.Properties[StringSpan("SomePropertyName")] = Xe::Game::Tiled::StringProperty("SomePropertyValue");
+	
+	auto& expectedAnim = Add(expected.Animation);
+	expectedAnim.TileId = 456;
+	expectedAnim.Duration = 789;
+
+	SaveJson(expectedTileset, memStream);
+	memStream->SetPosition(0);
+	ParseJson(actualTileset, memStream);
+
+	const auto& actual = *actualTileset.Tiles.begin();
+	ASSERT_EQ(expected.Id, actual.Id);
+	ASSERT_EQ(expected.Probability, actual.Probability);
+	ASSERT_STRCASEEQ(expected.Type, actual.Type);
+
+	const auto& actualAnim = *actual.Animation.begin();
+	ASSERT_EQ(expectedAnim.TileId, actualAnim.TileId);
+	ASSERT_EQ(expectedAnim.Duration, actualAnim.Duration);
+}
+
 TEST(XeGameTiledTest, SaveAndParseMapTest) {
 
 	Xe::ObjPtr<IMemoryStream> memStream = IO::IMemoryStream::New(0, true);

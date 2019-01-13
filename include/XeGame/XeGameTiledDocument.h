@@ -75,6 +75,30 @@ namespace Xe { namespace Game { namespace Tiled {
 		std::list<Object> Objects;
 	};
 
+	struct Frame
+	{
+		//! Frame duration in milliseconds
+		int Duration;
+
+		//! Local tile ID representing this frame
+		int TileId;
+	};
+
+	struct Tile : public GenericProperties
+	{
+		//! Local ID of the tile
+		int Id;
+
+		//! Probability used when randomizing
+		double Probability;
+
+		//! The type of the tile (optional)
+		String Type;
+
+		//! Array of Frames
+		std::list<Frame> Animation;
+	};
+
 	struct Tileset : public GenericProperties
 	{
 		//! The number of tile columns in the tileset
@@ -118,6 +142,8 @@ namespace Xe { namespace Game { namespace Tiled {
 
 		//! Source of the tileset
 		String Source;
+
+		std::list<Tile> Tiles;
 
 		String TiledVersion;
 

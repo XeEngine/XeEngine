@@ -14,6 +14,10 @@ void Internal_WriteToStream(IO::IStream* pStream, const rapidjson::Value& value)
 	value.Accept(writer);
 }
 
+void Internal_Parse(Tiled::Frame& obj, const rapidjson::Value& value);
+void Internal_Save(const Tiled::Frame& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator);
+void Internal_Parse(Tiled::Tile& obj, const rapidjson::Value& value);
+void Internal_Save(const Tiled::Tile& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator);
 void Internal_Parse(Tiled::Tileset& obj, const rapidjson::Value& value);
 void Internal_Save(const Tiled::Tileset& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator);
 void Internal_Parse(Tiled::Layer& obj, const rapidjson::Value& value);
@@ -225,6 +229,38 @@ void Internal_ReadLayerDataBase64Zlib(std::vector<Tiled::Gid>& vector, const rap
 	// TODO not implemented yet
 }
 
+void Internal_Parse(Tiled::Frame& obj, const rapidjson::Value& value)
+{
+	JSON_GET(value, "duration", GetInt(), obj.Duration);
+	JSON_GET(value, "tileid", GetInt(), obj.TileId);
+}
+
+void Internal_Save(const Tiled::Frame& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
+{
+	JSON_ADD(value, "duration", obj.Duration, 0);
+	JSON_ADD(value, "tileid", obj.TileId, 1.0);
+}
+
+void Internal_Parse(Tiled::Tile& obj, const rapidjson::Value& value)
+{
+	JSON_GET(value, "id", GetInt(), obj.Id);
+	JSON_GET(value, "probability", GetDouble(), obj.Probability);
+	JSON_GET(value, "type", GetString(), obj.Type);
+
+	Internal_ParseProperties(obj, value);
+	Internal_ParseList(obj.Animation, value, "animation");
+}
+
+void Internal_Save(const Tiled::Tile& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
+{
+	JSON_ADDIF(value, "id", obj.Id, 0);
+	JSON_ADDIF(value, "probability", obj.Probability, 1.0);
+	JSON_STRADD(value, "type", obj.Type);
+
+	Internal_SaveProperties(obj, value, allocator);
+	Internal_SaveList(obj.Animation, value, allocator, "animation");
+}
+
 void Internal_Parse(Tiled::Tileset& obj, const rapidjson::Value& value)
 {
 	JSON_GET(value, "columns", GetInt(), obj.Columns);
@@ -245,6 +281,7 @@ void Internal_Parse(Tiled::Tileset& obj, const rapidjson::Value& value)
 	JSON_GET(value, "version", GetFloat(), obj.Version);
 
 	Internal_ParseProperties(obj, value);
+	Internal_ParseList(obj.Tiles, value, "tiles");
 }
 
 void Internal_Save(const Tiled::Tileset& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
@@ -267,6 +304,7 @@ void Internal_Save(const Tiled::Tileset& obj, rapidjson::Value& value, rapidjson
 	JSON_ADD(value, "version", obj.Version);
 
 	Internal_SaveProperties(obj, value, allocator);
+	Internal_SaveList(obj.Tiles, value, allocator, "tiles");
 }
 
 void Internal_Parse(Tiled::Layer& obj, const rapidjson::Value& value)
