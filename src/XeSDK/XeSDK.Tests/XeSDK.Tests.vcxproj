@@ -62,6 +62,7 @@
     <ClCompile Include="XeIODevices_Dummy.cpp" />
     <ClCompile Include="XeStoragePathTest.cpp" />
     <ClCompile Include="XeStringTest.cpp" />
+    <ClCompile Include="XeUriTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

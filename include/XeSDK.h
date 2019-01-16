@@ -58,6 +58,7 @@
 #include <XeSDK/XeString.h>
 #include <XeSDK/XeStringSpan.h>
 #include <XeSDK/XeTimer.h>
+#include <XeSDK/XeUri.h>
 
 #include <XeSDK/XeGameComponentPosition2d.h>
 #include <XeSDK/XeGameComponentTexture2d.h>

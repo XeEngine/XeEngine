@@ -115,6 +115,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeSystem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeTimer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeUri.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DefaultGamepadEventHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DummyApplicationHandler.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeTimer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeUri.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeValue.cpp" />
   </ItemGroup>
   <ItemGroup>

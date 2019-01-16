@@ -10,6 +10,7 @@
     <ClCompile Include="XeStoragePathTest.cpp" />
     <ClCompile Include="XeConvertTest.cpp" />
     <ClCompile Include="XeIOStreamTest.cpp" />
+    <ClCompile Include="XeUriTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

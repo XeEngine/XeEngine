@@ -357,6 +357,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeConvert.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeUri.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">
@@ -504,6 +507,9 @@
       <Filter>Graphics\Private</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeConvert.Base64.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeUri.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
