@@ -17,20 +17,32 @@ namespace Xe { namespace Game {
 		TilemapTileSize m_TileSize;
 		TilemapBufferSize m_BufferSize;
 		TilesetProperties m_Tileset;
+		Graphics::Color m_BgColor;
 		Layer m_Layer;
 
 		std::vector<TilemapDrawVertex> m_DrawVertices;
 		std::vector<TilemapDrawIndex> m_DrawIndices;
+		std::vector<Xe::Graphics::Color> m_DrawColors;
+		std::vector<float> m_DrawTextureModes;
 
 		static void ValidateTilesetProperties(TilemapBufferSizeType bufferSizeType);
 
 		static void ResizeLayer(const TilemapBufferSize& size, Layer& layer);
+
+		u16 PushColor(const Xe::Graphics::Color& color);
+		u16 PushTexMode(float mode);
+		u16 PushTexModeNoTexture();
+		u16 PushTexModeTexture();
+		u16 PushTexModePalette(float palette);
 	public:
 		CTilemap2d();
 		~CTilemap2d();
 
 		void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate);
 		void SetDrawCallback(TilemapDrawDelegate* delegate);
+
+		const Xe::Graphics::Color& GetBackgroundColor() const;
+		void SetBackgroundColor(const Xe::Graphics::Color& color);
 
 		const Math::Vector2i& GetCameraSize();
 		void SetCameraSize(const Math::Vector2i& cameraSize);

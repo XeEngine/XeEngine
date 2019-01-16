@@ -36,6 +36,16 @@ void CTilemap2d::SetDrawCallback(TilemapDrawDelegate* delegate)
 	m_DrawDelegate = delegate;
 }
 
+const Xe::Graphics::Color& CTilemap2d::GetBackgroundColor() const
+{
+	return m_BgColor;
+}
+
+void CTilemap2d::SetBackgroundColor(const Xe::Graphics::Color& color)
+{
+	m_BgColor = color;
+}
+
 const Math::Vector2i& CTilemap2d::GetCameraSize()
 {
 	return m_CameraSize;
@@ -133,14 +143,39 @@ void CTilemap2d::Draw(int flags)
 {
 	m_DrawVertices.clear();
 	m_DrawIndices.clear();
+	m_DrawColors.clear();
+	m_DrawTextureModes.clear();
 
-	u16 index = 0;
+	u16 vertexIndex = 0;
+	u16 colorIndex;
+	u16 texModeIndex;
+
+	if (m_BgColor.a > 0)
+	{
+		colorIndex = PushColor(m_BgColor);
+		texModeIndex = PushTexModeNoTexture();
+		m_DrawVertices.push_back({ 0, 0, 0, 0, colorIndex, texModeIndex });
+		m_DrawVertices.push_back({ (float)m_CameraSize.x, 0, 0, 0, colorIndex, texModeIndex });
+		m_DrawVertices.push_back({ 0, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex });
+		m_DrawVertices.push_back({ (float)m_CameraSize.x, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex });
+	
+		m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
+		m_DrawIndices.push_back({ (u16)(vertexIndex + 0) });
+		m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
+		m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
+		m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
+		m_DrawIndices.push_back({ (u16)(vertexIndex + 3) });
+		vertexIndex += 4;
+	}
+
 	float tx = (float)m_TileSize.x;
 	float ty = (float)m_TileSize.y;
 	int width = (m_CameraSize.x + m_TileSize.x  - 1) / m_TileSize.x;
 	int height = (m_CameraSize.y + m_TileSize.y - 1) / m_TileSize.y;
-	float cameraShiftX = -Math::Fmod(m_CameraPosition.x, (float)m_TileSize.x);
-	float cameraShiftY = -Math::Fmod(m_CameraPosition.y, (float)m_TileSize.y);
+	float cameraShiftX = -Math::Fmod((float)m_CameraPosition.x, (float)m_TileSize.x);
+	float cameraShiftY = -Math::Fmod((float)m_CameraPosition.y, (float)m_TileSize.y);
+	colorIndex = PushColor(Xe::Graphics::Color::White);
+	texModeIndex = PushTexModeTexture();
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
@@ -154,8 +189,8 @@ void CTilemap2d::Draw(int flags)
 				float fx = cameraShiftX + x * tx;
 				float fy = cameraShiftY + y * ty;
 
-				float u1 = (tile % m_Tileset.TilesPerRow) * m_TileSize.x;
-				float v1 = (tile / m_Tileset.TilesPerRow) * m_TileSize.y;
+				float u1 = (float)((tile % m_Tileset.TilesPerRow) * m_TileSize.x);
+				float v1 = (float)((tile / m_Tileset.TilesPerRow) * m_TileSize.y);
 				float u2 = u1 + m_TileSize.x;
 				float v2 = v1 + m_TileSize.x;
 
@@ -170,10 +205,10 @@ void CTilemap2d::Draw(int flags)
 						std::swap(v1, v2);
 					}
 
-					m_DrawVertices.push_back({ fx, fy, u1, v1 });
-					m_DrawVertices.push_back({ fx + tx, fy, u1, v2 });
-					m_DrawVertices.push_back({ fx, fy + ty, u2, v1 });
-					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2 });
+					m_DrawVertices.push_back({ fx, fy, u1, v1, colorIndex, texModeIndex });
+					m_DrawVertices.push_back({ fx + tx, fy, u1, v2, colorIndex, texModeIndex });
+					m_DrawVertices.push_back({ fx, fy + ty, u2, v1, colorIndex, texModeIndex });
+					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex });
 				}
 				else
 				{
@@ -186,19 +221,19 @@ void CTilemap2d::Draw(int flags)
 						std::swap(v1, v2);
 					}
 
-					m_DrawVertices.push_back({ fx, fy, u1, v1 });
-					m_DrawVertices.push_back({ fx + tx, fy, u2, v1 });
-					m_DrawVertices.push_back({ fx, fy + ty, u1, v2 });
-					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2 });
+					m_DrawVertices.push_back({ fx, fy, u1, v1, colorIndex, texModeIndex });
+					m_DrawVertices.push_back({ fx + tx, fy, u2, v1, colorIndex, texModeIndex });
+					m_DrawVertices.push_back({ fx, fy + ty, u1, v2, colorIndex, texModeIndex });
+					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex });
 				}
 
-				m_DrawIndices.push_back({ (u16)(index + 1) });
-				m_DrawIndices.push_back({ (u16)(index + 0) });
-				m_DrawIndices.push_back({ (u16)(index + 2) });
-				m_DrawIndices.push_back({ (u16)(index + 1) });
-				m_DrawIndices.push_back({ (u16)(index + 2) });
-				m_DrawIndices.push_back({ (u16)(index + 3) });
-				index += 4;
+				m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
+				m_DrawIndices.push_back({ (u16)(vertexIndex + 0) });
+				m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
+				m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
+				m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
+				m_DrawIndices.push_back({ (u16)(vertexIndex + 3) });
+				vertexIndex += 4;
 			}
 		}
 	}
@@ -208,8 +243,13 @@ void CTilemap2d::Draw(int flags)
 	{
 		m_DrawVertices.data(),
 		m_DrawIndices.data(),
+		m_DrawColors.data(),
+		m_DrawTextureModes.data(),
+
 		m_DrawVertices.size(),
-		m_DrawIndices.size()
+		m_DrawIndices.size(),
+		m_DrawColors.size(),
+		m_DrawTextureModes.size()
 	});
 
 	TilemapArgs<TilemapDrawArgs> e;
@@ -231,6 +271,33 @@ inline void CTilemap2d::ValidateTilesetProperties(TilemapBufferSizeType bufferSi
 	//default:
 	//	throw std::invalid_argument(NAMEOF(bufferSizeType)" must be in the string range");
 	//}
+}
+
+inline u16 CTilemap2d::PushColor(const Color& color)
+{
+	m_DrawColors.push_back(color);
+	return (u16)(m_DrawColors.size() - 1);
+}
+
+inline u16 CTilemap2d::PushTexMode(float mode)
+{
+	m_DrawTextureModes.push_back(mode);
+	return (u16)(m_DrawTextureModes.size() - 1);
+}
+
+inline u16 CTilemap2d::PushTexModeNoTexture()
+{
+	return PushTexMode(1.0f);
+}
+
+inline u16 CTilemap2d::PushTexModeTexture()
+{
+	return PushTexMode(0.5f);
+}
+
+inline u16 CTilemap2d::PushTexModePalette(float palette)
+{
+	return PushTexMode(palette / 2.0f);
 }
 
 void CTilemap2d::ResizeLayer(const TilemapBufferSize& size, Layer& layer)

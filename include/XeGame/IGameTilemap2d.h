@@ -83,6 +83,7 @@ namespace Xe { namespace Game {
 	struct TilemapDrawVertex
 	{
 		float x, y, u, v;
+		u16 ColorIndex, TextureModeIndex;
 	};
 
 	struct TilemapDrawIndex
@@ -94,8 +95,13 @@ namespace Xe { namespace Game {
 	{
 		TilemapDrawVertex* VerticesData;
 		TilemapDrawIndex* IndicesData;
+		Xe::Graphics::Color* ColorsData;
+		float* TextureModeData;
+
 		size_t VerticesCount;
 		size_t IndicesCount;
+		size_t ColorsCount;
+		size_t TextureModeCount;
 	};
 
 	struct TilemapDrawArgs
@@ -124,6 +130,9 @@ namespace Xe { namespace Game {
 
 		virtual void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate) = 0;
 		virtual void SetDrawCallback(TilemapDrawDelegate* delegate) = 0;
+
+		virtual const Xe::Graphics::Color& GetBackgroundColor() const = 0;
+		virtual void SetBackgroundColor(const Xe::Graphics::Color& color) = 0;
 
 		virtual const Xe::Math::Vector2i& GetCameraSize() = 0;
 		virtual void SetCameraSize(const Xe::Math::Vector2i& cameraSize) = 0;
