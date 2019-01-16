@@ -33,6 +33,7 @@
 #include <XeSDK/XeConvert.h>
 #include <XeSDK/IIOMemoryStream.h>
 #include <XeSDK/XeObjPtr.h>
+#include <string>
 
 using namespace Xe;
 

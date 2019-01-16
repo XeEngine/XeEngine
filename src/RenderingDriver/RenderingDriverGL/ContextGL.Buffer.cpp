@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ContextGL.Buffer.h"
 #include "ContextGL.Common.h"
+#include <stdexcept>
 
 using namespace Xe::Graphics;
 
