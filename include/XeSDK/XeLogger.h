@@ -52,6 +52,8 @@ constexpr const char* _LogGetFilenameWithoutPath(const char(&path)[length]) {
 #define LOGI(fmt, ...) (NOOP())
 #define LOGD(fmt, ...) (NOOP())
 #define LOGT(fmt, ...) (NOOP())
+
+#define XE__FILE__ ""
 #endif
 
 namespace Xe {

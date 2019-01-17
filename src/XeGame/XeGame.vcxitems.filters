@@ -114,6 +114,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTiledDocument.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -161,5 +162,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsFilePicker.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TiledDocument.cpp" />
   </ItemGroup>
 </Project>

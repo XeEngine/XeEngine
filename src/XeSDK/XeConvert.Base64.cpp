@@ -143,8 +143,8 @@ size_t Convert::FromBase64String(IO::IStream* pOutStream, IO::IStream* pInStream
 
 size_t Convert::ToBase64String(IO::IStream* pOutStream, IO::IStream* pInStream, size_t in_len)
 {
-	assert(pInStream != nullptr);
-	assert(pOutStream != nullptr);
+	ASSERT(pInStream != nullptr);
+	ASSERT(pOutStream != nullptr);
 
 	const unsigned char ChEof = '=';
 	int i = 0;
