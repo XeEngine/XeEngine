@@ -4,6 +4,29 @@
 namespace Xe { namespace Game {
 	class CTilemap2d : public ITilemap2d
 	{
+		template <class T>
+		struct MyVector
+		{
+			T* Data;
+			size_t Capacity;
+			size_t Count;
+
+			MyVector() : Data(nullptr), Capacity(0) {}
+			inline void Realloc(size_t capacity) { Data = (T*)Xe::Memory::Resize(capacity); }
+			inline void Release() { if (Data) Xe::Memory::Free(Data); }
+			inline void Clear() { Count = 0; }
+			inline void Reserve(size_t newElements) { EnsureCapacity(Count += newElements); }
+
+			inline void EnsureCapacity(size_t requiredCapacity)
+			{
+				if (Capacity < requiredCapacity)
+				{
+					Capacity = requiredCapacity + requiredCapacity / 4; // * 1.25
+					Data = (T*)Memory::Resize(Data, Capacity * sizeof(T));
+				}
+			}
+		};
+
 		struct Layer
 		{
 			TileData* Data;
@@ -20,14 +43,20 @@ namespace Xe { namespace Game {
 		Graphics::Color m_BgColor;
 		Layer m_Layer;
 
-		std::vector<TilemapDrawVertex> m_DrawVertices;
-		std::vector<TilemapDrawIndex> m_DrawIndices;
-		std::vector<Xe::Graphics::Color> m_DrawColors;
-		std::vector<float> m_DrawTextureModes;
+		MyVector<TilemapDrawVertex> m_DrawVertices;
+		MyVector<TilemapDrawIndex> m_DrawIndices;
+		MyVector<Xe::Graphics::Color> m_DrawColors;
+		MyVector<float> m_DrawTextureModes;
 
 		static void ValidateTilesetProperties(TilemapBufferSizeType bufferSizeType);
 
 		static void ResizeLayer(const TilemapBufferSize& size, Layer& layer);
+
+		template <class T>
+		static T* EnsureCapacity(T* mem, size_t currentCapacity, size_t requiredCapacity)
+		{
+			return currentCapacity < requiredCapacity ? (T*)Memory::Resize(mem, requiredCapacity * sizeof(T)) : mem;
+		}
 
 		u16 PushColor(const Xe::Graphics::Color& color);
 		u16 PushTexMode(float mode);

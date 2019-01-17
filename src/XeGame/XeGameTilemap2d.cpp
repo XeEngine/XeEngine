@@ -22,8 +22,9 @@ CTilemap2d::CTilemap2d() :
 
 CTilemap2d::~CTilemap2d()
 {
-	if (m_Layer.Data)
-		Xe::Memory::Free(m_Layer.Data);
+	if (m_Layer.Data) Xe::Memory::Free(m_Layer.Data);
+	m_DrawVertices.Release();
+	m_DrawIndices.Release();
 }
 
 void CTilemap2d::SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate)
@@ -141,30 +142,34 @@ void CTilemap2d::Flush()
 
 void CTilemap2d::Draw(int flags)
 {
-	m_DrawVertices.clear();
-	m_DrawIndices.clear();
-	m_DrawColors.clear();
-	m_DrawTextureModes.clear();
+	m_DrawVertices.Clear();
+	m_DrawIndices.Clear();
+	m_DrawColors.Clear();
+	m_DrawTextureModes.Clear();
 
-	u16 vertexIndex = 0;
+	int vertexIndex = 0;
+	int indices = 0;
 	u16 colorIndex;
 	u16 texModeIndex;
 
 	if (m_BgColor.a > 0)
 	{
+		m_DrawVertices.Reserve(4);
+		m_DrawIndices.Reserve(6);
+
 		colorIndex = PushColor(m_BgColor);
 		texModeIndex = PushTexModeNoTexture();
-		m_DrawVertices.push_back({ 0, 0, 0, 0, colorIndex, texModeIndex });
-		m_DrawVertices.push_back({ (float)m_CameraSize.x, 0, 0, 0, colorIndex, texModeIndex });
-		m_DrawVertices.push_back({ 0, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex });
-		m_DrawVertices.push_back({ (float)m_CameraSize.x, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex });
-	
-		m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
-		m_DrawIndices.push_back({ (u16)(vertexIndex + 0) });
-		m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
-		m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
-		m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
-		m_DrawIndices.push_back({ (u16)(vertexIndex + 3) });
+		m_DrawVertices.Data[vertexIndex + 0] = { 0, 0, 0, 0, colorIndex, texModeIndex };
+		m_DrawVertices.Data[vertexIndex + 1] = { (float)m_CameraSize.x, 0, 0, 0, colorIndex, texModeIndex };
+		m_DrawVertices.Data[vertexIndex + 2] = { 0, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
+		m_DrawVertices.Data[vertexIndex + 3] = { (float)m_CameraSize.x, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
+		
+		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
+		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
 		vertexIndex += 4;
 	}
 
@@ -185,6 +190,8 @@ void CTilemap2d::Draw(int flags)
 			if (tile > 0)
 			{
 				tile--;
+				m_DrawVertices.Reserve(4);
+				m_DrawIndices.Reserve(6);
 
 				float fx = cameraShiftX + x * tx;
 				float fy = cameraShiftY + y * ty;
@@ -205,10 +212,10 @@ void CTilemap2d::Draw(int flags)
 						std::swap(v1, v2);
 					}
 
-					m_DrawVertices.push_back({ fx, fy, u1, v1, colorIndex, texModeIndex });
-					m_DrawVertices.push_back({ fx + tx, fy, u1, v2, colorIndex, texModeIndex });
-					m_DrawVertices.push_back({ fx, fy + ty, u2, v1, colorIndex, texModeIndex });
-					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex });
+					m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
+					m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u1, v2, colorIndex, texModeIndex };
+					m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u2, v1, colorIndex, texModeIndex };
+					m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
 				}
 				else
 				{
@@ -221,35 +228,38 @@ void CTilemap2d::Draw(int flags)
 						std::swap(v1, v2);
 					}
 
-					m_DrawVertices.push_back({ fx, fy, u1, v1, colorIndex, texModeIndex });
-					m_DrawVertices.push_back({ fx + tx, fy, u2, v1, colorIndex, texModeIndex });
-					m_DrawVertices.push_back({ fx, fy + ty, u1, v2, colorIndex, texModeIndex });
-					m_DrawVertices.push_back({ fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex });
+					m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
+					m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u2, v1, colorIndex, texModeIndex };
+					m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u1, v2, colorIndex, texModeIndex };
+					m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
 				}
 
-				m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
-				m_DrawIndices.push_back({ (u16)(vertexIndex + 0) });
-				m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
-				m_DrawIndices.push_back({ (u16)(vertexIndex + 1) });
-				m_DrawIndices.push_back({ (u16)(vertexIndex + 2) });
-				m_DrawIndices.push_back({ (u16)(vertexIndex + 3) });
+				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
+				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
 				vertexIndex += 4;
 			}
 		}
+
+		ASSERT(m_DrawVertices.Count == vertexIndex);
+		ASSERT(m_DrawIndices.Count == indices);
 	}
 
 	TilemapDrawArgs args;
 	args.Draws.push_back(TilemapDrawList
 	{
-		m_DrawVertices.data(),
-		m_DrawIndices.data(),
-		m_DrawColors.data(),
-		m_DrawTextureModes.data(),
+		m_DrawVertices.Data,
+		m_DrawIndices.Data,
+		m_DrawColors.Data,
+		m_DrawTextureModes.Data,
 
-		m_DrawVertices.size(),
-		m_DrawIndices.size(),
-		m_DrawColors.size(),
-		m_DrawTextureModes.size()
+		m_DrawVertices.Count,
+		m_DrawIndices.Count,
+		m_DrawColors.Count,
+		m_DrawTextureModes.Count
 	});
 
 	TilemapArgs<TilemapDrawArgs> e;
@@ -275,14 +285,18 @@ inline void CTilemap2d::ValidateTilesetProperties(TilemapBufferSizeType bufferSi
 
 inline u16 CTilemap2d::PushColor(const Color& color)
 {
-	m_DrawColors.push_back(color);
-	return (u16)(m_DrawColors.size() - 1);
+	auto count = m_DrawColors.Count;
+	m_DrawColors.Reserve(1);
+	m_DrawColors.Data[count] = color;
+	return count;
 }
 
 inline u16 CTilemap2d::PushTexMode(float mode)
 {
-	m_DrawTextureModes.push_back(mode);
-	return (u16)(m_DrawTextureModes.size() - 1);
+	auto count = m_DrawTextureModes.Count;
+	m_DrawTextureModes.Reserve(1);
+	m_DrawTextureModes.Data[count] = mode;
+	return count;
 }
 
 inline u16 CTilemap2d::PushTexModeNoTexture()
