@@ -1,5 +1,6 @@
 #pragma once
 #include <XeSDK/IDelegate.h>
+#include <XeSDK/XeCollectionsArray.h>
 #include <XeSDK/XeMathVector2.h>
 #include <XeSDK/XeMathRectangle.h>
 #include <XeSDK/XeGraphicsColor.h>
@@ -74,6 +75,12 @@ namespace Xe { namespace Game {
 		}
 	};
 
+	struct TileFrame
+	{
+		TileData Tile;
+		float DelayMs;
+	};
+
 	struct TilemapRequestTilesArgs
 	{
 		TilemapData Destination;
@@ -145,6 +152,10 @@ namespace Xe { namespace Game {
 
 		virtual const TilemapBufferSize& GetBufferSize() = 0;
 		virtual void SetBufferSize(const TilemapBufferSize& bufferSize) = 0;
+
+		virtual bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) = 0;
+		virtual void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames) = 0;
+		virtual void RemoveTileSequence(TileData tile) = 0;
 
 		virtual bool GetBuffer(TilemapData* layer) = 0;
 

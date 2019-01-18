@@ -15,9 +15,9 @@ using namespace Xe::Game;
 CTilemap2d::CTilemap2d() :
 	m_RequestTilesDelegate(nullptr),
 	m_DrawDelegate(nullptr),
+	m_Timer(0.0),
 	m_Layer({0})
 {
-
 }
 
 CTilemap2d::~CTilemap2d()
@@ -94,6 +94,69 @@ void CTilemap2d::SetBufferSize(const TilemapBufferSize& bufferSize)
 	ResizeLayer(bufferSize, m_Layer);
 }
 
+bool CTilemap2d::GetTileSequence(TileData tile, std::vector<TileFrame>& frames)
+{
+	for (auto sequence : m_AnimatedTiles)
+	{
+		if (sequence.TileId.Tile == tile.Tile)
+		{
+			frames.clear();
+			frames.resize(sequence.Sequence.Count);
+			for (size_t i = 0; i < sequence.Sequence.Count; ++i)
+			{
+				frames[i] = sequence.Sequence.Data[i];
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void CTilemap2d::AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames)
+{
+	bool found = false;
+	auto it = m_AnimatedTiles.begin();
+	for (; it != m_AnimatedTiles.end(); ++it)
+	{
+		if ((*it).TileId == tile.Tile)
+		{
+			found = true;
+			break;
+		}
+	}
+
+	if (found == false)
+	{
+		m_AnimatedTiles.push_back(TileSequence());
+		it = std::prev(m_AnimatedTiles.end());
+	}
+
+	auto& sequence = *it;
+	sequence.TileId = tile;
+	sequence.Speed = 1.0;
+	sequence.Sequence.Clear();
+	sequence.Sequence.Reserve(frames.GetLength());
+
+	for (size_t i = 0; i < sequence.Sequence.Count; ++i)
+	{
+		sequence.Sequence.Data[i] = frames[i];
+	}
+}
+
+void CTilemap2d::RemoveTileSequence(TileData tile)
+{
+	for (auto it = m_AnimatedTiles.begin(); it != m_AnimatedTiles.end(); ++it)
+	{
+		if ((*it).TileId.Tile == tile.Tile)
+		{
+			m_AnimatedTiles.erase(it);
+			break;
+		}
+	}
+}
+
 bool CTilemap2d::GetBuffer(TilemapData* layer)
 {
 	assert(!!layer);
@@ -113,7 +176,7 @@ void CTilemap2d::SetTileset(const TilesetProperties& tileset)
 
 void CTilemap2d::Update(double deltaTime)
 {
-
+	m_Timer += deltaTime;
 }
 
 void CTilemap2d::Flush()
@@ -186,6 +249,7 @@ void CTilemap2d::Draw(int flags)
 		for (int x = 0; x < width; x++)
 		{
 			TileData tileData = m_Layer.Data[(x % m_Layer.Size.x) + (y % m_Layer.Size.y) * m_Layer.Size.x];
+			tileData = GetTileData(tileData);
 			u32 tile = tileData.Tile;
 			if (tile > 0)
 			{
@@ -312,6 +376,47 @@ inline u16 CTilemap2d::PushTexModeTexture()
 inline u16 CTilemap2d::PushTexModePalette(float palette)
 {
 	return PushTexMode(palette / 2.0f);
+}
+
+TileData CTilemap2d::GetTileData(TileData tile) const
+{
+	// TODO iterating all the possible animated tiles for every tile that the
+	// engine wants to draw it is not the best thing. An idea would be to
+	// create a look-up table, reducing the complexity of GetTileData from
+	// O(n) to O(1). The only down-side of this approach is that the possible
+	// amount of tile indices is 2^29, which is 2GB of required memory... :D.
+	// Since it is impossible for a map to use 2^29 tiles, if the highest tile
+	// index is known, it would be possible to create the LUT. Let's suppose
+	// that, with a tileset of 1024x1024 with 16x16 tiles, the highest tile is
+	// 4096; in this case, the LUT will be 4096*sizeof(TileData) = 16KB!!!
+
+	for (auto seq : m_AnimatedTiles)
+	{
+		if (tile.Tile == seq.TileId.Tile)
+		{
+			float totalLength = 0.0f;
+			for (size_t j = 0; j < seq.Sequence.Count; ++j)
+			{
+				totalLength += seq.Sequence.Data[j].DelayMs;
+			}
+
+			double msIndex = Math::Fmod(m_Timer * 1000.0, (double)totalLength);
+			totalLength = 0.0f;
+			for (size_t j = 0; j < seq.Sequence.Count; ++j)
+			{
+				const auto& frame = seq.Sequence.Data[j];
+				totalLength += frame.DelayMs;
+				if (msIndex < totalLength)
+				{
+					return { (u32)(frame.Tile + 1) };
+				}
+			}
+
+			return tile;
+		}
+	}
+
+	return tile;
 }
 
 void CTilemap2d::ResizeLayer(const TilemapBufferSize& size, Layer& layer)

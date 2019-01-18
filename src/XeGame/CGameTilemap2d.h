@@ -1,5 +1,6 @@
 #pragma once
 #include <XeGame/IGameTilemap2d.h>
+#include <list>
 
 namespace Xe { namespace Game {
 	class CTilemap2d : public ITilemap2d
@@ -11,7 +12,7 @@ namespace Xe { namespace Game {
 			size_t Capacity;
 			size_t Count;
 
-			MyVector() : Data(nullptr), Capacity(0) {}
+			MyVector() : Data(nullptr), Capacity(0), Count(0) {}
 			inline void Realloc(size_t capacity) { Data = (T*)Xe::Memory::Resize(capacity); }
 			inline void Release() { if (Data) Xe::Memory::Free(Data); }
 			inline void Clear() { Count = 0; }
@@ -21,9 +22,14 @@ namespace Xe { namespace Game {
 			{
 				if (Capacity < requiredCapacity)
 				{
-					Capacity = requiredCapacity + requiredCapacity / 4; // * 1.25
-					Data = (T*)Memory::Resize(Data, Capacity * sizeof(T));
+					SetCapacity(requiredCapacity + requiredCapacity / 4); // * 1.25
 				}
+			}
+
+			inline void SetCapacity(size_t capacity)
+			{
+				Capacity = capacity;
+				Data = (T*)Memory::Resize(Data, Capacity * sizeof(T));
 			}
 		};
 
@@ -31,6 +37,13 @@ namespace Xe { namespace Game {
 		{
 			TileData* Data;
 			TilemapBufferSize Size;
+		};
+
+		struct TileSequence
+		{
+			TileData TileId;
+			float Speed;
+			MyVector<TileFrame> Sequence;
 		};
 
 		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
@@ -41,7 +54,9 @@ namespace Xe { namespace Game {
 		TilemapBufferSize m_BufferSize;
 		TilesetProperties m_Tileset;
 		Graphics::Color m_BgColor;
+		double m_Timer;
 		Layer m_Layer;
+		std::list<TileSequence> m_AnimatedTiles;
 
 		MyVector<TilemapDrawVertex> m_DrawVertices;
 		MyVector<TilemapDrawIndex> m_DrawIndices;
@@ -63,6 +78,8 @@ namespace Xe { namespace Game {
 		u16 PushTexModeNoTexture();
 		u16 PushTexModeTexture();
 		u16 PushTexModePalette(float palette);
+
+		TileData GetTileData(TileData tile) const;
 	public:
 		CTilemap2d();
 		~CTilemap2d();
@@ -84,6 +101,10 @@ namespace Xe { namespace Game {
 
 		const TilemapBufferSize& GetBufferSize();
 		void SetBufferSize(const TilemapBufferSize& bufferSize);
+
+		bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames);
+		void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames);
+		void RemoveTileSequence(TileData tile);
 
 		bool GetBuffer(TilemapData* layer);
 
