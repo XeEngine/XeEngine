@@ -178,16 +178,19 @@ void CTilemap2d::Update(double deltaTime)
 
 void CTilemap2d::Flush()
 {
-	auto requiredSizeX = Math::Min<size_t>(m_Layer.Size.x, m_CameraSize.x);
-	auto requiredSizeY = Math::Min<size_t>(m_Layer.Size.y, m_CameraSize.y);
+	if (m_TileSize.x <= 0 || m_TileSize.y <= 0)
+		return;
+
+	auto requiredSizeX = Math::Min<size_t>(m_Layer.Size.x, m_CameraSize.x / m_TileSize.x + 1);
+	auto requiredSizeY = Math::Min<size_t>(m_Layer.Size.y, m_CameraSize.y / m_TileSize.y + 1);
 
 	if (requiredSizeX <= 0 || requiredSizeY <= 0 ||
 		m_TileSize.x <= 0 || m_TileSize.y <= 0)
 		return;
 
 	TilemapRequestTilesArgs args;
-	args.Position.x = m_CameraPosition.x / m_TileSize.x;
-	args.Position.y = m_CameraPosition.y / m_TileSize.y;
+	args.Position.x = (int)Math::Floor(m_CameraPosition.x / m_TileSize.x);
+	args.Position.y = (int)Math::Floor(m_CameraPosition.y / m_TileSize.y);
 
 	TilemapData& tilemapData = args.Destination;
 	tilemapData.Tilemap = m_Layer.Data;
@@ -206,6 +209,9 @@ void CTilemap2d::Draw(int flags)
 	m_DrawIndices.Clear();
 	m_DrawColors.Clear();
 	m_DrawTextureModes.Clear();
+
+	if (m_TileSize.x == 0 || m_TileSize.y == 0)
+		return;
 
 	int vertexIndex = 0;
 	int indices = 0;
@@ -235,10 +241,10 @@ void CTilemap2d::Draw(int flags)
 
 	float tx = (float)m_TileSize.x;
 	float ty = (float)m_TileSize.y;
-	int width = (m_CameraSize.x + m_TileSize.x  - 1) / m_TileSize.x;
-	int height = (m_CameraSize.y + m_TileSize.y - 1) / m_TileSize.y;
-	float cameraShiftX = -Math::Fmod((float)m_CameraPosition.x, (float)m_TileSize.x);
-	float cameraShiftY = -Math::Fmod((float)m_CameraPosition.y, (float)m_TileSize.y);
+	int width = (m_CameraSize.x + m_TileSize.x) / m_TileSize.x;
+	int height = (m_CameraSize.y + m_TileSize.y) / m_TileSize.y;
+	float cameraShiftX = -Math::Fmod(m_CameraPosition.x, (float)m_TileSize.x);
+	float cameraShiftY = -Math::Fmod(m_CameraPosition.y, (float)m_TileSize.y);
 	colorIndex = PushColor(Xe::Graphics::Color::White);
 	texModeIndex = PushTexModeTexture();
 	for (int y = 0; y < height; y++)
@@ -342,7 +348,7 @@ inline u16 CTilemap2d::PushTexMode(float mode)
 	auto count = m_DrawTextureModes.Count;
 	m_DrawTextureModes.Reserve(1);
 	m_DrawTextureModes.Data[count] = mode;
-	return count;
+	return (u16)count;
 }
 
 inline u16 CTilemap2d::PushTexModeNoTexture()

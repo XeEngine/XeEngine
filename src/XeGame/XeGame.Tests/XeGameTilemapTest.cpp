@@ -115,6 +115,8 @@ TEST(XeGameTilemapTest, DontPerformCallbackTest)
 
 TEST(XeGameTilemapTest, PerformRequestTilesCallbackBasicTest)
 {
+	const int TileWidth = 16;
+	const int TileHeight = 16;
 	const int CameraSizeX = 4;
 	const int CameraSizeY = 2;
 	const int UnexpectedStride = 789;
@@ -134,7 +136,7 @@ TEST(XeGameTilemapTest, PerformRequestTilesCallbackBasicTest)
 
 	tilemap->SetTileSize({ 16, 16 });
 	tilemap->SetBufferSize({ 32, 16 });
-	tilemap->SetCameraSize(Math::Vector2i(CameraSizeX, CameraSizeY));
+	tilemap->SetCameraSize(Math::Vector2i(CameraSizeX * TileWidth, CameraSizeY * TileHeight));
 
 	TilemapData layer;
 	layer.Stride = 0;
@@ -147,12 +149,12 @@ TEST(XeGameTilemapTest, PerformRequestTilesCallbackBasicTest)
 
 	tilemap->Flush();
 
-	EXPECT_EQ(CameraSizeX, args.Destination.Size.x);
-	EXPECT_EQ(CameraSizeY, args.Destination.Size.y);
+	EXPECT_EQ(CameraSizeX + 1, args.Destination.Size.x);
+	EXPECT_EQ(CameraSizeY + 1, args.Destination.Size.y);
 	EXPECT_NE(UnexpectedStride, args.Destination.Stride);
 	EXPECT_NE(UnexpectedTilemap, args.Destination.Tilemap);
 	EXPECT_NE(nullptr, args.Destination.Tilemap);
-	EXPECT_EQ(CameraSizeX * CameraSizeY, delegateTest.tilesWritten);
+	EXPECT_EQ((CameraSizeX + 1) * (CameraSizeY + 1), delegateTest.tilesWritten);
 
 	EXPECT_TRUE(tilemap->GetBuffer(&layer));
 	for (int x = 0; x < CameraSizeX; x++)
@@ -168,8 +170,8 @@ TEST(XeGameTilemapTest, PerformRequestTilesCallbackBasicTest)
 
 TEST(XeGameTilemapTest, CheckBoundariesOnRequestTilesCallbackTest)
 {
-	const int CameraSizeX = 99;
-	const int CameraSizeY = 99;
+	const int CameraSizeX = 100;
+	const int CameraSizeY = 80;
 
 	ObjPtr<ITilemap2d> tilemap;
 	Factory(&tilemap, nullptr);
@@ -185,8 +187,8 @@ TEST(XeGameTilemapTest, CheckBoundariesOnRequestTilesCallbackTest)
 
 	tilemap->Flush();
 
-	EXPECT_EQ(32, args.Destination.Size.x);
-	EXPECT_EQ(16, args.Destination.Size.y);
+	EXPECT_EQ(7, args.Destination.Size.x);
+	EXPECT_EQ(6, args.Destination.Size.y);
 	EXPECT_EQ(32 * sizeof(TileData), args.Destination.Stride);
 }
 
