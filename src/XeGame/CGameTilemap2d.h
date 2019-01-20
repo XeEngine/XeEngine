@@ -36,7 +36,7 @@ namespace Xe { namespace Game {
 		struct Layer
 		{
 			TileData* Data;
-			TilemapBufferSize Size;
+			Xe::Math::Vector2i Size;
 		};
 
 		struct TileSequence
@@ -49,9 +49,9 @@ namespace Xe { namespace Game {
 		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
 		TilemapDrawDelegate* m_DrawDelegate;
 		Math::Vector2i m_CameraSize;
-		Math::Vector2i m_CameraPosition;
-		TilemapTileSize m_TileSize;
-		TilemapBufferSize m_BufferSize;
+		Math::Vector2f m_CameraPosition;
+		Xe::Math::Vector2i m_TileSize;
+		Xe::Math::Vector2i m_BufferSize;
 		TilesetProperties m_Tileset;
 		Graphics::Color m_BgColor;
 		double m_Timer;
@@ -63,9 +63,7 @@ namespace Xe { namespace Game {
 		MyVector<Xe::Graphics::Color> m_DrawColors;
 		MyVector<float> m_DrawTextureModes;
 
-		static void ValidateTilesetProperties(TilemapBufferSizeType bufferSizeType);
-
-		static void ResizeLayer(const TilemapBufferSize& size, Layer& layer);
+		static void ResizeLayer(const Xe::Math::Vector2i& size, Layer& layer);
 
 		template <class T>
 		static T* EnsureCapacity(T* mem, size_t currentCapacity, size_t requiredCapacity)
@@ -93,14 +91,14 @@ namespace Xe { namespace Game {
 		const Math::Vector2i& GetCameraSize();
 		void SetCameraSize(const Math::Vector2i& cameraSize);
 
-		const Math::Vector2i& GetCameraPosition();
-		void SetCameraPosition(const Math::Vector2i& cameraPosition);
+		const Math::Vector2f& GetCameraPosition();
+		void SetCameraPosition(const Math::Vector2f& cameraPosition);
 
-		const TilemapTileSize& GetTileSize();
-		void SetTileSize(const TilemapTileSize& tileSize);
+		const Xe::Math::Vector2i& GetTileSize();
+		void SetTileSize(const Xe::Math::Vector2i& tileSize);
 
-		const TilemapBufferSize& GetBufferSize();
-		void SetBufferSize(const TilemapBufferSize& bufferSize);
+		const Xe::Math::Vector2i& GetBufferSize();
+		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
 
 		bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames);
 		void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames);

@@ -15,28 +15,6 @@ namespace Xe { namespace Game {
 		TilemapDraw_Color = 8,
 	};
 
-	enum TilemapBufferSizeType
-	{
-		TilemapBuffer_16 = 16,
-		TilemapBuffer_32 = 32,
-		TilemapBuffer_64 = 64,
-		TilemapBuffer_128 = 128,
-		TilemapBuffer_256 = 256,
-	};
-
-	enum TilemapTileSizeType
-	{
-		TilemapTile_8 = 8,
-		TilemapTile_16 = 16,
-		TilemapTile_24 = 24,
-		TilemapTile_32 = 32,
-		TilemapTile_48 = 48,
-		TilemapTile_64 = 64,
-	};
-
-	typedef Xe::Math::Vector2<TilemapBufferSizeType> TilemapBufferSize;
-	typedef Xe::Math::Vector2<TilemapTileSizeType> TilemapTileSize;
-
 	struct TilesetProperties
 	{
 		int TilesPerRow;
@@ -144,14 +122,14 @@ namespace Xe { namespace Game {
 		virtual const Xe::Math::Vector2i& GetCameraSize() = 0;
 		virtual void SetCameraSize(const Xe::Math::Vector2i& cameraSize) = 0;
 
-		virtual const Xe::Math::Vector2i& GetCameraPosition() = 0;
-		virtual void SetCameraPosition(const Xe::Math::Vector2i& cameraPosition) = 0;
+		virtual const Xe::Math::Vector2f& GetCameraPosition() = 0;
+		virtual void SetCameraPosition(const Xe::Math::Vector2f& cameraPosition) = 0;
 
-		virtual const TilemapTileSize& GetTileSize() = 0;
-		virtual void SetTileSize(const TilemapTileSize& tileSize) = 0;
+		virtual const Xe::Math::Vector2i& GetTileSize() = 0;
+		virtual void SetTileSize(const Xe::Math::Vector2i& tileSize) = 0;
 
-		virtual const TilemapBufferSize& GetBufferSize() = 0;
-		virtual void SetBufferSize(const TilemapBufferSize& bufferSize) = 0;
+		virtual const Xe::Math::Vector2i& GetBufferSize() = 0;
+		virtual void SetBufferSize(const Xe::Math::Vector2i& bufferSize) = 0;
 
 		virtual bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) = 0;
 		virtual void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames) = 0;

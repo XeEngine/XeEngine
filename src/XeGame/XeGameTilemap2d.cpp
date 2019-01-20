@@ -57,38 +57,35 @@ void CTilemap2d::SetCameraSize(const Vector2i& cameraSize)
 	m_CameraSize = cameraSize;
 }
 
-const Math::Vector2i& CTilemap2d::GetCameraPosition()
+const Math::Vector2f& CTilemap2d::GetCameraPosition()
 {
 	return m_CameraPosition;
 }
 
-void CTilemap2d::SetCameraPosition(const Vector2i& cameraPosition)
+void CTilemap2d::SetCameraPosition(const Vector2f& cameraPosition)
 {
 	m_CameraPosition = cameraPosition;
 }
 
-const TilemapTileSize& CTilemap2d::GetTileSize()
+const Xe::Math::Vector2i& CTilemap2d::GetTileSize()
 {
 	return m_TileSize;
 }
 
-void CTilemap2d::SetTileSize(const TilemapTileSize& tileSize)
+void CTilemap2d::SetTileSize(const Xe::Math::Vector2i& tileSize)
 {
 	m_TileSize = tileSize;
 }
 
-const TilemapBufferSize& CTilemap2d::GetBufferSize()
+const Xe::Math::Vector2i& CTilemap2d::GetBufferSize()
 {
 	return m_BufferSize;
 }
 
-void CTilemap2d::SetBufferSize(const TilemapBufferSize& bufferSize)
+void CTilemap2d::SetBufferSize(const Xe::Math::Vector2i& bufferSize)
 {
 	if (m_BufferSize == bufferSize)
 		return;
-
-	ValidateTilesetProperties(bufferSize.x);
-	ValidateTilesetProperties(bufferSize.y);
 
 	m_BufferSize = bufferSize;
 	ResizeLayer(bufferSize, m_Layer);
@@ -332,27 +329,12 @@ void CTilemap2d::Draw(int flags)
 	(*m_DrawDelegate)(e);
 }
 
-inline void CTilemap2d::ValidateTilesetProperties(TilemapBufferSizeType bufferSizeType)
-{
-	//switch (bufferSizeType)
-	//{
-	//case TilemapBuffer_16:
-	//case TilemapBuffer_32:
-	//case TilemapBuffer_64:
-	//case TilemapBuffer_128:
-	//case TilemapBuffer_256:
-	//	break;
-	//default:
-	//	throw std::invalid_argument(NAMEOF(bufferSizeType)" must be in the string range");
-	//}
-}
-
 inline u16 CTilemap2d::PushColor(const Color& color)
 {
 	auto count = m_DrawColors.Count;
 	m_DrawColors.Reserve(1);
 	m_DrawColors.Data[count] = color;
-	return count;
+	return (u16)count;
 }
 
 inline u16 CTilemap2d::PushTexMode(float mode)
@@ -419,7 +401,7 @@ TileData CTilemap2d::GetTileData(TileData tile) const
 	return tile;
 }
 
-void CTilemap2d::ResizeLayer(const TilemapBufferSize& size, Layer& layer)
+void CTilemap2d::ResizeLayer(const Xe::Math::Vector2i& size, Layer& layer)
 {
 	if (layer.Data)
 		Xe::Memory::Free(layer.Data);

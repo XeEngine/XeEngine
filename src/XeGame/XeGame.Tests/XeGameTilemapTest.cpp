@@ -71,8 +71,8 @@ TEST(XeGameTilemapTest, SetPropertiesTest)
 {
 	ObjPtr<ITilemap2d> tilemap;
 	Vector2i cameraSize(123, 456);
-	Vector2i cameraPos(222, 444);
-	TilemapBufferSize bufferSize;
+	Vector2f cameraPos(222, 444);
+	Xe::Math::Vector2i bufferSize(32, 16);
 
 	Factory(&tilemap, nullptr);
 	EXPECT_NE(nullptr, tilemap.Get());
@@ -132,8 +132,8 @@ TEST(XeGameTilemapTest, PerformRequestTilesCallbackBasicTest)
 	args.Destination.Stride = UnexpectedStride;
 	args.Destination.Tilemap = UnexpectedTilemap;
 
-	tilemap->SetTileSize({ TilemapTile_16, TilemapTile_16 });
-	tilemap->SetBufferSize(TilemapBufferSize(TilemapBuffer_32, TilemapBuffer_16));
+	tilemap->SetTileSize({ 16, 16 });
+	tilemap->SetBufferSize({ 32, 16 });
 	tilemap->SetCameraSize(Math::Vector2i(CameraSizeX, CameraSizeY));
 
 	TilemapData layer;
@@ -179,8 +179,8 @@ TEST(XeGameTilemapTest, CheckBoundariesOnRequestTilesCallbackTest)
 
 	auto& args = delegateTest.args;
 
-	tilemap->SetTileSize({ TilemapTile_16, TilemapTile_16 });
-	tilemap->SetBufferSize(TilemapBufferSize(TilemapBuffer_32, TilemapBuffer_16));
+	tilemap->SetTileSize({ 16, 16 });
+	tilemap->SetBufferSize({ 32, 16 });
 	tilemap->SetCameraSize(Math::Vector2i(CameraSizeX, CameraSizeY));
 
 	tilemap->Flush();
