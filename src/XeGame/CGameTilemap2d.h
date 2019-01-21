@@ -89,20 +89,20 @@ namespace Xe { namespace Game {
 		const Xe::Graphics::Color& GetBackgroundColor() const;
 		void SetBackgroundColor(const Xe::Graphics::Color& color);
 
-		const Math::Vector2i& GetCameraSize();
+		const Math::Vector2i& GetCameraSize() const;
 		void SetCameraSize(const Math::Vector2i& cameraSize);
 
-		const Math::Vector2f& GetCameraPosition();
+		const Math::Vector2f& GetCameraPosition() const;
 		void SetCameraPosition(const Math::Vector2f& cameraPosition);
 
-		const Xe::Math::Vector2i& GetTileSize();
+		const Xe::Math::Vector2i& GetTileSize() const;
 		void SetTileSize(const Xe::Math::Vector2i& tileSize);
 
-		bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames);
+		bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) const;
 		void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames);
 		void RemoveTileSequence(TileData tile);
 
-		const Xe::Math::Vector2i& GetBufferSize();
+		const Xe::Math::Vector2i& GetBufferSize() const;
 		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
 
 		bool IsLayerVisible() const;

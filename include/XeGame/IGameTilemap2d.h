@@ -119,20 +119,20 @@ namespace Xe { namespace Game {
 		virtual const Xe::Graphics::Color& GetBackgroundColor() const = 0;
 		virtual void SetBackgroundColor(const Xe::Graphics::Color& color) = 0;
 
-		virtual const Xe::Math::Vector2i& GetCameraSize() = 0;
+		virtual const Xe::Math::Vector2i& GetCameraSize() const = 0;
 		virtual void SetCameraSize(const Xe::Math::Vector2i& cameraSize) = 0;
 
-		virtual const Xe::Math::Vector2f& GetCameraPosition() = 0;
+		virtual const Xe::Math::Vector2f& GetCameraPosition() const = 0;
 		virtual void SetCameraPosition(const Xe::Math::Vector2f& cameraPosition) = 0;
 
-		virtual const Xe::Math::Vector2i& GetTileSize() = 0;
+		virtual const Xe::Math::Vector2i& GetTileSize() const = 0;
 		virtual void SetTileSize(const Xe::Math::Vector2i& tileSize) = 0;
 
-		virtual bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) = 0;
+		virtual bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) const = 0;
 		virtual void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames) = 0;
 		virtual void RemoveTileSequence(TileData tile) = 0;
 
-		virtual const Xe::Math::Vector2i& GetBufferSize() = 0;
+		virtual const Xe::Math::Vector2i& GetBufferSize() const = 0;
 		virtual void SetBufferSize(const Xe::Math::Vector2i& bufferSize) = 0;
 
 		virtual bool IsLayerVisible() const = 0;

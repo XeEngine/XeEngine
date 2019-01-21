@@ -47,7 +47,7 @@ void CTilemap2d::SetBackgroundColor(const Xe::Graphics::Color& color)
 	m_BgColor = color;
 }
 
-const Math::Vector2i& CTilemap2d::GetCameraSize()
+const Math::Vector2i& CTilemap2d::GetCameraSize() const
 {
 	return m_CameraSize;
 }
@@ -57,7 +57,7 @@ void CTilemap2d::SetCameraSize(const Vector2i& cameraSize)
 	m_CameraSize = cameraSize;
 }
 
-const Math::Vector2f& CTilemap2d::GetCameraPosition()
+const Math::Vector2f& CTilemap2d::GetCameraPosition() const
 {
 	return m_CameraPosition;
 }
@@ -67,7 +67,7 @@ void CTilemap2d::SetCameraPosition(const Vector2f& cameraPosition)
 	m_CameraPosition = cameraPosition;
 }
 
-const Xe::Math::Vector2i& CTilemap2d::GetTileSize()
+const Xe::Math::Vector2i& CTilemap2d::GetTileSize() const
 {
 	return m_TileSize;
 }
@@ -77,7 +77,7 @@ void CTilemap2d::SetTileSize(const Xe::Math::Vector2i& tileSize)
 	m_TileSize = tileSize;
 }
 
-bool CTilemap2d::GetTileSequence(TileData tile, std::vector<TileFrame>& frames)
+bool CTilemap2d::GetTileSequence(TileData tile, std::vector<TileFrame>& frames) const
 {
 	for (auto sequence : m_AnimatedTiles)
 	{
@@ -140,7 +140,7 @@ void CTilemap2d::RemoveTileSequence(TileData tile)
 	}
 }
 
-const Xe::Math::Vector2i& CTilemap2d::GetBufferSize()
+const Xe::Math::Vector2i& CTilemap2d::GetBufferSize() const
 {
 	return m_BufferSize;
 }
