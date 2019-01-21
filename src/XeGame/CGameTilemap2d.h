@@ -37,6 +37,7 @@ namespace Xe { namespace Game {
 		{
 			TileData* Data;
 			Xe::Math::Vector2i Size;
+			bool Visible;
 		};
 
 		struct TileSequence
@@ -97,12 +98,15 @@ namespace Xe { namespace Game {
 		const Xe::Math::Vector2i& GetTileSize();
 		void SetTileSize(const Xe::Math::Vector2i& tileSize);
 
-		const Xe::Math::Vector2i& GetBufferSize();
-		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
-
 		bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames);
 		void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames);
 		void RemoveTileSequence(TileData tile);
+
+		const Xe::Math::Vector2i& GetBufferSize();
+		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
+
+		bool IsLayerVisible() const;
+		void SetLayerVisible(bool visible);
 
 		bool GetBuffer(TilemapData* layer);
 

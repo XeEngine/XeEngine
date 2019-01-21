@@ -128,12 +128,15 @@ namespace Xe { namespace Game {
 		virtual const Xe::Math::Vector2i& GetTileSize() = 0;
 		virtual void SetTileSize(const Xe::Math::Vector2i& tileSize) = 0;
 
-		virtual const Xe::Math::Vector2i& GetBufferSize() = 0;
-		virtual void SetBufferSize(const Xe::Math::Vector2i& bufferSize) = 0;
-
 		virtual bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) = 0;
 		virtual void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames) = 0;
 		virtual void RemoveTileSequence(TileData tile) = 0;
+
+		virtual const Xe::Math::Vector2i& GetBufferSize() = 0;
+		virtual void SetBufferSize(const Xe::Math::Vector2i& bufferSize) = 0;
+
+		virtual bool IsLayerVisible() const = 0;
+		virtual void SetLayerVisible(bool visible) = 0;
 
 		virtual bool GetBuffer(TilemapData* layer) = 0;
 

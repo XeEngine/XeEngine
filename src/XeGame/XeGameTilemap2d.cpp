@@ -16,7 +16,7 @@ CTilemap2d::CTilemap2d() :
 	m_RequestTilesDelegate(nullptr),
 	m_DrawDelegate(nullptr),
 	m_Timer(0.0),
-	m_Layer({0})
+	m_Layer({ 0, {0, 0}, true })
 {
 }
 
@@ -75,20 +75,6 @@ const Xe::Math::Vector2i& CTilemap2d::GetTileSize()
 void CTilemap2d::SetTileSize(const Xe::Math::Vector2i& tileSize)
 {
 	m_TileSize = tileSize;
-}
-
-const Xe::Math::Vector2i& CTilemap2d::GetBufferSize()
-{
-	return m_BufferSize;
-}
-
-void CTilemap2d::SetBufferSize(const Xe::Math::Vector2i& bufferSize)
-{
-	if (m_BufferSize == bufferSize)
-		return;
-
-	m_BufferSize = bufferSize;
-	ResizeLayer(bufferSize, m_Layer);
 }
 
 bool CTilemap2d::GetTileSequence(TileData tile, std::vector<TileFrame>& frames)
@@ -152,6 +138,30 @@ void CTilemap2d::RemoveTileSequence(TileData tile)
 			break;
 		}
 	}
+}
+
+const Xe::Math::Vector2i& CTilemap2d::GetBufferSize()
+{
+	return m_BufferSize;
+}
+
+void CTilemap2d::SetBufferSize(const Xe::Math::Vector2i& bufferSize)
+{
+	if (m_BufferSize == bufferSize)
+		return;
+
+	m_BufferSize = bufferSize;
+	ResizeLayer(bufferSize, m_Layer);
+}
+
+bool CTilemap2d::IsLayerVisible() const
+{
+	return m_Layer.Visible;
+}
+
+void CTilemap2d::SetLayerVisible(bool visible)
+{
+	m_Layer.Visible = visible;
 }
 
 bool CTilemap2d::GetBuffer(TilemapData* layer)
@@ -247,6 +257,10 @@ void CTilemap2d::Draw(int flags)
 	float cameraShiftY = -Math::Fmod(m_CameraPosition.y, (float)m_TileSize.y);
 	colorIndex = PushColor(Xe::Graphics::Color::White);
 	texModeIndex = PushTexModeTexture();
+
+	if (m_Layer.Visible == false)
+		return;
+
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
