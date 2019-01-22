@@ -13,6 +13,9 @@ using namespace Xe::Graphics;
 using namespace Xe::Game;
 
 CTilemapLayer::CTilemapLayer() :
+	m_TextureId(TexInvalid),
+	m_ClutId(ClutInvalid),
+	m_TilesPerRow(1),
 	m_Flags({ 0 }),
 	m_Data(nullptr),
 	m_LockedData(nullptr)
@@ -82,6 +85,34 @@ bool CTilemapLayer::IsVisible() const
 void CTilemapLayer::SetVisible(bool visibility)
 {
 	m_Flags.Visible = visibility;
+}
+
+TexId CTilemapLayer::GetTexture() const
+{
+	return m_TextureId;
+}
+
+size_t CTilemapLayer::GetTilesPerRow() const
+{
+	return m_TilesPerRow;
+}
+
+void CTilemapLayer::SetTexture(TexId textureId, size_t tilesPerRow)
+{
+	if (tilesPerRow == 0)
+		throw std::invalid_argument(NAMEOF(tilesPerRow) " must be greater than 0");
+
+	m_TextureId = textureId;
+	m_TilesPerRow = tilesPerRow;
+}
+
+ClutId CTilemapLayer::GetPalette()
+{
+	return m_ClutId;
+}
+void CTilemapLayer::SetPalette(ClutId clutId)
+{
+	m_ClutId = clutId;
 }
 
 bool CTilemapLayer::IsLocked() const
@@ -285,11 +316,6 @@ void CTilemap2d::SetBufferSize(const Xe::Math::Vector2i& bufferSize)
 	m_Layers[0]->SetBufferSize({ (size_t)bufferSize.x, (size_t)bufferSize.y });
 }
 
-void CTilemap2d::SetTileset(const TilesetProperties& tileset)
-{
-	m_Tileset = tileset;
-}
-
 void CTilemap2d::Update(double deltaTime)
 {
 	m_Timer += deltaTime;
@@ -377,6 +403,7 @@ void CTilemap2d::Draw(int flags)
 	auto layerSize = layer.GetBufferSize();
 	if (layer.IsVisible())
 	{
+		auto tilesPerRow = layer.GetTilesPerRow();
 		for (int y = 0; y < height; y++)
 		{
 			for (int x = 0; x < width; x++)
@@ -393,8 +420,8 @@ void CTilemap2d::Draw(int flags)
 					float fx = cameraShiftX + x * tx;
 					float fy = cameraShiftY + y * ty;
 
-					float u1 = (float)((tile % m_Tileset.TilesPerRow) * m_TileSize.x);
-					float v1 = (float)((tile / m_Tileset.TilesPerRow) * m_TileSize.y);
+					float u1 = (float)((tile % tilesPerRow) * m_TileSize.x);
+					float v1 = (float)((tile / tilesPerRow) * m_TileSize.y);
 					float u2 = u1 + m_TileSize.x;
 					float v2 = v1 + m_TileSize.x;
 
@@ -454,6 +481,9 @@ void CTilemap2d::Draw(int flags)
 		m_DrawIndices.Data,
 		m_DrawColors.Data,
 		m_DrawTextureModes.Data,
+
+		m_Layers[0]->GetTexture(),
+		m_Layers[0]->GetPalette(),
 
 		m_DrawVertices.Count,
 		m_DrawIndices.Count,

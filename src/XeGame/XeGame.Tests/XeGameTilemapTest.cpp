@@ -203,6 +203,9 @@ TEST(XeGameTilemapTest, TilemapLayerPropertiesTest)
 	const auto expectedName = "LayerNameTest";
 	const Vector2u expectedBufferSize = { 4, 8 };
 	const Vector2f expectedPosition = { -123.f, 456.08f };
+	const TexId expectedTexId = (TexId)0x1234;
+	const ClutId expectedClutId = (ClutId)0x5678;
+	const size_t expectedTilesPerRow = 88;
 
 	ObjPtr<ITilemap2d> tilemap;
 	Factory(&tilemap, nullptr);
@@ -231,6 +234,16 @@ TEST(XeGameTilemapTest, TilemapLayerPropertiesTest)
 	EXPECT_TRUE(layer->IsVisible());
 	layer->SetVisible(false);
 	EXPECT_FALSE(layer->IsVisible());
+
+	EXPECT_EQ(Xe::Game::TexInvalid, layer->GetTexture());
+	EXPECT_NE(0, layer->GetTilesPerRow());
+	layer->SetTexture(expectedTexId, expectedTilesPerRow);
+	EXPECT_EQ(expectedTexId, layer->GetTexture());
+	EXPECT_EQ(expectedTilesPerRow, layer->GetTilesPerRow());
+
+	EXPECT_EQ(Xe::Game::ClutInvalid, layer->GetPalette());
+	layer->SetPalette(expectedClutId);
+	EXPECT_EQ(expectedClutId, layer->GetPalette());
 }
 
 TEST(XeGameTilemapTest, TilemapLayerLockExceptionTest)

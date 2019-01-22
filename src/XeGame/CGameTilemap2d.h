@@ -18,6 +18,9 @@ namespace Xe { namespace Game {
 		String m_Name;
 		Xe::Math::Vector2u m_BufferSize;
 		Xe::Math::Vector2f m_Position;
+		TexId m_TextureId;
+		ClutId m_ClutId;
+		size_t m_TilesPerRow;
 		Flags m_Flags;
 
 		LockType m_LockType;
@@ -40,6 +43,13 @@ namespace Xe { namespace Game {
 
 		bool IsVisible() const;
 		void SetVisible(bool visibility);
+
+		TexId GetTexture() const;
+		size_t GetTilesPerRow() const;
+		void SetTexture(TexId textureId, size_t tilesPerRow);
+
+		ClutId GetPalette();
+		void SetPalette(ClutId clutId);
 
 		bool IsLocked() const;
 		bool Lock(TilemapData& tilemapData, LockType lockType);
@@ -88,7 +98,6 @@ namespace Xe { namespace Game {
 		Math::Vector2i m_CameraSize;
 		Xe::Math::Vector2i m_TileSize;
 		mutable Xe::Math::Vector2i m_BufferSizeDELETEME;
-		TilesetProperties m_Tileset;
 		Graphics::Color m_BgColor;
 		double m_Timer;
 		std::list<TileSequence> m_AnimatedTiles;
@@ -138,8 +147,6 @@ namespace Xe { namespace Game {
 
 		const Xe::Math::Vector2i& GetBufferSize() const;
 		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
-
-		void SetTileset(const TilesetProperties& tileset);
 
 		void Update(double deltaTime);
 		void Flush();

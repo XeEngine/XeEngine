@@ -2,6 +2,7 @@
 #include <XeSDK/IObject.h>
 #include <XeSDK/XeString.h>
 #include <XeGame/XeGameTilemapDef.h>
+#include <XeGame/ITextureManager.h>
 
 namespace Xe { namespace Game {
 
@@ -85,6 +86,27 @@ namespace Xe { namespace Game {
 		 */
 		//! \sa IsVisible
 		virtual void SetVisible(bool visibility) = 0;
+
+		//! \brief Get the texture id used to render the tiles of the layer
+		//! \sa SetTexture, GetTilesPerRow
+		virtual TexId GetTexture() const = 0;
+
+		//! \brief Get how many tiles are contained in a row for 
+		//! \sa GetTexture, SetTexture
+		virtual size_t GetTilesPerRow() const = 0;
+
+		//! \brief Set the texture that will be used to render the layer
+		//! \param[in] textureId Texture used for drawing; can be TexInvalid.
+		//! \param[in] tilesPerRow How many tiles are contained in a texture row; cannot be 0.
+		//! \sa GetTexture, GetTilesPerRow
+		virtual void SetTexture(TexId textureId, size_t tilesPerRow) = 0;
+
+		//! \brief Get the palette used to render the layer
+		virtual ClutId GetPalette() = 0;
+
+		//! \brief Set the palette to render the layer
+		//! \param[in] clutId Clut to use; can be ClutInvalid
+		virtual void SetPalette(ClutId clutId) = 0;
 
 		//! \brief Lock the buffer to provide read or write functionalities
 		//! \param[out] tilemapData The structure that will process the buffer

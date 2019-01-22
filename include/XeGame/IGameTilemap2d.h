@@ -16,11 +16,6 @@ namespace Xe { namespace Game {
 		TilemapDraw_Color = 8,
 	};
 
-	struct TilesetProperties
-	{
-		int TilesPerRow;
-	};
-
 	static_assert(sizeof(TileData) == sizeof(TileData::Data), "TileData size is different than expected");
 
 	struct TileFrame
@@ -52,6 +47,8 @@ namespace Xe { namespace Game {
 		TilemapDrawIndex* IndicesData;
 		Xe::Graphics::Color* ColorsData;
 		float* TextureModeData;
+		TexId TextureId;
+		ClutId ClutId;
 
 		size_t VerticesCount;
 		size_t IndicesCount;
@@ -102,8 +99,6 @@ namespace Xe { namespace Game {
 		virtual size_t GetLayerCount() const = 0;
 		virtual void SetLayersCount(size_t layersCount) = 0;
 		virtual ObjPtr<ITilemapLayer> GetLayer(size_t index) = 0;
-
-		virtual void SetTileset(const TilesetProperties& tileset) = 0;
 
 		virtual void Update(double deltaTime) = 0;
 		virtual void Flush() = 0;
