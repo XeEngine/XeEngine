@@ -21,6 +21,13 @@ namespace Xe {
 			if (m_obj) m_obj->AddRef();
 		}
 
+		//! \brief Assign an ObjPtr adding a reference
+		ObjPtr(ObjPtr&& objptr) noexcept :
+			m_obj(objptr.m_obj)
+		{
+			m_obj = std::exchange(objptr.m_obj, nullptr);
+		}
+
 		//! \brief Remove a reference from the holding IObject, if exists
 		~ObjPtr()
 		{
@@ -58,6 +65,12 @@ namespace Xe {
 			if (obj) obj->AddRef();
 			if (m_obj) m_obj->Release();
 			m_obj = obj;
+			return *this;
+		}
+
+		ObjPtr<T>& operator=(ObjPtr<T>&& objptr) noexcept
+		{
+			m_obj = std::exchange(objptr.m_obj, nullptr);
 			return *this;
 		}
 
