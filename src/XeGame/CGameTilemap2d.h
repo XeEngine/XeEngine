@@ -17,7 +17,8 @@ namespace Xe { namespace Game {
 		//TileData* Data;
 		String m_Name;
 		Xe::Math::Vector2u m_BufferSize;
-		Xe::Math::Vector2f m_Position;
+		Xe::Math::Vector2f m_ScrollOffset;
+		Xe::Math::Vector2f m_ScrollMultiplier;
 		TexId m_TextureId;
 		ClutId m_ClutId;
 		size_t m_TilesPerRow;
@@ -38,8 +39,13 @@ namespace Xe { namespace Game {
 		const Vector2u& GetBufferSize() const;
 		void SetBufferSize(const Vector2u& size);
 
-		const Vector2f& GetPosition() const;
-		void SetPosition(const Vector2f& position);
+		const Vector2f& GetScrollOffset() const;
+		void SetScrollOffset(const Vector2f& offset);
+
+		const Xe::Math::Vector2f& GetScrollMultiplier() const;
+		void SetScrollMultiplier(const Xe::Math::Vector2f& multiplier);
+
+		Xe::Math::Vector2f ProcessPosition(const Xe::Math::Vector2f& cameraPosition) const;
 
 		bool IsVisible() const;
 		void SetVisible(bool visibility);
@@ -96,6 +102,7 @@ namespace Xe { namespace Game {
 		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
 		TilemapDrawDelegate* m_DrawDelegate;
 		Math::Vector2i m_CameraSize;
+		Math::Vector2f m_CameraPosition;
 		Xe::Math::Vector2i m_TileSize;
 		mutable Xe::Math::Vector2i m_BufferSizeDELETEME;
 		Graphics::Color m_BgColor;
@@ -125,7 +132,7 @@ namespace Xe { namespace Game {
 
 		TileData GetTileData(TileData tile) const;
 
-		void FetchLayer(ITilemapLayer& layer, size_t layerIndex);
+		void FetchLayer(CTilemapLayer& layer, size_t layerIndex);
 
 		void DrawBackground();
 		void DrawLayer(const CTilemapLayer& layer);
@@ -141,6 +148,9 @@ namespace Xe { namespace Game {
 
 		const Math::Vector2i& GetCameraSize() const;
 		void SetCameraSize(const Math::Vector2i& cameraSize);
+
+		const Xe::Math::Vector2f& GetCameraPosition() const;
+		void SetCameraPosition(const Xe::Math::Vector2f& cameraPosition);
 
 		const Xe::Math::Vector2i& GetTileSize() const;
 		void SetTileSize(const Xe::Math::Vector2i& tileSize);

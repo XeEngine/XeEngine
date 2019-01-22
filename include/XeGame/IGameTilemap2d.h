@@ -90,6 +90,9 @@ namespace Xe { namespace Game {
 		virtual const Xe::Math::Vector2i& GetCameraSize() const = 0;
 		virtual void SetCameraSize(const Xe::Math::Vector2i& cameraSize) = 0;
 
+		virtual const Xe::Math::Vector2f& GetCameraPosition() const = 0;
+		virtual void SetCameraPosition(const Xe::Math::Vector2f& cameraPosition) = 0;
+
 		virtual const Xe::Math::Vector2i& GetTileSize() const = 0;
 		virtual void SetTileSize(const Xe::Math::Vector2i& tileSize) = 0;
 

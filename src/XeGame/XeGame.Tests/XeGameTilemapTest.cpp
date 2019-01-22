@@ -203,6 +203,7 @@ TEST(XeGameTilemapTest, TilemapLayerPropertiesTest)
 	const auto expectedName = "LayerNameTest";
 	const Vector2u expectedBufferSize = { 4, 8 };
 	const Vector2f expectedPosition = { -123.f, 456.08f };
+	const Vector2f expectedMultiplier = { 2.f, -4.5f };
 	const TexId expectedTexId = (TexId)0x1234;
 	const ClutId expectedClutId = (ClutId)0x5678;
 	const size_t expectedTilesPerRow = 88;
@@ -225,9 +226,17 @@ TEST(XeGameTilemapTest, TilemapLayerPropertiesTest)
 	EXPECT_THROW(layer->SetBufferSize({ 0, 1 }), std::invalid_argument);
 	EXPECT_THROW(layer->SetBufferSize({ 1, 0 }), std::invalid_argument);
 
-	layer->SetPosition(expectedPosition);
-	EXPECT_EQ(expectedPosition.x, layer->GetPosition().x);
-	EXPECT_EQ(expectedPosition.y, layer->GetPosition().y);
+	EXPECT_EQ(0.0f, layer->GetScrollOffset().x);
+	EXPECT_EQ(0.0f, layer->GetScrollOffset().y);
+	layer->SetScrollOffset(expectedPosition);
+	EXPECT_EQ(expectedPosition.x, layer->GetScrollOffset().x);
+	EXPECT_EQ(expectedPosition.y, layer->GetScrollOffset().y);
+
+	EXPECT_EQ(1.0f, layer->GetScrollMultiplier().x);
+	EXPECT_EQ(1.0f, layer->GetScrollMultiplier().y);
+	layer->SetScrollMultiplier(expectedMultiplier);
+	EXPECT_EQ(expectedMultiplier.x, layer->GetScrollMultiplier().x);
+	EXPECT_EQ(expectedMultiplier.y, layer->GetScrollMultiplier().y);
 
 	EXPECT_FALSE(layer->IsVisible());
 	layer->SetVisible(true);

@@ -61,17 +61,21 @@ namespace Xe { namespace Game {
 		 //! \sa GetBufferSize
 		virtual void SetBufferSize(const Xe::Math::Vector2u& size) = 0;
 
-		//! \brief Get the scroll value of the layer
-		//! \sa SetPosition
-		virtual const Xe::Math::Vector2f& GetPosition() const = 0;
+		//! \brief Get the scroll offset of the layer
+		//! \sa SetScrollOffset
+		virtual const Xe::Math::Vector2f& GetScrollOffset() const = 0;
 
-		//! \brief Set the scroll value of the layer
-		/** \details The scrolling (or position for convenience) is it used to
-		 * move the drawing area across the buffer and to fetch the required
-		 * tiles from the source.
-		 */
-		 //! \sa GetPosition
-		virtual void SetPosition(const Xe::Math::Vector2f& position) = 0;
+		//! \brief Set the scroll offset of the layer
+		 //! \sa GetScrollOffset
+		virtual void SetScrollOffset(const Xe::Math::Vector2f& offset) = 0;
+
+		//! \brief Get the scroll multiplier when scrolling the layer
+		//! \sa SetScrollMultiplier
+		virtual const Xe::Math::Vector2f& GetScrollMultiplier() const = 0;
+
+		//! \brief Set the scroll multiplier when scrolling the layer
+		 //! \sa GetScrollMultiplier
+		virtual void SetScrollMultiplier(const Xe::Math::Vector2f& multiplier) = 0;
 
 		//! \brief If the layer can be drawn
 		//! \details The default value is false

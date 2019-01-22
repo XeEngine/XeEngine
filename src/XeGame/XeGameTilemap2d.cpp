@@ -13,6 +13,7 @@ using namespace Xe::Graphics;
 using namespace Xe::Game;
 
 CTilemapLayer::CTilemapLayer() :
+	m_ScrollMultiplier({ 1.0f, 1.0f }),
 	m_TextureId(TexInvalid),
 	m_ClutId(ClutInvalid),
 	m_TilesPerRow(1),
@@ -67,14 +68,30 @@ void CTilemapLayer::SetBufferSize(const Vector2u& size)
 	m_Data = (TileData*)Xe::Memory::Alloc(m_BufferSize.x * m_BufferSize.y * sizeof(TileData));
 }
 
-const Vector2f& CTilemapLayer::GetPosition() const
+const Vector2f& CTilemapLayer::GetScrollOffset() const
 {
-	return m_Position;
+	return m_ScrollOffset;
 }
 
-void CTilemapLayer::SetPosition(const Vector2f& position)
+void CTilemapLayer::SetScrollOffset(const Vector2f& offset)
 {
-	m_Position = position;
+	m_ScrollOffset = offset;
+}
+
+const Xe::Math::Vector2f& CTilemapLayer::GetScrollMultiplier() const
+{
+	return m_ScrollMultiplier;
+}
+
+void CTilemapLayer::SetScrollMultiplier(const Xe::Math::Vector2f& multiplier)
+{
+	m_ScrollMultiplier = multiplier;
+}
+
+Xe::Math::Vector2f CTilemapLayer::ProcessPosition(
+	const Xe::Math::Vector2f& cameraPosition) const
+{
+	return cameraPosition * m_ScrollMultiplier + m_ScrollOffset;
 }
 
 bool CTilemapLayer::IsVisible() const
@@ -205,6 +222,16 @@ void CTilemap2d::SetCameraSize(const Vector2i& cameraSize)
 	m_CameraSize = cameraSize;
 }
 
+const Xe::Math::Vector2f& CTilemap2d::GetCameraPosition() const
+{
+	return m_CameraPosition;
+}
+
+void CTilemap2d::SetCameraPosition(const Xe::Math::Vector2f& cameraPosition)
+{
+	m_CameraPosition = cameraPosition;
+}
+
 const Xe::Math::Vector2i& CTilemap2d::GetTileSize() const
 {
 	return m_TileSize;
@@ -329,7 +356,7 @@ void CTilemap2d::Flush()
 	size_t layerIndex = 0;
 	for (auto layer : m_Layers)
 	{
-		FetchLayer(*layer, layerIndex++);
+		FetchLayer((CTilemapLayer&)*layer, layerIndex++);
 	}
 }
 
@@ -458,7 +485,7 @@ TileData CTilemap2d::GetTileData(TileData tile) const
 	return tile;
 }
 
-void CTilemap2d::FetchLayer(ITilemapLayer& layer, size_t layerIndex)
+void CTilemap2d::FetchLayer(CTilemapLayer& layer, size_t layerIndex)
 {
 	const auto& layerSize = layer.GetBufferSize();
 	auto requiredSizeX = Math::Min<size_t>(layerSize.x, m_CameraSize.x / m_TileSize.x + 1);
@@ -467,7 +494,7 @@ void CTilemap2d::FetchLayer(ITilemapLayer& layer, size_t layerIndex)
 	if (requiredSizeX <= 0 || requiredSizeY <= 0)
 		return;
 
-	const auto& position = layer.GetPosition();
+	auto position = layer.ProcessPosition(GetCameraPosition());
 
 	TilemapRequestTilesArgs args;
 	args.Position.x = (int)Math::Floor(position.x / m_TileSize.x);
@@ -522,7 +549,7 @@ void CTilemap2d::DrawLayer(const CTilemapLayer& layer)
 	auto colorIndex = PeekColor();
 	auto texModeIndex = PeekTexMode();
 
-	const auto& position = layer.GetPosition();
+	auto position = layer.ProcessPosition(GetCameraPosition());
 	int width = (m_CameraSize.x + m_TileSize.x) / m_TileSize.x;
 	int height = (m_CameraSize.y + m_TileSize.y) / m_TileSize.y;
 	float tx = (float)m_TileSize.x;
