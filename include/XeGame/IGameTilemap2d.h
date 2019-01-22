@@ -28,6 +28,7 @@ namespace Xe { namespace Game {
 	{
 		TilemapData Destination;
 		Math::Vector2i Position;
+		size_t LayerIndex;
 	};
 
 	struct TilemapDrawVertex
@@ -102,6 +103,6 @@ namespace Xe { namespace Game {
 
 		virtual void Update(double deltaTime) = 0;
 		virtual void Flush() = 0;
-		virtual void Draw(int flags) = 0;
+		virtual void Draw() = 0;
 	};
 } }

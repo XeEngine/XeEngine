@@ -326,34 +326,14 @@ void CTilemap2d::Flush()
 	if (m_TileSize.x <= 0 || m_TileSize.y <= 0)
 		return;
 
-	const auto& layerSize = m_Layers[0]->GetBufferSize();
-	auto requiredSizeX = Math::Min<size_t>(layerSize.x, m_CameraSize.x / m_TileSize.x + 1);
-	auto requiredSizeY = Math::Min<size_t>(layerSize.y, m_CameraSize.y / m_TileSize.y + 1);
-
-	if (requiredSizeX <= 0 || requiredSizeY <= 0 ||
-		m_TileSize.x <= 0 || m_TileSize.y <= 0)
-		return;
-
-	const auto& position = m_Layers[0]->GetPosition();
-
-	TilemapRequestTilesArgs args;
-	args.Position.x = (int)Math::Floor(position.x / m_TileSize.x);
-	args.Position.y = (int)Math::Floor(position.y / m_TileSize.y);
-
-	m_Layers[0]->Lock(args.Destination, Lock_ReadWrite);
-	//args.Destination.Data += requiredSizeX + requiredSizeY * layerSize.y;
-	args.Destination.Size.x = requiredSizeX;
-	args.Destination.Size.y = requiredSizeY;
-
-	TilemapArgs<TilemapRequestTilesArgs> e;
-	e.Sender = this;
-	e.Arguments = &args;
-	(*m_RequestTilesDelegate)(e);
-
-	m_Layers[0]->Unlock();
+	size_t layerIndex = 0;
+	for (auto layer : m_Layers)
+	{
+		FetchLayer(*layer, layerIndex++);
+	}
 }
 
-void CTilemap2d::Draw(int flags)
+void CTilemap2d::Draw()
 {
 	m_DrawVertices.Clear();
 	m_DrawIndices.Clear();
@@ -363,116 +343,15 @@ void CTilemap2d::Draw(int flags)
 	if (m_TileSize.x == 0 || m_TileSize.y == 0)
 		return;
 
-	int vertexIndex = 0;
-	int indices = 0;
-	u16 colorIndex;
-	u16 texModeIndex;
+	DrawBackground();
 
-	if (m_BgColor.a > 0)
+	PushColor(Xe::Graphics::Color::White);
+	PushTexModeTexture();
+
+	for (auto layer : m_Layers)
 	{
-		m_DrawVertices.Reserve(4);
-		m_DrawIndices.Reserve(6);
-
-		colorIndex = PushColor(m_BgColor);
-		texModeIndex = PushTexModeNoTexture();
-		m_DrawVertices.Data[vertexIndex + 0] = { 0, 0, 0, 0, colorIndex, texModeIndex };
-		m_DrawVertices.Data[vertexIndex + 1] = { (float)m_CameraSize.x, 0, 0, 0, colorIndex, texModeIndex };
-		m_DrawVertices.Data[vertexIndex + 2] = { 0, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
-		m_DrawVertices.Data[vertexIndex + 3] = { (float)m_CameraSize.x, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
-		
-		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
-		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-		m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
-		vertexIndex += 4;
+		DrawLayer(*(CTilemapLayer*)layer.Get());
 	}
-
-	const auto& position = m_Layers[0]->GetPosition();
-	float tx = (float)m_TileSize.x;
-	float ty = (float)m_TileSize.y;
-	int width = (m_CameraSize.x + m_TileSize.x) / m_TileSize.x;
-	int height = (m_CameraSize.y + m_TileSize.y) / m_TileSize.y;
-	float cameraShiftX = -Math::Fmod(position.x, (float)m_TileSize.x);
-	float cameraShiftY = -Math::Fmod(position.y, (float)m_TileSize.y);
-	colorIndex = PushColor(Xe::Graphics::Color::White);
-	texModeIndex = PushTexModeTexture();
-
-	const auto& layer = *(CTilemapLayer*)m_Layers[0].Get();
-	auto layerSize = layer.GetBufferSize();
-	if (layer.IsVisible())
-	{
-		auto tilesPerRow = layer.GetTilesPerRow();
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				TileData tileData = layer.m_Data[(x % layerSize.x) + (y % layerSize.y) * layerSize.x];
-				tileData = GetTileData(tileData);
-				u32 tile = tileData.Tile;
-				if (tile > 0)
-				{
-					tile--;
-					m_DrawVertices.Reserve(4);
-					m_DrawIndices.Reserve(6);
-
-					float fx = cameraShiftX + x * tx;
-					float fy = cameraShiftY + y * ty;
-
-					float u1 = (float)((tile % tilesPerRow) * m_TileSize.x);
-					float v1 = (float)((tile / tilesPerRow) * m_TileSize.y);
-					float u2 = u1 + m_TileSize.x;
-					float v2 = v1 + m_TileSize.x;
-
-					if (tileData.Rotate)
-					{
-						if (tileData.Flip)
-						{
-							std::swap(u1, u2);
-						}
-						if (tileData.Mirror)
-						{
-							std::swap(v1, v2);
-						}
-
-						m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
-						m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u1, v2, colorIndex, texModeIndex };
-						m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u2, v1, colorIndex, texModeIndex };
-						m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
-					}
-					else
-					{
-						if (tileData.Mirror)
-						{
-							std::swap(u1, u2);
-						}
-						if (tileData.Flip)
-						{
-							std::swap(v1, v2);
-						}
-
-						m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
-						m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u2, v1, colorIndex, texModeIndex };
-						m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u1, v2, colorIndex, texModeIndex };
-						m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
-					}
-
-					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
-					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
-					vertexIndex += 4;
-				}
-			}
-
-			ASSERT(m_DrawVertices.Count == vertexIndex);
-			ASSERT(m_DrawIndices.Count == indices);
-		}
-	}
-
 
 	TilemapDrawArgs args;
 	args.Draws.push_back(TilemapDrawList
@@ -497,12 +376,22 @@ void CTilemap2d::Draw(int flags)
 	(*m_DrawDelegate)(e);
 }
 
+inline u16 CTilemap2d::PeekColor() const
+{
+	return (u16)(m_DrawColors.Count - 1);
+}
+
 inline u16 CTilemap2d::PushColor(const Color& color)
 {
 	auto count = m_DrawColors.Count;
 	m_DrawColors.Reserve(1);
 	m_DrawColors.Data[count] = color;
 	return (u16)count;
+}
+
+inline u16 CTilemap2d::PeekTexMode() const
+{
+	return (u16)(m_DrawTextureModes.Count - 1);
 }
 
 inline u16 CTilemap2d::PushTexMode(float mode)
@@ -567,6 +456,150 @@ TileData CTilemap2d::GetTileData(TileData tile) const
 	}
 
 	return tile;
+}
+
+void CTilemap2d::FetchLayer(ITilemapLayer& layer, size_t layerIndex)
+{
+	const auto& layerSize = layer.GetBufferSize();
+	auto requiredSizeX = Math::Min<size_t>(layerSize.x, m_CameraSize.x / m_TileSize.x + 1);
+	auto requiredSizeY = Math::Min<size_t>(layerSize.y, m_CameraSize.y / m_TileSize.y + 1);
+
+	if (requiredSizeX <= 0 || requiredSizeY <= 0)
+		return;
+
+	const auto& position = layer.GetPosition();
+
+	TilemapRequestTilesArgs args;
+	args.Position.x = (int)Math::Floor(position.x / m_TileSize.x);
+	args.Position.y = (int)Math::Floor(position.y / m_TileSize.y);
+
+	layer.Lock(args.Destination, Lock_ReadWrite);
+	//args.Destination.Data += requiredSizeX + requiredSizeY * layerSize.y;
+	args.Destination.Size.x = requiredSizeX;
+	args.Destination.Size.y = requiredSizeY;
+	args.LayerIndex = layerIndex;
+
+	TilemapArgs<TilemapRequestTilesArgs> e;
+	e.Sender = this;
+	e.Arguments = &args;
+	(*m_RequestTilesDelegate)(e);
+
+	layer.Unlock();
+}
+
+void CTilemap2d::DrawBackground()
+{
+	if (m_BgColor.a <= 0)
+		return;
+
+	const auto vertexIndex = m_DrawVertices.Count;
+	const auto indices = m_DrawIndices.Count;
+	const auto colorIndex = PushColor(m_BgColor);
+	const auto texModeIndex = PushTexModeNoTexture();
+
+	m_DrawVertices.Reserve(4);
+	m_DrawVertices.Data[vertexIndex + 0] = { 0, 0, 0, 0, colorIndex, texModeIndex };
+	m_DrawVertices.Data[vertexIndex + 1] = { (float)m_CameraSize.x, 0, 0, 0, colorIndex, texModeIndex };
+	m_DrawVertices.Data[vertexIndex + 2] = { 0, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
+	m_DrawVertices.Data[vertexIndex + 3] = { (float)m_CameraSize.x, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
+
+	m_DrawIndices.Reserve(6);
+	m_DrawIndices.Data[indices + 0] = { (u16)(vertexIndex + 1) };
+	m_DrawIndices.Data[indices + 1] = { (u16)(vertexIndex + 0) };
+	m_DrawIndices.Data[indices + 2] = { (u16)(vertexIndex + 2) };
+	m_DrawIndices.Data[indices + 3] = { (u16)(vertexIndex + 1) };
+	m_DrawIndices.Data[indices + 4] = { (u16)(vertexIndex + 2) };
+	m_DrawIndices.Data[indices + 5] = { (u16)(vertexIndex + 3) };
+}
+
+void CTilemap2d::DrawLayer(const CTilemapLayer& layer)
+{
+	if (!layer.IsVisible())
+		return;
+
+	auto vertexIndex = m_DrawVertices.Count;
+	auto indices = m_DrawIndices.Count;
+	auto colorIndex = PeekColor();
+	auto texModeIndex = PeekTexMode();
+
+	const auto& position = layer.GetPosition();
+	int width = (m_CameraSize.x + m_TileSize.x) / m_TileSize.x;
+	int height = (m_CameraSize.y + m_TileSize.y) / m_TileSize.y;
+	float tx = (float)m_TileSize.x;
+	float ty = (float)m_TileSize.y;
+	float cameraShiftX = -Math::Fmod(position.x, (float)m_TileSize.x);
+	float cameraShiftY = -Math::Fmod(position.y, (float)m_TileSize.y);
+
+	auto layerSize = layer.GetBufferSize();
+	auto tilesPerRow = layer.GetTilesPerRow();
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			TileData tileData = layer.m_Data[(x % layerSize.x) + (y % layerSize.y) * layerSize.x];
+			tileData = GetTileData(tileData);
+			u32 tile = tileData.Tile;
+
+			if (tile == 0)
+				continue;
+
+			tile--;
+
+			float fx = cameraShiftX + x * tx;
+			float fy = cameraShiftY + y * ty;
+
+			float u1 = (float)((tile % tilesPerRow) * m_TileSize.x);
+			float v1 = (float)((tile / tilesPerRow) * m_TileSize.y);
+			float u2 = u1 + m_TileSize.x;
+			float v2 = v1 + m_TileSize.x;
+
+			m_DrawVertices.Reserve(4);
+			if (tileData.Rotate)
+			{
+				if (tileData.Flip)
+				{
+					std::swap(u1, u2);
+				}
+				if (tileData.Mirror)
+				{
+					std::swap(v1, v2);
+				}
+
+				m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
+				m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u1, v2, colorIndex, texModeIndex };
+				m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u2, v1, colorIndex, texModeIndex };
+				m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
+			}
+			else
+			{
+				if (tileData.Mirror)
+				{
+					std::swap(u1, u2);
+				}
+				if (tileData.Flip)
+				{
+					std::swap(v1, v2);
+				}
+
+				m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
+				m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u2, v1, colorIndex, texModeIndex };
+				m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u1, v2, colorIndex, texModeIndex };
+				m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
+			}
+
+			m_DrawIndices.Reserve(6);
+			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
+			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
+			vertexIndex += 4;
+		}
+
+		ASSERT(m_DrawVertices.Count == vertexIndex);
+		ASSERT(m_DrawIndices.Count == indices);
+	}
 }
 
 void Xe::Game::Factory(ITilemap2d** ppTilemap2d, IDrawing2d* pDrawing2d)

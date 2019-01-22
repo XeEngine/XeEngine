@@ -114,13 +114,21 @@ namespace Xe { namespace Game {
 			return currentCapacity < requiredCapacity ? (T*)Memory::Resize(mem, requiredCapacity * sizeof(T)) : mem;
 		}
 
+		u16 PeekColor() const;
 		u16 PushColor(const Xe::Graphics::Color& color);
+
+		u16 PeekTexMode() const;
 		u16 PushTexMode(float mode);
 		u16 PushTexModeNoTexture();
 		u16 PushTexModeTexture();
 		u16 PushTexModePalette(float palette);
 
 		TileData GetTileData(TileData tile) const;
+
+		void FetchLayer(ITilemapLayer& layer, size_t layerIndex);
+
+		void DrawBackground();
+		void DrawLayer(const CTilemapLayer& layer);
 	public:
 		CTilemap2d();
 		~CTilemap2d();
@@ -150,6 +158,6 @@ namespace Xe { namespace Game {
 
 		void Update(double deltaTime);
 		void Flush();
-		void Draw(int flags);
+		void Draw();
 	};
 } }
