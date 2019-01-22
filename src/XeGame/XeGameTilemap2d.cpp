@@ -12,17 +12,134 @@ using namespace Xe::Math;
 using namespace Xe::Graphics;
 using namespace Xe::Game;
 
+CTilemapLayer::CTilemapLayer() :
+	m_Flags({ 0 }),
+	m_Data(nullptr),
+	m_LockedData(nullptr)
+{
+	SetBufferSize({ 1, 1 });
+}
+
+CTilemapLayer::~CTilemapLayer()
+{
+	if (m_Data) Xe::Memory::Free(m_Data);
+	if (m_LockedData) Xe::Memory::Free(m_LockedData);
+}
+
+const String& CTilemapLayer::GetName() const
+{
+	return m_Name;
+}
+
+void CTilemapLayer::SetName(const StringSpan& name)
+{
+	m_Name = name;
+}
+
+const Vector2u& CTilemapLayer::GetBufferSize() const
+{
+	return m_BufferSize;
+}
+
+void CTilemapLayer::SetBufferSize(const Vector2u& size)
+{
+	if (size.x == 0)
+		throw std::invalid_argument(NAMEOF(size.x) " must be greater than 0");
+	if (size.y == 0)
+		throw std::invalid_argument(NAMEOF(size.y) " must be greater than 0");
+
+	if (m_BufferSize == size)
+		return;
+
+	m_BufferSize = size;
+
+	if (m_Data)
+		Xe::Memory::Free(m_Data);
+	if (m_LockedData)
+	{
+		Xe::Memory::Free(m_LockedData);
+		m_LockedData = nullptr;
+	}
+
+	m_Data = (TileData*)Xe::Memory::Alloc(m_BufferSize.x * m_BufferSize.y * sizeof(TileData));
+}
+
+const Vector2f& CTilemapLayer::GetPosition() const
+{
+	return m_Position;
+}
+
+void CTilemapLayer::SetPosition(const Vector2f& position)
+{
+	m_Position = position;
+}
+
+bool CTilemapLayer::IsVisible() const
+{
+	return !!m_Flags.Visible;
+}
+
+void CTilemapLayer::SetVisible(bool visibility)
+{
+	m_Flags.Visible = visibility;
+}
+
+bool CTilemapLayer::IsLocked() const
+{
+	return !!m_Flags.Locked;
+}
+
+bool CTilemapLayer::Lock(TilemapData& tilemapData, Game::LockType lockType)
+{
+	if (IsLocked())
+		throw std::logic_error("Cannot lock an already locked resource");
+
+	m_Flags.Locked = true;
+	m_LockType = lockType;
+
+	tilemapData.Size = GetBufferSize();
+	tilemapData.Stride = tilemapData.Size.x * sizeof(TileData);
+
+	size_t length = tilemapData.Stride * tilemapData.Size.y;
+
+	if (m_LockedData == nullptr)
+		m_LockedData = (TileData*)Xe::Memory::Alloc(length);
+
+	if (m_LockType & Lock_Read)
+	{
+		Xe::Memory::Copy(m_LockedData, m_Data, length);
+	}
+
+	tilemapData.Data = m_LockedData;
+
+	return true;
+}
+void CTilemapLayer::Unlock()
+{
+	if (!IsLocked())
+		throw std::logic_error("Cannot unlock a resource that is not locked");
+
+	m_Flags.Locked = false;
+
+	const auto& bufferSize = GetBufferSize();
+	size_t length = bufferSize.x * sizeof(TileData) * bufferSize.y;
+
+	if (m_LockType & Lock_Write)
+	{
+		Xe::Memory::Copy(m_Data, m_LockedData, length);
+	}
+}
+
 CTilemap2d::CTilemap2d() :
 	m_RequestTilesDelegate(nullptr),
 	m_DrawDelegate(nullptr),
-	m_Timer(0.0),
-	m_Layer({ 0, {0, 0}, true })
+	m_Timer(0.0)
 {
+	SetLayersCount(1);
 }
 
 CTilemap2d::~CTilemap2d()
 {
-	if (m_Layer.Data) Xe::Memory::Free(m_Layer.Data);
 	m_DrawVertices.Release();
 	m_DrawIndices.Release();
 }
@@ -55,16 +172,6 @@ const Math::Vector2i& CTilemap2d::GetCameraSize() const
 void CTilemap2d::SetCameraSize(const Vector2i& cameraSize)
 {
 	m_CameraSize = cameraSize;
-}
-
-const Math::Vector2f& CTilemap2d::GetCameraPosition() const
-{
-	return m_CameraPosition;
-}
-
-void CTilemap2d::SetCameraPosition(const Vector2f& cameraPosition)
-{
-	m_CameraPosition = cameraPosition;
 }
 
 const Xe::Math::Vector2i& CTilemap2d::GetTileSize() const
@@ -140,40 +247,42 @@ void CTilemap2d::RemoveTileSequence(TileData tile)
 	}
 }
 
+size_t CTilemap2d::GetLayerCount() const
+{
+	return m_Layers.size();
+}
+
+void CTilemap2d::SetLayersCount(size_t layersCount)
+{
+	m_Layers.resize(layersCount);
+
+	for (size_t i = 0; i < layersCount; ++i)
+	{
+		if (m_Layers[i].Get() == nullptr)
+		{
+			m_Layers[i] = new CTilemapLayer();
+		}
+	}
+}
+
+ObjPtr<ITilemapLayer> CTilemap2d::GetLayer(size_t index)
+{
+	if (index >= GetLayerCount())
+		throw std::invalid_argument(NAMEOF(index) " exceeds " NAMEOF(GetLayerCount));
+
+	return m_Layers[index];
+}
+
 const Xe::Math::Vector2i& CTilemap2d::GetBufferSize() const
 {
-	return m_BufferSize;
+	m_BufferSizeDELETEME.x = m_Layers[0]->GetBufferSize().x;
+	m_BufferSizeDELETEME.y = m_Layers[0]->GetBufferSize().y;
+	return m_BufferSizeDELETEME;
 }
 
 void CTilemap2d::SetBufferSize(const Xe::Math::Vector2i& bufferSize)
 {
-	if (m_BufferSize == bufferSize)
-		return;
-
-	m_BufferSize = bufferSize;
-	ResizeLayer(bufferSize, m_Layer);
-}
-
-bool CTilemap2d::IsLayerVisible() const
-{
-	return m_Layer.Visible;
-}
-
-void CTilemap2d::SetLayerVisible(bool visible)
-{
-	m_Layer.Visible = visible;
-}
-
-bool CTilemap2d::GetBuffer(TilemapData* layer)
-{
-	assert(!!layer);
-
-	layer->Tilemap = m_Layer.Data;
-	layer->Size.x = m_Layer.Size.x;
-	layer->Size.y = m_Layer.Size.y;
-	layer->Stride = layer->Size.x * sizeof(TileData);
-
-	return true;
+	m_Layers[0]->SetBufferSize({ (size_t)bufferSize.x, (size_t)bufferSize.y });
 }
 
 void CTilemap2d::SetTileset(const TilesetProperties& tileset)
@@ -191,26 +300,31 @@ void CTilemap2d::Flush()
 	if (m_TileSize.x <= 0 || m_TileSize.y <= 0)
 		return;
 
-	auto requiredSizeX = Math::Min<size_t>(m_Layer.Size.x, m_CameraSize.x / m_TileSize.x + 1);
-	auto requiredSizeY = Math::Min<size_t>(m_Layer.Size.y, m_CameraSize.y / m_TileSize.y + 1);
+	const auto& layerSize = m_Layers[0]->GetBufferSize();
+	auto requiredSizeX = Math::Min<size_t>(layerSize.x, m_CameraSize.x / m_TileSize.x + 1);
+	auto requiredSizeY = Math::Min<size_t>(layerSize.y, m_CameraSize.y / m_TileSize.y + 1);
 
 	if (requiredSizeX <= 0 || requiredSizeY <= 0 ||
 		m_TileSize.x <= 0 || m_TileSize.y <= 0)
 		return;
 
-	TilemapRequestTilesArgs args;
-	args.Position.x = (int)Math::Floor(m_CameraPosition.x / m_TileSize.x);
-	args.Position.y = (int)Math::Floor(m_CameraPosition.y / m_TileSize.y);
+	const auto& position = m_Layers[0]->GetPosition();
 
-	TilemapData& tilemapData = args.Destination;
-	tilemapData.Tilemap = m_Layer.Data;
-	tilemapData.Size = Math::Vector2i(requiredSizeX, requiredSizeY);
-	tilemapData.Stride = m_Layer.Size.x * sizeof(TileData);
+	TilemapRequestTilesArgs args;
+	args.Position.x = (int)Math::Floor(position.x / m_TileSize.x);
+	args.Position.y = (int)Math::Floor(position.y / m_TileSize.y);
+
+	m_Layers[0]->Lock(args.Destination, Lock_ReadWrite);
+	//args.Destination.Data += requiredSizeX + requiredSizeY * layerSize.y;
+	args.Destination.Size.x = requiredSizeX;
+	args.Destination.Size.y = requiredSizeY;
 
 	TilemapArgs<TilemapRequestTilesArgs> e;
 	e.Sender = this;
 	e.Arguments = &args;
 	(*m_RequestTilesDelegate)(e);
+
+	m_Layers[0]->Unlock();
 }
 
 void CTilemap2d::Draw(int flags)
@@ -249,85 +363,89 @@ void CTilemap2d::Draw(int flags)
 		vertexIndex += 4;
 	}
 
+	const auto& position = m_Layers[0]->GetPosition();
 	float tx = (float)m_TileSize.x;
 	float ty = (float)m_TileSize.y;
 	int width = (m_CameraSize.x + m_TileSize.x) / m_TileSize.x;
 	int height = (m_CameraSize.y + m_TileSize.y) / m_TileSize.y;
-	float cameraShiftX = -Math::Fmod(m_CameraPosition.x, (float)m_TileSize.x);
-	float cameraShiftY = -Math::Fmod(m_CameraPosition.y, (float)m_TileSize.y);
+	float cameraShiftX = -Math::Fmod(position.x, (float)m_TileSize.x);
+	float cameraShiftY = -Math::Fmod(position.y, (float)m_TileSize.y);
 	colorIndex = PushColor(Xe::Graphics::Color::White);
 	texModeIndex = PushTexModeTexture();
 
-	if (m_Layer.Visible == false)
-		return;
-
-	for (int y = 0; y < height; y++)
+	const auto& layer = *(CTilemapLayer*)m_Layers[0].Get();
+	auto layerSize = layer.GetBufferSize();
+	if (layer.IsVisible())
 	{
-		for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++)
 		{
-			TileData tileData = m_Layer.Data[(x % m_Layer.Size.x) + (y % m_Layer.Size.y) * m_Layer.Size.x];
-			tileData = GetTileData(tileData);
-			u32 tile = tileData.Tile;
-			if (tile > 0)
+			for (int x = 0; x < width; x++)
 			{
-				tile--;
-				m_DrawVertices.Reserve(4);
-				m_DrawIndices.Reserve(6);
-
-				float fx = cameraShiftX + x * tx;
-				float fy = cameraShiftY + y * ty;
-
-				float u1 = (float)((tile % m_Tileset.TilesPerRow) * m_TileSize.x);
-				float v1 = (float)((tile / m_Tileset.TilesPerRow) * m_TileSize.y);
-				float u2 = u1 + m_TileSize.x;
-				float v2 = v1 + m_TileSize.x;
-
-				if (tileData.Rotate)
+				TileData tileData = layer.m_Data[(x % layerSize.x) + (y % layerSize.y) * layerSize.x];
+				tileData = GetTileData(tileData);
+				u32 tile = tileData.Tile;
+				if (tile > 0)
 				{
-					if (tileData.Flip)
+					tile--;
+					m_DrawVertices.Reserve(4);
+					m_DrawIndices.Reserve(6);
+
+					float fx = cameraShiftX + x * tx;
+					float fy = cameraShiftY + y * ty;
+
+					float u1 = (float)((tile % m_Tileset.TilesPerRow) * m_TileSize.x);
+					float v1 = (float)((tile / m_Tileset.TilesPerRow) * m_TileSize.y);
+					float u2 = u1 + m_TileSize.x;
+					float v2 = v1 + m_TileSize.x;
+
+					if (tileData.Rotate)
 					{
-						std::swap(u1, u2);
+						if (tileData.Flip)
+						{
+							std::swap(u1, u2);
+						}
+						if (tileData.Mirror)
+						{
+							std::swap(v1, v2);
+						}
+
+						m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
+						m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u1, v2, colorIndex, texModeIndex };
+						m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u2, v1, colorIndex, texModeIndex };
+						m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
 					}
-					if (tileData.Mirror)
+					else
 					{
-						std::swap(v1, v2);
+						if (tileData.Mirror)
+						{
+							std::swap(u1, u2);
+						}
+						if (tileData.Flip)
+						{
+							std::swap(v1, v2);
+						}
+
+						m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
+						m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u2, v1, colorIndex, texModeIndex };
+						m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u1, v2, colorIndex, texModeIndex };
+						m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
 					}
 
-					m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
-					m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u1, v2, colorIndex, texModeIndex };
-					m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u2, v1, colorIndex, texModeIndex };
-					m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
+					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
+					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
+					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
+					m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
+					vertexIndex += 4;
 				}
-				else
-				{
-					if (tileData.Mirror)
-					{
-						std::swap(u1, u2);
-					}
-					if (tileData.Flip)
-					{
-						std::swap(v1, v2);
-					}
-
-					m_DrawVertices.Data[vertexIndex + 0] = { fx, fy, u1, v1, colorIndex, texModeIndex };
-					m_DrawVertices.Data[vertexIndex + 1] = { fx + tx, fy, u2, v1, colorIndex, texModeIndex };
-					m_DrawVertices.Data[vertexIndex + 2] = { fx, fy + ty, u1, v2, colorIndex, texModeIndex };
-					m_DrawVertices.Data[vertexIndex + 3] = { fx + tx, fy + ty, u2, v2, colorIndex, texModeIndex };
-				}
-
-				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
-				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-				m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
-				vertexIndex += 4;
 			}
-		}
 
-		ASSERT(m_DrawVertices.Count == vertexIndex);
-		ASSERT(m_DrawIndices.Count == indices);
+			ASSERT(m_DrawVertices.Count == vertexIndex);
+			ASSERT(m_DrawIndices.Count == indices);
+		}
 	}
+
 
 	TilemapDrawArgs args;
 	args.Draws.push_back(TilemapDrawList
@@ -419,16 +537,6 @@ TileData CTilemap2d::GetTileData(TileData tile) const
 	}
 
 	return tile;
-}
-
-void CTilemap2d::ResizeLayer(const Xe::Math::Vector2i& size, Layer& layer)
-{
-	if (layer.Data)
-		Xe::Memory::Free(layer.Data);
-
-	auto stride = size.x * sizeof(TileData);
-	layer.Size = size;
-	layer.Data = (TileData*)Xe::Memory::Alloc(stride * size.y);
 }
 
 void Xe::Game::Factory(ITilemap2d** ppTilemap2d, IDrawing2d* pDrawing2d)

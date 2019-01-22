@@ -48,6 +48,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameSoundSfxEntity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemap2d.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemapLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />

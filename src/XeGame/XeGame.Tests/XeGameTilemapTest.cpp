@@ -5,6 +5,7 @@
 #include <XeGame/XeGameTiledDocument.h>
 #include <XeGame/XeGameTilemap2d.h>
 #include <XeGame/IGameTilemap2d.h>
+#include <XeGame/IGameTilemapLayer.h>
 
 using namespace Xe;
 using namespace Xe::Math;
@@ -43,18 +44,18 @@ struct TilemapGenericDelegateTest<TilemapRequestTilesArgs>
 		this->args = *args.Arguments;
 
 		auto dst = args.Arguments->Destination;
-		auto tilemapOffset = (u8*)dst.Tilemap;
+		auto tilemapOffset = (u8*)dst.Data;
 		auto stride = args.Arguments->Destination.Stride;
 
 		tilesWritten = 0;
-		for (int x = 0; x < args.Arguments->Destination.Size.x; x++)
+		for (size_t x = 0; x < args.Arguments->Destination.Size.x; x++)
 		{
-			for (int y = 0; y < args.Arguments->Destination.Size.y; y++)
+			for (size_t y = 0; y < args.Arguments->Destination.Size.y; y++)
 			{
 				MetaTile tile;
-				tile.X = x;
-				tile.Y = y;
-				dst.SetTile(x, y, TileData{ tile.Data });
+				tile.X = (u16)x;
+				tile.Y = (u16)y;
+				dst.Tile(x, y) = TileData{ tile.Data };
 				tilesWritten++;
 			}
 		}
@@ -72,18 +73,13 @@ TEST(XeGameTilemapTest, SetPropertiesTest)
 	ObjPtr<ITilemap2d> tilemap;
 	Vector2i cameraSize(123, 456);
 	Vector2f cameraPos(222, 444);
-	Xe::Math::Vector2i bufferSize(32, 16);
 
 	Factory(&tilemap, nullptr);
 	EXPECT_NE(nullptr, tilemap.Get());
 
 	tilemap->SetCameraSize(cameraSize);
-	tilemap->SetCameraPosition(cameraPos);
-	tilemap->SetBufferSize(bufferSize);
 
 	EXPECT_EQ(cameraSize, tilemap->GetCameraSize());
-	EXPECT_EQ(cameraPos, tilemap->GetCameraPosition());
-	EXPECT_EQ(bufferSize, tilemap->GetBufferSize());
 }
 
 TEST(XeGameTilemapTest, DontPerformCallbackTest)
@@ -103,69 +99,14 @@ TEST(XeGameTilemapTest, DontPerformCallbackTest)
 	args.Destination.Size.x = ExpectedSizeX;
 	args.Destination.Size.y = ExpectedSizeY;
 	args.Destination.Stride = ExpectedStride;
-	args.Destination.Tilemap = ExpectedTilemap;
+	args.Destination.Data = ExpectedTilemap;
 	tilemap->Flush();
 
 	EXPECT_EQ(Vector2i(0, 0), tilemap->GetCameraSize());
 	EXPECT_EQ(ExpectedSizeX, args.Destination.Size.x);
 	EXPECT_EQ(ExpectedSizeY, args.Destination.Size.y);
 	EXPECT_EQ(ExpectedStride, args.Destination.Stride);
-	EXPECT_EQ(ExpectedTilemap, args.Destination.Tilemap);
-}
-
-TEST(XeGameTilemapTest, PerformRequestTilesCallbackBasicTest)
-{
-	const int TileWidth = 16;
-	const int TileHeight = 16;
-	const int CameraSizeX = 4;
-	const int CameraSizeY = 2;
-	const int UnexpectedStride = 789;
-	Xe::Game::TileData* const UnexpectedTilemap = (Xe::Game::TileData*)0xDEADB33F;
-
-	ObjPtr<ITilemap2d> tilemap;
-	Factory(&tilemap, nullptr);
-
-	TilemapRequestTilesDelegateTest delegateTest;
-	tilemap->SetRequestTilesCallback(&delegateTest);
-
-	auto& args = delegateTest.args;
-	args.Destination.Size.x = 111111;
-	args.Destination.Size.y = 222222;
-	args.Destination.Stride = UnexpectedStride;
-	args.Destination.Tilemap = UnexpectedTilemap;
-
-	tilemap->SetTileSize({ 16, 16 });
-	tilemap->SetBufferSize({ 32, 16 });
-	tilemap->SetCameraSize(Math::Vector2i(CameraSizeX * TileWidth, CameraSizeY * TileHeight));
-
-	TilemapData layer;
-	layer.Stride = 0;
-	EXPECT_TRUE(tilemap->GetBuffer(&layer));
-	EXPECT_NE(nullptr, layer.Tilemap);
-	EXPECT_NE(0, layer.Stride);
-	EXPECT_NE(0, layer.Size.x);
-	EXPECT_NE(0, layer.Size.y);
-	Memory::Fill(layer.Tilemap, 0xCC, layer.Stride * layer.Size.y);
-
-	tilemap->Flush();
-
-	EXPECT_EQ(CameraSizeX + 1, args.Destination.Size.x);
-	EXPECT_EQ(CameraSizeY + 1, args.Destination.Size.y);
-	EXPECT_NE(UnexpectedStride, args.Destination.Stride);
-	EXPECT_NE(UnexpectedTilemap, args.Destination.Tilemap);
-	EXPECT_NE(nullptr, args.Destination.Tilemap);
-	EXPECT_EQ((CameraSizeX + 1) * (CameraSizeY + 1), delegateTest.tilesWritten);
-
-	EXPECT_TRUE(tilemap->GetBuffer(&layer));
-	for (int x = 0; x < CameraSizeX; x++)
-	{
-		for (int y = 0; y < CameraSizeY; y++)
-		{
-			auto pTile = (MetaTile*)&layer.Tilemap[x + y * layer.Size.x];
-			EXPECT_EQ(x, pTile->X);
-			EXPECT_EQ(y, pTile->Y);
-		}
-	}
+	EXPECT_EQ(ExpectedTilemap, args.Destination.Data);
 }
 
 TEST(XeGameTilemapTest, CheckBoundariesOnRequestTilesCallbackTest)
@@ -181,8 +122,9 @@ TEST(XeGameTilemapTest, CheckBoundariesOnRequestTilesCallbackTest)
 
 	auto& args = delegateTest.args;
 
+	tilemap->SetLayersCount(1);
 	tilemap->SetTileSize({ 16, 16 });
-	tilemap->SetBufferSize({ 32, 16 });
+	tilemap->GetLayer(0)->SetBufferSize({ 32, 16 });
 	tilemap->SetCameraSize(Math::Vector2i(CameraSizeX, CameraSizeY));
 
 	tilemap->Flush();
@@ -234,4 +176,119 @@ TEST(XeGameTilemapTest, AddAndRemoveTileSequenceTest)
 	tilemap->RemoveTileSequence(tile2);
 	EXPECT_FALSE(tilemap->GetTileSequence(tile2, seq));
 	EXPECT_FALSE(tilemap->GetTileSequence(tile, seq));
+}
+
+TEST(XeGameTilemapTest, TilemapSetLayersCountTest)
+{
+	ObjPtr<ITilemap2d> tilemap;
+	Factory(&tilemap, nullptr);
+
+	tilemap->SetLayersCount(1);
+	EXPECT_EQ(1, tilemap->GetLayerCount());
+
+	auto layer = tilemap->GetLayer(0);
+	EXPECT_NE(nullptr, layer.Get());
+	EXPECT_NE(2, layer->i_count);
+
+	tilemap->SetLayersCount(0);
+	EXPECT_NE(1, layer->i_count);
+	EXPECT_THROW(tilemap->GetLayer(0), std::invalid_argument);
+
+	tilemap->SetLayersCount(1);
+	EXPECT_NE(layer.Get(), tilemap->GetLayer(0).Get());
+}
+
+TEST(XeGameTilemapTest, TilemapLayerPropertiesTest)
+{
+	const auto expectedName = "LayerNameTest";
+	const Vector2u expectedBufferSize = { 4, 8 };
+	const Vector2f expectedPosition = { -123.f, 456.08f };
+
+	ObjPtr<ITilemap2d> tilemap;
+	Factory(&tilemap, nullptr);
+	tilemap->SetLayersCount(1);
+	auto layer = tilemap->GetLayer(0);
+
+	EXPECT_STRCASENE(expectedName, layer->GetName());
+	layer->SetName(expectedName);
+	EXPECT_STRCASEEQ(expectedName, layer->GetName());
+
+	EXPECT_NE(0, layer->GetBufferSize().x);
+	EXPECT_NE(0, layer->GetBufferSize().y);
+	layer->SetBufferSize(expectedBufferSize);
+	EXPECT_EQ(expectedBufferSize.x, layer->GetBufferSize().x);
+	EXPECT_EQ(expectedBufferSize.y, layer->GetBufferSize().y);
+	EXPECT_THROW(layer->SetBufferSize({ 0, 0 }), std::invalid_argument);
+	EXPECT_THROW(layer->SetBufferSize({ 0, 1 }), std::invalid_argument);
+	EXPECT_THROW(layer->SetBufferSize({ 1, 0 }), std::invalid_argument);
+
+	layer->SetPosition(expectedPosition);
+	EXPECT_EQ(expectedPosition.x, layer->GetPosition().x);
+	EXPECT_EQ(expectedPosition.y, layer->GetPosition().y);
+
+	EXPECT_FALSE(layer->IsVisible());
+	layer->SetVisible(true);
+	EXPECT_TRUE(layer->IsVisible());
+	layer->SetVisible(false);
+	EXPECT_FALSE(layer->IsVisible());
+}
+
+TEST(XeGameTilemapTest, TilemapLayerLockExceptionTest)
+{
+	ObjPtr<ITilemap2d> tilemap;
+	Factory(&tilemap, nullptr);
+	tilemap->SetLayersCount(1);
+	auto layer = tilemap->GetLayer(0);
+
+	Xe::Game::TilemapData tilemapData;
+	EXPECT_THROW(layer->Unlock(), std::logic_error);
+	EXPECT_TRUE(layer->Lock(tilemapData, Xe::Game::Lock_Read));
+	EXPECT_THROW(layer->Lock(tilemapData, Xe::Game::Lock_Read), std::logic_error);
+	layer->Unlock();
+	EXPECT_THROW(layer->Unlock(), std::logic_error);
+}
+
+TEST(XeGameTilemapTest, TilemapLayerLockReadTest)
+{
+	TileData expectedTile;
+
+	ObjPtr<ITilemap2d> tilemap;
+	Factory(&tilemap, nullptr);
+	tilemap->SetLayersCount(1);
+	auto layer = tilemap->GetLayer(0);
+
+	Xe::Game::TilemapData tilemapData;
+	EXPECT_TRUE(layer->Lock(tilemapData, Xe::Game::Lock_Read));
+	expectedTile = tilemapData.Tile(0, 0);
+	tilemapData.Tile(0, 0) = { expectedTile + 1 };
+	layer->Unlock();
+
+	EXPECT_TRUE(layer->Lock(tilemapData, Xe::Game::Lock_Read));
+	EXPECT_EQ(expectedTile, tilemapData.Tile(0, 0));
+	layer->Unlock();
+}
+
+TEST(XeGameTilemapTest, TilemapLayerLockWriteTest)
+{
+	const TileData expectedTile = { 123 };
+	const TileData expectedTile2 = { expectedTile + 1 };
+
+	ObjPtr<ITilemap2d> tilemap;
+	Factory(&tilemap, nullptr);
+	tilemap->SetLayersCount(1);
+	auto layer = tilemap->GetLayer(0);
+
+	Xe::Game::TilemapData tilemapData;
+	EXPECT_TRUE(layer->Lock(tilemapData, Xe::Game::Lock_Write));
+	tilemapData.Tile(0, 0) = { expectedTile };
+	layer->Unlock();
+
+	EXPECT_TRUE(layer->Lock(tilemapData, Xe::Game::Lock_ReadWrite));
+	EXPECT_EQ(expectedTile, tilemapData.Tile(0, 0));
+	tilemapData.Tile(0, 0) = expectedTile2;
+	layer->Unlock();
+
+	EXPECT_TRUE(layer->Lock(tilemapData, Xe::Game::Lock_Read));
+	EXPECT_EQ(expectedTile2, tilemapData.Tile(0, 0));
+	layer->Unlock();
 }

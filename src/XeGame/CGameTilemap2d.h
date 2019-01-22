@@ -2,7 +2,50 @@
 #include <XeGame/IGameTilemap2d.h>
 #include <list>
 
+using namespace Xe;
+using namespace Xe::Math;
+
 namespace Xe { namespace Game {
+	class CTilemapLayer : public ITilemapLayer
+	{
+		struct Flags
+		{
+			u32 Visible : 1;
+			u32 Locked : 1;
+		};
+
+		//TileData* Data;
+		String m_Name;
+		Xe::Math::Vector2u m_BufferSize;
+		Xe::Math::Vector2f m_Position;
+		Flags m_Flags;
+
+		LockType m_LockType;
+		TileData* m_LockedData;
+
+	public:
+		TileData* m_Data;
+
+		CTilemapLayer();
+		~CTilemapLayer();
+
+		const String& GetName() const;
+		void SetName(const StringSpan& name);
+
+		const Vector2u& GetBufferSize() const;
+		void SetBufferSize(const Vector2u& size);
+
+		const Vector2f& GetPosition() const;
+		void SetPosition(const Vector2f& position);
+
+		bool IsVisible() const;
+		void SetVisible(bool visibility);
+
+		bool IsLocked() const;
+		bool Lock(TilemapData& tilemapData, LockType lockType);
+		void Unlock();
+	};
+
 	class CTilemap2d : public ITilemap2d
 	{
 		template <class T>
@@ -33,13 +76,6 @@ namespace Xe { namespace Game {
 			}
 		};
 
-		struct Layer
-		{
-			TileData* Data;
-			Xe::Math::Vector2i Size;
-			bool Visible;
-		};
-
 		struct TileSequence
 		{
 			TileData TileId;
@@ -50,21 +86,18 @@ namespace Xe { namespace Game {
 		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
 		TilemapDrawDelegate* m_DrawDelegate;
 		Math::Vector2i m_CameraSize;
-		Math::Vector2f m_CameraPosition;
 		Xe::Math::Vector2i m_TileSize;
-		Xe::Math::Vector2i m_BufferSize;
+		mutable Xe::Math::Vector2i m_BufferSizeDELETEME;
 		TilesetProperties m_Tileset;
 		Graphics::Color m_BgColor;
 		double m_Timer;
-		Layer m_Layer;
 		std::list<TileSequence> m_AnimatedTiles;
+		std::vector<ObjPtr<ITilemapLayer>> m_Layers;
 
 		MyVector<TilemapDrawVertex> m_DrawVertices;
 		MyVector<TilemapDrawIndex> m_DrawIndices;
 		MyVector<Xe::Graphics::Color> m_DrawColors;
 		MyVector<float> m_DrawTextureModes;
-
-		static void ResizeLayer(const Xe::Math::Vector2i& size, Layer& layer);
 
 		template <class T>
 		static T* EnsureCapacity(T* mem, size_t currentCapacity, size_t requiredCapacity)
@@ -92,9 +125,6 @@ namespace Xe { namespace Game {
 		const Math::Vector2i& GetCameraSize() const;
 		void SetCameraSize(const Math::Vector2i& cameraSize);
 
-		const Math::Vector2f& GetCameraPosition() const;
-		void SetCameraPosition(const Math::Vector2f& cameraPosition);
-
 		const Xe::Math::Vector2i& GetTileSize() const;
 		void SetTileSize(const Xe::Math::Vector2i& tileSize);
 
@@ -102,13 +132,12 @@ namespace Xe { namespace Game {
 		void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames);
 		void RemoveTileSequence(TileData tile);
 
+		size_t GetLayerCount() const;
+		void SetLayersCount(size_t layersCount);
+		ObjPtr<ITilemapLayer> GetLayer(size_t index);
+
 		const Xe::Math::Vector2i& GetBufferSize() const;
 		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
-
-		bool IsLayerVisible() const;
-		void SetLayerVisible(bool visible);
-
-		bool GetBuffer(TilemapData* layer);
 
 		void SetTileset(const TilesetProperties& tileset);
 
