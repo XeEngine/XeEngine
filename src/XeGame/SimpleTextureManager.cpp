@@ -387,6 +387,12 @@ namespace Xe { namespace Game {
 			m_Context.SelectSurface(GetClutSurface(), slot);
 		}
 
+		Xe::Math::Vector2i GetTextureSize(TexId texId) const
+		{
+			ASSERT(texId != TexInvalid);
+			return GetInternalTextureConst(texId).Surface->GetSize();
+		}
+
 		void GetUv(TexId texId, Math::Vector2f(uv)[4])
 		{
 		}

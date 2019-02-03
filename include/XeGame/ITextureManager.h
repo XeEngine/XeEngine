@@ -65,6 +65,10 @@ namespace Xe { namespace Game {
 		//! \brief Select the texture for the next draw.
 		virtual void SelectClut(int slot) = 0;
 
+		//! \brief Get the size of the specified texture
+		//! \param[in] texId Must be a valid TexId
+		virtual Math::Vector2i GetTextureSize(TexId texId) const = 0;
+
 		//! \brief Transform the specified UV coordinates into the correct versions.
 		virtual void GetUv(TexId texId, Math::Vector2f(uv)[4]) = 0;
 
