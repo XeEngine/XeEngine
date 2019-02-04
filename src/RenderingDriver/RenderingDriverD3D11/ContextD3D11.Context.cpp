@@ -154,7 +154,21 @@ namespace Xe { namespace Graphics {
 		m_ClearStencil = stencil;
 	}
 
-	const Xe::Math::Rectangle<int> CContextD3D11::GetScissor()
+	bool CContextD3D11::IsScissorEnabled() const
+	{
+		return m_RasterizerDesc.ScissorEnable;
+	}
+
+	void CContextD3D11::SetScissorEnabled(bool enabled)
+	{
+		if (m_RasterizerDesc.ScissorEnable != enabled)
+		{
+			m_RasterizerDesc.ScissorEnable = enabled;
+			CommitRasterizerDesc();
+		}
+	}
+
+	const Xe::Math::Rectangle<int> CContextD3D11::GetScissor() const
 	{
 		UINT numRects = 1;
 		D3D11_RECT rect;
@@ -165,15 +179,8 @@ namespace Xe { namespace Graphics {
 
 	void CContextD3D11::SetScissor(const Xe::Math::Rectangle<int>& scissor)
 	{
-		if (scissor.left | scissor.top | scissor.right | scissor.bottom)
-		{
-			D3D11_RECT rect{ (LONG)scissor.left, (LONG)scissor.top, (LONG)scissor.right, (LONG)scissor.bottom };
-			m_d3dContext->RSSetScissorRects(1, &rect);
-		}
-		else
-		{
-			m_d3dContext->RSSetScissorRects(0, NULL);
-		}
+		D3D11_RECT rect{ (LONG)scissor.left, (LONG)scissor.top, (LONG)scissor.right, (LONG)scissor.bottom };
+		m_d3dContext->RSSetScissorRects(1, &rect);
 	}
 
 	void CContextD3D11::Clear(svar clearmask) {

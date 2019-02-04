@@ -51,6 +51,7 @@ namespace Xe { namespace Graphics {
 
 		D3D11_VIEWPORT m_viewport;
 		D3D_FEATURE_LEVEL m_FeatureLevel;
+		D3D11_RASTERIZER_DESC m_RasterizerDesc;
 
 #if !_XBOX_ONE
 		ID3D11Device* p_d3dDevice;
@@ -89,6 +90,7 @@ namespace Xe { namespace Graphics {
 		void SetSwapChainViewport(const Size& size);
 		void SetViewport(const Size& size);
 		bool IsSdkLayersAvailable();
+		bool CommitRasterizerDesc();
 
 	public:
 		CContextD3D11();
@@ -104,7 +106,9 @@ namespace Xe { namespace Graphics {
 		int GetClearStencil() const;
 		void SetClearStencil(int stencil);
 
-		const Xe::Math::Rectangle<int> GetScissor();
+		bool IsScissorEnabled() const;
+		void SetScissorEnabled(bool enabled);
+		const Xe::Math::Rectangle<int> GetScissor() const;
 		void SetScissor(const Xe::Math::Rectangle<int>& scissor);
 			
 		void Clear(svar clearmask);

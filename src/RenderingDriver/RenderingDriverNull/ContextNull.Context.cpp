@@ -10,7 +10,8 @@ namespace Xe {
 			m_ClearColor(Color::Black),
 			m_ClearDepth(0.0f),
 			m_ClearStencil(0),
-			m_DepthStencilState(nullptr)
+			m_DepthStencilState(nullptr),
+			m_ScissorEnabled(false)
 		{
 			Memory::Fill(&m_State, 0, sizeof(m_State));
 			Memory::Fill(m_Surface, 0, sizeof(m_Surface));
@@ -56,7 +57,17 @@ namespace Xe {
 			m_ClearStencil = stencil;
 		}
 
-		const Xe::Math::Rectangle<int> CContextNull::GetScissor()
+		bool CContextNull::IsScissorEnabled() const
+		{
+			return m_ScissorEnabled;
+		}
+
+		void CContextNull::SetScissorEnabled(bool enabled)
+		{
+			m_ScissorEnabled = enabled;
+		}
+
+		const Xe::Math::Rectangle<int> CContextNull::GetScissor() const
 		{
 			return m_Scissor;
 		}

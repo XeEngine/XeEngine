@@ -45,7 +45,9 @@ namespace Xe { namespace Graphics {
 		int GetClearStencil() const;
 		void SetClearStencil(int stencil);
 
-		const Xe::Math::Rectangle<int> GetScissor();
+		bool IsScissorEnabled() const;
+		void SetScissorEnabled(bool enabled);
+		const Xe::Math::Rectangle<int> GetScissor() const;
 		void SetScissor(const Xe::Math::Rectangle<int>& scissor);
 			
 		void Clear(svar clearmask);

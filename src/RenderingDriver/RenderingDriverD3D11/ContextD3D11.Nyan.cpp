@@ -271,22 +271,20 @@ namespace Xe {
 			else
 				LOGE("Unable to create depth/stencil state (HR: %08X).", hr);
 
-			D3D11_RASTERIZER_DESC rasterizerDesc;
-			Memory::Fill(&rasterizerDesc, 0, sizeof(rasterizerDesc));
-			rasterizerDesc.FillMode = D3D11_FILL_SOLID;
-			rasterizerDesc.CullMode = D3D11_CULL_NONE;
-			rasterizerDesc.FrontCounterClockwise = FALSE;
-			rasterizerDesc.DepthClipEnable = TRUE;
-			rasterizerDesc.ScissorEnable = FALSE;
-
-			ID3D11RasterizerState* rasterizerState;
-			hr = p_d3dDevice->CreateRasterizerState(&rasterizerDesc, &rasterizerState);
-			if (SUCCEEDED(hr)) {
-				m_d3dContext->RSSetState(rasterizerState);
-				rasterizerState->Release();
-			}
-			else
-				LOGE("Unable to create rasterizer state (HR: %08X).", hr);
+			// Default parameters for D3D11_RASTERIZER_DESC
+			// https://docs.microsoft.com/en-gb/windows/desktop/api/d3d11/ns-d3d11-d3d11_rasterizer_desc
+			m_RasterizerDesc.FillMode = D3D11_FILL_SOLID;
+			m_RasterizerDesc.CullMode = D3D11_CULL_BACK;
+			m_RasterizerDesc.FrontCounterClockwise = FALSE;
+			m_RasterizerDesc.DepthBias = 0;
+			m_RasterizerDesc.SlopeScaledDepthBias = 0.0f;
+			m_RasterizerDesc.DepthBiasClamp = 0.0f;
+			m_RasterizerDesc.DepthClipEnable = TRUE;
+			m_RasterizerDesc.ScissorEnable = FALSE;
+			m_RasterizerDesc.MultisampleEnable = FALSE;
+			m_RasterizerDesc.AntialiasedLineEnable = FALSE;
+			CommitRasterizerDesc();
+			SetScissor({ 0, 0, 0, 0 });
 
 			D3D11_BLEND_DESC blendStateDesc;
 			Memory::Fill(&blendStateDesc, 0, sizeof(blendStateDesc));
@@ -617,6 +615,22 @@ namespace Xe {
 				nullptr                     // Non � necessario mantenere il riferimento contesto di dispositivo D3D.
 			);
 			return SUCCEEDED(hr);
+		}
+
+		bool CContextD3D11::CommitRasterizerDesc()
+		{
+			ID3D11RasterizerState* rasterizerState;
+			HRESULT hr = p_d3dDevice->CreateRasterizerState(&m_RasterizerDesc, &rasterizerState);
+			if (FAILED(hr))
+			{
+				LOGE("Unable to create rasterizer state (HR: %08X).", hr);
+				return false;
+			}
+
+			m_d3dContext->RSSetState(rasterizerState);
+			rasterizerState->Release();
+
+			return true;
 		}
 	}
 }

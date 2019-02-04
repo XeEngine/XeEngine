@@ -31,6 +31,7 @@ namespace Xe { namespace Graphics {
 		CSurface *m_Surface[0x100];
 		CDepthStencilState *m_DepthStencilState;
 		Xe::Math::Rectangle<int> m_Scissor;
+		bool m_ScissorEnabled;
 
 	public:
 		CContextNull();
@@ -46,7 +47,9 @@ namespace Xe { namespace Graphics {
 		int GetClearStencil() const;
 		void SetClearStencil(int stencil);
 
-		const Xe::Math::Rectangle<int> GetScissor();
+		bool IsScissorEnabled() const;
+		void SetScissorEnabled(bool enabled);
+		const Xe::Math::Rectangle<int> GetScissor() const;
 		void SetScissor(const Xe::Math::Rectangle<int>& scissor);
 
 		void Clear(svar clearmask);

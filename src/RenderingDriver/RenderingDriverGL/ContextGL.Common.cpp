@@ -245,7 +245,18 @@ void CContextGLCommon::SetClearStencil(int stencil) {
 	glClearStencil((GLint)stencil);
 }
 
-const Xe::Math::Rectangle<int> CContextGLCommon::GetScissor()
+
+bool CContextGLCommon::IsScissorEnabled() const
+{
+	return glIsEnabled(GL_SCISSOR_TEST);
+}
+
+void CContextGLCommon::SetScissorEnabled(bool enabled)
+{
+	enabled ? glEnable(GL_SCISSOR_TEST) : glDisable(GL_SCISSOR_TEST);
+}
+
+const Xe::Math::Rectangle<int> CContextGLCommon::GetScissor() const
 {
 	return m_Scissor;
 }

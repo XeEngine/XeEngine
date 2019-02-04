@@ -177,8 +177,12 @@ namespace Xe { namespace Graphics {
 		virtual int GetClearStencil() const = 0;
 		virtual void SetClearStencil(int stencil) = 0;
 
+		virtual bool IsScissorEnabled() const = 0;
+
+		virtual void SetScissorEnabled(bool enabled) = 0;
+
 		//! \brief Get the current scissor rectangle.
-		virtual const Xe::Math::Rectangle<int> GetScissor() = 0;
+		virtual const Xe::Math::Rectangle<int> GetScissor() const = 0;
 
 		//! \brief Set the scissor rectangle bound.
 		//! \param scissor Scissor rectangle, where each value must be positive.
