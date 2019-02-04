@@ -358,12 +358,12 @@ void CTilemap2d::DrawBackground()
 	m_DrawVertices.Data[vertexIndex + 3] = { (float)m_CameraSize.x, (float)m_CameraSize.y, 0, 0, colorIndex, texModeIndex };
 
 	m_DrawIndices.Reserve(6);
-	m_DrawIndices.Data[indices + 0] = { (u16)(vertexIndex + 1) };
-	m_DrawIndices.Data[indices + 1] = { (u16)(vertexIndex + 0) };
+	m_DrawIndices.Data[indices + 0] = { (u16)(vertexIndex + 0) };
+	m_DrawIndices.Data[indices + 1] = { (u16)(vertexIndex + 1) };
 	m_DrawIndices.Data[indices + 2] = { (u16)(vertexIndex + 2) };
 	m_DrawIndices.Data[indices + 3] = { (u16)(vertexIndex + 1) };
-	m_DrawIndices.Data[indices + 4] = { (u16)(vertexIndex + 2) };
-	m_DrawIndices.Data[indices + 5] = { (u16)(vertexIndex + 3) };
+	m_DrawIndices.Data[indices + 4] = { (u16)(vertexIndex + 3) };
+	m_DrawIndices.Data[indices + 5] = { (u16)(vertexIndex + 2) };
 }
 
 void CTilemap2d::DrawLayer(const CTilemapLayer& layer)
@@ -442,13 +442,14 @@ void CTilemap2d::DrawLayer(const CTilemapLayer& layer)
 			}
 
 			m_DrawIndices.Reserve(6);
-			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 0) };
-			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 1) };
-			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 2) };
-			m_DrawIndices.Data[indices++] = { (u16)(vertexIndex + 3) };
+			m_DrawIndices.Data[indices + 0] = { (u16)(vertexIndex + 0) };
+			m_DrawIndices.Data[indices + 1] = { (u16)(vertexIndex + 1) };
+			m_DrawIndices.Data[indices + 2] = { (u16)(vertexIndex + 2) };
+			m_DrawIndices.Data[indices + 3] = { (u16)(vertexIndex + 1) };
+			m_DrawIndices.Data[indices + 4] = { (u16)(vertexIndex + 3) };
+			m_DrawIndices.Data[indices + 5] = { (u16)(vertexIndex + 2) };
 			vertexIndex += 4;
+			indices += 6;
 		}
 
 		ASSERT(m_DrawVertices.Count == vertexIndex);
