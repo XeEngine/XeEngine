@@ -309,6 +309,8 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 	LOGA(m_Context->CreateBuffer(&indexBuffer, ibDesc, &ibDataDesc));
 	delete[] indexData;
 
+	auto isScissorEnabled = m_Context->IsScissorEnabled();
+	m_Context->SetScissorEnabled(true);
 	u32 primitiveOffset = 0;
 	for (int n = 0; n < draw_data->CmdListsCount; n++)
 	{
@@ -321,6 +323,7 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 			m_Context->SelectSurface(surface, 0);
 			m_Context->SetVertexBuffer(vertexBuffer);
 			m_Context->SetIndexBuffer(indexBuffer);
+			m_Context->SetScissor({ (int)pcmd.ClipRect.x, (int)pcmd.ClipRect.y, (int)pcmd.ClipRect.z, (int)pcmd.ClipRect.w });
 
 			m_Context->DrawIndexed(Xe::Graphics::Primitive_TriangleList, pcmd.ElemCount, primitiveOffset);
 			primitiveOffset += pcmd.ElemCount;
@@ -328,6 +331,7 @@ void ImGuiHandler::Render(ImDrawData* draw_data)
 	}
 	m_Context->SetVertexBuffer(nullptr);
 	m_Context->SetIndexBuffer(nullptr);
+	m_Context->SetScissorEnabled(isScissorEnabled);
 
 	indexBuffer->Release();
 	vertexBuffer->Release();
