@@ -586,6 +586,12 @@ namespace Xe {
 			}
 			return true;
 		}
+
+		void CContextD3D11::SetSwapChainViewport(const Size& size)
+		{
+			SetViewport(m_SwapChainViewportSize = size);
+		}
+
 		void CContextD3D11::SetViewport(const Size& size) {
 			m_viewport.TopLeftX = 0;
 			m_viewport.TopLeftY = 0;
@@ -595,6 +601,7 @@ namespace Xe {
 			m_viewport.MaxDepth = D3D11_MAX_DEPTH;
 			m_d3dContext->RSSetViewports(1, &m_viewport);
 		}
+
 		// Dism /online /add-capability /capabilityname:Tools.Graphics.DirectX~~~~0.0.1.0
 		bool CContextD3D11::IsSdkLayersAvailable() {
 			HRESULT hr = D3D11CreateDevice(

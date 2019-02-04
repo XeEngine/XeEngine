@@ -85,7 +85,7 @@ namespace Xe { namespace Graphics {
 			CreateWindowSizeDependentResources();
 		if (success == true)
 		{
-			SetViewport(m_pFrameView->GetSize());
+			SetSwapChainViewport(m_pFrameView->GetSize());
 			for (svar i = 0; i < lengthof(m_Surface); i++)
 				SelectSurface(nullptr, i);
 		}
@@ -123,7 +123,7 @@ namespace Xe { namespace Graphics {
 		if (SUCCEEDED(hr))
 		{
 			CreateResourcesForSwapchain();
-			SetViewport(size);
+			SetSwapChainViewport(size);
 		}
 		else
 		{

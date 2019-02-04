@@ -167,5 +167,14 @@ namespace Xe { namespace Graphics {
 		if (m_State.RenderSurface) m_State.RenderSurface->Release();
 		m_State.RenderSurface = surface;
 		if (m_State.RenderSurface) m_State.RenderSurface->AddRef();
+
+		if (surface)
+		{
+			SetViewport(surface->GetSize());
+		}
+		else
+		{
+			SetViewport(m_SwapChainViewportSize);
+		}
 	}
 } }

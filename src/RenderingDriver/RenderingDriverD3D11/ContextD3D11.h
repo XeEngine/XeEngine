@@ -41,6 +41,7 @@ namespace Xe { namespace Graphics {
 		FLOAT m_d3dClearColor[4];
 		CSurface *m_Surface[0x100];
 		CDepthStencilState *m_DepthStencilState;
+		Size m_SwapChainViewportSize;
 
 		IDXGIDevice1* m_dxgiDevice1;
 		IDXGIAdapter* m_dxgiAdapter;
@@ -85,6 +86,7 @@ namespace Xe { namespace Graphics {
 		bool CreateResourcesForSwapchain();
 		bool GetResourcesFromSwapchain();
 		bool CreateDepthBuffer(UINT width, UINT height);
+		void SetSwapChainViewport(const Size& size);
 		void SetViewport(const Size& size);
 		bool IsSdkLayersAvailable();
 
