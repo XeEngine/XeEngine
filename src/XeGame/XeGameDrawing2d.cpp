@@ -36,9 +36,9 @@ CDrawing2d::CDrawing2d(IContext *pContext) :
 	u32* pIndices = (u32*)indices;
 	for (int i = 0, nx = 0x00000000; i < MaximumQuadsCount * 3; i += 3)
 	{
-		pIndices[i + 0] = nx + 0x00000001;
+		pIndices[i + 0] = nx + 0x00010000;
 		pIndices[i + 1] = nx + 0x00010002;
-		pIndices[i + 2] = nx + 0x00030002;
+		pIndices[i + 2] = nx + 0x00020003;
 
 		nx += 0x00040004;
 	}
