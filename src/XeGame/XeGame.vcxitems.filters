@@ -128,6 +128,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameTilemapLayer.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTilemapDebugger.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTilemap2d.TilemapLayer.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTilemapDebugger.cpp">
+      <Filter>src\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
