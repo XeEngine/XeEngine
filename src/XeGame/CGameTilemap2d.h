@@ -43,7 +43,6 @@ namespace Xe { namespace Game {
 		};
 
 		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
-		TilemapDrawDelegate* m_DrawDelegate;
 		Math::Vector2i m_CameraSize;
 		Math::Vector2f m_CameraPosition;
 		Xe::Math::Vector2i m_TileSize;
@@ -86,7 +85,6 @@ namespace Xe { namespace Game {
 		~CTilemap2d();
 
 		void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate);
-		void SetDrawCallback(TilemapDrawDelegate* delegate);
 
 		const Xe::Graphics::Color& GetBackgroundColor() const;
 		void SetBackgroundColor(const Xe::Graphics::Color& color);
@@ -114,7 +112,6 @@ namespace Xe { namespace Game {
 		void Update(double deltaTime);
 		void Flush();
 
-		void Draw(TilemapDrawFlags drawFlags);
 		void Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags);
 		void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags);
 	};

@@ -7,7 +7,6 @@ using namespace Xe::Game;
 
 CTilemap2d::CTilemap2d() :
 	m_RequestTilesDelegate(nullptr),
-	m_DrawDelegate(nullptr),
 	m_Timer(0.0)
 {
 	SetLayersCount(1);
@@ -22,11 +21,6 @@ CTilemap2d::~CTilemap2d()
 void CTilemap2d::SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate)
 {
 	m_RequestTilesDelegate = delegate;
-}
-
-void CTilemap2d::SetDrawCallback(TilemapDrawDelegate* delegate)
-{
-	m_DrawDelegate = delegate;
 }
 
 const Xe::Graphics::Color& CTilemap2d::GetBackgroundColor() const
@@ -185,17 +179,6 @@ void CTilemap2d::Flush()
 	{
 		FetchLayer((CTilemapLayer&)*layer, layerIndex++);
 	}
-}
-
-void CTilemap2d::Draw(TilemapDrawFlags drawFlags)
-{
-	TilemapDrawArgs args;
-	Draw(args, drawFlags);
-
-	TilemapArgs<TilemapDrawArgs> e;
-	e.Sender = this;
-	e.Arguments = &args;
-	(*m_DrawDelegate)(e);
 }
 
 void CTilemap2d::Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags)

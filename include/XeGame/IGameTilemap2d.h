@@ -78,14 +78,11 @@ namespace Xe { namespace Game {
 
 	typedef TilemapDelegate<TilemapRequestTilesArgs> TilemapRequestTilesDelegate;
 
-	typedef TilemapDelegate<TilemapDrawArgs> TilemapDrawDelegate;
-
 	interface ITilemap2d : public IObject
 	{
 		virtual ~ITilemap2d() {};
 
 		virtual void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate) = 0;
-		virtual void SetDrawCallback(TilemapDrawDelegate* delegate) = 0;
 
 		virtual const Xe::Graphics::Color& GetBackgroundColor() const = 0;
 		virtual void SetBackgroundColor(const Xe::Graphics::Color& color) = 0;
@@ -110,7 +107,6 @@ namespace Xe { namespace Game {
 		virtual void Update(double deltaTime) = 0;
 		virtual void Flush() = 0;
 
-		virtual void Draw(TilemapDrawFlags drawFlags) = 0;
 		virtual void Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags) = 0;
 		virtual void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags) = 0;
 	};
