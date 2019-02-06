@@ -5,6 +5,7 @@
 #include <XeGame/IEntity.h>
 #include <XeGame/IEntityManager.h>
 #include <XeGame/ITextureManager.h>
+#include <XeGame/IGameTilemap2d.h>
 #include <XeGame/IGameSoundManager.h>
 #include <XeGame/IGameSoundBgmEntity.h>
 #include <XeGame/IGameSoundSfxEntity.h>
