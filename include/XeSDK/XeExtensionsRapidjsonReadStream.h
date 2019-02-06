@@ -38,7 +38,8 @@ namespace rapidjson
 		Ch Take()
 		{
 			Ch c = m_LastReadChar;
-			m_Stream->Read(&m_LastReadChar, 0, 1);
+			if (m_Stream->Read(&m_LastReadChar, 0, 1) == 0)
+				m_LastReadChar = '\0';
 			return c;
 		}
 

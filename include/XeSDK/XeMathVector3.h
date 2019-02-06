@@ -8,7 +8,7 @@ namespace Xe {
 		public:
 			T x, y, z;
 
-			Vector3() : x(0), y(0), z(0) {}
+			Vector3() : x((T)0), y((T)0), z((T)0) {}
 			Vector3(T v) : x(v), y(v), z(v) {}
 			Vector3(T x, T y, T z) : x(x), y(y), z(z) {}
 			Vector3(const Vector2<T>& v, float z) : x(v.x), y(v.y), z(z) {}

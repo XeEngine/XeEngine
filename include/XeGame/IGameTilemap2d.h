@@ -1,63 +1,113 @@
 #pragma once
+#include <XeSDK/IDelegate.h>
+#include <XeSDK/XeCollectionsArray.h>
+#include <XeSDK/XeMathVector2.h>
+#include <XeSDK/XeMathRectangle.h>
 #include <XeSDK/XeGraphicsColor.h>
+#include <XeGame/IGameTilemapLayer.h>
 
 namespace Xe { namespace Game {
-	struct TilesetProperties {
-		// Size of a single tile
-		Math::Vector2i TileSize;
-		// Size of the texture that contains the tileset
-		Math::Vector2i TextureSize;
-		// Where the tileset is located inside the texture
-		Math::Rectangle<int> Rectangle;
+	enum TilemapDrawFlags
+	{
+		TilemapDraw_Simple = 0,
+		TilemapDraw_CameraPosition = 1,
+		TilemapDraw_Parallax = 2,
+		TilemapDraw_AdvancedParallax = 4,
+		TilemapDraw_Palette = 8,
+		TilemapDraw_Color = 16,
+		TilemapDraw_IgnoreVisibility = 32,
+		TilemapDraw_All = 0x7FFF & (~TilemapDraw_IgnoreVisibility)
 	};
-	struct TileData {
-		union {
-			struct {
-				u16 Index : 14;
-				u16 Flip : 2;
-			};
-			u16 Tile;
-		};
-		u16 RESERVED;
-		Graphics::Color BlendColor;
+
+	static_assert(sizeof(TileData) == sizeof(TileData::Data), "TileData size is different than expected");
+
+	struct TileFrame
+	{
+		TileData Tile;
+		float DelayMs;
 	};
-	struct TilemapData {
-		TileData* Tilemap;
-		int Stride;
-		Math::Vector2i Size;
+
+	struct TilemapRequestTilesArgs
+	{
+		TilemapData Destination;
+		Math::Vector2i Position;
+		size_t LayerIndex;
 	};
+
+	struct TilemapDrawVertex
+	{
+		float x, y, u, v;
+		u16 ColorIndex, TextureModeIndex;
+	};
+
+	struct TilemapDrawIndex
+	{
+		u16 VertexIndex;
+	};
+
+	struct TilemapDrawList
+	{
+		TilemapDrawVertex* VerticesData;
+		TilemapDrawIndex* IndicesData;
+		Xe::Graphics::Color* ColorsData;
+		float* TextureModeData;
+		TexId TextureId;
+		ClutId ClutId;
+
+		size_t VerticesCount;
+		size_t IndicesCount;
+		size_t ColorsCount;
+		size_t TextureModeCount;
+	};
+
+	struct TilemapDrawArgs
+	{
+		std::vector<TilemapDrawList> Draws;
+		Math::Vector2f Position;
+		Math::Vector2f Size;
+	};
+
+	interface ITilemap2d;
+
+	template <class T>
+	struct TilemapArgs : public EventArgs<ITilemap2d*, T*> {};
+
+	template <class T>
+	interface TilemapDelegate :
+		public Xe::IDelegate<const TilemapArgs<T>&> {};
+
+	typedef TilemapDelegate<TilemapRequestTilesArgs> TilemapRequestTilesDelegate;
 
 	interface ITilemap2d : public IObject
 	{
-		enum DrawFlags {
-			Draw_Default = 0,
-			Draw_Flip = 1,
-			Draw_Palette = 2,
-			Draw_Parallax = 4,
-			Draw_Color = 8,
-		};
-
 		virtual ~ITilemap2d() {};
 
-		virtual void SetTileset(const TilesetProperties& tileset) = 0;
+		virtual void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate) = 0;
 
-		//! \brief Get the current size of the tilemap
-		//! \return Size of tilemap; by default it is set to (0, 0)
-		virtual const Math::Vector2i& GetMapSize() const = 0;
+		virtual const Xe::Graphics::Color& GetBackgroundColor() const = 0;
+		virtual void SetBackgroundColor(const Xe::Graphics::Color& color) = 0;
 
-		//! \brief Set the number of cells horizontally and vertically
-		//! \param[in] size Size of the tilemap
-		/** \details Every time that a new size iss specified, the old content
-		 * will be invalidated.
-		 */
-		virtual void SetMapSize(const Math::Vector2i& size) = 0;
+		virtual const Xe::Math::Vector2i& GetCameraSize() const = 0;
+		virtual void SetCameraSize(const Xe::Math::Vector2i& cameraSize) = 0;
 
-		virtual void Lock(TilemapData& data) = 0;
-		virtual void Unlock() = 0;
+		virtual const Xe::Math::Vector2f& GetCameraPosition() const = 0;
+		virtual void SetCameraPosition(const Xe::Math::Vector2f& cameraPosition) = 0;
 
-		virtual const Math::Rectanglef& GetCamera() const = 0;
-		virtual void SetCamera(const Math::Rectanglef& camera) = 0;
+		virtual const Xe::Math::Vector2i& GetTileSize() const = 0;
+		virtual void SetTileSize(const Xe::Math::Vector2i& tileSize) = 0;
 
-		virtual void Draw(int flags) = 0;
+		virtual bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) const = 0;
+		virtual void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames) = 0;
+		virtual void RemoveTileSequence(TileData tile) = 0;
+
+		virtual size_t GetLayerCount() const = 0;
+		virtual void SetLayersCount(size_t layersCount) = 0;
+		virtual ObjPtr<ITilemapLayer> GetLayer(size_t index) = 0;
+
+		virtual void Update(double deltaTime) = 0;
+		virtual void Flush() = 0;
+
+		virtual void Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags) = 0;
+		virtual void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags) = 0;
 	};
 } }

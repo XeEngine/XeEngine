@@ -14,6 +14,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTilemapDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\ICollection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\IComparable.h" />

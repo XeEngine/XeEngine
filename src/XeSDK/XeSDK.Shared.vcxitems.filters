@@ -360,6 +360,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeSDK\XeUri.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTilemapDef.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGraphics.cpp">

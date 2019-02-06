@@ -16,6 +16,9 @@
     <Filter Include="src\Tools">
       <UniqueIdentifier>{1b031038-92a4-4156-a675-454657dd14eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Tiled">
+      <UniqueIdentifier>{a63bbe3c-a03f-43f7-b0bf-6411ba364fb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
@@ -114,7 +117,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTiledDocument.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsFilePicker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTextureDebugger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameTiledDocument.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemapLayer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CGameTilemapLayer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTilemapDebugger.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -153,15 +169,28 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameDrawing2d.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTilemap2d.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTextureDebugger.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsFilePicker.cpp">
       <Filter>src\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TiledDocument.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsFilePicker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTextureDebugger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TiledDocument.cpp">
+      <Filter>src\Tiled</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTilemap2d.Tilemap2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTilemap2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameTilemap2d.TilemapLayer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTilemapDebugger.cpp">
+      <Filter>src\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

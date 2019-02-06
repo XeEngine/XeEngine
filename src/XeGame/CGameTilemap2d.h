@@ -1,43 +1,118 @@
 #pragma once
+#include <XeGame/IGameTilemap2d.h>
+
+using namespace Xe::Math;
 
 namespace Xe { namespace Game {
-	class CTilemap2d : public ITilemap2d {
-		IDrawing2d* m_pDrawing;
+	class CTilemapLayer;
+	class CTilemap2d : public ITilemap2d
+	{
+		template <class T>
+		struct MyVector
+		{
+			T* Data;
+			size_t Capacity;
+			size_t Count;
 
-		Graphics::Size m_TileSize;
-		Math::Vector2f m_TileSizef;
+			MyVector() : Data(nullptr), Capacity(0), Count(0) {}
+			inline void Realloc(size_t capacity) { Data = (T*)Xe::Memory::Resize(capacity); }
+			inline void Release() { if (Data) Xe::Memory::Free(Data); }
+			inline void Clear() { Count = 0; }
+			inline void Reserve(size_t newElements) { EnsureCapacity(Count += newElements); }
 
-		int m_TilesPerRow;
-		Math::Rectangle<float> m_TilesetRectf;
-		Math::Vector2f m_TilesetPos;
-		Math::Vector2f m_TilesetSize;
-		Math::Vector2f m_TilesetMul;
-		Math::Vector2f m_TilesetPadding;
+			inline void EnsureCapacity(size_t requiredCapacity)
+			{
+				if (Capacity < requiredCapacity)
+				{
+					SetCapacity(requiredCapacity + requiredCapacity / 4); // * 1.25
+				}
+			}
 
-		Math::Rectanglef m_Camera;
+			inline void SetCapacity(size_t capacity)
+			{
+				Capacity = capacity;
+				Data = (T*)Memory::Resize(Data, Capacity * sizeof(T));
+			}
+		};
 
-		Graphics::Size m_MapSize;
-		int m_ParallaxSize;
-		TileData* m_Tilemap;
-		float* m_Parallax;
+		struct TileSequence
+		{
+			TileData TileId;
+			float Speed;
+			MyVector<TileFrame> Sequence;
+		};
 
-		void SetTileset(const TilesetProperties& tileset);
+		TilemapRequestTilesDelegate* m_RequestTilesDelegate;
+		Math::Vector2i m_CameraSize;
+		Math::Vector2f m_CameraPosition;
+		Xe::Math::Vector2i m_TileSize;
+		mutable Xe::Math::Vector2i m_BufferSizeDELETEME;
+		Graphics::Color m_BgColor;
+		double m_Timer;
+		std::list<TileSequence> m_AnimatedTiles;
+		std::vector<ObjPtr<ITilemapLayer>> m_Layers;
 
-		const Graphics::Size& GetMapSize() const;
-		void SetMapSize(const Graphics::Size& size);
+		MyVector<TilemapDrawVertex> m_DrawVertices;
+		MyVector<TilemapDrawIndex> m_DrawIndices;
+		MyVector<Xe::Graphics::Color> m_DrawColors;
+		MyVector<float> m_DrawTextureModes;
 
-		void Lock(TilemapData& data);
-		void Unlock();
+		template <class T>
+		static T* EnsureCapacity(T* mem, size_t currentCapacity, size_t requiredCapacity)
+		{
+			return currentCapacity < requiredCapacity ? (T*)Memory::Resize(mem, requiredCapacity * sizeof(T)) : mem;
+		}
 
-		const Math::Rectanglef& GetCamera() const;
-		void SetCamera(const Math::Rectanglef& camera);
+		u16 PeekColor() const;
+		u16 PushColor(const Xe::Graphics::Color& color);
 
-		void Draw(int flags);
-		void DrawStandard() const;
-		void DrawFlip() const;
+		u16 PeekTexMode() const;
+		u16 PushTexMode(float mode);
+		u16 PushTexModeNoTexture();
+		u16 PushTexModeTexture();
+		u16 PushTexModePalette(float palette);
 
+		TileData GetTileData(TileData tile) const;
+
+		void FetchLayer(CTilemapLayer& layer, size_t layerIndex);
+
+		bool RenderBegin(TilemapDrawArgs& drawArgs);
+		void RenderEnd(TilemapDrawArgs& drawArgs);
+		void DrawBackground();
+		void DrawLayer(const CTilemapLayer& layer, TilemapDrawFlags drawFlags);
 	public:
-		CTilemap2d(IDrawing2d* context);
+		CTilemap2d();
 		~CTilemap2d();
+
+		void SetRequestTilesCallback(TilemapRequestTilesDelegate* delegate);
+
+		const Xe::Graphics::Color& GetBackgroundColor() const;
+		void SetBackgroundColor(const Xe::Graphics::Color& color);
+
+		const Math::Vector2i& GetCameraSize() const;
+		void SetCameraSize(const Math::Vector2i& cameraSize);
+
+		const Xe::Math::Vector2f& GetCameraPosition() const;
+		void SetCameraPosition(const Xe::Math::Vector2f& cameraPosition);
+
+		const Xe::Math::Vector2i& GetTileSize() const;
+		void SetTileSize(const Xe::Math::Vector2i& tileSize);
+
+		bool GetTileSequence(TileData tile, std::vector<TileFrame>& frames) const;
+		void AddTileSequence(TileData tile, const Xe::Collections::Array<TileFrame>& frames);
+		void RemoveTileSequence(TileData tile);
+
+		size_t GetLayerCount() const;
+		void SetLayersCount(size_t layersCount);
+		ObjPtr<ITilemapLayer> GetLayer(size_t index);
+
+		const Xe::Math::Vector2i& GetBufferSize() const;
+		void SetBufferSize(const Xe::Math::Vector2i& bufferSize);
+
+		void Update(double deltaTime);
+		void Flush();
+
+		void Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags);
+		void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags);
 	};
 } }
