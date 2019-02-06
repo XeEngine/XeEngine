@@ -106,6 +106,9 @@ namespace Xe { namespace Game {
 
 		virtual void Update(double deltaTime) = 0;
 		virtual void Flush() = 0;
+
 		virtual void Draw() = 0;
+		virtual void Draw(TilemapDrawArgs& drawArgs) = 0;
+		virtual void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs) = 0;
 	};
 } }

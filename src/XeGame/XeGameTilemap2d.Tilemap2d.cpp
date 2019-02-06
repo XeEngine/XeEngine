@@ -189,45 +189,44 @@ void CTilemap2d::Flush()
 
 void CTilemap2d::Draw()
 {
-	m_DrawVertices.Clear();
-	m_DrawIndices.Clear();
-	m_DrawColors.Clear();
-	m_DrawTextureModes.Clear();
-
-	if (m_TileSize.x == 0 || m_TileSize.y == 0)
-		return;
-
-	DrawBackground();
-
-	PushColor(Xe::Graphics::Color::White);
-	PushTexModeTexture();
-
-	for (auto layer : m_Layers)
-	{
-		DrawLayer(*(CTilemapLayer*)layer.Get());
-	}
-
 	TilemapDrawArgs args;
-	args.Draws.push_back(TilemapDrawList
-		{
-			m_DrawVertices.Data,
-			m_DrawIndices.Data,
-			m_DrawColors.Data,
-			m_DrawTextureModes.Data,
-
-			m_Layers[0]->GetTexture(),
-			m_Layers[0]->GetPalette(),
-
-			m_DrawVertices.Count,
-			m_DrawIndices.Count,
-			m_DrawColors.Count,
-			m_DrawTextureModes.Count
-		});
+	Draw(args);
 
 	TilemapArgs<TilemapDrawArgs> e;
 	e.Sender = this;
 	e.Arguments = &args;
 	(*m_DrawDelegate)(e);
+}
+
+void CTilemap2d::Draw(TilemapDrawArgs& drawArgs)
+{
+	if (RenderBegin(drawArgs))
+	{
+		DrawBackground();
+
+		PushColor(Xe::Graphics::Color::White);
+		PushTexModeTexture();
+
+		for (auto layer : m_Layers)
+		{
+			DrawLayer(*(CTilemapLayer*)layer.Get());
+		}
+	}
+
+	RenderEnd(drawArgs);
+}
+
+void CTilemap2d::DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs)
+{
+	if (RenderBegin(drawArgs))
+	{
+		PushColor(Xe::Graphics::Color::White);
+		PushTexModeTexture();
+
+		DrawLayer(*(CTilemapLayer*)GetLayer(layerIndex).Get());
+	}
+
+	RenderEnd(drawArgs);
 }
 
 inline u16 CTilemap2d::PeekColor() const
@@ -339,6 +338,38 @@ void CTilemap2d::FetchLayer(CTilemapLayer& layer, size_t layerIndex)
 	(*m_RequestTilesDelegate)(e);
 
 	layer.Unlock();
+}
+
+bool CTilemap2d::RenderBegin(TilemapDrawArgs& drawArgs)
+{
+	m_DrawVertices.Clear();
+	m_DrawIndices.Clear();
+	m_DrawColors.Clear();
+	m_DrawTextureModes.Clear();
+
+	if (m_TileSize.x == 0 || m_TileSize.y == 0)
+		return false;
+
+	return true;
+}
+
+void CTilemap2d::RenderEnd(TilemapDrawArgs& drawArgs)
+{
+	drawArgs.Draws.push_back(TilemapDrawList
+		{
+			m_DrawVertices.Data,
+			m_DrawIndices.Data,
+			m_DrawColors.Data,
+			m_DrawTextureModes.Data,
+
+			m_Layers[0]->GetTexture(),
+			m_Layers[0]->GetPalette(),
+
+			m_DrawVertices.Count,
+			m_DrawIndices.Count,
+			m_DrawColors.Count,
+			m_DrawTextureModes.Count
+		});
 }
 
 void CTilemap2d::DrawBackground()

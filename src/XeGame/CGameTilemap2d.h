@@ -77,6 +77,8 @@ namespace Xe { namespace Game {
 
 		void FetchLayer(CTilemapLayer& layer, size_t layerIndex);
 
+		bool RenderBegin(TilemapDrawArgs& drawArgs);
+		void RenderEnd(TilemapDrawArgs& drawArgs);
 		void DrawBackground();
 		void DrawLayer(const CTilemapLayer& layer);
 	public:
@@ -112,5 +114,7 @@ namespace Xe { namespace Game {
 		void Update(double deltaTime);
 		void Flush();
 		void Draw();
+		void Draw(TilemapDrawArgs& drawArgs);
+		void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs);
 	};
 } }
