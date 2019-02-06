@@ -80,7 +80,7 @@ namespace Xe { namespace Game {
 		bool RenderBegin(TilemapDrawArgs& drawArgs);
 		void RenderEnd(TilemapDrawArgs& drawArgs);
 		void DrawBackground();
-		void DrawLayer(const CTilemapLayer& layer);
+		void DrawLayer(const CTilemapLayer& layer, TilemapDrawFlags drawFlags);
 	public:
 		CTilemap2d();
 		~CTilemap2d();
@@ -113,8 +113,9 @@ namespace Xe { namespace Game {
 
 		void Update(double deltaTime);
 		void Flush();
-		void Draw();
-		void Draw(TilemapDrawArgs& drawArgs);
-		void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs);
+
+		void Draw(TilemapDrawFlags drawFlags);
+		void Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags);
+		void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags);
 	};
 } }

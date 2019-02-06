@@ -10,10 +10,13 @@ namespace Xe { namespace Game {
 	enum TilemapDrawFlags
 	{
 		TilemapDraw_Simple = 0,
-		TilemapDraw_Flip = 1,
-		TilemapDraw_Palette = 2,
-		TilemapDraw_Parallax = 4,
-		TilemapDraw_Color = 8,
+		TilemapDraw_CameraPosition = 1,
+		TilemapDraw_Parallax = 2,
+		TilemapDraw_AdvancedParallax = 4,
+		TilemapDraw_Palette = 8,
+		TilemapDraw_Color = 16,
+		TilemapDraw_IgnoreVisibility = 32,
+		TilemapDraw_All = 0x7FFF & (~TilemapDraw_IgnoreVisibility)
 	};
 
 	static_assert(sizeof(TileData) == sizeof(TileData::Data), "TileData size is different than expected");
@@ -107,8 +110,8 @@ namespace Xe { namespace Game {
 		virtual void Update(double deltaTime) = 0;
 		virtual void Flush() = 0;
 
-		virtual void Draw() = 0;
-		virtual void Draw(TilemapDrawArgs& drawArgs) = 0;
-		virtual void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs) = 0;
+		virtual void Draw(TilemapDrawFlags drawFlags) = 0;
+		virtual void Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags) = 0;
+		virtual void DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags) = 0;
 	};
 } }

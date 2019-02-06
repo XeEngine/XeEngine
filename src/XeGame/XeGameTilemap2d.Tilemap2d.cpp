@@ -187,10 +187,10 @@ void CTilemap2d::Flush()
 	}
 }
 
-void CTilemap2d::Draw()
+void CTilemap2d::Draw(TilemapDrawFlags drawFlags)
 {
 	TilemapDrawArgs args;
-	Draw(args);
+	Draw(args, drawFlags);
 
 	TilemapArgs<TilemapDrawArgs> e;
 	e.Sender = this;
@@ -198,7 +198,7 @@ void CTilemap2d::Draw()
 	(*m_DrawDelegate)(e);
 }
 
-void CTilemap2d::Draw(TilemapDrawArgs& drawArgs)
+void CTilemap2d::Draw(TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags)
 {
 	if (RenderBegin(drawArgs))
 	{
@@ -209,21 +209,21 @@ void CTilemap2d::Draw(TilemapDrawArgs& drawArgs)
 
 		for (auto layer : m_Layers)
 		{
-			DrawLayer(*(CTilemapLayer*)layer.Get());
+			DrawLayer(*(CTilemapLayer*)layer.Get(), drawFlags);
 		}
 	}
 
 	RenderEnd(drawArgs);
 }
 
-void CTilemap2d::DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs)
+void CTilemap2d::DrawLayer(size_t layerIndex, TilemapDrawArgs& drawArgs, TilemapDrawFlags drawFlags)
 {
 	if (RenderBegin(drawArgs))
 	{
 		PushColor(Xe::Graphics::Color::White);
 		PushTexModeTexture();
 
-		DrawLayer(*(CTilemapLayer*)GetLayer(layerIndex).Get());
+		DrawLayer(*(CTilemapLayer*)GetLayer(layerIndex).Get(), drawFlags);
 	}
 
 	RenderEnd(drawArgs);
@@ -397,9 +397,9 @@ void CTilemap2d::DrawBackground()
 	m_DrawIndices.Data[indices + 5] = { (u16)(vertexIndex + 2) };
 }
 
-void CTilemap2d::DrawLayer(const CTilemapLayer& layer)
+void CTilemap2d::DrawLayer(const CTilemapLayer& layer, TilemapDrawFlags drawFlags)
 {
-	if (!layer.IsVisible())
+	if (!layer.IsVisible() && !(drawFlags & TilemapDraw_IgnoreVisibility))
 		return;
 
 	auto vertexIndex = m_DrawVertices.Count;
@@ -407,7 +407,12 @@ void CTilemap2d::DrawLayer(const CTilemapLayer& layer)
 	auto colorIndex = PeekColor();
 	auto texModeIndex = PeekTexMode();
 
-	auto position = layer.ProcessPosition(GetCameraPosition());
+	Xe::Math::Vector2f position{ 0, 0 };
+	if (drawFlags & TilemapDraw_CameraPosition)
+		position = GetCameraPosition();
+	if (drawFlags & TilemapDraw_Parallax)
+		position = layer.ProcessPosition(position);
+
 	int width = (m_CameraSize.x + m_TileSize.x) / m_TileSize.x;
 	int height = (m_CameraSize.y + m_TileSize.y) / m_TileSize.y;
 	float tx = (float)m_TileSize.x;
