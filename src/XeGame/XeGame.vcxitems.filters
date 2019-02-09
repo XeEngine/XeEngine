@@ -19,6 +19,9 @@
     <Filter Include="src\Tiled">
       <UniqueIdentifier>{a63bbe3c-a03f-43f7-b0bf-6411ba364fb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Animations">
+      <UniqueIdentifier>{7483b9ce-704d-4a17-9062-57988ab5e3d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
@@ -131,6 +134,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameToolsTilemapDebugger.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameAnimationDef.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -191,6 +197,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameToolsTilemapDebugger.cpp">
       <Filter>src\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameAnimations.Document.cpp">
+      <Filter>src\Animations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CGameSoundSfxEntity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlatformDummy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameAnimations.Document.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameDrawing2d.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameImGuiHandler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
@@ -53,6 +54,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemap2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameTilemapLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\ITextureManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameAnimationDef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameEaseFunctions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameImGuiHandler.h" />
