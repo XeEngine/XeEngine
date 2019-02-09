@@ -136,44 +136,6 @@ void Internal_SaveProperties(const Tiled::GenericProperties& obj, rapidjson::Val
 	JSON_ADD(value, "properties", propertiesValue);
 }
 
-template <class T>
-void Internal_ParseList(std::list<T>& list, const rapidjson::Value& value, const char* memberName)
-{
-	if (value.HasMember(memberName))
-	{
-		const auto& items = value[memberName].GetArray();
-		list.clear();
-
-		for (rapidjson::SizeType i = 0; i < items.Size(); ++i)
-		{
-			list.push_back(T());
-			auto& item = *std::prev(list.end());
-			Internal_Parse(item, items[i]);
-		}
-	}
-}
-
-template <class T>
-void Internal_SaveList(const std::list<T>& items, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator, const char* memberName)
-{
-	if (items.size() > 0)
-	{
-		rapidjson::Value jsonArray;
-		jsonArray.SetArray();
-
-		for (const auto& item : items)
-		{
-			rapidjson::Value jsonItem;
-			jsonItem.SetObject();
-
-			Internal_Save(item, jsonItem, allocator);
-			jsonArray.PushBack(jsonItem, allocator);
-		}
-
-		value.AddMember(rapidjson::Value::StringRefType::GenericStringRef(memberName), jsonArray, allocator);
-	}
-}
-
 void Internal_ReadLayerDataRaw(std::vector<Tiled::Gid>& vector, const rapidjson::Value& jsonData)
 {
 	if (!jsonData.IsArray())
@@ -248,7 +210,7 @@ void Internal_Parse(Tiled::Tile& obj, const rapidjson::Value& value)
 	JSON_GET(value, "type", GetString(), obj.Type);
 
 	Internal_ParseProperties(obj, value);
-	Internal_ParseList(obj.Animation, value, "animation");
+	JsonGetList(obj.Animation, value, "animation", Internal_Parse);
 }
 
 void Internal_Save(const Tiled::Tile& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
@@ -258,7 +220,7 @@ void Internal_Save(const Tiled::Tile& obj, rapidjson::Value& value, rapidjson::M
 	JSON_STRADD(value, "type", obj.Type);
 
 	Internal_SaveProperties(obj, value, allocator);
-	Internal_SaveList(obj.Animation, value, allocator, "animation");
+	JsonAddList(obj.Animation, value, allocator, "animation", Internal_Save);
 }
 
 void Internal_Parse(Tiled::Tileset& obj, const rapidjson::Value& value)
@@ -281,7 +243,7 @@ void Internal_Parse(Tiled::Tileset& obj, const rapidjson::Value& value)
 	JSON_GET(value, "version", GetFloat(), obj.Version);
 
 	Internal_ParseProperties(obj, value);
-	Internal_ParseList(obj.Tiles, value, "tiles");
+	JsonGetList(obj.Tiles, value, "tiles", Internal_Parse);
 }
 
 void Internal_Save(const Tiled::Tileset& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
@@ -304,7 +266,7 @@ void Internal_Save(const Tiled::Tileset& obj, rapidjson::Value& value, rapidjson
 	JSON_ADD(value, "version", obj.Version);
 
 	Internal_SaveProperties(obj, value, allocator);
-	Internal_SaveList(obj.Tiles, value, allocator, "tiles");
+	JsonAddList(obj.Tiles, value, allocator, "tiles", Internal_Save);
 }
 
 void Internal_Parse(Tiled::Layer& obj, const rapidjson::Value& value)
@@ -350,8 +312,8 @@ void Internal_Parse(Tiled::Layer& obj, const rapidjson::Value& value)
 		}
 	}
 
-	Internal_ParseList(obj.Objects, value, "objects");
-	Internal_ParseList(obj.Layers, value, "layers");
+	JsonGetList(obj.Objects, value, "objects", Internal_Parse);
+	JsonGetList(obj.Layers, value, "layers", Internal_Parse);
 	Internal_ParseProperties(obj, value);
 }
 
@@ -396,8 +358,8 @@ void Internal_Save(const Tiled::Layer& obj, rapidjson::Value& value, rapidjson::
 	}
 	JSON_ADD(value, "data", jsonData);
 
-	Internal_SaveList(obj.Objects, value, allocator, "objects");
-	Internal_SaveList(obj.Layers, value, allocator, "layers");
+	JsonAddList(obj.Objects, value, allocator, "objects", Internal_Save);
+	JsonAddList(obj.Layers, value, allocator, "layers", Internal_Save);
 	Internal_SaveProperties(obj, value, allocator);
 }
 
@@ -429,8 +391,8 @@ void Internal_Parse(Tiled::Object& obj, const rapidjson::Value& value)
 	JSON_GET(value, "point", GetBool(), obj.Point);
 	JSON_GET(value, "ellipse", GetBool(), obj.Ellipse);
 
-	Internal_ParseList(obj.Polygon, value, "polygon");
-	Internal_ParseList(obj.Polyline, value, "polyline");
+	JsonGetList(obj.Polygon, value, "polygon", Internal_Parse);
+	JsonGetList(obj.Polyline, value, "polyline", Internal_Parse);
 }
 
 void Internal_Save(const Tiled::Object& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
@@ -449,8 +411,8 @@ void Internal_Save(const Tiled::Object& obj, rapidjson::Value& value, rapidjson:
 	JSON_ADDIF(value, "point", obj.Point, false);
 	JSON_ADDIF(value, "ellipse", obj.Ellipse, false);
 
-	Internal_SaveList(obj.Polygon, value, allocator, "polygon");
-	Internal_SaveList(obj.Polyline, value, allocator, "polyline");
+	JsonAddList(obj.Polygon, value, allocator, "polygon", Internal_Save);
+	JsonAddList(obj.Polyline, value, allocator, "polyline", Internal_Save);
 }
 
 void Internal_Parse(Tiled::Map& obj, const rapidjson::Value& value)
@@ -472,8 +434,8 @@ void Internal_Parse(Tiled::Map& obj, const rapidjson::Value& value)
 	JSON_GET(value, "tiledversion", GetString(), obj.TiledVersion);
 	JSON_GET(value, "version", GetFloat(), obj.Version);
 
-	Internal_ParseList(obj.Tilesets, value, "tilesets");
-	Internal_ParseList(obj.Layers, value, "layers");
+	JsonGetList(obj.Tilesets, value, "tilesets", Internal_Parse);
+	JsonGetList(obj.Layers, value, "layers", Internal_Parse);
 	Internal_ParseProperties(obj, value);
 }
 
@@ -496,8 +458,8 @@ void Internal_Save(const Tiled::Map& obj, rapidjson::Value& value, rapidjson::Me
 	JSON_STRADD(value, "tiledversion", obj.TiledVersion);
 	JSON_ADD(value, "version", obj.Version);
 
-	Internal_SaveList(obj.Tilesets, value, allocator, "tilesets");
-	Internal_SaveList(obj.Layers, value, allocator, "layers");
+	JsonAddList(obj.Tilesets, value, allocator, "tilesets", Internal_Save);
+	JsonAddList(obj.Layers, value, allocator, "layers", Internal_Save);
 	Internal_SaveProperties(obj, value, allocator);
 }
 
