@@ -6,6 +6,7 @@
 #include <rapidjson/filereadstream.h>
 #include <rapidjson/prettywriter.h>
 #include <rapidjson/writer.h>
+#include <list>
 
 #define JSON_GET(val, key, func, var) \
 	if (val.HasMember(key)) { var = val[key].func; }

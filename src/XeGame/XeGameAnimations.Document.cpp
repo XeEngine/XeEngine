@@ -35,6 +35,36 @@ namespace Xe { namespace Game { namespace Animations {
 		JSON_ADD(value, "reference", obj.Reference);
 	}
 
+	void Internal_Parse(FrameSequence& obj, const rapidjson::Value& value)
+	{
+		JSON_GET(value, "name", GetString(), obj.Name);
+		JSON_GET(value, "duration", GetUint(), obj.Duration);
+		JSON_GET(value, "loop", GetUint(), obj.Loop);
+		JSON_GET(value, "flags", GetUint(), obj.Flags);
+
+		JsonGetList(obj.Frames, value, "frames", Internal_Parse);
+	}
+
+	void Internal_Save(const FrameSequence& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
+	{
+		JSON_STRADD(value, "name", obj.Name);
+		JSON_ADD(value, "duration", obj.Duration);
+		JSON_ADD(value, "loop", obj.Loop);
+		JSON_ADD(value, "flags", obj.Flags);
+
+		JsonAddList(obj.Frames, value, allocator, "frames", Internal_Save);
+	}
+
+	void Internal_Parse(SpriteSheet& obj, const rapidjson::Value& value)
+	{
+		JSON_GET(value, "path", GetString(), obj.Path);
+	}
+
+	void Internal_Save(const SpriteSheet& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
+	{
+		JSON_STRADD(value, "path", obj.Path);
+	}
+
 	Frame& Animations::ParseJson(Frame& obj, Xe::IO::IStream* pStream)
 	{
 		rapidjson::XeReadStream stream(pStream);
@@ -53,4 +83,71 @@ namespace Xe { namespace Game { namespace Animations {
 		return obj;
 	}
 
+	FrameSequence& Animations::ParseJson(FrameSequence& obj, Xe::IO::IStream* pStream)
+	{
+		rapidjson::XeReadStream stream(pStream);
+		Internal_Parse(obj, rapidjson::Document().ParseStream(stream));
+
+		return obj;
+	}
+
+	const FrameSequence& Animations::SaveJson(const FrameSequence& obj, Xe::IO::IStream* pStream)
+	{
+		rapidjson::Document document;
+		document.SetObject();
+		Internal_Save(obj, document, document.GetAllocator());
+		Internal_WriteToStream(pStream, document);
+
+		return obj;
+	}
+
+	SpriteSheet& ParseJson(SpriteSheet& obj, Xe::IO::IStream* pStream)
+	{
+		rapidjson::XeReadStream stream(pStream);
+		Internal_Parse(obj, rapidjson::Document().ParseStream(stream));
+
+		return obj;
+	}
+
+	const SpriteSheet& SaveJson(const SpriteSheet& obj, Xe::IO::IStream* pStream)
+	{
+		rapidjson::Document document;
+		document.SetObject();
+		Internal_Save(obj, document, document.GetAllocator());
+		Internal_WriteToStream(pStream, document);
+
+		return obj;
+	}
+
+	void Animations::ParseJson(AnimationDocument& obj, const rapidjson::Value& value)
+	{
+		JSON_GET(value, "name", GetString(), obj.Name);
+		JsonGetList(obj.SpriteSheets, value, "spritesheets", Internal_Parse);
+		JsonGetList(obj.Sequences, value, "sequences", Internal_Parse);
+	}
+
+	void Animations::SaveJson(const AnimationDocument& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
+	{
+		JSON_STRADD(value, "name", obj.Name);
+		JsonAddList(obj.SpriteSheets, value, allocator, "spritesheets", Internal_Save);
+		JsonAddList(obj.Sequences, value, allocator, "sequences", Internal_Save);
+	}
+
+	AnimationDocument& Animations::ParseJson(AnimationDocument& obj, Xe::IO::IStream* pStream)
+	{
+		rapidjson::XeReadStream stream(pStream);
+		ParseJson(obj, rapidjson::Document().ParseStream(stream));
+
+		return obj;
+	}
+
+	const AnimationDocument& Animations::SaveJson(const AnimationDocument& obj, Xe::IO::IStream* pStream)
+	{
+		rapidjson::Document document;
+		document.SetObject();
+		SaveJson(obj, document, document.GetAllocator());
+		Internal_WriteToStream(pStream, document);
+
+		return obj;
+	}
 } } }
