@@ -2,6 +2,7 @@
 #include <XeGame/IGameAnimationsAnimationGroup.h>
 #include <XeGame/XeGameAnimations.h>
 #include <XeGame/XeGameAnimationDef.h>
+#include "XeGameAnimations.SequenceAnimator.h"
 
 using namespace Xe;
 using namespace Xe::Game;
@@ -40,13 +41,8 @@ public:
 
 	bool IsSequenceExists(const StringSpan& sequenceName) const
 	{
-		for (const auto& sequence : m_Document.Sequences)
-		{
-			if (StringSpan::Compare(sequence.Name, sequenceName) == 0)
-				return true;
-		}
-
-		return false;
+		const FrameSequence* pFrameSequence;
+		return TryGetSequence(&pFrameSequence, sequenceName);
 	}
 
 	bool TryGetSequence(const FrameSequence** ppFrameSequence, const StringSpan& sequenceName) const
@@ -62,6 +58,19 @@ public:
 
 		*ppFrameSequence = nullptr;
 		return false;
+	}
+
+	bool TryCreateSequenceAnimator(ISequenceAnimator** ppSequenceAnimator, const StringSpan& sequenceName) const
+	{
+		const FrameSequence* pFrameSequence;
+		if (!TryGetSequence(&pFrameSequence, sequenceName))
+		{
+			*ppSequenceAnimator = nullptr;
+			return false;
+		}
+
+		*ppSequenceAnimator = new SequenceAnimator(*pFrameSequence);
+		return true;
 	}
 };
 

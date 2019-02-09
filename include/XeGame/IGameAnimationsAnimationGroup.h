@@ -4,6 +4,7 @@
 #include <list>
 
 namespace Xe { namespace Game { namespace Animations {
+	struct ISequenceAnimator;
 	struct FrameSequence;
 	interface IAnimationGroup
 	{
@@ -16,5 +17,7 @@ namespace Xe { namespace Game { namespace Animations {
 		virtual bool IsSequenceExists(const StringSpan& sequenceName) const = 0;
 
 		virtual bool TryGetSequence(const FrameSequence** ppFrameSequence, const StringSpan& sequenceName) const = 0;
+
+		virtual bool TryCreateSequenceAnimator(ISequenceAnimator** ppSequenceAnimator, const StringSpan& sequenceName) const = 0;
 	};
 } } }

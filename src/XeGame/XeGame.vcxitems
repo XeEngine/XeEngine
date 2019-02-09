@@ -46,6 +46,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IEntityManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAchievement.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAnimationsAnimationGroup.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAnimationsSequenceAnimator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameDrawing2d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGamePlatformCallback.h" />
@@ -78,6 +79,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CGameTilemapLayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlatformConfig.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGameAnimations.SequenceAnimator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XeGameTextureManagerDef.h" />
   </ItemGroup>
 </Project>

@@ -3,8 +3,9 @@
 #include <XeSDK/IIOMemoryStream.h>
 #include <XeGame/XeGameAnimationDef.h>
 #include "JsonTestHelper.h"
-#include "XeGame/IGameAnimationsAnimationGroup.h"
-#include "XeGame/XeGameAnimations.h"
+#include <XeGame/IGameAnimationsAnimationGroup.h>
+#include <XeGame/IGameAnimationsSequenceAnimator.h>
+#include <XeGame/XeGameAnimations.h>
 
 using namespace Xe;
 using namespace Xe::IO;
@@ -145,4 +146,37 @@ TEST(XeGameAnimationsTest, FactoryAnimationGroupTest) {
 
 	ASSERT_EQ(true, pAnimGroup->TryGetSequence(&pFrameSequence, "Anim3"));
 	ASSERT_NE(nullptr, pFrameSequence);
+}
+
+
+TEST(XeGameAnimationsTest, CreateSequenceAnimatorTest) {
+	AnimationDocument doc;
+	doc.Name = "AnimationDocumentName";
+
+	auto& sequence = Add(doc.Sequences);
+	sequence.Name = "Sequence";
+	sequence.Loop = 999;
+
+	auto& frame1 = Add(sequence.Frames);
+	auto& frame2 = Add(sequence.Frames);
+	frame1.Duration = 666;
+	frame2.Duration = 777;
+
+	IAnimationGroup* pAnimGroup;
+	ASSERT_EQ(true, Factory(&pAnimGroup, doc));
+
+	ISequenceAnimator* pSequenceAnimator = (ISequenceAnimator*)0xDEADCCCC;
+	ASSERT_EQ(false, pAnimGroup->TryCreateSequenceAnimator(&pSequenceAnimator, "none"));
+	ASSERT_EQ(nullptr, pSequenceAnimator);
+
+	ASSERT_EQ(true, pAnimGroup->TryCreateSequenceAnimator(&pSequenceAnimator, "Sequence"));
+	ASSERT_NE(nullptr, pSequenceAnimator);
+
+	ASSERT_STREQ(sequence.Name, pSequenceAnimator->GetName());
+	ASSERT_EQ(sequence.Loop, pSequenceAnimator->GetLoopIndex());
+	ASSERT_EQ(sequence.Frames.size(), pSequenceAnimator->GetFrameCount());
+	ASSERT_EQ((*sequence.Frames.begin()).Duration, pSequenceAnimator->GetFrame(0).Duration);
+	ASSERT_EQ((*std::next(sequence.Frames.begin())).Duration, pSequenceAnimator->GetFrame(1).Duration);
+
+	ASSERT_THROW(pSequenceAnimator->GetFrame(sequence.Frames.size()), std::invalid_argument);
 }

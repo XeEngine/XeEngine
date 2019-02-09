@@ -143,6 +143,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameAnimations.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAnimationsSequenceAnimator.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XeGameAnimations.SequenceAnimator.h">
+      <Filter>src\Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
