@@ -137,6 +137,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameAnimationDef.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\IGameAnimationsAnimationGroup.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\include\XeGame\XeGameAnimations.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGame.cpp">
@@ -199,6 +205,9 @@
       <Filter>src\Tools</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)XeGameAnimations.Document.cpp">
+      <Filter>src\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XeGameAnimations.AnimGroup.cpp">
       <Filter>src\Animations</Filter>
     </ClCompile>
   </ItemGroup>

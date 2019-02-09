@@ -3,6 +3,8 @@
 #include <XeSDK/IIOMemoryStream.h>
 #include <XeGame/XeGameAnimationDef.h>
 #include "JsonTestHelper.h"
+#include "XeGame/IGameAnimationsAnimationGroup.h"
+#include "XeGame/XeGameAnimations.h"
 
 using namespace Xe;
 using namespace Xe::IO;
@@ -101,4 +103,46 @@ TEST(XeGameAnimationsTest, SaveAndParseAnimationDocumentTest) {
 	ASSERT_STREQ(expectedSpriteSheet1.Path, (*actual.SpriteSheets.begin()).Path);
 	ASSERT_EQ(expected.Sequences.size(), actual.Sequences.size());
 	ASSERT_EQ(expectedSequence1.Duration, (*actual.Sequences.begin()).Duration);
+}
+
+TEST(XeGameAnimationsTest, FactoryAnimationGroupTest) {
+	AnimationDocument doc;
+	doc.Name = "AnimationDocumentName";
+	auto& sequence1 = Add(doc.Sequences);
+	auto& sequence2 = Add(doc.Sequences);
+	auto& sequence3 = Add(doc.Sequences);
+	auto& sequence4 = Add(doc.Sequences);
+	auto& sequence5 = Add(doc.Sequences);
+	auto& sequence6 = Add(doc.Sequences);
+
+	sequence1.Name = "Anim1";
+	sequence2.Name = "Anim2";
+	sequence3.Name = "Anim3";
+	sequence4.Name = "Anim4";
+	sequence5.Name = "Anim5";
+	sequence6.Name = "Anim6";
+
+	sequence3.Duration = 123;
+
+	IAnimationGroup* pAnimGroup;
+	ASSERT_EQ(true, Factory(&pAnimGroup, doc));
+	doc.Name = "DifferentName";
+	doc.Sequences.clear();
+	doc.SpriteSheets.clear();
+
+	ASSERT_STREQ("AnimationDocumentName", pAnimGroup->GetName());
+	ASSERT_EQ(6, pAnimGroup->GetSequenceNames().size());
+
+	ASSERT_STREQ("Anim1", (*pAnimGroup->GetSequenceNames().begin()));
+	ASSERT_STREQ("Anim6", (*std::prev(pAnimGroup->GetSequenceNames().end())));
+	ASSERT_EQ(true, pAnimGroup->IsSequenceExists("Anim2"));
+	ASSERT_EQ(false, pAnimGroup->IsSequenceExists("NotExistingAnim"));
+	ASSERT_EQ(false, pAnimGroup->IsSequenceExists(""));
+
+	const FrameSequence* pFrameSequence = (const FrameSequence*)0xDEADCCCC;
+	ASSERT_EQ(false, pAnimGroup->TryGetSequence(&pFrameSequence, "none"));
+	ASSERT_EQ(nullptr, pFrameSequence);
+
+	ASSERT_EQ(true, pAnimGroup->TryGetSequence(&pFrameSequence, "Anim3"));
+	ASSERT_NE(nullptr, pFrameSequence);
 }
