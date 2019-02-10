@@ -155,7 +155,7 @@ TEST(XeGameAnimationsTest, CreateSequenceAnimatorTest) {
 
 	auto& sequence = Add(doc.Sequences);
 	sequence.Name = "Sequence";
-	sequence.Loop = 999;
+	sequence.Loop = 1;
 
 	auto& frame1 = Add(sequence.Frames);
 	auto& frame2 = Add(sequence.Frames);
@@ -180,3 +180,51 @@ TEST(XeGameAnimationsTest, CreateSequenceAnimatorTest) {
 
 	ASSERT_THROW(pSequenceAnimator->GetFrame(sequence.Frames.size()), std::invalid_argument);
 }
+
+
+TEST(XeGameAnimationsTest, ExecuteSequenceAnimatorWithLoopTest) {
+	AnimationDocument doc;
+	doc.Name = "AnimationDocumentName";
+
+	auto& sequence = Add(doc.Sequences);
+	sequence.Name = "Sequence";
+	sequence.Loop = 1;
+	sequence.Duration = 1024;
+
+	auto& frame1 = Add(sequence.Frames);
+	auto& frame2 = Add(sequence.Frames);
+	auto& frame3 = Add(sequence.Frames);
+	auto& frame4 = Add(sequence.Frames);
+
+	frame1.Duration = 0;
+	frame2.Duration = 32;
+	frame3.Duration = 64;
+	frame4.Duration = 64;
+
+	IAnimationGroup* pAnimGroup;
+	ASSERT_EQ(true, Factory(&pAnimGroup, doc));
+
+	ISequenceAnimator* pSequenceAnimator;
+	ASSERT_EQ(true, pAnimGroup->TryCreateSequenceAnimator(&pSequenceAnimator, "Sequence"));
+
+	ASSERT_EQ(0, pSequenceAnimator->GetCurrentFrameIndex());
+	ASSERT_EQ(0, pSequenceAnimator->GetLoopHitCount());
+	ASSERT_EQ(false, pSequenceAnimator->IsAnimationFinish());
+	ASSERT_EQ(0.0, pSequenceAnimator->GetTime());
+
+	pSequenceAnimator->AddTime(0.8);
+	ASSERT_EQ(0, pSequenceAnimator->GetCurrentFrameIndex());
+
+	pSequenceAnimator->SetTime(1.0);
+	ASSERT_EQ(1.0, pSequenceAnimator->GetTime());
+	ASSERT_EQ(1, pSequenceAnimator->GetCurrentFrameIndex());
+
+	pSequenceAnimator->AddTime(1.5);
+	ASSERT_EQ(3, pSequenceAnimator->GetCurrentFrameIndex());
+	ASSERT_EQ(0, pSequenceAnimator->GetLoopHitCount());
+
+	pSequenceAnimator->AddTime(1.0);
+	ASSERT_EQ(1, pSequenceAnimator->GetCurrentFrameIndex());
+	ASSERT_EQ(1, pSequenceAnimator->GetLoopHitCount());
+}
+

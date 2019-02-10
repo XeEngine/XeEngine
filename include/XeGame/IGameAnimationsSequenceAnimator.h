@@ -16,6 +16,18 @@ namespace Xe { namespace Game { namespace Animations {
 
 		virtual const Frame& GetFrame(size_t index) const = 0;
 
+		virtual size_t GetCurrentFrameIndex() const = 0;
 
+		virtual const Frame& GetCurrentFrame() const = 0;
+
+		virtual bool IsAnimationFinish() const = 0;
+
+		virtual size_t GetLoopHitCount() const = 0;
+
+		virtual double GetTime() const = 0;
+
+		virtual void SetTime(double time) = 0;
+
+		virtual void AddTime(double time) = 0;
 	};
 } } }
