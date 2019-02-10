@@ -226,5 +226,21 @@ TEST(XeGameAnimationsTest, ExecuteSequenceAnimatorWithLoopTest) {
 	pSequenceAnimator->AddTime(1.0);
 	ASSERT_EQ(1, pSequenceAnimator->GetCurrentFrameIndex());
 	ASSERT_EQ(1, pSequenceAnimator->GetLoopHitCount());
+
+	pSequenceAnimator->AddTime(-1.0);
+	ASSERT_EQ(3, pSequenceAnimator->GetCurrentFrameIndex());
+	ASSERT_EQ(0, pSequenceAnimator->GetLoopHitCount());
+
+	pSequenceAnimator->AddTime(1.0);
+	ASSERT_EQ(1, pSequenceAnimator->GetCurrentFrameIndex());
+	ASSERT_EQ(1, pSequenceAnimator->GetLoopHitCount());
+
+	pSequenceAnimator->SetTime(0.0);
+	ASSERT_EQ(0, pSequenceAnimator->GetCurrentFrameIndex());
+	ASSERT_EQ(0, pSequenceAnimator->GetLoopHitCount());
+	ASSERT_EQ(false, pSequenceAnimator->IsAnimationFinish());
+	ASSERT_EQ(0.0, pSequenceAnimator->GetTime());
+
+	ASSERT_THROW(pSequenceAnimator->AddTime(-0.1), std::invalid_argument);
 }
 

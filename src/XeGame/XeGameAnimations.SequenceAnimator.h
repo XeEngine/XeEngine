@@ -29,6 +29,87 @@ class SequenceAnimator : public ISequenceAnimator
 		return it;
 	}
 
+
+
+	void MoveTimeForward(double time)
+	{
+		double prevTimer;
+		do
+		{
+			auto currentFrameSpeed = (*m_ItCurrent).Duration;
+			if (currentFrameSpeed == 0)
+				currentFrameSpeed = 64;
+
+			prevTimer = m_CurrentFrameTimer;
+
+			auto timeForNextFrame = 1024.0 / (m_Sequence.Duration * 64.0 / currentFrameSpeed);
+			if (m_CurrentFrameTimer >= timeForNextFrame)
+			{
+				m_CurrentFrameTimer -= timeForNextFrame;
+				++m_IdxCurrent;
+				++m_ItCurrent;
+
+				if (IsAnimationFinish())
+				{
+					m_IdxCurrent = m_Sequence.Loop;
+					m_ItCurrent = m_ItLoop;
+					++m_LoopCount;
+				}
+			}
+
+		} while (m_CurrentFrameTimer != prevTimer);
+	}
+
+	void MoveTimeBackward(double time)
+	{
+		double prevTimer;
+		do
+		{
+			auto prevIndex = m_IdxCurrent;
+			auto prevFrame = m_ItCurrent;
+			auto prevLoop = m_LoopCount;
+			if (m_LoopCount > 0)
+			{
+				if (m_IdxCurrent == m_Sequence.Loop)
+				{
+					prevFrame = std::prev(m_Sequence.Frames.end());
+					prevIndex = m_Sequence.Frames.size() - 1;
+					prevLoop--;
+				}
+				else
+				{
+					prevFrame = std::prev(prevFrame);
+					prevIndex--;
+				}
+			}
+			else if (m_IdxCurrent > 0)
+			{
+				prevFrame = std::prev(prevFrame);
+				prevIndex--;
+			}
+			else
+			{
+				break;
+			}
+
+			auto previousFrameSpeed = (*prevFrame).Duration;
+			if (previousFrameSpeed == 0)
+				previousFrameSpeed = 64;
+
+			prevTimer = m_CurrentFrameTimer;
+
+			auto timeForPrevFrame = 1024.0 / (m_Sequence.Duration * 64.0 / previousFrameSpeed);
+			if (-m_CurrentFrameTimer >= timeForPrevFrame)
+			{
+				m_CurrentFrameTimer += timeForPrevFrame;
+				m_IdxCurrent = prevIndex;
+				m_ItCurrent = prevFrame;
+				m_LoopCount = prevLoop;
+			}
+
+		} while (m_CurrentFrameTimer != prevTimer);
+	}
+
 public:
 	SequenceAnimator(const FrameSequence& frameSequence) :
 		m_Sequence(frameSequence)
@@ -113,37 +194,22 @@ public:
 
 	void AddTime(double time)
 	{
-		if (m_Sequence.Duration == 0 || IsAnimationFinish())
+		if (time == 0 || m_Sequence.Duration == 0 || IsAnimationFinish())
 			return;
 
 		m_AbsoluteTimer += time;
 		m_CurrentFrameTimer += time;
 
-		double prevTimer;
-		do
+		if (m_AbsoluteTimer < 0)
+			throw std::invalid_argument(NAMEOF(GetTime)" cannot be negative");
+
+		if (time > 0)
 		{
-			auto currentFrameSpeed = (*m_ItCurrent).Duration;
-			if (currentFrameSpeed == 0)
-				currentFrameSpeed = 64;
-
-			prevTimer = m_CurrentFrameTimer;
-
-			auto timeForNextFrame = 1024.0 / (m_Sequence.Duration * 64.0 / currentFrameSpeed);
-			if (m_CurrentFrameTimer >= timeForNextFrame)
-			{
-				m_CurrentFrameTimer -= timeForNextFrame;
-				++m_IdxCurrent;
-				++m_ItCurrent;
-
-				if (IsAnimationFinish())
-				{
-					m_IdxCurrent = m_Sequence.Loop;
-					m_ItCurrent = m_ItLoop;
-					++m_LoopCount;
-				}
-			}
-
-		} while (m_CurrentFrameTimer != prevTimer);
-
+			MoveTimeForward(time);
+		}
+		else
+		{
+			MoveTimeBackward(time);
+		}
 	}
 };
