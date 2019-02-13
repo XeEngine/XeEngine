@@ -159,6 +159,8 @@ public:
 			if (i++ == index)
 				return frame;
 		}
+
+		ASSERT(!"Unexpected end of " NAMEOF(GetFrame) ": possible bug");
 	}
 
 	size_t GetCurrentFrameIndex() const

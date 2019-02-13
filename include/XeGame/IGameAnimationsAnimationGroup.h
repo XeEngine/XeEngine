@@ -6,7 +6,7 @@
 namespace Xe { namespace Game { namespace Animations {
 	struct ISequenceAnimator;
 	struct FrameSequence;
-	interface IAnimationGroup
+	interface IAnimationGroup : IObject
 	{
 		virtual ~IAnimationGroup() {}
 

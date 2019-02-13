@@ -4,7 +4,7 @@
 
 namespace Xe { namespace Game { namespace Animations {
 	struct Frame;
-	interface ISequenceAnimator
+	interface ISequenceAnimator : IObject
 	{
 		virtual ~ISequenceAnimator() {}
 
