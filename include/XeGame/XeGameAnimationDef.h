@@ -18,7 +18,7 @@ namespace Xe { namespace Game { namespace Animations {
 	{
 		Xe::String Name;
 		std::list<Frame> Frames;
-		u16 Duration;
+		u16 Speed;
 		u16 Loop;
 		u32 Flags;
 	};

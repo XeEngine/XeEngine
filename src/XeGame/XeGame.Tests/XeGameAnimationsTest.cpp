@@ -45,7 +45,7 @@ TEST(XeGameAnimationsTest, SaveAndParseFrameSequenceTest) {
 	FrameSequence expected, actual;
 
 	expected.Name = "AnimationNameTest";
-	expected.Duration = 123;
+	expected.Speed = 123;
 	expected.Loop = 456;
 	expected.Flags = 789;
 
@@ -58,7 +58,7 @@ TEST(XeGameAnimationsTest, SaveAndParseFrameSequenceTest) {
 	ParseJson(actual, memStream);
 
 	ASSERT_STREQ(expected.Name, actual.Name);
-	ASSERT_EQ(expected.Duration, actual.Duration);
+	ASSERT_EQ(expected.Speed, actual.Speed);
 	ASSERT_EQ(expected.Loop, actual.Loop);
 	ASSERT_EQ(expected.Flags, actual.Flags);
 	ASSERT_EQ(expected.Frames.size(), actual.Frames.size());
@@ -93,7 +93,7 @@ TEST(XeGameAnimationsTest, SaveAndParseAnimationDocumentTest) {
 	auto& expectedSequence1 = Add(expected.Sequences);
 	auto& expectedSequence2 = Add(expected.Sequences);
 	auto& expectedSequence3 = Add(expected.Sequences);
-	expectedSequence1.Duration = 123;
+	expectedSequence1.Speed = 123;
 
 	SaveJson(expected, memStream);
 	memStream->SetPosition(0);
@@ -103,7 +103,7 @@ TEST(XeGameAnimationsTest, SaveAndParseAnimationDocumentTest) {
 	ASSERT_EQ(expected.SpriteSheets.size(), actual.SpriteSheets.size());
 	ASSERT_STREQ(expectedSpriteSheet1.Path, (*actual.SpriteSheets.begin()).Path);
 	ASSERT_EQ(expected.Sequences.size(), actual.Sequences.size());
-	ASSERT_EQ(expectedSequence1.Duration, (*actual.Sequences.begin()).Duration);
+	ASSERT_EQ(expectedSequence1.Speed, (*actual.Sequences.begin()).Speed);
 }
 
 TEST(XeGameAnimationsTest, FactoryAnimationGroupTest) {
@@ -123,7 +123,7 @@ TEST(XeGameAnimationsTest, FactoryAnimationGroupTest) {
 	sequence5.Name = "Anim5";
 	sequence6.Name = "Anim6";
 
-	sequence3.Duration = 123;
+	sequence3.Speed = 123;
 
 	IAnimationGroup* pAnimGroup;
 	ASSERT_EQ(true, Factory(&pAnimGroup, doc));
@@ -189,7 +189,7 @@ TEST(XeGameAnimationsTest, ExecuteSequenceAnimatorWithLoopTest) {
 	auto& sequence = Add(doc.Sequences);
 	sequence.Name = "Sequence";
 	sequence.Loop = 1;
-	sequence.Duration = 4;
+	sequence.Speed = 4;
 
 	auto& frame1 = Add(sequence.Frames);
 	auto& frame2 = Add(sequence.Frames);

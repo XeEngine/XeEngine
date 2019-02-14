@@ -38,7 +38,7 @@ namespace Xe { namespace Game { namespace Animations {
 	void Internal_Parse(FrameSequence& obj, const rapidjson::Value& value)
 	{
 		JSON_GET(value, "name", GetString(), obj.Name);
-		JSON_GET(value, "duration", GetUint(), obj.Duration);
+		JSON_GET(value, "speed", GetUint(), obj.Speed);
 		JSON_GET(value, "loop", GetUint(), obj.Loop);
 		JSON_GET(value, "flags", GetUint(), obj.Flags);
 
@@ -48,7 +48,7 @@ namespace Xe { namespace Game { namespace Animations {
 	void Internal_Save(const FrameSequence& obj, rapidjson::Value& value, rapidjson::MemoryPoolAllocator<>& allocator)
 	{
 		JSON_STRADD(value, "name", obj.Name);
-		JSON_ADD(value, "duration", obj.Duration);
+		JSON_ADD(value, "speed", obj.Speed);
 		JSON_ADD(value, "loop", obj.Loop);
 		JSON_ADD(value, "flags", obj.Flags);
 

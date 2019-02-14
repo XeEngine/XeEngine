@@ -44,7 +44,7 @@ class SequenceAnimator : public ISequenceAnimator
 
 			prevTimer = m_CurrentFrameTimer;
 
-			auto timeForNextFrame = FrameSpeedDivisor / (m_Sequence.Duration * 64.0 / currentFrameSpeed);
+			auto timeForNextFrame = FrameSpeedDivisor / (m_Sequence.Speed * 64.0 / currentFrameSpeed);
 			if (m_CurrentFrameTimer >= timeForNextFrame)
 			{
 				m_CurrentFrameTimer -= timeForNextFrame;
@@ -100,7 +100,7 @@ class SequenceAnimator : public ISequenceAnimator
 
 			prevTimer = m_CurrentFrameTimer;
 
-			auto timeForPrevFrame = FrameSpeedDivisor / (m_Sequence.Duration * 64.0 / previousFrameSpeed);
+			auto timeForPrevFrame = FrameSpeedDivisor / (m_Sequence.Speed * 64.0 / previousFrameSpeed);
 			if (-m_CurrentFrameTimer >= timeForPrevFrame)
 			{
 				m_CurrentFrameTimer += timeForPrevFrame;
@@ -198,7 +198,7 @@ public:
 
 	void AddTime(double time)
 	{
-		if (time == 0 || m_Sequence.Duration == 0 || IsAnimationFinish())
+		if (time == 0 || m_Sequence.Speed == 0 || IsAnimationFinish())
 			return;
 
 		m_AbsoluteTimer += time;
