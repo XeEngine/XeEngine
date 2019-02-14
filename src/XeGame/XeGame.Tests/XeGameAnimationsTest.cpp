@@ -189,7 +189,7 @@ TEST(XeGameAnimationsTest, ExecuteSequenceAnimatorWithLoopTest) {
 	auto& sequence = Add(doc.Sequences);
 	sequence.Name = "Sequence";
 	sequence.Loop = 1;
-	sequence.Duration = 1024;
+	sequence.Duration = 4;
 
 	auto& frame1 = Add(sequence.Frames);
 	auto& frame2 = Add(sequence.Frames);
@@ -197,9 +197,9 @@ TEST(XeGameAnimationsTest, ExecuteSequenceAnimatorWithLoopTest) {
 	auto& frame4 = Add(sequence.Frames);
 
 	frame1.Duration = 0;
-	frame2.Duration = 32;
-	frame3.Duration = 64;
-	frame4.Duration = 64;
+	frame2.Duration = 128;
+	frame3.Duration = 256;
+	frame4.Duration = 256;
 
 	IAnimationGroup* pAnimGroup;
 	ASSERT_EQ(true, Factory(&pAnimGroup, doc));

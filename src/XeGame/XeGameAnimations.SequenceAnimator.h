@@ -8,6 +8,8 @@ using namespace Xe::Game::Animations;
 
 class SequenceAnimator : public ISequenceAnimator
 {
+	const int DefaultFrameSpeed = 256;
+	const double FrameSpeedDivisor = 1;
 	const FrameSequence m_Sequence;
 	std::list<Frame>::const_iterator m_ItLoop;
 	std::list<Frame>::const_iterator m_ItCurrent;
@@ -38,11 +40,11 @@ class SequenceAnimator : public ISequenceAnimator
 		{
 			auto currentFrameSpeed = (*m_ItCurrent).Duration;
 			if (currentFrameSpeed == 0)
-				currentFrameSpeed = 64;
+				currentFrameSpeed = DefaultFrameSpeed;
 
 			prevTimer = m_CurrentFrameTimer;
 
-			auto timeForNextFrame = 1024.0 / (m_Sequence.Duration * 64.0 / currentFrameSpeed);
+			auto timeForNextFrame = FrameSpeedDivisor / (m_Sequence.Duration * 64.0 / currentFrameSpeed);
 			if (m_CurrentFrameTimer >= timeForNextFrame)
 			{
 				m_CurrentFrameTimer -= timeForNextFrame;
@@ -94,11 +96,11 @@ class SequenceAnimator : public ISequenceAnimator
 
 			auto previousFrameSpeed = (*prevFrame).Duration;
 			if (previousFrameSpeed == 0)
-				previousFrameSpeed = 64;
+				previousFrameSpeed = DefaultFrameSpeed;
 
 			prevTimer = m_CurrentFrameTimer;
 
-			auto timeForPrevFrame = 1024.0 / (m_Sequence.Duration * 64.0 / previousFrameSpeed);
+			auto timeForPrevFrame = FrameSpeedDivisor / (m_Sequence.Duration * 64.0 / previousFrameSpeed);
 			if (-m_CurrentFrameTimer >= timeForPrevFrame)
 			{
 				m_CurrentFrameTimer += timeForPrevFrame;
