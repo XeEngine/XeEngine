@@ -28,14 +28,24 @@ namespace Xe
 		//! \brief Create an empty string
 		String();
 
-		template <unsigned length>
-		String(const char(&str)[length]) :
-			String(StringSpan(str, length - 1))
+		template <unsigned maxLength>
+		String(const char(&str)[maxLength]) :
+			String(StringSpan(str, maxLength, maxLength - 1))
+		{ }
+
+		template <unsigned maxLength>
+		String(const char(&str)[maxLength], int length) :
+			String(StringSpan(str, maxLength, length))
 		{ }
 
 		//! \brief Create a string from a C-style string
 		//! \param[in] string to copy
 		String(const char* str);
+
+		//! \brief Create a string from an existing, but trimming it
+		//! \param[in] string to copy
+		//! \param[in] length new length
+		String(const char* str, int length);
 
 		//! \brief Create a string from a StringSpan
 		//! \param[in] string to copy

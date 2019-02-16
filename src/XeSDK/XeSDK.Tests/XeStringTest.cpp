@@ -13,11 +13,19 @@ void XeStringTest(const char* strExpected)
 	STRASSERT(strExpected, str);
 }
 
-TEST(XeStringTest, BaseTest)
+TEST(XeStringTest, InitializeTest)
 {
 	XeStringTest("");
 	XeStringTest("test");
 	XeStringTest(Xe::String::Empty);
+}
+
+TEST(XeStringTest, InitializeWithLengthTest)
+{
+	auto string = Xe::String("hello world", 5);
+	EXPECT_EQ(5, string.GetLength());
+	EXPECT_EQ('h', string[0]);
+	EXPECT_EQ('o', string[4]);
 }
 
 TEST(XeStringTest, EmptyTest)

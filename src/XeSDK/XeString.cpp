@@ -207,6 +207,12 @@ String::String(const char* str) :
 	String(StringSpan(str))
 { }
 
+String::String(const char* str, int length) :
+	String(StringSpan(str, length))
+{
+
+}
+
 String::String(const StringSpan& string) :
 	String(string.GetLength())
 {

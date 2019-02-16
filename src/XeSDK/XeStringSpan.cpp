@@ -25,6 +25,17 @@ StringSpan::StringSpan(const char* str, int length) :
 	ASSERT_POSITIVE(length);
 }
 
+StringSpan::StringSpan(const char* str, int maxLength, int length) :
+	m_Length(length),
+	m_Data(str)
+{
+	ASSERT_POSITIVE(length);
+	if (maxLength < length)
+	{
+		throw std::invalid_argument(NAMEOF(length)" must be in the string range");
+	}
+}
+
 void StringSpan::CheckRangeIndex(int startIndex, int length) const
 {
 	ASSERT_POSITION(startIndex);

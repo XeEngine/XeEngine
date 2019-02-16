@@ -20,15 +20,22 @@ namespace Xe
 		int m_Length;
 		const char* m_Data;
 
+		StringSpan(const char* str, int maxLength, int length);
+
 		//! \brief Check if the specified range is valid, throwing an exception if not
 		void CheckRangeIndex(int startIndex, int length) const;
 	public:
 		//! \brief Definition of an empty string
 		static StringSpan Empty;
 
-		template <unsigned length>
-		StringSpan(const char(&str)[length]) :
-			StringSpan(str, length - 1)
+		template <unsigned maxLength>
+		StringSpan(const char(&str)[maxLength]) :
+			StringSpan(str, maxLength, maxLength - 1)
+		{ }
+
+		template <unsigned maxLength>
+		StringSpan(const char(&str)[maxLength], int length) :
+			StringSpan(str, maxLength, length)
 		{ }
 
 		StringSpan();
