@@ -28,6 +28,16 @@ public:
 		return m_Document.Name;
 	}
 
+
+	std::vector<SpriteSheet> GetSpriteSheets() const
+	{
+		return
+		{
+			std::make_move_iterator(std::begin(m_Document.SpriteSheets)),
+			std::make_move_iterator(std::end(m_Document.SpriteSheets))
+		};
+	}
+
 	std::vector<String> GetSequenceNames() const
 	{
 		std::vector<String> names;

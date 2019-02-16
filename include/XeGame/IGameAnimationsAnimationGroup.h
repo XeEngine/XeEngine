@@ -1,6 +1,7 @@
 #pragma once
 #include <XeSDK/XeDef.h>
 #include <XeSDK/XeString.h>
+#include <XeGame/XeGameAnimationDef.h>
 #include <list>
 
 namespace Xe { namespace Game { namespace Animations {
@@ -11,6 +12,8 @@ namespace Xe { namespace Game { namespace Animations {
 		virtual ~IAnimationGroup() {}
 
 		virtual const String& GetName() const = 0;
+
+		virtual std::vector<SpriteSheet> GetSpriteSheets() const = 0;
 
 		virtual std::vector<String> GetSequenceNames() const = 0;
 
