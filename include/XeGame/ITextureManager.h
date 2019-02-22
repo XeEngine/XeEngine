@@ -2,6 +2,7 @@
 #include <XeSDK/IStorage.h>
 #include <XeSDK/XeGraphicsImaging.h>
 #include <XeSDK/XeMathVector2.h>
+#include <XeSDK/IDelegate.h>
 
 namespace Xe { namespace Game {
 	struct _TexId;
@@ -40,12 +41,50 @@ namespace Xe { namespace Game {
 		std::list<TextureManagerProfileEntry> Textures;
 	};
 
-	interface ITextureManager : public virtual IObject
+	struct TextureManagerLoadRequest
 	{
+		//! \brief Output image that will hold the loaded image
+		Xe::ObjPtr<Xe::Graphics::Imaging::IImage> Image;
+
+		//! \brief The file name of the image to load
+		Xe::String FileName;
+	};
+
+	interface ITextureManager;
+
+	template <class T>
+	struct TextureManagerArgs : public EventArgs<ITextureManager*, T> {};
+
+	template <class T>
+	interface TextureManagerDelegate :
+		public Xe::IDelegate<const TextureManagerArgs<T>&> {};
+
+	typedef TextureManagerDelegate<TextureManagerLoadRequest> TextureManagerLoadRequestDelegate;
+
+	interface ITextureManager :
+		public virtual IObject
+	{
+		virtual void SetLoadRequestDelegate(TextureManagerLoadRequestDelegate* delegate) = 0;
+
+		//! \brief Create a texture from an image.
+		//! \param[in] fileName Path of the image to open
+		/** \details If the file name has been opened before, a new reference
+		 * will be added and a valid TexId will be returned. If the file name
+		 * has been previously unloaded, uncached or never loaded, the
+		 * specified TextureManagerLoadRequestDelegate will be called.
+		 * If TextureManagerLoadRequestDelegate is null or will return invalid
+		 * data, then TexInvalid will be returend.
+		 */
+		virtual TexId Open(const Xe::StringSpan& fileName) = 0;
+
 		//! \brief Create a texture from an image.
 		//! \param[in] image Image that will be loaded and transformed as a texture.
 		//! \param[in] name An unique name from the image, usually used to cache them; cannot be null..
 		//! \return A proper TexId or TexInvalid.
+		//! \warning DEPRECATED! Use Open and SetLoadRequestDelegate instead
+//#if _MSC_VER >= 1911
+//		[[deprecated]]
+//#endif
 		virtual TexId Create(Xe::Graphics::Imaging::IImage* image, ctstring name) = 0;
 
 		//! \brief Get the TexId from the unique name

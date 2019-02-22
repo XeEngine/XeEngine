@@ -30,7 +30,7 @@ namespace Xe { namespace Game {
 			int ClutsCount;
 			Graphics::ISurface* Surface;
 #ifdef DEVELOPMENT
-			std::string Name;
+			String Name;
 #endif
 		};
 
@@ -43,6 +43,8 @@ namespace Xe { namespace Game {
 		int m_ClutsCount;
 
 		bool m_ClutInvalidated;
+
+		TextureManagerLoadRequestDelegate* m_LoadRequestDelegate;
 
 		Xe::Graphics::ISurface* m_SurfacePalette;
 
@@ -57,6 +59,7 @@ namespace Xe { namespace Game {
 			m_TexturesCount(0),
 			m_ClutsCount(0),
 			m_ClutInvalidated(true),
+			m_LoadRequestDelegate(nullptr),
 			m_SurfacePalette(nullptr)
 		{
 			for (int i = 0; i < lengthof(m_Texture); i++)
@@ -96,6 +99,70 @@ namespace Xe { namespace Game {
 			}
 
 			ASSERT(m_TexturesCount == 0);
+		}
+
+		void SetLoadRequestDelegate(TextureManagerLoadRequestDelegate* delegate)
+		{
+			m_LoadRequestDelegate = delegate;
+		}
+
+		TexId Open(const Xe::StringSpan& fileName)
+		{
+			// Has the texture previously loaded?
+			Hash hash = crc.Calculate(fileName.GetData(), 0, fileName.GetLength());
+			TexId texId = Search(hash);
+			if (texId != TexInvalid)
+			{
+				AddReference(texId);
+				return texId;
+			}
+
+			texId = GetFreeTextureSlot();
+			if (m_LoadRequestDelegate && texId != TexInvalid)
+			{
+				Texture& tex = GetInternalTexture(texId);
+				TextureManagerArgs<TextureManagerLoadRequest> args;
+				args.Sender = this;
+				args.Arguments.FileName = fileName;
+
+				(*m_LoadRequestDelegate)(args);
+				auto image = args.Arguments.Image;
+
+				// Check if it is possible to allocate the texture.
+				if (!!image && AllocateTexture(*image, tex.Surface))
+				{
+					ClutId paletteSlot;
+					if (Xe::Graphics::Color::IsIndexed(image->GetFormat()))
+					{
+						paletteSlot = CreateClut(texId, *image);
+					}
+					else
+					{
+						paletteSlot = ClutInvalid;
+					}
+
+					// Texture loaded!
+					tex.Hash = hash;
+					tex.Id = texId;
+					tex.Palette[0] = paletteSlot;
+					tex.ReferencesCount = 1;
+					tex.ClutsCount = paletteSlot != ClutInvalid ? 1 : 0;
+#ifdef DEVELOPMENT
+					tex.Name = fileName;
+#endif
+					m_TexturesCount++;
+					LOGI("Texture %s opened as %i.\n", fileName, texId);
+				}
+				else {
+					LOGE("Unable to allocate %s.\n", fileName);
+					tex.Surface = nullptr;
+				}
+			}
+			else {
+				LOGW("There's no space to allocate %s.\n", fileName);
+			}
+
+			return texId;
 		}
 
 		TexId Search(Hash hash) const
